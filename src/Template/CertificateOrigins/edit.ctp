@@ -68,9 +68,9 @@ input[type="radio"]
 							$options[]='Sea';
 							$options[]='Air';
 							$options[]='Road';
-							if($certificate_origin_good['despatched_by']==0){$despatch='Sea';}
-							else if ($certificate_origin_good['despatched_by']==1){ $despatch='Air'; }
-							else{ $despatch='Road'; } 
+							if($certificate_origin_good['despatched_by']==0){$despatch=0;}
+							else if ($certificate_origin_good['despatched_by']==1){ $despatch=1; }
+							else{ $despatch=2; } 
 							 
 							echo $this->Form->input('despatched_by', array('type' => 'radio','label' => false,'options' => $options,'value'=>$despatch,'hiddenField' => false)); 
 							unset($options);
@@ -180,40 +180,42 @@ input[type="radio"]
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							<?php   foreach($certificate_origins as $data){  
+									foreach($data['certificate_origin_goods'] as $dataa)  {  ?>	
+							<tr>	
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][marks]',['label'=>false,'class'=>'form-control marks','type'=>'text']);
+								 echo $this->Form->input('certificate_origin_goods[0][marks]',['label'=>false,'class'=>'form-control marks','type'=>'text','value'=>$dataa['marks']]);
 								?>
 								</td>
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][container_no]',['label'=>false,'class'=>'form-control','type'=>'text']);
+								 echo $this->Form->input('certificate_origin_goods[0][container_no]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['container_no']]);
 								?>
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][no_and_packing]',['label'=>false,'class'=>'form-control','type'=>'text']);
+								 echo $this->Form->input('certificate_origin_goods[0][no_and_packing]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['no_and_packing']]);
 								?>
 								</td>
 								
 								<td>
 							   <?php
-								 echo $this->Form->input('certificate_origin_goods[0][description_of_goods]',['label'=>false,'class'=>'form-control','type'=>'text']);
+								 echo $this->Form->input('certificate_origin_goods[0][description_of_goods]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['description_of_goods']]);
 								?>
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][quantity]',['label'=>false,'class'=>'form-control','type'=>'text','style'=>'']);
+								 echo $this->Form->input('certificate_origin_goods[0][quantity]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['quantity']]);
 								?>
 								
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control','type'=>'text']);
+								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['value']]);
 								?>
 								
 								</td>
@@ -225,7 +227,9 @@ input[type="radio"]
 								echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']),['class'=>'btn btn-info btn-sm add_row','type'=>'button']);
 								?>
 							   </td>
+								
 							</tr>
+							<?php  }   } ?>
 						</tbody>
 					</table>
 					</div>

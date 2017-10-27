@@ -443,7 +443,10 @@ class CertificateOriginsController extends AppController
 		$certificate_origin_good = $this->CertificateOrigins->get($id, [
             'contain' => []
         ]);
-		//pr($certificate_origin_good);   exit;
+		$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$id,'approve'=>1])->contain(['Companies','CertificateOriginGoods'])->toArray();
+		$approved_by=$certificate_origins[0]->approved_by;
+		$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->where(['user_id'=>$approved_by])->contain(['Users'])->toArray();
+		
         if ($this->request->is(['patch', 'post', 'put'])) {
             $this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
 			$this->request->data['date_current']=date('Y-m-d');
@@ -507,7 +510,7 @@ class CertificateOriginsController extends AppController
 		$MasterUnits=$this->CertificateOrigins->MasterUnits->find()->toArray();
 		$MasterCurrencies=$this->CertificateOrigins->MasterCurrencies->find()->toArray();
 		$this->set('company_organisation' , $Users[0]->company_organisation);
-		$this->set(compact('MasterUnits','MasterCurrencies'));
+		$this->set(compact('MasterUnits','MasterCurrencies','certificate_origins'));
 	}
 	
 	//  edit end

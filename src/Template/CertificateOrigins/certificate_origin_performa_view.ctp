@@ -299,6 +299,7 @@ text-align:center;
 		
 	$total_value = 0;
 	$total_qty = 0;
+
 	foreach($certificate_origin as $dataa){ 
 	$total_qty = $total_qty + $dataa->quantity;
 	$total_value = $total_value + $dataa->value;
