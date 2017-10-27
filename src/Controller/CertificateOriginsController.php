@@ -413,9 +413,9 @@ class CertificateOriginsController extends AppController
 		
 		
 				$this->Flash->success(__('Your certificate origin good has been saved.'));
-				return $this->redirect(['action' => 'certificate_origin']);
+				//return $this->redirect(['action' => 'certificate_origin']);
 				//return $this->redirect('https://test.payu.in/_payment');
-				//return $this->redirect(['action' => 'payment',$data->id]);
+				return $this->redirect(['action' => 'payment',$data->id]);
 			}
 			
 			$this->Flash->error(__('Unable to add your certificate origin goods.'));
@@ -453,14 +453,14 @@ class CertificateOriginsController extends AppController
 			$this->request->data['company_id']=$user_id;
 			
 			
-			 $files=$this->request->data['file']; 
+			$files=$this->request->data['file']; 
 			
 			if(!empty($files[0]['name'])){
 				$this->request->data['invoice_attachment']='true';
 			}else{
 				$this->request->data['invoice_attachment']='false';
 			}
-			 
+			
 			
 			$amount=200;
 			$Tax=$amount*18/100;
@@ -484,8 +484,6 @@ class CertificateOriginsController extends AppController
 				 	
 			if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 			{ 
-		
-
 				$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
 				$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice/'.$data->id;
 				foreach($files as $file){
