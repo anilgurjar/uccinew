@@ -17,7 +17,7 @@
 				<table class="table table-bordered" id="parant_table" style="width:100%;">
 					<thead>
 						<tr>
-							<th>Sr.No.</th><th>Exporter</th><th>Consignee</th><th>Invoice No.</th><th>Date</th><th>Manufacturer</th><th>Despatched by</th><th>View</th>
+							<th>Sr.No.</th><th>Exporter</th><th>Origin No</th><th>Date</th><th>Consignee</th><th>Invoice No.</th><th>Invoice Date</th><th>Manufacturer</th><th>Despatched by</th><th>View</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -27,6 +27,8 @@
 					<tr>
 					    <td><?= ++$sr ?></td>
 						<td><?= $certificate_origin->exporter ?></td>
+						<td><?= $certificate_origin->origin_no ?></td>
+						<td><?= $certificate_origin->date_current ?></td>
 						<td><?= $certificate_origin->consignee ?></td>
 						<td><?= $certificate_origin->invoice_no ?></td>
 						<td><?= date('d-m-Y', strtotime($certificate_origin->invoice_date)) ?></td>
