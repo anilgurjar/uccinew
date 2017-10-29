@@ -109,7 +109,10 @@ class CompaniesController extends AppController
 		
 		
 		if($this->request->is(['post','put']))
-		{   pr($this->request->data); exit;
+		{   
+			$organisation_name=$this->request->data['company_organisation'];
+			$find_id_Companies=$this->Companies->find('list')->where(['company_organisation'=>$organisation_name]);
+			pr($find_id_Companies); exit;
 			$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
 			 $form_number=$result_Companies->form_number+1;
 			$this->request->data['year_of_joining']=date("Y-m-d");
