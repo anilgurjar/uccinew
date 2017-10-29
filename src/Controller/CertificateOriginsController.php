@@ -395,8 +395,7 @@ class CertificateOriginsController extends AppController
 			}
 						
 			$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
-			
-				 	
+			 	
 			if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 			{ 
 		
@@ -413,9 +412,9 @@ class CertificateOriginsController extends AppController
 		
 		
 				$this->Flash->success(__('Your certificate origin good has been saved.'));
-				//return $this->redirect(['action' => 'certificate_origin']);
+				return $this->redirect(['action' => 'certificate_origin']);
 				//return $this->redirect('https://test.payu.in/_payment');
-				return $this->redirect(['action' => 'payment',$data->id]);
+				//return $this->redirect(['action' => 'payment',$data->id]);
 			}
 			
 			$this->Flash->error(__('Unable to add your certificate origin goods.'));
@@ -496,9 +495,9 @@ class CertificateOriginsController extends AppController
 		
 		
 				$this->Flash->success(__('Your certificate origin good has been saved.'));
-				//return $this->redirect(['action' => 'certificate_origin']);
+				return $this->redirect(['action' => 'edit']);
 				//return $this->redirect('https://test.payu.in/_payment');
-				return $this->redirect(['action' => 'payment',$data->id]);
+				//return $this->redirect(['action' => 'payment',$data->id]);
 			}
 			
 			$this->Flash->error(__('Unable to add your certificate origin goods.'));

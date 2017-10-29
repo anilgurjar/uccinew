@@ -463,8 +463,11 @@ public function MemberReceiptAjaxType(){
 			}
 		}
 		$MasterCompanies=$this->MemberReceipts->MasterCompanies->find();
+		$signature=$this->MemberReceipts->MasterSignature->find()->where(['flag'=>1]);
+		
 			$this->set('MasterCompanies',$MasterCompanies);
 		$this->set('master_member',$master_member);
+		$this->set('signature',$signature);
 		$BankDetails=$this->MemberReceipts->MasterBanks->find();
 			$this->set('BankDetails',$BankDetails);
 	}

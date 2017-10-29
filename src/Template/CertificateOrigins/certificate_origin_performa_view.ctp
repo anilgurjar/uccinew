@@ -24,6 +24,7 @@ $origin_no = $data->origin_no;
 $certificate_origin = $data->certificate_origin_goods;
 $current_date = $data->date_current;
 $currency_name = $data->currency;
+$company_address = $data->company->address;
 $unit_name = $data->master_unit->unit_name;
 }
 
@@ -188,7 +189,7 @@ text-align:center;
 		<b>Exporter : </b>
 		</center>
 		</td>
-		<td colspan="2"> '. $exporter.'</td>
+		<td colspan="2"> '. $exporter.'<br/>'.$company_address.'</td>
 		<td align="left"  style="border-left:none;">
 			<b>Port of Loading</b></p>
 
@@ -251,6 +252,18 @@ text-align:center;
 		
 
 		</tr>';
+		
+		$html_content.='<tr>
+		<td align="right" style="border-right:none;">
+		<center>
+		<b>Other information : </b>
+		</center>
+		</td>
+		<td colspan="5"> '. $other_info.'</td>
+		
+		
+		</tr>';
+		
 		
 		$html_content.='<tr>
 		<td align="right" style="border-right:none;" colspan="6">
@@ -328,15 +341,49 @@ text-align:center;
 		</td>
 		
 		
-		<td style="text-align:center;"><b>'. $currency_name.' '.$total_value.'</b></td>
+		<td style="text-align:center;"><b>'. $currency_name.' '.$total_before_discount.'</b></td>
 		
 		</tr>';
+		$html_content.='<tr>
+		<td align="right" style="border-right:none;" colspan="5">
+		
+		<b> Discount </b>
+		
+		</td>
+		
+		
+		<td style="text-align:center;"><b>'.$discount.'</b></td>
+		
+		</tr>';
+		$html_content.='<tr>
+		<td align="right" style="border-right:none;" colspan="5">
+		
+		<b> Freight Amount </b>
+		
+		</td>
+		
+		
+		<td style="text-align:center;"><b>'.$freight_amount.'</b></td>
+		
+		</tr>';
+		$html_content.='<tr>
+		<td align="right" style="border-right:none;" colspan="5">
+		
+		<b>Total Amount</b>
+		
+		</td>
+		
+		
+		<td style="text-align:center;"><b>'.$total_amount.'</b></td>
+		
+		</tr>';
+		
 	}	
 	if($show_amount=='Yes'){
 	$html_content.='<tr>
 		<td align="left" style="border-right:none;" colspan="6">
 		<span >Amount Chargeable(in words):- '. $currency_name.' &nbsp; </span>
-		<strong>'.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_value)])).' Only.</strong>
+		<strong>'.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_amount)])).' Only.</strong>
 		</td>
 		
 		

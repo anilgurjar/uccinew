@@ -60,7 +60,12 @@ class MemberReceiptsTable extends Table
 			'joinType' => 'INNER'
 		]);
  */
- 
+		$this->belongsTo('MasterSignature', [
+            'foreignKey' => 'master_signature_id',
+            'joinType' => 'INNER'
+        ]);
+		
+		
 		 $this->belongsTo('MasterStates', [
             'foreignKey' => 'master_state_id',
             'joinType' => 'INNER'

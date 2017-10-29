@@ -124,7 +124,28 @@ input[type="radio"]
 						</div>
 						
 					</div>
-					
+					<div class="col-sm-6 ">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Other Information</label>
+							<div class="col-sm-8">
+							<?php
+								 echo $this->Form->textarea('other_info',['label'=>false,'class'=>'form-control','type'=>'text']);
+								 ?> 
+						   </div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Invoice Attachment</label>
+							<table id="file_table" style="line-height:2.5">
+								<tr>
+									<td><?= $this->Form->file('file[]',['multiple'=>'multiple']); ?></td>
+									<td><?= $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']) . __(' Add More'), ['class'=>'btn btn-block btn-primary btn-sm add_more','type'=>'button']) ?></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>	
+					</div>	
 				
 					
 					
@@ -132,21 +153,7 @@ input[type="radio"]
 				
 			
 			
-			<div class="col-sm-12">
-				<div class="col-sm-6">
-					<div class="form-group">
 			
-					 <label class="col-sm-4 control-label">Invoice Attachment</label>
-						<table id="file_table" style="line-height:2.5">
-						<tr>
-						<td><?= $this->Form->file('file[]',['multiple'=>'multiple']); ?></td>
-						<td><?= $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']) . __(' Add More'), ['class'=>'btn btn-block btn-primary btn-sm add_more','type'=>'button']) ?></td>
-						<td></td>
-						</tr>
-						</table>
-					</div>	
-				</div>			
-			</div>
 				
 			<table id="copy_row" style="display:none;">	
 			<tbody>
@@ -215,7 +222,7 @@ input[type="radio"]
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['value']]);
+								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control totaladd','type'=>'text','value'=>$dataa['value']]);
 								?>
 								
 								</td>
@@ -234,7 +241,46 @@ input[type="radio"]
 					</table>
 					</div>
 				</div>
-				
+				<div class="col-sm-12 no-print">
+					<div class="form-group">
+						<label class="col-sm-9 control-label">Total</label>
+						<div class="col-sm-2">
+						 <?php
+						echo $this->Form->input('total_before_discount',['label'=>false,'class'=>'form-control total','type'=>'text','name'=>'total_before_discount','readonly','style'=>' ']);  
+						?> 
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 no-print">
+					<div class="form-group">
+						<label class="col-sm-9 control-label">Discount</label>
+						<div class="col-sm-2">
+						 <?php
+						echo $this->Form->input('discount',['label'=>false,'class'=>'form-control discount','type'=>'text','name'=>'discount','style'=>' ']);  
+						?> 
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 no-print">
+					<div class="form-group">
+						<label class="col-sm-9 control-label">Freight Amount</label>
+						<div class="col-sm-2">
+						 <?php
+						echo $this->Form->input('freight_amount',['label'=>false,'class'=>'form-control freighttotal','type'=>'text','name'=>'freight_amount','style'=>' ']);  
+						?> 
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 no-print">
+					<div class="form-group">
+						<label class="col-sm-9 control-label">Total Amount</label>
+						<div class="col-sm-2">
+						 <?php
+						echo $this->Form->input('total_amount',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'total_amount','style'=>' ']);  
+						?> 
+						</div>
+					</div>
+				</div>
 				<div class="col-sm-12 no-print">
 					<center>
 					<?php
@@ -277,7 +323,7 @@ input[type="radio"]
 				?>
 				<td>
 				<?php
-				echo $this->Form->input('value1',['class'=>'form-control','type'=>'text','label'=>false]);
+				echo $this->Form->input('value1',['class'=>'form-control totaladd','type'=>'text','label'=>false]);
 				?>
 				
 				</td>
@@ -311,6 +357,61 @@ $(document).on('click','button.delete_row',function() {
 });
 
 $(document).ready(function(){ 
+
+	$(document).on('keyup','input.totaladd',function() {
+		calculation();
+		calculate2();
+	});
+	
+	
+	
+	$('.freighttotal').on('keyup',function() {
+		calculate2();
+	});	
+	
+	
+	function calculate2(){    
+		total1=parseFloat($('.total').val());
+		if(total1==''){ total1=0; }
+		totalamount=parseFloat($('.totalamount').val());
+		if($.isNumeric(totalamount)==false){ totalamount=0; }
+		 
+		
+		var discount1=parseFloat($('.discount').val());
+		if($.isNumeric(discount1)==false){ discount1=0; }
+		var freighttotal1=parseFloat($('.freighttotal').val());
+		if($.isNumeric(freighttotal1)==false){ freighttotal1=0; }
+		
+		total_amount=total1-discount1+freighttotal1;
+		$('input[name="total_amount"]').val(total_amount.toFixed(2));
+	}
+	
+	function calculation(){
+		var total=0;
+		$(".totaladd").each(function(){  
+			 total1=parseFloat($(this).val());
+			
+			if($.isNumeric(total1)==false){ total1=0; }
+			
+			total+=total1; 
+			totalamount=total; 
+			
+				
+		});
+		
+		$('input[name="total_before_discount"]').val(total.toFixed(2));
+		$('input[name="total_amount"]').val(totalamount.toFixed(2));
+		
+		calculate2();
+		
+	}
+	
+	
+
+
+
+
+
 	// Add Row certificate_origin_goods
 	$( document ).on( 'click', '.add_row', function() {
 		var new_line=$('#sample tbody').html();

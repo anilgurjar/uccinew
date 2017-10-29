@@ -82,6 +82,12 @@ use Cake\Filesystem\File;
 							<?php if($certificate_origin->despatched_by==0){ echo 'Sea'; }else if($certificate_origin->despatched_by==1){ echo 'Air'; } else{ echo "Road"; } ?>
 						  </div>
 						</div>
+						<div class="col-sm-12 value_padding">
+							<label class="col-sm-4">Other Info</label>
+							<div class="col-sm-8">
+								<?= $certificate_origin->other_info ?>
+							</div>
+						</div>
 					</div>
 					<div class="col-sm-6 value_padding">
 						<div class="col-sm-12 value_padding">

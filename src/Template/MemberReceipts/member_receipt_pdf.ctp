@@ -450,12 +450,14 @@ Dated <br/> '.date('d-m-Y', strtotime($member_data->member_fee->invoice_date)).'
 			
 		}
 					 */
+					 //foreach( $signature as $signatur){  <img src="'.ROOT . DS  . 'webroot' . DS  .'images/digital_sign/'.$signatur['signature_image'].'" width="100px" height="50px" align="right" />}
 					$html.='</td>
 					<td colspan="5" align="right"> 
 					<strong style="font-size:15px;">For: Udaipur Chamber of Commerce & Industry </strong>
 					<br/> <br/>
 					<p style="width:100%; text-align:right; font-size: 15px;padding-right:8px;">
-					<img src="'.ROOT . DS  . 'webroot' . DS  .'images/digital_sign/signature.png" width="100px" height="50px" align="right" />
+					
+					<img src="'.ROOT . DS  . 'webroot' . DS  .'images/digital_sign/signature1.png" width="100px" height="50px" align="right" />
 					 <br/> <br/> <br/> <br/>
 						Authorised Signatory</p>
 					</td>
@@ -536,7 +538,7 @@ $html.='<div class="" style="page-break-before:always;"><table width="100%" clas
 									Rs. '.number_format($member_data->member_receipt->amount, 2, '.', '').'
 									</td></tr></table></td>
 									
-									<td style="width: 70%; text-align:right; font-size:15px;"><br/><p  style="width:95%;"><img src="'.ROOT . DS  . 'webroot' . DS  .'images/digital_sign/signature.png" width="100px" height="50px" align="right" /></p><br/><br/><br/><br/>Authorised Signatory</td>
+									<td style="width: 70%; text-align:right; font-size:15px;"><br/><p  style="width:95%;"><img src="'.ROOT . DS  . 'webroot' . DS  .'images/digital_sign/signature1.png" width="100px" height="50px" align="right" /></p><br/><br/><br/><br/>Authorised Signatory</td>
 									</tr>
 									
 									

@@ -128,6 +128,10 @@ else
 	<td valign="top">Dispatched By</td>
 	<td>: <?php if($despatched_by == 0){ echo "Sea"; }else if($despatched_by == 1){ echo "Air"; }else{ echo "Road"; } ?></td>
 	</tr>
+	<tr>
+	<td valign="top">Other Info.</td>
+	<td>: <?php echo $other_info; ?></td></td>
+	</tr>
 	</table>
 	<br/>
 	<table border="1" style="width:100%;">
