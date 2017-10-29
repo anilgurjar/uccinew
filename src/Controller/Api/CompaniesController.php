@@ -105,8 +105,31 @@ class CompaniesController extends AppController
 	}
 	
 	public function nonmemberexportertemp{
+		$Companies=$this->Companies->newEntity();
 		
-		pr($this->request->data);    exit;
+		
+		if($this->request->is(['post','put']))
+		{
+			$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
+			 $form_number=$result_Companies->form_number+1;
+			$this->request->data['year_of_joining']=date("Y-m-d");
+			$this->request->data['form_number']=$form_number;
+			$this->request->data['role_id']=2;
+			$Companies=$this->Companies->patchEntity($Companies,$this->request->data,['associated'=>['Users','CompanyMemberTypes','CoRegistrations','CoRegistrations.CoTaxAmounts']]);
+			//pr($Companies); exit;
+			if($result=$this->Companies->save($Companies)){
+			 $Companies_datas = base64_encode($result);
+			 
+			 $Companies_data = json_encode($Companies_datas);
+			 
+			 
+			 $this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+			// return $this->redirect();
+			
+			}
+			//$this->Flash->error(__('Unable to add the non member.'));
+		}
+	
 	}
 	
     /**
