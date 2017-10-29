@@ -14,6 +14,10 @@ $despatched_by = $data->despatched_by;
 $origin_no = $data->origin_no;
 $certificate_origin = $data->certificate_origin_goods;
 $current_date = $data->date_current;
+$total_before_discount = $data->total_before_discount;
+$discount = $data->discount;
+$freight_amount = $data->freight_amount;
+$total_amount = $data->total_amount;
 $currency_name = $data->master_currency->currency_name;
 $unit_name = $data->master_unit->unit_name;
 }
@@ -161,14 +165,43 @@ else
 		<td style="text-align:center;"><?php echo $dataa->quantity.' '.$unit_name; ?></td>
 		<td style="text-align:center;"><?php echo $currency_name.' '.$dataa->value; ?></td>
 	</tr>
-	<?php } ?>
+	<?php } if($total_before_amount==0){?>
 	<tr>
 	<td colspan="4" style="text-align:right;">
 	<b>Total</b>
 	</td>
 	<td style="text-align:center;"><b><?php echo $total_qty.' '.$unit_name; ?><b/></td>
 	<td style="text-align:center;"><b><?php echo $currency_name.' '.$total_value; ?></b></td>
+	</tr><?php   } else {?>
+	<tr>
+	<td colspan="4" style="text-align:right;">
+	<b>Total</b>
+	</td>
+	<td style="text-align:center;"><b><?php echo $total_qty.' '.$unit_name; ?><b/></td>
+	<td style="text-align:center;"><b><?php echo $currency_name.' '.$total_before_amount; ?></b></td>
 	</tr>
+	<tr>
+	<td colspan="4" style="text-align:right;">
+	<b>Discount</b>
+	</td>
+	<td></td>
+	<td style="text-align:center;"><b><?php echo $discount; ?></b></td>
+	</tr>
+	<tr>
+	<td colspan="4" style="text-align:right;">
+	<b>Freight Amount</b>
+	</td>
+	<td></td>
+	<td style="text-align:center;"><b><?php echo $freight_amount; ?></b></td>
+	</tr>
+	<tr>
+	<td colspan="4" style="text-align:right;">
+	<b>Total Amount</b>
+	</td>
+	<td></td>
+	<td style="text-align:center;"><b><?php echo $total_amount; ?></b></td>
+	</tr>
+	<?php }  ?>
 	</table>
 	<br/>
 	<table border="0" style="width:100%;">

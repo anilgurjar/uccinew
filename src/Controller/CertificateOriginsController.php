@@ -160,6 +160,7 @@ class CertificateOriginsController extends AppController
 				$this->Flash->error(__('Unable to not approved certificate of origin.'));
 			}
 		}
+		
 		$MasterCompanies=$this->CertificateOrigins->MasterCompanies->find();
 		$this->set('MasterCompanies',$MasterCompanies);
 		$this->set(compact('CertificateOrigins'));

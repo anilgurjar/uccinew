@@ -24,6 +24,10 @@ $origin_no = $data->origin_no;
 $certificate_origin = $data->certificate_origin_goods;
 $current_date = $data->date_current;
 $currency_name = $data->currency;
+$total_before_discount = $data->total_before_discount;
+$discount = $data->discount;
+$freight_amount = $data->freight_amount;
+$total_amount = $data->total_amount;
 $company_address = $data->company->address;
 $unit_name = $data->master_unit->unit_name;
 }
@@ -332,8 +336,24 @@ text-align:center;
 		
 	}
 	if($show_amount=='Yes'){
+		if($total_before_discount==0){
 		$total_value=number_format($total_value, 2, '.', '');
 	$html_content.='<tr>
+		<td align="right" style="border-right:none;" colspan="5">
+		
+		<b> Total </b>
+		
+		</td>
+		
+		
+		<td style="text-align:center;"><b>'. $currency_name.' '.$total_value.'</b></td>
+		
+		</tr>';
+		
+		
+		}else{
+		$total_before_discount=number_format($total_before_discount, 2, '.', '');
+		$html_content.='<tr>
 		<td align="right" style="border-right:none;" colspan="5">
 		
 		<b> Total </b>
@@ -344,6 +364,7 @@ text-align:center;
 		<td style="text-align:center;"><b>'. $currency_name.' '.$total_before_discount.'</b></td>
 		
 		</tr>';
+		$discount=number_format($discount, 2, '.', '');
 		$html_content.='<tr>
 		<td align="right" style="border-right:none;" colspan="5">
 		
@@ -355,6 +376,7 @@ text-align:center;
 		<td style="text-align:center;"><b>'.$discount.'</b></td>
 		
 		</tr>';
+		$freight_amount=number_format($freight_amount, 2, '.', '');
 		$html_content.='<tr>
 		<td align="right" style="border-right:none;" colspan="5">
 		
@@ -366,6 +388,7 @@ text-align:center;
 		<td style="text-align:center;"><b>'.$freight_amount.'</b></td>
 		
 		</tr>';
+		$total_amount=number_format($total_amount, 2, '.', '');
 		$html_content.='<tr>
 		<td align="right" style="border-right:none;" colspan="5">
 		
@@ -377,19 +400,27 @@ text-align:center;
 		<td style="text-align:center;"><b>'.$total_amount.'</b></td>
 		
 		</tr>';
-		
-	}	
+		}
+	}
+	
+	
 	if($show_amount=='Yes'){
-	$html_content.='<tr>
-		<td align="left" style="border-right:none;" colspan="6">
-		<span >Amount Chargeable(in words):- '. $currency_name.' &nbsp; </span>
-		<strong>'.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_amount)])).' Only.</strong>
-		</td>
-		
-		
-		
-		
+		if($total_before_discount==0){
+			$html_content.='<tr>
+			<td align="left" style="border-right:none;" colspan="6">
+			<span >Amount Chargeable(in words):- '. $currency_name.' &nbsp; </span>
+			<strong>'.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_value)])).' Only.</strong>
+			</td>
+			</tr>';
+		}else{
+		$html_content.='<tr>
+			<td align="left" style="border-right:none;" colspan="6">
+			<span >Amount Chargeable(in words):- '. $currency_name.' &nbsp; </span>
+			<strong>'.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_amount)])).' Only.</strong>
+			</td>
+			
 		</tr>';
+		}
 	}
 		$html_content.='<tr>
 		<td  style="border-right:none;" colspan="6">

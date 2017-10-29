@@ -136,7 +136,7 @@ use Cake\Filesystem\File;
 							<td style="text-align:center;">'.$certificate_goods->quantity.' </td>
 							<td style="text-align:center;"> '.$certificate_goods->value.'</td></tr>';
 						}
-					
+						if($total_before_discount==0){
 						?>
 						<tr>
 						<td colspan="5" style="text-align:right;">
@@ -145,13 +145,49 @@ use Cake\Filesystem\File;
 						<!--<td style="text-align:center;"><b><?php echo $total_qty.' '.$certificate_origin->master_unit->unit_name; ?><b/></td>-->
 						<td style="text-align:center;"><b><?php echo $certificate_origin->currency.' '.$total_value; ?></b></td>
 						</tr>
+						<?
+						}else{?>
+						<tr>
+						<td colspan="5" style="text-align:right;">
+						<b>Total</b>
+						</td>
+						<!--<td style="text-align:center;"><b><?php echo $total_qty.' '.$certificate_origin->master_unit->unit_name; ?><b/></td>-->
+						<td style="text-align:center;"><b><?php echo $certificate_origin->currency.' '.$total_before_amount; ?></b></td>
+						</tr>
+						<tr>
+						<td colspan="5" style="text-align:right;">
+						<b>Discount</b>
+						</td>
+						<td style="text-align:center;"><b><?php echo $discount; ?></b></td>
+						</tr>
+						<tr>
+						<td colspan="5" style="text-align:right;">
+						<b>Freight Amount</b>
+						</td>
+						<td style="text-align:center;"><b><?php echo $freight_amount; ?></b></td>
+						</tr>
+						<tr>
+						<td colspan="5" style="text-align:right;">
+						<b>Total Amount</b>
+						</td>
+						<td style="text-align:center;"><b><?php echo $total_amount; ?></b></td>
+						</tr>
 						
-						
+						<?php}
+						if($total_before_amount==0){
+						?>
 						<tr>
 												
 						<td style="text-align:left;" colspan="6" ><span >Amount Chargeable(in words):- <?php echo $certificate_origin->currency ?> &nbsp; </span>
-		<strong><?php echo ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_value)])); ?> Only.</strong></td>
+						<strong><?php echo ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_value)])); ?> Only.</strong></td>
 						</tr>
+						<?php }else{
+							<tr>
+												
+						<td style="text-align:left;" colspan="6" ><span >Amount Chargeable(in words):- <?php echo $certificate_origin->currency ?> &nbsp; </span>
+						<strong><?php echo ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_amount)])); ?> Only.</strong></td>
+						</tr>
+						}?>
 						
 						</tbody>
 					</table>
