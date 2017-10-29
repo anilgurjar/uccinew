@@ -112,7 +112,7 @@ class CompaniesController extends AppController
 		{   
 			$organisation_name=$this->request->data['company_organisation'];
 			$find_id_Companies=$this->Companies->find('list')->where(['company_organisation LIKE'=>$organisation_name]);
-			$find_id_CoRegistration=$this->Companies->CoRegistrations->find('list')->where(['company_id'=>$find_id_Companies->id]);
+			$find_id_CoRegistration=$this->Companies->CoRegistrations->find('list')->where(['company_id'=>$find_id_Companies]);
 			pr($find_id_CoRegistration->toArray()); exit;
 			$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
 			 $form_number=$result_Companies->form_number+1;
