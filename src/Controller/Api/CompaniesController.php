@@ -104,7 +104,7 @@ class CompaniesController extends AppController
 	
 	}
 	
-	public function nonmemberexportertemp{
+	public function nonmemberexportertemp(){
 		$Companies=$this->Companies->newEntity();
 		
 		
