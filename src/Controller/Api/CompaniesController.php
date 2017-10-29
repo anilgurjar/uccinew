@@ -109,14 +109,14 @@ class CompaniesController extends AppController
 		
 		
 		if($this->request->is(['post','put']))
-		{
+		{   pr($this->request->data); exit;
 			$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
 			 $form_number=$result_Companies->form_number+1;
 			$this->request->data['year_of_joining']=date("Y-m-d");
 			$this->request->data['form_number']=$form_number;
 			$this->request->data['role_id']=2;
 			$Companies=$this->Companies->patchEntity($Companies,$this->request->data,['associated'=>['Users','CompanyMemberTypes','CoRegistrations','CoRegistrations.CoTaxAmounts']]);
-			//pr($Companies); exit;
+			pr($Companies); exit;
 			if($result=$this->Companies->save($Companies)){
 			 $Companies_datas = base64_encode($result);
 			 
