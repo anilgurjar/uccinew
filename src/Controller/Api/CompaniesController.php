@@ -112,7 +112,7 @@ class CompaniesController extends AppController
 		{   
 			$organisation_name=$this->request->data['company_organisation'];
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
-			pr($find_id_Companies->toArray()); exit;
+			pr($find_id_Companies); exit;
 			
 			
 			foreach($find_id_Companies as $find_id_Companie){
