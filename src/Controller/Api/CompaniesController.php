@@ -189,8 +189,7 @@ class CompaniesController extends AppController
 							->execute(); 
 					
 					}
-					
-				exit;
+				
 			}else{
 			
 				$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
