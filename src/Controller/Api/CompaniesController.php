@@ -124,11 +124,13 @@ class CompaniesController extends AppController
 			$total_amount=$this->request->data['total_amount'];
 			$master_financial_year_id=$this->request->data['master_financial_year_id'];
 			$co_tax_amounts=$this->request->data['co_tax_amounts'];
-			pr($co_tax_amounts);   exit;
-			foreach($co_tax_amounts as $co_tax_amount){
-				$tax_id=$co_tax_amount->tax_id;
-				$tax_percentage=$co_tax_amount->tax_percentage;
-				$co_amount=$co_tax_amount->amount;
+			
+			foreach($co_tax_amounts as $co_tax_amoun){
+				foreach($co_tax_amoun as $co_tax_amount){
+					$tax_id=$co_tax_amount->tax_id;
+					$tax_percentage=$co_tax_amount->tax_percentage;
+					$co_amount=$co_tax_amount->amount;
+				}	
 			}
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
 			if($find_id_Companies>0){
