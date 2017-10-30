@@ -157,7 +157,7 @@ class CompaniesController extends AppController
 						->where(['co_registration_id' => $find_id_CoRegistration_id])
 						->execute();	
 				}else{
-					/* $query = $this->Companies->CoRegistrations->query();
+					$query = $this->Companies->CoRegistrations->query();
 					$query->insert(['amount', 'tax_amount','total_amount','master_financial_year_id'])
 						->values([
 							'amount' => $amount,
@@ -165,7 +165,6 @@ class CompaniesController extends AppController
 							'total_amount' => $total_amount,
 							'master_financial_year_id' => $master_financial_year_id,
 						])
-						-.where(['co_registration_id'=>$find_id_CoRegistration_id])
 						->execute();
 					
 					$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
@@ -175,8 +174,7 @@ class CompaniesController extends AppController
 							'tax_percentage' => $tax_percentage,
 							'amount' => $amount,
 						])
-						-.where(['co_registration_id'=>$find_id_CoRegistration_id])
-						->execute(); */
+						->execute(); 
 				
 				}
 				}	
