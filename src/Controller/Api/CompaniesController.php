@@ -111,12 +111,30 @@ class CompaniesController extends AppController
 		if($this->request->is(['post','put']))
 		{   
 			$organisation_name=$this->request->data['company_organisation'];
+			$gst_number=$this->request->data['gst_number'];
+			$export=$this->request->data['export'];
+			$address=$this->request->data['address'];
+			$office_telephone=$this->request->data['office_telephone'];
+			$nationality=$this->request->data['nationality'];
+			$member_name=$this->request->data['member_name'];
+			$email=$this->request->data['email'];
+			$mobile_no=$this->request->data['mobile_no'];
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
 			if($find_id_Companies>0){
 				$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name]);
 				foreach($find_id_Companies as $find_id_Companie){
 					$find_id=$find_id_Companie->id;
 				}
+				$query = $Companies->query();
+				$query->update()
+					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'address'=>$address,'office_telephone'=>$office_telephone,'nationality'=>$nationality])
+					->where(['id' => $find_id])
+					->execute();
+				$query = $Users->query();
+				$query->update()
+					->set(['member_name'=>$member_name,'email'=>$email,'mobile_no'=>$mobile_no])
+					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
+					->execute();	
 			}
 			
 			
