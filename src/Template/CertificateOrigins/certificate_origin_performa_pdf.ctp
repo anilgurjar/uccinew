@@ -16,6 +16,7 @@ $certificate_origin = $data->certificate_origin_goods;
 $current_date = $data->date_current;
 $total_before_discount = $data->total_before_discount;
 $discount = $data->discount;
+$other_info = $data->other_info;
 $freight_amount = $data->freight_amount;
 $total_amount = $data->total_amount;
 $currency_name = $data->master_currency->currency_name;
