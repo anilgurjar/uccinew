@@ -192,44 +192,44 @@ input[type="radio"]
 								?>
 								<?= $this->Form->input('unit_id', ['empty'=> '--Select--','label' => false,'class'=>'form-control ','options'=>$units_options,'style'=>'']) */ ?>
 								<label id="certificate-origin-goods-0-unit-id-error" class="error" for="certificate-origin-goods-0-unit-id" style="display: none;"></label></th><th>Value
-								<?= $this->Form->input('currency', ['empty'=> '--Select--','label' => false,'class'=>'form-control ','style'=>'','value'=>'INR']) ?></th><th></th>
+								<?= $this->Form->input('currency', ['empty'=> '--Select--','label' => false,'class'=>'form-control ','style'=>'','value'=>'','placeholder'=>'Currency Name']) ?></th><th></th>
 							</tr>
 						</thead>
 						<tbody class="maintbody">
 							<tr class="maintr">
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][marks]',['label'=>false,'class'=>'form-control marks','type'=>'text']);
+								 echo $this->Form->input('certificate_origin_goods[0][marks]',['label'=>false,'class'=>'form-control marks','type'=>'text','placeholder'=>'Marks']);
 								?>
 								</td>
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][container_no]',['label'=>false,'class'=>'form-control','type'=>'text']);
+								 echo $this->Form->input('certificate_origin_goods[0][container_no]',['label'=>false,'class'=>'form-control','type'=>'text','placeholder'=>'Container No.']);
 								?>
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][no_and_packing]',['label'=>false,'class'=>'form-control','type'=>'text']);
+								 echo $this->Form->input('certificate_origin_goods[0][no_and_packing]',['label'=>false,'class'=>'form-control','type'=>'text','placeholder'=>'No. Of Packing']);
 								?>
 								</td>
 								
 								<td>
 							   <?php
-								 echo $this->Form->input('certificate_origin_goods[0][description_of_goods]',['label'=>false,'class'=>'form-control','type'=>'text']);
+								 echo $this->Form->input('certificate_origin_goods[0][description_of_goods]',['label'=>false,'class'=>'form-control','type'=>'text','placeholder'=>'Description Of Goods']);
 								?>
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][quantity]',['label'=>false,'class'=>'form-control','type'=>'text','style'=>'']);
+								 echo $this->Form->input('certificate_origin_goods[0][quantity]',['label'=>false,'class'=>'form-control','type'=>'text','style'=>'','placeholder'=>'Quantity']);
 								?>
 								
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control  totaladd','type'=>'text']);
+								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control  totaladd','type'=>'text','placeholder'=>'Currency Value']);
 								?>
 								
 								</td>
