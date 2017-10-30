@@ -150,12 +150,12 @@ class CompaniesController extends AppController
 					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
 					->execute();
 				$find_id_CoRegistration=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]);
-				pr($find_id_CoRegistration->toArray());
-				foreach($find_id_CoRegistration as $find_id_CoRegistration){
-					$find_id_CoRegistration_id=$find_id_CoRegistration->id;
-					pr($find_id_CoRegistration_id);  exit;
-				}
+				
 				if($find_id_CoRegistration!=''){
+					foreach($find_id_CoRegistration as $find_id_CoRegistration){
+						$find_id_CoRegistration_id=$find_id_CoRegistration->id;
+						
+					}
 						$query = $this->Companies->CoRegistrations->query();
 						$query->update()
 							->set(['amount'=>$amount,'tax_amount'=>$tax_amount,'total_amount'=>$total_amount,'master_financial_year_id'=>$master_financial_year_id])
