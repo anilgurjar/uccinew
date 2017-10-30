@@ -158,7 +158,7 @@ class CompaniesController extends AppController
 						->execute();	
 				}else{
 					$query = $this->Companies->CoRegistrations->query();
-					$query->insert(['amount', 'body'])
+					$query->insert(['amount', 'tax_amount','total_amount','master_financial_year_id'])
 						->values([
 							'amount' => $amount,
 							'tax_amount' => $tax_amount,
