@@ -504,7 +504,6 @@ public function MemberReceiptAjaxType(){
 			$this->request->data=array_filter($this->request->data);
 			
 			$member_receipts=$this->MemberReceipts->patchEntity($member_receipts,$this->request->data);
-			
 			$result=$this->MemberReceipts->save($member_receipts);
 			
 			$this->redirect(array('controller' => 'MemberReceipts','action' => 'general_receipt_performa_view','?' => array('id'=>$result->receipt_id)));
