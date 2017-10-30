@@ -11,7 +11,7 @@ input[type="radio"]
   <div class="box box-primary">
 	<div class="box-header with-border no-print">
 	<center>
-	  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN</strong></h3>
+	  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN Edit</strong></h3>
 	</center>
 	</div>
 	<!-- /.box-header -->
@@ -25,69 +25,61 @@ input[type="radio"]
 					<div class="col-sm-12 no-print">
 					<div class="col-sm-6">
 						<div class="form-group">
-						  <label class="col-sm-4 control-label">Exporter</label>
-						   <div class="col-sm-8">
-						<?php
-						 echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control valid','name'=>'exporter','type'=>'text','value'=>$company_organisation,'style'=>'border:none; border-bottom: 1px dotted #ccc; background-color: #FFF;','readonly'=>'readonly']);
-						 ?>
-						 </div>
-						</div>
-						
-						<div class="form-group">
-						  <label class="col-sm-4 control-label">Consignee</label>
-						   <div class="col-sm-8">
-						<?php  
-						echo $this->Form->input('consignee',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'consignee','style'=>'border:none; border-bottom: 1px dotted #ccc;']);  
-						?>
-						</div>
-						</div>
-						
-						<div class="form-group">
-						  <label class="col-sm-4 control-label">Invoice No. & Date</label>
-						   <div class="col-sm-4">
-				       <?php  
-						echo $this->Form->input('invoice_no',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'invoice_no','style'=>'border:none; border-bottom: 1px dotted #ccc;','placeholder'=>'Invoice No.']);  
-						?>
-						 </div>
-						 <div class="col-sm-4">
-						<?php
-						echo $this->Form->input('invoice_date',['label'=>false,'class'=>'form-control date-picker','type'=>'text','name'=>'invoice_date','style'=>'border:none; border-bottom: 1px dotted #ccc;','placeholder'=>'Invoice Date','data-date-format'=>'dd-mm-yyyy']);
-						
-						
-						
-						?>
-						</div>
-						  
+							<label class="col-sm-4 control-label">Exporter</label>
+							<div class="col-sm-8">
+							<?php
+								echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control valid','name'=>'exporter','type'=>'text','value'=>$company_organisation,'style'=>'border:none; border-bottom: 1px dotted #ccc; background-color: #FFF;','readonly'=>'readonly']);
+							?>	
+							</div>
 						</div>
 						<div class="form-group">
-						  <label class="col-sm-4 control-label">Manufacturer</label>
-						   <div class="col-sm-8">
-						<?php
-						echo $this->Form->input('manufacturer',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'manufacturer','style'=>'border:none; border-bottom: 1px dotted #ccc;']);  
-						?> 
-						 </div>
+							<label class="col-sm-4 control-label">Consignee</label>
+							<div class="col-sm-8">
+							<?php  
+							echo $this->Form->input('consignee',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'consignee','style'=>'border:none; border-bottom: 1px dotted #ccc;']);  
+							?>
+							</div>
 						</div>
 						<div class="form-group">
-						  <label class="col-sm-4 control-label">Despatched by :</label>
+							<label class="col-sm-4 control-label">Invoice No. & Date</label>
+							<div class="col-sm-4">
+							<?php  
+							echo $this->Form->input('invoice_no',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'invoice_no','style'=>'border:none; border-bottom: 1px dotted #ccc;','placeholder'=>'Invoice No.']);  
+							?>
+							</div>
+							<div class="col-sm-4">
+							<?php
+							echo $this->Form->input('invoice_date',['label'=>false,'class'=>'form-control date-picker','type'=>'text','name'=>'invoice_date','style'=>'border:none; border-bottom: 1px dotted #ccc;','placeholder'=>'Invoice Date','data-date-format'=>'dd-mm-yyyy']);
+							?>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Manufacturer</label>
+							<div class="col-sm-8">
+							<?php
+							echo $this->Form->input('manufacturer',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'manufacturer','style'=>'border:none; border-bottom: 1px dotted #ccc;']);  
+							?> 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Despatched by :</label>
 						    <div class="col-sm-8">
-					     <?php
-						 $options[]='Sea';
-						 $options[]='Air';
-						 $options[]='Road';
-			           
-						echo $this->Form->input('despatched_by', array('type' => 'radio','label' => false,'options' => $options,'value'=>'Sea','hiddenField' => false)); 
-						 unset($options);
-						 ?>
-						 <br/>
-						 <label id="despatched_by-error" class="error" for="despatched_by" style="display: none;"></label>
-						  </div>
-						  
-						  
-						  
-						
+							<?php
+							$options[]='Sea';
+							$options[]='Air';
+							$options[]='Road';
+							if($certificate_origin_good['despatched_by']==0){$despatch=0;}
+							else if ($certificate_origin_good['despatched_by']==1){ $despatch=1; }
+							else{ $despatch=2; } 
+							 
+							echo $this->Form->input('despatched_by', array('type' => 'radio','label' => false,'options' => $options,'value'=>$despatch,'hiddenField' => false)); 
+							unset($options);
+							?>
+							<br/>
+							<label id="despatched_by-error" class="error" for="despatched_by" style="display: none;"></label>
+							</div>
+						</div>
 					</div>
-					</div>
-					
 					<div class="col-sm-6">
 						<div class="form-group">
 						  <label class="col-sm-4 control-label">Port of Loading</label>
@@ -132,7 +124,6 @@ input[type="radio"]
 						</div>
 						
 					</div>
-					
 					<div class="col-sm-6 ">
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Other Information</label>
@@ -155,13 +146,15 @@ input[type="radio"]
 							</table>
 						</div>	
 					</div>	
+				
+					
 					
 				</div>
 				
 			
 			
 			
-			
+				
 			<table id="copy_row" style="display:none;">	
 			<tbody>
 				<tr>
@@ -172,13 +165,11 @@ input[type="radio"]
 					<?= $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-trash']) . __(' Delete'), ['class'=>'btn btn-block btn-danger btn-sm delete_row','type'=>'button']) ?></td>
 				</tr>
 			</tbody>
-			</table>
-			
-				
+			</table>				
 				
 				<div class="col-sm-12 no-print">
 					<div class="table-responsive no-padding">
-					<table class="table table-bordered  maintable" id="parant_table" style="width:100%;">
+					<table class="table table-bordered" id="parant_table" style="width:100%;">
 						<thead>
 							<tr>
 								<th colspan="7" style="text-align:center;"><h4><strong>PARTICULARS OF GOODS<strong></h4></th>
@@ -192,44 +183,46 @@ input[type="radio"]
 								?>
 								<?= $this->Form->input('unit_id', ['empty'=> '--Select--','label' => false,'class'=>'form-control ','options'=>$units_options,'style'=>'']) */ ?>
 								<label id="certificate-origin-goods-0-unit-id-error" class="error" for="certificate-origin-goods-0-unit-id" style="display: none;"></label></th><th>Value
-								<?= $this->Form->input('currency', ['empty'=> '--Select--','label' => false,'class'=>'form-control ','style'=>'','value'=>'','placeholder'=>'Currency Name']) ?></th><th></th>
+								<?= $this->Form->input('currency', ['empty'=> '--Select--','label' => false,'class'=>'form-control ','style'=>'','value'=>'INR']) ?></th><th></th>
 							</tr>
 						</thead>
-						<tbody class="maintbody">
-							<tr class="maintr">
+						<tbody>
+							<?php   foreach($certificate_origins as $data){  
+									foreach($data['certificate_origin_goods'] as $dataa)  {  ?>	
+							<tr>	
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][marks]',['label'=>false,'class'=>'form-control marks','type'=>'text','placeholder'=>'Marks']);
+								 echo $this->Form->input('certificate_origin_goods[0][marks]',['label'=>false,'class'=>'form-control marks','type'=>'text','value'=>$dataa['marks']]);
 								?>
 								</td>
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][container_no]',['label'=>false,'class'=>'form-control','type'=>'text','placeholder'=>'Container No.']);
+								 echo $this->Form->input('certificate_origin_goods[0][container_no]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['container_no']]);
 								?>
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][no_and_packing]',['label'=>false,'class'=>'form-control','type'=>'text','placeholder'=>'No. Of Packing']);
+								 echo $this->Form->input('certificate_origin_goods[0][no_and_packing]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['no_and_packing']]);
 								?>
 								</td>
 								
 								<td>
 							   <?php
-								 echo $this->Form->input('certificate_origin_goods[0][description_of_goods]',['label'=>false,'class'=>'form-control','type'=>'text','placeholder'=>'Description Of Goods']);
+								 echo $this->Form->input('certificate_origin_goods[0][description_of_goods]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['description_of_goods']]);
 								?>
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][quantity]',['label'=>false,'class'=>'form-control','type'=>'text','style'=>'','placeholder'=>'Quantity']);
+								 echo $this->Form->input('certificate_origin_goods[0][quantity]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['quantity']]);
 								?>
 								
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control  totaladd','type'=>'text','placeholder'=>'Currency Value']);
+								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control totaladd','type'=>'text','value'=>$dataa['value']]);
 								?>
 								
 								</td>
@@ -241,12 +234,13 @@ input[type="radio"]
 								echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']),['class'=>'btn btn-info btn-sm add_row','type'=>'button']);
 								?>
 							   </td>
+								
 							</tr>
+							<?php  }   } ?>
 						</tbody>
 					</table>
 					</div>
 				</div>
-				
 				<div class="col-sm-12 no-print">
 					<div class="form-group">
 						<label class="col-sm-9 control-label">Total</label>
@@ -282,17 +276,17 @@ input[type="radio"]
 						<label class="col-sm-9 control-label">Total Amount</label>
 						<div class="col-sm-2">
 						 <?php
-						echo $this->Form->input('total_amount',['label'=>false,'class'=>'form-control totalamount','readonly','type'=>'text','name'=>'total_amount','style'=>' ']);  
+						echo $this->Form->input('total_amount',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'total_amount','style'=>' ']);  
 						?> 
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-12 no-print">
 					<center>
-						<?php
-						echo $this->Form->button(__('Save as Draft') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-success','button type'=>'Submit','name'=>'certificate_origin_submit','id'=>'certificate_origin']);
-						?>
-					</center>
+					<?php
+					echo $this->Form->button(__('Submit') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-success','button type'=>'Submit','name'=>'certificate_origin_submit','id'=>'certificate_origin']);
+					?>
+					 </center>
 					
 				</div>
 		  <?php echo $this->Form->end(); ?>
@@ -362,9 +356,6 @@ $(document).on('click','button.delete_row',function() {
 		$(this).closest('tr').remove();
 });
 
-
-
-
 $(document).ready(function(){ 
 
 	$(document).on('keyup','input.totaladd',function() {
@@ -374,7 +365,7 @@ $(document).ready(function(){
 	
 	
 	
-	$('.discount').on('keyup',function() {
+	$('.freighttotal').on('keyup',function() {
 		calculate2();
 	});	
 	
@@ -416,8 +407,10 @@ $(document).ready(function(){
 	}
 	
 	
-	
-	
+
+
+
+
 
 	// Add Row certificate_origin_goods
 	$( document ).on( 'click', '.add_row', function() {
