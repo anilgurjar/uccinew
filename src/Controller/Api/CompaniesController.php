@@ -135,10 +135,10 @@ class CompaniesController extends AppController
 					->set(['member_name'=>$member_name,'email'=>$email,'mobile_no'=>$mobile_no])
 					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
 					->execute();
-				pr($query);     exit;			
+							
 			}
 			
-			
+			pr($find_id_Companies);     exit;
 			
 			$find_id_CoRegistration=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]);
 			
