@@ -377,6 +377,9 @@ $(document).ready(function(){
 	$('.discount').on('keyup',function() {
 		calculate2();
 	});	
+	$('.freighttotal').on('keyup',function() {
+		calculate2();
+	});	
 	
 	
 	function calculate2(){    

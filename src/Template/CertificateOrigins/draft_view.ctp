@@ -11,7 +11,7 @@ input[type="radio"]
   <div class="box box-primary">
 	<div class="box-header with-border no-print">
 	<center>
-	  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN Edit</strong></h3>
+	  <h3 class="box-title"><strong>REVIEW CERTIFICATE OF ORIGIN</strong></h3>
 	</center>
 	</div>
 	<!-- /.box-header -->
@@ -284,9 +284,15 @@ input[type="radio"]
 				<div class="col-sm-12 no-print">
 					<center>
 					<?php
-					echo $this->Form->button(__('Submit') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-success','button type'=>'Submit','name'=>'certificate_origin_submit','id'=>'certificate_origin']);
+						echo $this->Form->button(__('Edit') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-warning','button type'=>'button','id'=>'edit_button']);
 					?>
-					 </center>
+					<?php
+						echo $this->Form->button(__('Save as Draft') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-primary','button type'=>'Submit','name'=>'certificate_origin_draft','id'=>'certificate_origin']);
+					?>
+					<?php
+						echo $this->Form->button(__('Publish') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-success','button type'=>'Submit','name'=>'certificate_origin_publish','id'=>'certificate_origin_publish']);
+					?>
+					</center>
 					
 				</div>
 		  <?php echo $this->Form->end(); ?>
@@ -362,14 +368,21 @@ $(document).ready(function(){
 		calculation();
 		calculate2();
 	});
-	
-	
-	
+	//--
+	$('input').prop('readonly', true);
+	$('textarea').prop('readonly', true);
+	$('.discount').on('keyup',function() {
+		calculate2();
+	});	
 	$('.freighttotal').on('keyup',function() {
 		calculate2();
 	});	
 	
-	
+	$('#edit_button').on('click',function(){
+		$('input').prop('readonly', false);
+		$('textarea').prop('readonly', false);
+	});
+	//--
 	function calculate2(){    
 		total1=parseFloat($('.total').val());
 		if(total1==''){ total1=0; }
