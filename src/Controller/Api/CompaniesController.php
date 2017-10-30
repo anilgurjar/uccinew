@@ -109,7 +109,7 @@ class CompaniesController extends AppController
 		
 		
 		if($this->request->is(['post','put']))
-		{   pr($this->request->data);    exit;
+		{  
 			$organisation_name=$this->request->data['company_organisation'];
 			$gst_number=$this->request->data['gst_number'];
 			$export=$this->request->data['export'];
@@ -120,12 +120,15 @@ class CompaniesController extends AppController
 			$email=$this->request->data['email'];
 			$mobile_no=$this->request->data['mobile_no'];
 			$amount=$this->request->data['amount'];
-			$coamount=$this->request->data['coamount'];
 			$tax_amount=$this->request->data['tax_amount'];
 			$total_amount=$this->request->data['total_amount'];
 			$master_financial_year_id=$this->request->data['master_financial_year_id'];
-			$tax_id=$this->request->data['tax_id'];
-			$tax_percentage=$this->request->data['tax_percentage'];
+			$co_tax_amounts=$this->request->data['co_tax_amounts'];
+			foreach($co_tax_amounts as $co_tax_amount){
+				$tax_id=$co_tax_amount->tax_id;
+				$tax_percentage=$co_tax_amount->tax_percentage;
+				$co_amount=$co_tax_amount->amount;
+			}
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
 			if($find_id_Companies>0){
 				$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name]);
@@ -154,7 +157,7 @@ class CompaniesController extends AppController
 							->execute();
 						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
 						$query->update()
-							->set(['tax_id'=>$tax_id,'tax_percentage'=>$tax_percentage,'amount'=>$amount])
+							->set(['tax_id'=>$tax_id,'tax_percentage'=>$tax_percentage,'amount'=>$co_amount])
 							->where(['co_registration_id' => $find_id_CoRegistration_id])
 							->execute();	
 					}else{
@@ -173,7 +176,7 @@ class CompaniesController extends AppController
 							->values([
 								'tax_id' => $tax_id,
 								'tax_percentage' => $tax_percentage,
-								'amount' => $amount,
+								'amount' => $co_amount,
 							])
 							->execute(); 
 					
