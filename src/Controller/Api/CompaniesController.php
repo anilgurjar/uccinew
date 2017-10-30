@@ -146,38 +146,38 @@ class CompaniesController extends AppController
 					$find_id_CoRegistration_id=$find_id_CoRegistration->id;
 				}
 				if($find_id_CoRegistration!=''){
-					$query = $this->Companies->CoRegistrations->query();
-					$query->update()
-						->set(['amount'=>$amount,'tax_amount'=>$tax_amount,'total_amount'=>$total_amount,'master_financial_year_id'=>$master_financial_year_id])
-						->where(['company_id' => $find_id])
-						->execute();
-					$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
-					$query->update()
-						->set(['tax_id'=>$tax_id,'tax_percentage'=>$tax_percentage,'amount'=>$amount])
-						->where(['co_registration_id' => $find_id_CoRegistration_id])
-						->execute();	
-				}else{
-					$query = $this->Companies->CoRegistrations->query();
-					$query->insert(['amount', 'tax_amount','total_amount','master_financial_year_id'])
-						->values([
-							'amount' => $amount,
-							'tax_amount' => $tax_amount,
-							'total_amount' => $total_amount,
-							'master_financial_year_id' => $master_financial_year_id,
-						])
-						->execute();
+						$query = $this->Companies->CoRegistrations->query();
+						$query->update()
+							->set(['amount'=>$amount,'tax_amount'=>$tax_amount,'total_amount'=>$total_amount,'master_financial_year_id'=>$master_financial_year_id])
+							->where(['company_id' => $find_id])
+							->execute();
+						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
+						$query->update()
+							->set(['tax_id'=>$tax_id,'tax_percentage'=>$tax_percentage,'amount'=>$amount])
+							->where(['co_registration_id' => $find_id_CoRegistration_id])
+							->execute();	
+					}else{
+						$query = $this->Companies->CoRegistrations->query();
+						$query->insert(['amount', 'tax_amount','total_amount','master_financial_year_id'])
+							->values([
+								'amount' => $amount,
+								'tax_amount' => $tax_amount,
+								'total_amount' => $total_amount,
+								'master_financial_year_id' => $master_financial_year_id,
+							])
+							->execute();
+						
+						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
+						$query->insert(['tax_id', 'tax_percentage','amount'])
+							->values([
+								'tax_id' => $tax_id,
+								'tax_percentage' => $tax_percentage,
+								'amount' => $amount,
+							])
+							->execute(); 
 					
-					$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
-					$query->insert(['tax_id', 'tax_percentage','amount'])
-						->values([
-							'tax_id' => $tax_id,
-							'tax_percentage' => $tax_percentage,
-							'amount' => $amount,
-						])
-						->execute(); 
-				
-				}
-				}	
+					}
+					
 				
 			}else{
 			

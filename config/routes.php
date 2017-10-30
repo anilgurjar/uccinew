@@ -410,6 +410,10 @@ Router::prefix('api', function ($routes) {
 				   'action' => 'nonmemberexporter',
 				   'method' => 'POST'
 			    ],
+				'nonmemberexportertemp' => [
+				   'action' => 'nonmemberexportertemp',
+				   'method' => 'POST'
+			    ],
 			   'nonmemberdata' => [
 				   'action' => 'nonmemberdata',
 				   'method' => 'GET'

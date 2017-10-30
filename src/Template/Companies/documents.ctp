@@ -78,7 +78,7 @@ padding-left: 0px;
 				</div>
 				<div class="col-md-4">
 					<div class="form-group">
-						<label class="control-label">IBC Code</label><br/>
+						<label class="control-label">IEC Code</label><br/>
 						<?php echo $this->Html->Image('/'.$companies_data->ibc_code,['height'=>'180px','width'=>'180px']); ?>
 					</div>
 				</div>
