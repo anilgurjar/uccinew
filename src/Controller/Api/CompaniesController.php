@@ -119,6 +119,10 @@ class CompaniesController extends AppController
 			$member_name=$this->request->data['member_name'];
 			$email=$this->request->data['email'];
 			$mobile_no=$this->request->data['mobile_no'];
+			$amount=$this->request->data['amount'];
+			$tax_amount=$this->request->data['tax_amount'];
+			$total_amount=$this->request->data['total_amount'];
+			$master_financial_year_id=$this->request->data['master_financial_year_id'];
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
 			if($find_id_Companies>0){
 				$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name]);
@@ -135,31 +139,34 @@ class CompaniesController extends AppController
 					->set(['member_name'=>$member_name,'email'=>$email,'mobile_no'=>$mobile_no])
 					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
 					->execute();
-							
+				$find_id_CoRegistration=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]);
+				$query = $this->Companies->CoRegistrations->query();
+				$query->update()
+					->set(['amount'=>$amount,'tax_amount'=>$tax_amount,'total_amount'=>$total_amount,'master_financial_year_id'=>$master_financial_year_id])
+					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
+					->execute();
+				
+			}else{
+			
+				$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
+				 $form_number=$result_Companies->form_number+1;
+				$this->request->data['year_of_joining']=date("Y-m-d");
+				$this->request->data['form_number']=$form_number;
+				$this->request->data['role_id']=2;
+				$Companies=$this->Companies->patchEntity($Companies,$this->request->data,['associated'=>['Users','CompanyMemberTypes','CoRegistrations','CoRegistrations.CoTaxAmounts']]);
+				
+				if($result=$this->Companies->save($Companies)){
+				 $Companies_datas = base64_encode($result);
+				 
+				 $Companies_data = json_encode($Companies_datas);
+				 
+				 
+				 $this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+				// return $this->redirect();
+				
+				}
+				//$this->Flash->error(__('Unable to add the non member.'));
 			}
-			
-			pr($find_id_Companies);     exit;
-			
-			$find_id_CoRegistration=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]);
-			
-			$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
-			 $form_number=$result_Companies->form_number+1;
-			$this->request->data['year_of_joining']=date("Y-m-d");
-			$this->request->data['form_number']=$form_number;
-			$this->request->data['role_id']=2;
-			$Companies=$this->Companies->patchEntity($Companies,$this->request->data,['associated'=>['Users','CompanyMemberTypes','CoRegistrations','CoRegistrations.CoTaxAmounts']]);
-			 exit;
-			if($result=$this->Companies->save($Companies)){
-			 $Companies_datas = base64_encode($result);
-			 
-			 $Companies_data = json_encode($Companies_datas);
-			 
-			 
-			 $this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
-			// return $this->redirect();
-			
-			}
-			//$this->Flash->error(__('Unable to add the non member.'));
 		}
 	
 	}
