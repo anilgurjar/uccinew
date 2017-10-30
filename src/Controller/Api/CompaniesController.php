@@ -149,10 +149,12 @@ class CompaniesController extends AppController
 					->set(['member_name'=>$member_name,'email'=>$email,'mobile_no'=>$mobile_no])
 					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
 					->execute();
-				$find_id_CoRegistration=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]);
+				$find_id_CoRegistration=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id])->count();
 				
-				if($find_id_CoRegistration!=''){
-					foreach($find_id_CoRegistration as $find_id_CoRegistration){
+				if($find_id_CoRegistration>0){
+					$find_id_CoRegistrations=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]);
+					foreach($find_id_CoRegistrations as $find_id_CoRegistration){
+						
 						$find_id_CoRegistration_id=$find_id_CoRegistration->id;
 						
 					}
