@@ -112,12 +112,15 @@ class CompaniesController extends AppController
 		{   
 			$organisation_name=$this->request->data['company_organisation'];
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
-			pr($find_id_Companies); exit;
-			
-			
-			foreach($find_id_Companies as $find_id_Companie){
-				$find_id=$find_id_Companie->id;
+			if($find_id_Companies>0){
+				$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name]);
+				foreach($find_id_Companies as $find_id_Companie){
+					$find_id=$find_id_Companie->id;
+				}
 			}
+			
+			
+			
 			$find_id_CoRegistration=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]);
 			
 			$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
