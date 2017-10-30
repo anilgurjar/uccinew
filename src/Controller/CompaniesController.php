@@ -2,7 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
- 
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 /**
  * Companies Controller
  *
@@ -32,12 +33,7 @@ class CompaniesController extends AppController
     {
         $user_id=$this->Auth->User('id');
 		$this->viewBuilder()->layout('index_layout');
-		
-		
-        $companies = $this->Companies->find()->contain(['Users']);
-			
-		
-		
+        $companies = $this->Companies->find()->contain(['Users']);		
         $this->set(compact('companies'));
         $this->set('_serialize', ['companies']);
     }
@@ -85,14 +81,7 @@ class CompaniesController extends AppController
 		$company_id=$Companies_data[0]->id; 
 		
 		 if ($this->request->is('post')) {
-			 
-			 
-			 
-			 
-		 }
-		
-		
-		
+		}
 	}
 	
 	
@@ -193,5 +182,83 @@ class CompaniesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+	
+	public function documents()
+    {
+		$user_id=$this->Auth->User('id');
+		$company_id=$this->Auth->User('company_id');
+		$this->viewBuilder()->layout('index_layout');
+        $company = $this->Companies->newEntity();
+        if ($this->request->is('post')) 
+		{
+			$pan_card=$this->request->data['pan_card'];
+			$company_registration=$this->request->data['company_registration'];
+			$ibc_code=$this->request->data['ibc_code'];
+			$undertaking=$this->request->data['undertaking'];
+			//-- PAN 
+			$dir = new Folder(WWW_ROOT . 'images/company_document/'.$company_id, true, 0755);
+			if(!empty($pan_card['tmp_name']))
+			{
+				
+				$ext = substr(strtolower(strrchr($pan_card['name'], '.')), 1); //get the extension
+				$arr_ext = array('jpg', 'jpeg'); //set allowed extensions
+				$pancard_path='images/company_document/'.$company_id.'/pan_card.'.$ext;
+				move_uploaded_file($pan_card['tmp_name'], WWW_ROOT . '/images/company_document/'.$company_id.'/pan_card.'.$ext);
+				$query = $this->Companies->query();
+				$query->update()
+				->set(['pan_card'=>$pancard_path])
+				->where(['id' => $company_id])
+				->execute();
+			}
+			//-- COMAPANY REGISTRATION
+			if(!empty($company_registration['tmp_name']))
+			{
+			 
+				$ext = substr(strtolower(strrchr($company_registration['name'], '.')), 1); //get the extension
+				$arr_ext = array('jpg', 'jpeg'); //set allowed extensions
+				$company_registration_path='images/company_document/'.$company_id.'/company_registration.'.$ext;
+				move_uploaded_file($company_registration['tmp_name'], WWW_ROOT . '/images/company_document/'.$company_id.'/company_registration.'.$ext);
+				$query = $this->Companies->query();
+				$query->update()
+				->set(['company_registration'=>$company_registration_path])
+				->where(['id' => $company_id])
+				->execute();
+			}
+			//-- IBC CODE
+			if(!empty($ibc_code['tmp_name']))
+			{
+			 
+				$ext = substr(strtolower(strrchr($ibc_code['name'], '.')), 1); //get the extension
+				$arr_ext = array('jpg', 'jpeg'); //set allowed extensions
+				$ibc_code_path='images/company_document/'.$company_id.'/ibc_code.'.$ext;
+				move_uploaded_file($ibc_code['tmp_name'], WWW_ROOT . '/images/company_document/'.$company_id.'/ibc_code.'.$ext);
+				$query = $this->Companies->query();
+				$query->update()
+				->set(['ibc_code'=>$ibc_code_path])
+				->where(['id' => $company_id])
+				->execute();
+			}
+			//-- UNDERTAKING
+			if(!empty($undertaking['tmp_name']))
+			{
+			 
+				$ext = substr(strtolower(strrchr($undertaking['name'], '.')), 1); //get the extension
+				$arr_ext = array('jpg', 'jpeg'); //set allowed extensions
+				$undertaking_path='images/company_document/'.$company_id.'/undertaking.'.$ext;
+				move_uploaded_file($undertaking['tmp_name'], WWW_ROOT . '/images/company_document/'.$company_id.'/undertaking.'.$ext);
+				$query = $this->Companies->query();
+				$query->update()
+				->set(['undertaking'=>$undertaking_path])
+				->where(['id' => $company_id])
+				->execute();
+			}
+            $this->Flash->success(__('The company has been saved.'));
+            return $this->redirect(['action' => 'documents']);
+        }
+		$companies_data = $this->Companies->find()->where(['id' => $company_id])->first();
+ 		
+		$this->set(compact('company','companies_data'));
+        $this->set('_serialize', ['company','companies_data']);
     }
 }
