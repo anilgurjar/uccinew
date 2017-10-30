@@ -130,7 +130,7 @@ class CompaniesController extends AppController
 					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'address'=>$address,'office_telephone'=>$office_telephone,'nationality'=>$nationality])
 					->where(['id' => $find_id])
 					->execute();
-				$query = $this->Users->query();
+				$query = $this->Companies->Users->query();
 				$query->update()
 					->set(['member_name'=>$member_name,'email'=>$email,'mobile_no'=>$mobile_no])
 					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
