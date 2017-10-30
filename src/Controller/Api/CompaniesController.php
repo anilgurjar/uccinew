@@ -170,21 +170,24 @@ class CompaniesController extends AppController
 							->execute();	
 					}else{
 						$query = $this->Companies->CoRegistrations->query();
-						$query->insert(['amount', 'tax_amount','total_amount','master_financial_year_id'])
+						$query->insert(['amount', 'tax_amount','total_amount','master_financial_year_id','company_id'])
 							->values([
 								'amount' => $amount,
 								'tax_amount' => $tax_amount,
 								'total_amount' => $total_amount,
 								'master_financial_year_id' => $master_financial_year_id,
+								'company_id' => $find_id,
 							])
 							->execute();
-						
+						$lastgetid=$this->Companies->CoRegistrations->getLastInsertId();
+						pr($lastgetid);   exit;
 						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
-						$query->insert(['tax_id', 'tax_percentage','amount'])
+						$query->insert(['tax_id', 'tax_percentage','amount','co_registration_id'])
 							->values([
 								'tax_id' => $tax_id,
 								'tax_percentage' => $tax_percentage,
 								'amount' => $co_amount,
+								'co_registration_id' => $co_amount,
 							])
 							->execute(); 
 					
