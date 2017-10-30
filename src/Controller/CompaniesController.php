@@ -194,8 +194,7 @@ class CompaniesController extends AppController
 		{
 			$pan_card=$this->request->data['pan_card'];
 			$company_registration=$this->request->data['company_registration'];
-			$ibc_code=$this->request->data['ibc_code'];
-			$undertaking=$this->request->data['undertaking'];
+			$ibc_code=$this->request->data['ibc_code']; 
 			//-- PAN 
 			$dir = new Folder(WWW_ROOT . 'images/company_document/'.$company_id, true, 0755);
 			if(!empty($pan_card['tmp_name']))
@@ -239,20 +238,7 @@ class CompaniesController extends AppController
 				->where(['id' => $company_id])
 				->execute();
 			}
-			//-- UNDERTAKING
-			if(!empty($undertaking['tmp_name']))
-			{
 			 
-				$ext = substr(strtolower(strrchr($undertaking['name'], '.')), 1); //get the extension
-				$arr_ext = array('jpg', 'jpeg'); //set allowed extensions
-				$undertaking_path='images/company_document/'.$company_id.'/undertaking.'.$ext;
-				move_uploaded_file($undertaking['tmp_name'], WWW_ROOT . '/images/company_document/'.$company_id.'/undertaking.'.$ext);
-				$query = $this->Companies->query();
-				$query->update()
-				->set(['undertaking'=>$undertaking_path])
-				->where(['id' => $company_id])
-				->execute();
-			}
             $this->Flash->success(__('The company has been saved.'));
             return $this->redirect(['action' => 'documents']);
         }

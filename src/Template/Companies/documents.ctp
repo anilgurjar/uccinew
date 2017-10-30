@@ -19,35 +19,29 @@ padding-left: 0px;
 				<div class="row">
 					<div class="col-md-12 pad">
 						 
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="form-group">
 								<label class="control-label">Company PAN Card</label><br/>
 								<?= $this->Form->file('pan_card') ?>
 								</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="form-group">
 								<label class="control-label">Company Registration</label><br/>
 								<?= $this->Form->file('company_registration',['class'=>'second']) ?>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 pad">
-						 
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="form-group">
 								<label class="control-label">IEC Code</label><br/>
 								<?= $this->Form->file('ibc_code') ?>
 								</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label class="control-label">Undertaking (Declaration)</label><br/>
-								<?= $this->Form->file('undertaking',['class'=>'second']) ?>
-							</div>
-						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 pad">
+						&nbsp; 
 					</div>
 				</div>
 			</div>
@@ -68,35 +62,27 @@ padding-left: 0px;
 		</div>
 		<div class="box-body" style="display: block;">
 			<div class="row">
-			<?php $companies_data['pan_card']; ?>
-			<?php $companies_data['company_registration']; ?>
-			<?php $companies_data['ibc_code']; ?>
-			<?php $companies_data['undertaking']; ?>
-			
-				<div class="col-md-3">
+			 
+ 			
+				<div class="col-md-4">
 					<div class="form-group">
 						<label class="control-label">Company PAN Card</label><br/>
 						<?php echo $this->Html->Image('/'.$companies_data->pan_card,['height'=>'180px','width'=>'180px']); ?>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<div class="form-group">
 						<label class="control-label">Company Registration</label><br/>
 						<?php echo $this->Html->Image('/'.$companies_data->company_registration,['height'=>'180px','width'=>'180px']); ?>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<div class="form-group">
 						<label class="control-label">IBC Code</label><br/>
 						<?php echo $this->Html->Image('/'.$companies_data->ibc_code,['height'=>'180px','width'=>'180px']); ?>
 					</div>
 				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label class="control-label">Undertaking</label><br/>
-						<?php echo $this->Html->Image('/'.$companies_data->undertaking,['height'=>'180px','width'=>'180px']); ?>
-					</div>
-				</div>
+				 
 				
 			</div>
 		</div>
