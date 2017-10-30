@@ -26,6 +26,7 @@ $current_date = $data->date_current;
 $currency_name = $data->currency;
 $total_before_discount = $data->total_before_discount;
 $discount = $data->discount;
+$other_info = $data->other_info;
 $freight_amount = $data->freight_amount;
 $total_amount = $data->total_amount;
 $company_address = $data->company->address;
