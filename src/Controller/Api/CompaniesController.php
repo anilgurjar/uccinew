@@ -131,7 +131,7 @@ class CompaniesController extends AppController
 					
 					echo $tax_id=$co_tax_amount['tax_id'];
 					echo $tax_percentage=$co_tax_amount['tax_percentage'];
-					echo $co_amount=$co_tax_amount['amount'];
+					echo $co_amount=$co_tax_amount['amount'];     exit;
 				}	
 			}
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
