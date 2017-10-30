@@ -126,8 +126,9 @@ class CompaniesController extends AppController
 			$co_tax_amounts=$this->request->data['co_tax_amounts'];
 			
 			foreach($co_tax_amounts as $co_tax_amoun){
+				pr($co_tax_amount);   exit;
 				foreach($co_tax_amoun as $co_tax_amount){
-					pr($co_tax_amount);   exit;
+					
 					$tax_id=$co_tax_amount->tax_id;
 					$tax_percentage=$co_tax_amount->tax_percentage;
 					$co_amount=$co_tax_amount->amount;
