@@ -179,8 +179,8 @@ class CompaniesController extends AppController
 								'company_id' => $find_id,
 							])
 							->execute();
-						$lastgetid=$this->Companies->CoRegistrations->getLastInsertId();
-						pr($lastgetid);   exit;
+						$lastinsertid=$this->Companies->CoRegistrations->getLastInsertId();
+						pr($lastinsertid);   exit;
 						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
 						$query->insert(['tax_id', 'tax_percentage','amount','co_registration_id'])
 							->values([
