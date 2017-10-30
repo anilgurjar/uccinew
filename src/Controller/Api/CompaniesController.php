@@ -120,6 +120,7 @@ class CompaniesController extends AppController
 			$email=$this->request->data['email'];
 			$mobile_no=$this->request->data['mobile_no'];
 			$amount=$this->request->data['amount'];
+			$coamount=$this->request->data['coamount'];
 			$tax_amount=$this->request->data['tax_amount'];
 			$total_amount=$this->request->data['total_amount'];
 			$master_financial_year_id=$this->request->data['master_financial_year_id'];
