@@ -109,7 +109,7 @@ class CompaniesController extends AppController
 		
 		
 		if($this->request->is(['post','put']))
-		{   
+		{   pr($this->request->data);    exit;
 			$organisation_name=$this->request->data['company_organisation'];
 			$gst_number=$this->request->data['gst_number'];
 			$export=$this->request->data['export'];
@@ -123,6 +123,8 @@ class CompaniesController extends AppController
 			$tax_amount=$this->request->data['tax_amount'];
 			$total_amount=$this->request->data['total_amount'];
 			$master_financial_year_id=$this->request->data['master_financial_year_id'];
+			$tax_id=$this->request->data['tax_id'];
+			$tax_percentage=$this->request->data['tax_percentage'];
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
 			if($find_id_Companies>0){
 				$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name]);
@@ -140,11 +142,44 @@ class CompaniesController extends AppController
 					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
 					->execute();
 				$find_id_CoRegistration=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]);
-				$query = $this->Companies->CoRegistrations->query();
-				$query->update()
-					->set(['amount'=>$amount,'tax_amount'=>$tax_amount,'total_amount'=>$total_amount,'master_financial_year_id'=>$master_financial_year_id])
-					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
-					->execute();
+				foreach($find_id_CoRegistration as $find_id_CoRegistration){
+					$find_id_CoRegistration_id=$find_id_CoRegistration->id;
+				}
+				if($find_id_CoRegistration!=''){
+					$query = $this->Companies->CoRegistrations->query();
+					$query->update()
+						->set(['amount'=>$amount,'tax_amount'=>$tax_amount,'total_amount'=>$total_amount,'master_financial_year_id'=>$master_financial_year_id])
+						->where(['company_id' => $find_id])
+						->execute();
+					$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
+					$query->update()
+						->set(['tax_id'=>$tax_id,'tax_percentage'=>$tax_percentage,'amount'=>$amount])
+						->where(['co_registration_id' => $find_id_CoRegistration_id])
+						->execute();	
+				}else{
+					$query = $this->Companies->CoRegistrations->query();
+					$query->insert(['amount', 'body'])
+						->values([
+							'amount' => $amount,
+							'tax_amount' => $tax_amount,
+							'total_amount' => $total_amount,
+							'master_financial_year_id' => $master_financial_year_id,
+						])
+						-.where(['co_registration_id'=>$find_id_CoRegistration_id])
+						->execute();
+					
+					$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
+					$query->insert(['tax_id', 'tax_percentage','amount'])
+						->values([
+							'tax_id' => $tax_id,
+							'tax_percentage' => $tax_percentage,
+							'amount' => $amount,
+						])
+						-.where(['co_registration_id'=>$find_id_CoRegistration_id])
+						->execute();
+				
+				}
+				}	
 				
 			}else{
 			
