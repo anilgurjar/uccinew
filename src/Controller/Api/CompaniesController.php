@@ -127,10 +127,10 @@ class CompaniesController extends AppController
 			
 			foreach($co_tax_amounts as $co_tax_amoun){
 
-					pr($co_tax_amoun);  
-					echo $tax_id=$co_tax_amoun['tax_id'];
-					echo $tax_percentage=$co_tax_amoun['tax_percentage'];
-					echo $co_amount=$co_tax_amoun['amount'];   
+					  
+					$tax_id=$co_tax_amoun['tax_id'];
+					$tax_percentage=$co_tax_amoun['tax_percentage'];
+					$co_amount=$co_tax_amoun['amount'];   
 				
 			}
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
@@ -150,8 +150,10 @@ class CompaniesController extends AppController
 					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
 					->execute();
 				$find_id_CoRegistration=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]);
+				pr($find_id_CoRegistration);
 				foreach($find_id_CoRegistration as $find_id_CoRegistration){
 					$find_id_CoRegistration_id=$find_id_CoRegistration->id;
+					pr($find_id_CoRegistration_id);  exit;
 				}
 				if($find_id_CoRegistration!=''){
 						$query = $this->Companies->CoRegistrations->query();
