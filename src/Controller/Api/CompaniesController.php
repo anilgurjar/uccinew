@@ -125,12 +125,12 @@ class CompaniesController extends AppController
 				foreach($find_id_Companies as $find_id_Companie){
 					$find_id=$find_id_Companie->id;
 				}
-				$query = $Companies->query();
+				$query = $this->Companies->query();
 				$query->update()
 					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'address'=>$address,'office_telephone'=>$office_telephone,'nationality'=>$nationality])
 					->where(['id' => $find_id])
 					->execute();
-				$query = $Users->query();
+				$query = $this->Users->query();
 				$query->update()
 					->set(['member_name'=>$member_name,'email'=>$email,'mobile_no'=>$mobile_no])
 					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
