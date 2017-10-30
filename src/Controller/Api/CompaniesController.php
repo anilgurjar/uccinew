@@ -134,7 +134,8 @@ class CompaniesController extends AppController
 				$query->update()
 					->set(['member_name'=>$member_name,'email'=>$email,'mobile_no'=>$mobile_no])
 					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
-					->execute();	
+					->execute();
+				pr($query);     exit;			
 			}
 			
 			
@@ -147,7 +148,7 @@ class CompaniesController extends AppController
 			$this->request->data['form_number']=$form_number;
 			$this->request->data['role_id']=2;
 			$Companies=$this->Companies->patchEntity($Companies,$this->request->data,['associated'=>['Users','CompanyMemberTypes','CoRegistrations','CoRegistrations.CoTaxAmounts']]);
-			pr($Companies); exit;
+			 exit;
 			if($result=$this->Companies->save($Companies)){
 			 $Companies_datas = base64_encode($result);
 			 
