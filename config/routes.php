@@ -421,6 +421,10 @@ Router::prefix('api', function ($routes) {
 				'nonmemberwpfail' => [
 				   'action' => 'nonmemberwpfail',
 				   'method' => 'GET'
+				],
+				'nonmemberexportertemp' => [
+				   'action' => 'nonmemberexportertemp',
+				   'method' => 'POST'
 				]
 		   ]
 		]
