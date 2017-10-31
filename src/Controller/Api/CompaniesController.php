@@ -137,7 +137,8 @@ class CompaniesController extends AppController
 				}
 				if($form_numbers==0){
 					$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
-					$form_number=$result_Companies->form_number+1;
+					echo $form_number=$result_Companies->form_number+1;
+					exit;
 				}
 				
 				$query = $this->Companies->query();
