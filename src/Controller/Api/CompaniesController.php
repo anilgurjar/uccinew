@@ -179,7 +179,7 @@ class CompaniesController extends AppController
 								'company_id' => $find_id,
 							])
 							->execute();
-							pr($query);
+							pr($query->toArray());
 						echo $idlst= $query->id;    
 						 
 						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
