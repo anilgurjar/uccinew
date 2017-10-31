@@ -181,8 +181,7 @@ class CompaniesController extends AppController
 							->execute();
 						$idlsts= $this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]); 
 						foreach($idlsts as $idlst){
-							pr($idlst);   exit;
-							$idlast=$idlst->id;
+							$idlast=$idlst['id'];
 						}
 						
 						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
@@ -191,7 +190,7 @@ class CompaniesController extends AppController
 								'tax_id' => $tax_id,
 								'tax_percentage' => $tax_percentage,
 								'amount' => $co_amount,
-								'co_registration_id' => $idlst,
+								'co_registration_id' => $idlast,
 							])
 							->execute(); 
 					
