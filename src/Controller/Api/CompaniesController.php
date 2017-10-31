@@ -124,7 +124,7 @@ class CompaniesController extends AppController
 			$total_amount=$this->request->data['co_registrations'][0]['total_amount'];
 			$master_financial_year_id=$this->request->data['co_registrations'][0]['master_financial_year_id'];
 			$co_tax_amounts=$this->request->data['co_registrations'][0]['co_tax_amounts'];
-			pr($co_tax_amounts);   exit;
+			
 			foreach($co_tax_amounts as $co_tax_amoun){
 
 					  
@@ -204,7 +204,7 @@ class CompaniesController extends AppController
 				$this->request->data['form_number']=$form_number;
 				$this->request->data['role_id']=2;
 				$Companies=$this->Companies->patchEntity($Companies,$this->request->data,['associated'=>['Users','CompanyMemberTypes','CoRegistrations','CoRegistrations.CoTaxAmounts']]);
-				pr($Companies->toArray());   exit;
+				
 				if($result=$this->Companies->save($Companies)){
 				 $Companies_datas = base64_encode($result);
 				 
