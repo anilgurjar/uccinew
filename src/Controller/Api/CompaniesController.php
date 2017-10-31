@@ -210,6 +210,8 @@ class CompaniesController extends AppController
 						}
 					
 					}
+				$Companies=$this->Companies->find()->where(['id'=>$find_id]);
+				pr($Companies->toArray());   exit; 
 				
 			}else{
 			
