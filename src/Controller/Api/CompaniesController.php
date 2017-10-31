@@ -211,7 +211,7 @@ class CompaniesController extends AppController
 				 $Companies_data = json_encode($Companies_datas);
 				 
 				 
-				$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+				//$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
 				// return $this->redirect();
 				
 				}
