@@ -115,6 +115,7 @@ class CompaniesController extends AppController
 			$gst_number=$this->request->data['gst_number'];
 			$export=$this->request->data['export'];
 			$address=$this->request->data['address'];
+			$this->request->data['non_memeber_exporter_email']='yes';
 			$office_telephone=$this->request->data['office_telephone'];
 			$nationality=$this->request->data['nationality'];
 			$member_name=$this->request->data['users'][0]['member_name'];
@@ -135,7 +136,7 @@ class CompaniesController extends AppController
 				}
 				$query = $this->Companies->query();
 				$query->update()
-					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'address'=>$address,'office_telephone'=>$office_telephone,'nationality'=>$nationality])
+					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'address'=>$address,'office_telephone'=>$office_telephone,'non_memeber_exporter_email'=>'yes','nationality'=>$nationality])
 					->where(['id' => $find_id])
 					->execute();
 				$query = $this->Companies->Users->query();
