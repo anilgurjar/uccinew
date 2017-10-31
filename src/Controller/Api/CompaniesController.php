@@ -63,7 +63,7 @@ class CompaniesController extends AppController
 		foreach($master_financial_years as $master_financial_year){
 			$master_financial_year_id=$master_financial_year->id;
 		}
-		$taxations=$this->Companies->MasterTaxations->find()->select(['tax_name','tax_id'])->where(['tax_flag'=>1])->contain(['MasterTaxationRates'])->toArray();
+		$taxations=$this->Companies->MasterTaxations->find()->select(['tax_name','tax_id'])->where(['tax_flag'=>1,'nmef'=>1])->contain(['MasterTaxationRates'])->toArray();
 		$master_membership_fees=$this->Companies->MasterMembershipFees->find()->where(['member_type_id'=>3])->toArray();
 		
 		$success=true;
