@@ -116,14 +116,14 @@ class CompaniesController extends AppController
 			$address=$this->request->data['address'];
 			$office_telephone=$this->request->data['office_telephone'];
 			$nationality=$this->request->data['nationality'];
-			$member_name=$this->request->data['member_name'];
-			$email=$this->request->data['email'];
-			$mobile_no=$this->request->data['mobile_no'];
-			$amount=$this->request->data['amount'];
-			$tax_amount=$this->request->data['tax_amount'];
-			$total_amount=$this->request->data['total_amount'];
-			$master_financial_year_id=$this->request->data['master_financial_year_id'];
-			$co_tax_amounts=$this->request->data['co_tax_amounts'];
+			$member_name=$this->request->data['users']['member_name'];
+			$email=$this->request->data['users']['email'];
+			$mobile_no=$this->request->data['users']['mobile_no'];
+			$amount=$this->request->data['co_registrations']['amount'];
+			$tax_amount=$this->request->data['co_registrations']['tax_amount'];
+			$total_amount=$this->request->data['co_registrations']['total_amount'];
+			$master_financial_year_id=$this->request->data['co_registrations']['master_financial_year_id'];
+			$co_tax_amounts=$this->request->data['co_registrations']['co_tax_amounts'];
 			
 			foreach($co_tax_amounts as $co_tax_amoun){
 
