@@ -27,6 +27,58 @@ class CompaniesController extends AppController
 		 $status=$this->request->query['status'];
 		 $txnid=$this->request->query['taxnid'];
 		 
+		 
+		$companies= $this->Companies->get($company_id,['contain'=>['Users','CoRegistrations'=>['CoTaxAmounts']]]);
+		
+		$MemberReceipts=$this->Companies->MemberReceipts->newEntity();
+		
+		$GeneralReceiptPurposes=$this->Companies->MemberReceipts->GeneralReceiptPurposes->newEntity();
+		
+		
+		$co_tax_amounts=$companies['co_registrations'][0]->co_tax_amounts;
+		$basic_amount=$companies['co_registrations'][0]->amount;
+		$taxamount=$companies['co_registrations'][0]->tax_amount;
+		$amount=$companies['co_registrations'][0]->total_amount;
+		$this->request->data['amount_type']='Cash';
+		$this->request->data['narration']='Non Member Exporters Registration Fees';
+		$this->request->data['tax_applicable']='Tax';
+		$this->request->data['basic_amount']=@$basic_amount;
+		$this->request->data['taxamount']=@$taxamount;
+		$this->request->data['amount']=@$amount;
+		$this->request->data['company_id']=$company_id;
+		$this->request->data['receipt_type']='general_receipt';
+		$this->request->data['receipt_no']=@$receipt_no;
+		$this->request->data['date_current']=date("Y-m-d");
+		
+		$this->request->data['general_receipt_purposes']=array();
+		$this->request->data['tax_amounts']=array();
+		
+		$MemberReceipts = $this->Companies->MemberReceipts->patchEntity($MemberReceipts, $this->request->data);
+		
+		$GeneralReceiptPurposes->purpose_id=26;
+		$GeneralReceiptPurposes->quantity=1;
+		$GeneralReceiptPurposes->amount=$basic_amount;
+		$GeneralReceiptPurposes->total=$basic_amount;
+		$MemberReceipts->general_receipt_purposes[0]=$GeneralReceiptPurposes;	
+		$i=0;
+		foreach($co_tax_amounts as $co_tax_amount){
+				$TaxAmounts=$this->Companies->MemberReceipts->TaxAmounts->newEntity();
+				$tax_id=$co_tax_amount->tax_id;
+				$tax_percentage=$co_tax_amount->tax_percentage;
+				$amount=$co_tax_amount->amount;
+			
+				$TaxAmounts->tax_id=$tax_id;
+				$TaxAmounts->tax_percentage=$tax_percentage;
+				$TaxAmounts->tax_id=$amount;
+				$MemberReceipts->tax_amounts[$i]=$TaxAmounts;
+			$i++;
+		}
+		
+		
+		
+		pr($MemberReceipts);
+		
+		 exit;
 		  $query = $this->Companies->query();
 			$query->update()
 			->set(['payment_status' => $status,'transaction_id'=>$txnid])
