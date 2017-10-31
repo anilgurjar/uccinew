@@ -221,13 +221,13 @@ class CompaniesController extends AppController
 				$Companies=$this->Companies->patchEntity($Companies,$this->request->data,['associated'=>['Users','CompanyMemberTypes','CoRegistrations','CoRegistrations.CoTaxAmounts']]);
 				  
 				if($result=$this->Companies->save($Companies)){
-					
+				pr($result);   exit;	
 				 $Companies_datas = base64_encode($result);
 				 
 				 $Companies_data = json_encode($Companies_datas);
 				 
 				 
-				//$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+				$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
 				// return $this->redirect();
 				
 				}
