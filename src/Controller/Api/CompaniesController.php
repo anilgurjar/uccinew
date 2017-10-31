@@ -137,13 +137,13 @@ class CompaniesController extends AppController
 				}
 				if(empty($form_numbers)){
 					$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
-					$form_number=$result_Companies->form_number+1;
+					$form_numbers=$result_Companies->form_number+1;
 					
 				}
 				
 				$query = $this->Companies->query();
 				$query->update()
-					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'form_number'=>$form_number,'address'=>$address,'office_telephone'=>$office_telephone,'non_memeber_exporter_email'=>'yes','nationality'=>$nationality])
+					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'form_number'=>$form_numbers,'address'=>$address,'office_telephone'=>$office_telephone,'non_memeber_exporter_email'=>'yes','nationality'=>$nationality])
 					->where(['id' => $find_id])
 					->execute();
 				$query = $this->Companies->Users->query();
