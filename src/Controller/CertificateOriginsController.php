@@ -426,7 +426,7 @@ class CertificateOriginsController extends AppController
             'contain' => []
         ]);
 		$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$id])->contain(['Companies','CertificateOriginGoods'])->toArray();
-	 
+		//pr($certificate_origins); exit;
 		 
         if ($this->request->is(['patch', 'post', 'put'])) {
 			
@@ -505,7 +505,6 @@ class CertificateOriginsController extends AppController
 				}
 							
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
-				
 						
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 				{ 
@@ -513,7 +512,6 @@ class CertificateOriginsController extends AppController
 					$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice/'.$data->id;
 					foreach($files as $file){
 					  move_uploaded_file($file['tmp_name'], $file_path.'/' . $file['name']);
-
 					}
 					$this->Flash->success(__('Your certificate origin good has been saved.'));
 					//return $this->redirect(['action' => 'edit']);
@@ -611,11 +609,6 @@ class CertificateOriginsController extends AppController
 	
 	//  edit end
 	
-	
-	
-	
-	
-	
 	public function CertificateOriginPerformaView(){
 		$this->viewBuilder()->layout('index_layout');
 		$user_id=$this->Auth->User('id');
@@ -628,6 +621,14 @@ class CertificateOriginsController extends AppController
 		$MasterCompanies=$this->CertificateOrigins->MasterCompanies->find();
 		$this->set('MasterCompanies',$MasterCompanies);
 		
+	}
+	public function certificateOriginDraftView()
+    {
+		$this->viewBuilder()->layout('index_layout');
+		$company_id=$this->Auth->User('company_id');  
+		$certificate_origins = $this->CertificateOrigins->find()->where(['company_id'=>$company_id,'status'=>'draft']);
+		
+		$this->set(compact('certificate_origins'));
 	}
 
 } 

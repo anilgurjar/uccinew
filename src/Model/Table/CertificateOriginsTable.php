@@ -52,7 +52,8 @@ class CertificateOriginsTable extends Table
             
         ]);
         $this->hasMany('CertificateOriginGoods', [
-            'foreignKey' => 'certificate_origin_id'
+            'foreignKey' => 'certificate_origin_id',
+			'saveStrategy'=>'replace'
         ]);
 		
 		

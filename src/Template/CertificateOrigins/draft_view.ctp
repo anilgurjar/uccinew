@@ -5,6 +5,9 @@ input[type="radio"]
 	margin-left: 6px;
 	margin-top: 6px;
 }
+.control-label{
+	text-align:left !important;
+}
  </style>
 <div class="col-md-12">
   <!-- Horizontal Form -->
@@ -187,8 +190,9 @@ input[type="radio"]
 							</tr>
 						</thead>
 						<tbody>
-							<?php   foreach($certificate_origins as $data){  
-									foreach($data['certificate_origin_goods'] as $dataa)  {  ?>	
+							<?php   foreach($certificate_origins as $data){ 
+							$xy=0;
+									foreach($data['certificate_origin_goods'] as $dataa)  { $xy++; ?>	
 							<tr>	
 								<td>
 								<?php
@@ -233,6 +237,11 @@ input[type="radio"]
 								<?php
 								echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']),['class'=>'btn btn-info btn-sm add_row','type'=>'button']);
 								?>
+								<?php
+								if($xy>1){
+								echo $this->Form->button(('') . $this->Html->tag('i', '', ['class'=>'fa fa-trash']),['class'=>'btn btn-danger btn-sm remove_row','type'=>'button']);
+								}
+								?>
 							   </td>
 								
 							</tr>
@@ -243,7 +252,7 @@ input[type="radio"]
 				</div>
 				<div class="col-sm-12 no-print">
 					<div class="form-group">
-						<label class="col-sm-9 control-label">Total</label>
+						<label class="col-sm-9 control-label" style="text-align:right !important">Total</label>
 						<div class="col-sm-2">
 						 <?php
 						echo $this->Form->input('total_before_discount',['label'=>false,'class'=>'form-control total','type'=>'text','name'=>'total_before_discount','readonly','style'=>' ']);  
@@ -253,7 +262,7 @@ input[type="radio"]
 				</div>
 				<div class="col-sm-12 no-print">
 					<div class="form-group">
-						<label class="col-sm-9 control-label">Discount</label>
+						<label class="col-sm-9 control-label" style="text-align:right !important">Discount</label>
 						<div class="col-sm-2">
 						 <?php
 						echo $this->Form->input('discount',['label'=>false,'class'=>'form-control discount','type'=>'text','name'=>'discount','style'=>' ']);  
@@ -263,7 +272,7 @@ input[type="radio"]
 				</div>
 				<div class="col-sm-12 no-print">
 					<div class="form-group">
-						<label class="col-sm-9 control-label">Freight Amount</label>
+						<label class="col-sm-9 control-label" style="text-align:right !important">Freight Amount</label>
 						<div class="col-sm-2">
 						 <?php
 						echo $this->Form->input('freight_amount',['label'=>false,'class'=>'form-control freighttotal','type'=>'text','name'=>'freight_amount','style'=>' ']);  
@@ -273,7 +282,7 @@ input[type="radio"]
 				</div>
 				<div class="col-sm-12 no-print">
 					<div class="form-group">
-						<label class="col-sm-9 control-label">Total Amount</label>
+						<label class="col-sm-9 control-label" style="text-align:right !important">Total Amount</label>
 						<div class="col-sm-2">
 						 <?php
 						echo $this->Form->input('total_amount',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'total_amount','style'=>' ']);  
@@ -383,9 +392,10 @@ $(document).ready(function(){
 		$('textarea').prop('readonly', false);
 	});
 	//--
-	function calculate2(){    
+	function calculate2(){  
+ 	
 		total1=parseFloat($('.total').val());
-		if(total1==''){ total1=0; }
+ 		if(total1==''){ total1=0; }
 		totalamount=parseFloat($('.totalamount').val());
 		if($.isNumeric(totalamount)==false){ totalamount=0; }
 		 
@@ -461,6 +471,8 @@ $(document).ready(function(){
 	// Remove Row
 	$( document ).on( 'click', '.remove_row', function() {
 		$(this).closest("#parant_table tr").remove();
+		calculation();
+		calculate2();
 		var i=0;
 		var name=[];
 		name.push('marks','container_no','no_and_packing','description_of_goods','quantity','value');
