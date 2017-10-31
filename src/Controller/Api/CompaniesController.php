@@ -128,9 +128,9 @@ class CompaniesController extends AppController
 			foreach($co_tax_amounts as $co_tax_amoun){
 
 					  
-					$tax_id=$co_tax_amoun['tax_id'];
-					$tax_percentage=$co_tax_amoun['tax_percentage'];
-					$co_amount=$co_tax_amoun['amount'];   
+					$tax_id=$co_tax_amoun[0]['tax_id'];
+					$tax_percentage=$co_tax_amoun[0]['tax_percentage'];
+					$co_amount=$co_tax_amoun[0]['amount'];   
 				
 			}
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
@@ -158,7 +158,7 @@ class CompaniesController extends AppController
 						$find_id_CoRegistration_id=$find_id_CoRegistration->id;
 						
 					}
-					pr($find_id_CoRegistrations->toArray());   exit;
+					
 						$query = $this->Companies->CoRegistrations->query();
 						$query->update()
 							->set(['amount'=>$amount,'tax_amount'=>$tax_amount,'total_amount'=>$total_amount,'master_financial_year_id'=>$master_financial_year_id])
@@ -168,7 +168,8 @@ class CompaniesController extends AppController
 						$query->update()
 							->set(['tax_id'=>$tax_id,'tax_percentage'=>$tax_percentage,'amount'=>$co_amount])
 							->where(['co_registration_id' => $find_id_CoRegistration_id])
-							->execute();	
+							->execute();
+						pr($query->toArray());   exit;
 					}else{
 						$query = $this->Companies->CoRegistrations->query();
 						$query->insert(['amount', 'tax_amount','total_amount','master_financial_year_id','company_id'])
