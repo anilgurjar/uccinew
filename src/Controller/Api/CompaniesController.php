@@ -159,10 +159,10 @@ class CompaniesController extends AppController
 							->where(['company_id' => $find_id])
 							->execute();
 						
-						pr($co_tax_amounts); exit;
+						
 						foreach($co_tax_amounts as $co_tax_amoun){
 
-								  
+								 
 								$tax_id=$co_tax_amoun['tax_id'];
 								$tax_percentage=$co_tax_amoun['tax_percentage'];
 								$co_amount=$co_tax_amoun['amount'];  
@@ -170,7 +170,7 @@ class CompaniesController extends AppController
 								$querys = $this->Companies->CoRegistrations->CoTaxAmounts->query();
 								$querys->update()
 								->set(['tax_id'=>$tax_id,'tax_percentage'=>$tax_percentage,'amount'=>$co_amount])
-								->where(['co_registration_id' => $find_id_CoRegistration_id])
+								->where(['co_registration_id' => $find_id_CoRegistration_id,'tax_id'=>$tax_id])
 								->execute();								
 							
 						}
