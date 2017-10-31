@@ -133,7 +133,12 @@ class CompaniesController extends AppController
 				$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name]);
 				foreach($find_id_Companies as $find_id_Companie){
 					$find_id=$find_id_Companie->id;
+					$form_numbers=$find_id_Companie->form_number;
 				}
+				pr($form_numbers);   exit;
+				$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
+				$form_number=$result_Companies->form_number+1;
+				if()
 				$query = $this->Companies->query();
 				$query->update()
 					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'address'=>$address,'office_telephone'=>$office_telephone,'non_memeber_exporter_email'=>'yes','nationality'=>$nationality])
