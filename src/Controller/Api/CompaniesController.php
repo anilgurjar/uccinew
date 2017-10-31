@@ -159,7 +159,7 @@ class CompaniesController extends AppController
 							->where(['company_id' => $find_id])
 							->execute();
 						
-						
+						pr($co_tax_amounts); exit;
 						foreach($co_tax_amounts as $co_tax_amoun){
 
 								  
