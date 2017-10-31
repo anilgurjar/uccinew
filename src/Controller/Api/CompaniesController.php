@@ -204,8 +204,9 @@ class CompaniesController extends AppController
 				$this->request->data['form_number']=$form_number;
 				$this->request->data['role_id']=2;
 				$Companies=$this->Companies->patchEntity($Companies,$this->request->data,['associated'=>['Users','CompanyMemberTypes','CoRegistrations','CoRegistrations.CoTaxAmounts']]);
-				pr($Companies->toArray());   exit;
+				pr($Companies->toArray());   
 				if($result=$this->Companies->save($Companies)){
+					pr($result);    exit;
 				 $Companies_datas = base64_encode($result);
 				 
 				 $Companies_data = json_encode($Companies_datas);
