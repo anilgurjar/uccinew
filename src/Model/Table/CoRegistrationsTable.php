@@ -47,7 +47,8 @@ class CoRegistrationsTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->hasMany('CoTaxAmounts', [
-            'foreignKey' => 'co_registration_id'
+            'foreignKey' => 'co_registration_id',
+			'saveStrategy'=>'replace'
         ]);
     }
 
