@@ -109,22 +109,22 @@ class CompaniesController extends AppController
 		
 		
 		if($this->request->is(['post','put']))
-		{  pr($this->request->data);   exit;
+		{  
 			$organisation_name=$this->request->data['company_organisation'];
 			$gst_number=$this->request->data['gst_number'];
 			$export=$this->request->data['export'];
 			$address=$this->request->data['address'];
 			$office_telephone=$this->request->data['office_telephone'];
 			$nationality=$this->request->data['nationality'];
-			$member_name=$this->request->data['users']['member_name'];
-			$email=$this->request->data['users']['email'];
-			$mobile_no=$this->request->data['users']['mobile_no'];
-			$amount=$this->request->data['co_registrations']['amount'];
-			$tax_amount=$this->request->data['co_registrations']['tax_amount'];
-			$total_amount=$this->request->data['co_registrations']['total_amount'];
-			$master_financial_year_id=$this->request->data['co_registrations']['master_financial_year_id'];
-			$co_tax_amounts=$this->request->data['co_registrations']['co_tax_amounts'];
-			
+			$member_name=$this->request->data['users'][0]['member_name'];
+			$email=$this->request->data['users'][0]['email'];
+			$mobile_no=$this->request->data['users'][0]['mobile_no'];
+			$amount=$this->request->data['co_registrations'][0]['amount'];
+			$tax_amount=$this->request->data['co_registrations'][0]['tax_amount'];
+			$total_amount=$this->request->data['co_registrations'][0]['total_amount'];
+			$master_financial_year_id=$this->request->data['co_registrations'][0]['master_financial_year_id'];
+			$co_tax_amounts=$this->request->data['co_registrations'][0]['co_tax_amounts'];
+			pr($co_tax_amounts);   exit;
 			foreach($co_tax_amounts as $co_tax_amoun){
 
 					  
