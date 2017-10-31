@@ -109,7 +109,7 @@ class CompaniesController extends AppController
 		
 		
 		if($this->request->is(['post','put']))
-		{  
+		{  pr($this->request->data);   exit;
 			$organisation_name=$this->request->data['company_organisation'];
 			$gst_number=$this->request->data['gst_number'];
 			$export=$this->request->data['export'];
