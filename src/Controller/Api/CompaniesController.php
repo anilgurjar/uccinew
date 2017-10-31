@@ -179,7 +179,6 @@ class CompaniesController extends AppController
 								'company_id' => $find_id,
 							])
 							->execute();
-							 
 						$idlst= $this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]); 
 						pr($idlst->toArray());   exit;
 						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
