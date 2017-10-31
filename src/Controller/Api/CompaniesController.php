@@ -210,10 +210,10 @@ class CompaniesController extends AppController
 						}
 					
 					}
-				$Companies=$this->Companies->find()->where(['id'=>$find_id])->contain(['Users','CoRegistrations'=>['CoTaxAmounts']]);
-				foreach($Companies as $Companie){
-					pr($Companie->toArray());   exit;
-				}
+				//$Companies=$this->Companies->find()->where(['id'=>$find_id])->contain(['Users','CoRegistrations'=>['CoTaxAmounts']]);
+				$Companies=$this->Companies->get($find_id, ['contain'=>['Users','CoRegistrations'=>['CoTaxAmounts']]]);
+				pr($Companies);   exit;
+				
 				 
 				
 			}else{
