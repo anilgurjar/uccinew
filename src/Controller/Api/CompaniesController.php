@@ -110,6 +110,7 @@ class CompaniesController extends AppController
 		
 		if($this->request->is(['post','put']))
 		{  
+	pr($this->request->data); exit;
 			$organisation_name=$this->request->data['company_organisation'];
 			$gst_number=$this->request->data['gst_number'];
 			$export=$this->request->data['export'];
@@ -164,6 +165,7 @@ class CompaniesController extends AppController
 							->set(['amount'=>$amount,'tax_amount'=>$tax_amount,'total_amount'=>$total_amount,'master_financial_year_id'=>$master_financial_year_id])
 							->where(['company_id' => $find_id])
 							->execute();
+						
 						$querys = $this->Companies->CoRegistrations->CoTaxAmounts->query();
 						$querys->update()
 							->set(['tax_id'=>$tax_id,'tax_percentage'=>$tax_percentage,'amount'=>$co_amount])
