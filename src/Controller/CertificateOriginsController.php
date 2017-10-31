@@ -234,7 +234,7 @@ class CertificateOriginsController extends AppController
 		$email=$this->request->data["email"];
 		$query = $this->CertificateOrigins->query();
 		$query->update()
-		->set(['transaction_id' => $txnid,'payment_status'=>$status])
+		->set(['transaction_id' => $txnid,'payment_status'=>$status,'status'=>'published'])
 		->where(['id' => $udf1])
 		->execute();
 		
@@ -625,8 +625,15 @@ class CertificateOriginsController extends AppController
 	public function certificateOriginDraftView()
     {
 		$this->viewBuilder()->layout('index_layout');
-		$company_id=$this->Auth->User('company_id');  
-		$certificate_origins = $this->CertificateOrigins->find()->where(['company_id'=>$company_id,'status'=>'draft']);
+		$company_id=$this->Auth->User('company_id'); 
+		$Companies=$this->CertificateOrigins->Companies->get($company_id);
+		$role_id=$Companies->role_id;
+		if($role_id==1 || $role_id==5){	
+			$certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'draft']);
+		}
+		else{
+			$certificate_origins = $this->CertificateOrigins->find()->where(['company_id'=>$company_id,'status'=>'draft']);
+		}
 		
 		$this->set(compact('certificate_origins'));
 	}
