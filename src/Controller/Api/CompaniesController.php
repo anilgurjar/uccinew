@@ -212,9 +212,14 @@ class CompaniesController extends AppController
 					}
 				//$Companies=$this->Companies->find()->where(['id'=>$find_id])->contain(['Users','CoRegistrations'=>['CoTaxAmounts']]);
 				$Companies=$this->Companies->get($find_id, ['contain'=>['Users','CoRegistrations'=>['CoTaxAmounts']]]);
-				pr($Companies);   exit;
-				
+				 $Companies_datas = base64_encode($Companies);
 				 
+				 $Companies_data = json_encode($Companies_datas);
+				 
+				 
+				$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+				
+			
 				
 			}else{
 			
@@ -226,13 +231,13 @@ class CompaniesController extends AppController
 				$Companies=$this->Companies->patchEntity($Companies,$this->request->data,['associated'=>['Users','CompanyMemberTypes','CoRegistrations','CoRegistrations.CoTaxAmounts']]);
 				  
 				if($result=$this->Companies->save($Companies)){
-				pr($result);   exit;	
+					
 				 $Companies_datas = base64_encode($result);
 				 
 				 $Companies_data = json_encode($Companies_datas);
 				 
 				 
-				//$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+				$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
 				// return $this->redirect();
 				
 				}
