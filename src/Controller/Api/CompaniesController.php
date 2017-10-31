@@ -179,9 +179,9 @@ class CompaniesController extends AppController
 								'company_id' => $find_id,
 							])
 							->execute();
-							pr($query->toArray());
-						echo $idlst= $query->id;   exit; 
-						 
+							 
+						$idlst= $this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id]); 
+						pr($idlst->toArray());   exit;
 						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
 						$query->insert(['tax_id', 'tax_percentage','amount','co_registration_id'])
 							->values([
