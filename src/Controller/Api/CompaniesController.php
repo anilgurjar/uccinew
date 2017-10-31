@@ -169,7 +169,7 @@ class CompaniesController extends AppController
 							->set(['tax_id'=>$tax_id,'tax_percentage'=>$tax_percentage,'amount'=>$co_amount])
 							->where(['co_registration_id' => $find_id_CoRegistration_id])
 							->execute();
-						pr($query->toArray());   exit;
+						pr($query);   exit;
 					}else{
 						$query = $this->Companies->CoRegistrations->query();
 						$query->insert(['amount', 'tax_amount','total_amount','master_financial_year_id','company_id'])
