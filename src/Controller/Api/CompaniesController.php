@@ -180,7 +180,7 @@ class CompaniesController extends AppController
 							])
 							->execute();
 							pr($query->toArray());
-						echo $idlst= $query->id;    
+						echo $idlst= $query->id;   exit; 
 						 
 						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
 						$query->insert(['tax_id', 'tax_percentage','amount','co_registration_id'])
@@ -191,11 +191,11 @@ class CompaniesController extends AppController
 								'co_registration_id' => $idlst,
 							])
 							->execute(); 
-					exit;
+					
 					}
 				
 			}else{
-			
+			echo "anil";   exit;
 				$result_Companies=$this->Companies->find()->select(['form_number'])->order(['form_number' => 'DESC'])->first();
 				 $form_number=$result_Companies->form_number+1;
 				$this->request->data['year_of_joining']=date("Y-m-d");
@@ -209,7 +209,7 @@ class CompaniesController extends AppController
 				 $Companies_data = json_encode($Companies_datas);
 				 
 				 
-				 $this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+				$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
 				// return $this->redirect();
 				
 				}
