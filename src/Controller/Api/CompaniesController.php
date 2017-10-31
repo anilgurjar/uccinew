@@ -179,7 +179,7 @@ class CompaniesController extends AppController
 								'company_id' => $find_id,
 							])
 							->execute();
-						echo $idlst=query->id;    exit;
+						echo $idlst=query->id;    
 						 
 						$query = $this->Companies->CoRegistrations->CoTaxAmounts->query();
 						$query->insert(['tax_id', 'tax_percentage','amount','co_registration_id'])
@@ -187,10 +187,10 @@ class CompaniesController extends AppController
 								'tax_id' => $tax_id,
 								'tax_percentage' => $tax_percentage,
 								'amount' => $co_amount,
-								'co_registration_id' => $co_amount,
+								'co_registration_id' => $idlst,
 							])
 							->execute(); 
-					
+					exit;
 					}
 				
 			}else{
