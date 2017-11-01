@@ -136,8 +136,7 @@ use Cake\Filesystem\File;
 							<td style="text-align:center;">'.$certificate_goods->quantity.' </td>
 							<td style="text-align:center;"> '.$certificate_goods->value.'</td></tr>';
 						}
-						pr($certificate_origin->total_before_discount);   exit;
-						if($total_before_discount==0){
+						if($certificate_origin->total_before_discount==0){
 						?>
 						<tr>
 						<td colspan="5" style="text-align:right;">
@@ -153,32 +152,32 @@ use Cake\Filesystem\File;
 						<b>Total</b>
 						</td>
 						<!--<td style="text-align:center;"><b><?php echo $total_qty.' '.$certificate_origin->master_unit->unit_name; ?><b/></td>-->
-						<td style="text-align:center;"><b><?php echo $certificate_origin->currency.' '.$total_before_amount; ?></b></td>
+						<td style="text-align:center;"><b><?php echo $certificate_origin->currency.' '.$certificate_origin->total_before_discount; ?></b></td>
 						</tr>
 						<tr>
 						<td colspan="5" style="text-align:right;">
 						<b>Discount</b>
 						</td>
-						<td style="text-align:center;"><b><?php echo $discount; ?></b></td>
+						<td style="text-align:center;"><b><?php echo $certificate_origin->discount; ?></b></td>
 						</tr>
 						<tr>
 						<td colspan="5" style="text-align:right;">
 						<b>Freight Amount</b>
 						</td>
-						<td style="text-align:center;"><b><?php echo $freight_amount; ?></b></td>
+						<td style="text-align:center;"><b><?php echo $certificate_origin->freight_amount; ?></b></td>
 						</tr>
 						<tr>
 						<td colspan="5" style="text-align:right;">
 						<b>Total Amount</b>
 						</td>
-						<td style="text-align:center;"><b><?php echo $total_amount; ?></b></td>
+						<td style="text-align:center;"><b><?php echo $certificate_origin->total_amount; ?></b></td>
 						</tr>
 						
 						<?php}
-						if($total_before_amount==0){
+						if($certificate_origin->total_before_amount==0){
 						?>
 						<?php
-							$grand_total=explode('.',$total_value);
+							$grand_total=explode('.',$certificate_origin->total_value);
 							$rupees=$grand_total[0];
 							$paisa_text='';
 							if(sizeof($grand_total)==2 )
@@ -199,7 +198,7 @@ use Cake\Filesystem\File;
 						</tr>
 						<?php }else{?>
 						<?php
-							$grand_total=explode('.',$total_amount);
+							$grand_total=explode('.',$certificate_origin->total_amount);
 							$rupees=$grand_total[0];
 							$paisa_text='';
 							if(sizeof($grand_total)==2 )
