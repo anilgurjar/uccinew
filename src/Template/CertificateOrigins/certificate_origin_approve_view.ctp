@@ -138,7 +138,7 @@ use Cake\Filesystem\File;
 							<td style="text-align:center;"> '.$certificate_goods->value.'</td></tr>';
 						}
 						$total_before_discount=$certificate_origin->total_before_discount;
-						 if($total_before_discount>0){
+						 if($total_before_discount==0){
 							?>
 							<tr>
 							<td colspan="5" style="text-align:right;">
@@ -178,7 +178,7 @@ use Cake\Filesystem\File;
 							</tr>	 
 						
 						<?php }
-						if($certificate_origin->total_before_amount==0){
+						if($total_before_discount==0){
 						?>
 						<?php
 							$grand_total=explode('.',$certificate_origin->total_value);
@@ -193,6 +193,7 @@ use Cake\Filesystem\File;
 									$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
 								}
 							}else{ $paisa_text=""; }
+						
 						?>
 						
 						<tr>
@@ -202,7 +203,8 @@ use Cake\Filesystem\File;
 						</tr>
 						<?php }else{?>
 						<?php
-						pr($certificate_origin->total_amount);   exit;
+						
+						
 							$grand_total=explode('.',$certificate_origin->total_amount);
 							$rupees=$grand_total[0];
 							$paisa_text='';
