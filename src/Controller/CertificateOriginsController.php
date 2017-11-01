@@ -685,9 +685,9 @@ class CertificateOriginsController extends AppController
 			if(isset($this->request->data['certificate_approve_submit']))
 			{
 				
-				$email = new Email();
-				$email->transport('SendGrid');
-				
+				//$email = new Email();
+				//$email->transport('SendGrid');
+				pr($this->request->data); exit;
 				$id=$this->request->data['certificate_approve_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
 				
