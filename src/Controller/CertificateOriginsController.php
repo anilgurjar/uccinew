@@ -115,7 +115,7 @@ class CertificateOriginsController extends AppController
 					  $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					// $email_to="rohitkumarjoshi43@gmail.com";
+					 $email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -176,11 +176,14 @@ class CertificateOriginsController extends AppController
 		$Users=$this->CertificateOrigins->Users->get($user_id);
 		//$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['CertificateOriginGoods']]);
 		
-			$sul='http://localhost/ucci/certificate-origins/success';
-			$furl='http://localhost/ucci/certificate-origins/failure';
+			//$sul='http://localhost/ucci/certificate-origins/success';
+			//$furl='http://localhost/ucci/certificate-origins/failure';
 			
 			//$sul='http://ucciudaipur.com/app/certificate-origins/success';
 			//$furl='http://ucciudaipur.com/app/certificate-origins/failure';
+			
+			$sul='http://ucciudaipur.com/uccinew/certificate-origins/success';
+			$furl='http://ucciudaipur.com/uccinew/certificate-origins/failure';
 			
 			
 			$CertificateOrigins = $this->CertificateOrigins->find()
@@ -515,8 +518,8 @@ class CertificateOriginsController extends AppController
 					}
 					$this->Flash->success(__('Your certificate origin good has been saved.'));
 					//return $this->redirect(['action' => 'edit']);
-					return $this->redirect('https://test.payu.in/_payment');
-					//return $this->redirect(['action' => 'payment',$data->id]);
+					//return $this->redirect('https://test.payu.in/_payment');
+					return $this->redirect(['action' => 'paymentTest',$data->id]);
 				}
 			}
         }

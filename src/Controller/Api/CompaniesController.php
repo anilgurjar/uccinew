@@ -78,6 +78,8 @@ class CompaniesController extends AppController
 		
 		pr($MemberReceipts);
 		
+		$this->Companies->MemberReceipts->save($MemberReceipts);
+		
 		 exit;
 		  $query = $this->Companies->query();
 			$query->update()
