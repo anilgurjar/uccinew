@@ -411,7 +411,7 @@ text-align:center;
 				$grand_total=explode('.',$total_value);
 				$rupees=$grand_total[0];
 				$paisa_text='';
-				if(sizeof($grand_total)==2)
+				if(sizeof($grand_total)==2 && $grand_total!=00)
 				{
 					$grand_total[1]=str_pad($grand_total[1], 2, '0', STR_PAD_RIGHT);
 					$paisa=(int)$grand_total[1];
