@@ -240,7 +240,8 @@ class CertificateOriginsController extends AppController
 		->set(['transaction_id' => $txnid,'payment_status'=>$status,'status'=>'published'])
 		->where(['id' => $udf1])
 		->execute(); */
-		$sendmail= $this->CertificateOrigins->Companies->find()->where(['role_id'=>2 ])->where(['role_id'=>2 ]);
+		$udf1=;
+		$sendmail= $this->CertificateOrigins->Companies->find()->where(['role_id'=>5 ,'company_id'=>$udf1])->where(['role_id'=>2 ]);
 		pr($sendmail->toArray());    exit;
 		 $this->set(compact('status','amount','id','txnid','sul'));	
 		
