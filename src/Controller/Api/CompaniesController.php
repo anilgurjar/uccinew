@@ -80,7 +80,7 @@ class CompaniesController extends AppController
 		 
 		 
 		$companies= $this->Companies->get($company_id,['contain'=>['Users','CoRegistrations'=>['CoTaxAmounts']]]);
-	    pr($companies); exit;
+	   
 		$non_member_exporter_email=$companies->non_memeber_exporter_email;
 		
 		if($non_member_exporter_email=='yes'){
