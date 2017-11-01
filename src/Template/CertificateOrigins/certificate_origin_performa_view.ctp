@@ -30,7 +30,7 @@ $other_info = $data->other_info;
 $freight_amount = $data->freight_amount;
 $total_amount = $data->total_amount;
 $company_address = $data->company->address;
-//$unit_name = $data->master_unit->unit_name;
+$unit_name = $data->master_unit->unit_name;
 }
 
 $invoice_date = date('d-m-Y',strtotime($invoice_date));
