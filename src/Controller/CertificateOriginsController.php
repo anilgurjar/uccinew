@@ -226,7 +226,7 @@ class CertificateOriginsController extends AppController
  
 	public function success()
     {
-		/* $this->viewBuilder()->layout('index_layout');
+		$this->viewBuilder()->layout('index_layout');
 		$status=$this->request->data["status"];
 		$amount=$this->request->data["amount"];
 		$txnid=$this->request->data["txnid"];
@@ -239,22 +239,43 @@ class CertificateOriginsController extends AppController
 		$query->update()
 		->set(['transaction_id' => $txnid,'payment_status'=>$status,'status'=>'published'])
 		->where(['id' => $udf1])
-		->execute(); */
-		$udf1=765;
-		$companies= $this->CertificateOrigins->Companies->find()->where(['id'=>$udf1]);
-		pr($companies->toArray());
+		->execute();
+		
+		//$companies= $this->CertificateOrigins->Companies->find()->where(['id'=>$udf1]);
+		 $email = new Email();
+		 $email->transport('SendGrid');
+		$sub='Secretary';
 		$sendmails= $this->CertificateOrigins->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>4])->contain(['Users']);
 		foreach($sendmails as $sendmail){
 			  
 			foreach($sendmail->users as $sendmai){
 				$mailsend=$sendmai['email'];
 				$name=$sendmai['member_name'];
-				pr($mailsend);
-				pr($name);
+				$from_name='UCCI';
+				  try {
+					  $email->from(['ucciudaipur@gmail.com' => $from_name])
+					  ->to($mailsend)
+					  ->replyTo('uccisec@hotmail.com')
+					  ->subject($sub)
+					  ->profile('default')
+					  ->template('coo_secretary_email')
+					  ->emailFormat('html')
+					  ->viewVars(['member_name'=>$name]);
+					  
+						$email->send();
+					 
+					 
+					 
+				   } catch (Exception $e) {
+					
+					echo 'Exception : ',  $e->getMessage(), "\n";
+
+				   }
+				
 			}
 		}
-		 exit;
-		 //$this->set(compact('status','amount','id','txnid','sul'));	
+		 
+		 $this->set(compact('status','amount','id','txnid','sul'));	
 		
 	}
  
