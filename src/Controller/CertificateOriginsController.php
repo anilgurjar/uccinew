@@ -240,12 +240,17 @@ class CertificateOriginsController extends AppController
 		->set(['transaction_id' => $txnid,'payment_status'=>$status,'status'=>'published'])
 		->where(['id' => $udf1])
 		->execute(); */
-		$sendmails= $this->CertificateOrigins->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>5])->contain(['Users']);
+		$udf1=765;
+		$companies= $this->CertificateOrigins->Companies->find()->where(['id'=>$udf1]);
+		pr($companies->toArray());
+		$sendmails= $this->CertificateOrigins->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>4])->contain(['Users']);
 		foreach($sendmails as $sendmail){
 			  
 			foreach($sendmail->users as $sendmai){
 				$mailsend=$sendmai['email'];
+				$name=$sendmai['member_name'];
 				pr($mailsend);
+				pr($name);
 			}
 		}
 		 exit;

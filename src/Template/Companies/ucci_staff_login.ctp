@@ -2,47 +2,57 @@
 	<div class="box box-primary">
     <?php echo $this->Form->create($Users, ['type' => 'file','id'=>'registratiomForm']); ?>
 		<div class="box-header with-border">
-			<h3 class="box-title">Add Staff Login</h3>
+			<h3 class="box-title">Add Ucci Staff Login</h3>
 		</div>
 		<div class="box-body" style="display: block;">
 			<div class="row">
 						
 				
 				<div class="col-md-12 pad">
-					<div class="col-md-3"> 
+									
+					<div class="col-md-4">
 						<div class="form-group">
-							<label class="control-label">Department </label>
-													
-						<?php echo $this->Form->input('industrial_department_id', array('empty'=> '--Select--','label' => false,'options' => $IndustrialDepartments,'hiddenField' => false,'value'=>'','class'=>'form-control select2')); ?>
-						
-						<?php echo $this->Form->input('company_id', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control ','type'=>'hidden','value'=>$company_id]); ?>
-						
-						<label id="industrial-department-id-error" class="error" for="industrial-department-id"></label>
-						</div>
-					</div> 
-				
-					<div class="col-md-3">
-						<div class="form-group">
-							<label class="control-label">Contact Person</label>
+							<label class="control-label">Name</label>
 							<?php echo $this->Form->input('member_name', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control']); ?>
 							
-							<?php echo $this->Form->input('member_nominee_type', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>'']); ?>
+							
 							
 						</div>
 					</div>
-					<div class="col-md-3"> 
+					<div class="col-md-4"> 
 						<div class="form-group">
 							<label class="control-label">Email </label>
-							<?php echo $this->Form->input('email', ['label' => false,'placeholder'=>'Company E-mail','class'=>'form-control ']); ?>
+							<?php echo $this->Form->input('email', ['label' => false,'placeholder'=>'E-mail','class'=>'form-control ']); ?>
 						</div>
 					</div> 
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Mobile No.</label>
 							<?php echo $this->Form->input('mobile_no', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control']); ?>
 						</div>
 					</div>
 				</div>
+				
+				<div class="col-md-12 pad">
+									
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">User Name</label>
+							<?php echo $this->Form->input('username', ['label' => false,'placeholder'=>'User Name','class'=>'form-control']); ?>
+							
+							
+							
+						</div>
+					</div>
+					<div class="col-md-4"> 
+						<div class="form-group">
+							<label class="control-label">Password </label>
+							<?php echo $this->Form->input('password', ['label' => false,'placeholder'=>'Password','class'=>'form-control ']); ?>
+						</div>
+					</div> 
+					
+				</div>
+				
 				
 			</div>
 		</div>
@@ -62,7 +72,7 @@
         <thead>
             <tr>
                 <th scope="col">Sr. No.</th>
-                <th scope="col"><?= $this->Paginator->sort('Department_name') ?></th>
+               
 				 <th scope="col"><?= $this->Paginator->sort('Contact Person') ?></th>
 				  <th scope="col"><?= $this->Paginator->sort('Email') ?></th>
 				   <th scope="col"><?= $this->Paginator->sort('Mobile') ?></th>
@@ -70,12 +80,12 @@
             </tr>
         </thead>
         <tbody>
-            <?php $sr_no=0; foreach ($Companies_datas[0]->users as $users_data): ?>
+            <?php  $sr_no=0; foreach ($staff_logins[0]->users as $staff_login): ?>
             <tr>
                 <td><?= $this->Number->format(++$sr_no) ?></td>
-                <td><?= h($users_data->industrial_department->department_name) ?></td> <td><?= h($users_data->member_name) ?></td> 
-				<td><?= h($users_data->email) ?></td>
-				<td><?= h($users_data->mobile_no) ?></td>
+               <td><?= h($staff_login->member_name) ?></td>
+				<td><?= h($staff_login->email) ?></td>
+				<td><?= h($staff_login->mobile_no) ?></td>
               
             </tr>
             <?php endforeach; ?>

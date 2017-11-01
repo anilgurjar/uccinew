@@ -73,16 +73,32 @@ class CompaniesController extends AppController
 	}
 
 	public function UcciStaffLogin(){
+  
+	  $this->viewBuilder()->layout('index_layout');
+			$Users = $this->Companies->Users->newEntity();
+	  
+	  $Companies_data=$this->Companies->find()->where(['role_id'=>4])->toArray();
+	  $company_id=$Companies_data[0]->id; 
+	  
+	   if($this->request->is('post')) {
 		
-		$this->viewBuilder()->layout('index_layout');
-        $Users = $this->IndustrialDepartments->Companies->Users->newEntity();
+		$this->request->data['company_id']=$company_id;
+	   
+		$Users=$this->Companies->Users->patchEntity($Users,$this->request->data);
+		if ($this->Companies->Users->save($Users)) {
+					$this->Flash->success(__('The Users has been saved.'));
+
+					return $this->redirect(['action' => 'UcciStaffLogin']);
+				} else {
+					$this->Flash->error(__('The Users could not be saved. Please, try again.'));
+				}
 		
-		$Companies_data=$this->IndustrialDepartments->Companies->find()->where(['role_id'=>4])->toArray();
-		$company_id=$Companies_data[0]->id; 
-		
-		 if ($this->request->is('post')) {
-		}
-	}
+	   }
+	   $staff_logins=$this->Companies->find()->where(['role_id'=>4])->contain(['Users'])->toArray();
+	  
+	  $this->set(compact('Users','staff_logins'));
+	  
+	 }
 	
 	
 	
