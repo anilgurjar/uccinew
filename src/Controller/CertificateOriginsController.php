@@ -640,6 +640,20 @@ class CertificateOriginsController extends AppController
 		
 		$this->set(compact('certificate_origins'));
 	}
+	public function certificateOriginViewPublished()
+    {
+		$this->viewBuilder()->layout('index_layout');
+		$company_id=$this->Auth->User('company_id'); 
+		$Companies=$this->CertificateOrigins->Companies->get($company_id);
+		$role_id=$Companies->role_id;
+		if($role_id==1 || $role_id==5){	
+			$certificate_origins =$this->CertificateOrigins->find()->where(['status'=>'published','payment_status'=>'success']);
+		}
+		else{
+			$certificate_origins=array();
+		}		
+		$this->set(compact('certificate_origins'));
+	}
 
 } 
 	
