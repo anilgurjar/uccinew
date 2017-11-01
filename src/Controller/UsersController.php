@@ -2420,7 +2420,9 @@ function convert_number_to_words($no) {
 		$highno=$no;
 		$remainno=0;
 		$value=100;
-		$value1=1000;       
+		$value1=1000; 
+		
+			
 				while($no>=100){
 					if(($value <= $no) &&($no  < $value1)){
 					$novalue=$words["$value"];
@@ -2430,18 +2432,24 @@ function convert_number_to_words($no) {
 					}
 					$value= $value1;
 					$value1 = $value * 100;
-				}       
+				}   
+				 	
 			  if(array_key_exists("$highno",$words))
-			  {
+			  {  
 				 // return $words["$highno"]." ".$novalue." ".$this->convert_number_to_words($remainno);
 				$this->response->body($words["$highno"]." ".$novalue." ".$this->convert_number_to_words($remainno));
+				
+				
 				return $this->response;
+				
 			  }				
-			  else {
+			  else { 
 				 $unit=$highno%10;
 				 $ten =(int)($highno/10)*10;            
 				 $words=$words["$ten"]." ".$words["$unit"]." ".$novalue." ".$this->convert_number_to_words($remainno);
+			   
 			   }
+			   
 			}
 		$this->response->body($words);
 		return $this->response;

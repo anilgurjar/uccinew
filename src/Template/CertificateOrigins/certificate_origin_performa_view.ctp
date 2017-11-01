@@ -30,7 +30,7 @@ $other_info = $data->other_info;
 $freight_amount = $data->freight_amount;
 $total_amount = $data->total_amount;
 $company_address = $data->company->address;
-$unit_name = $data->master_unit->unit_name;
+//$unit_name = $data->master_unit->unit_name;
 }
 
 $invoice_date = date('d-m-Y',strtotime($invoice_date));
@@ -407,17 +407,43 @@ text-align:center;
 	
 	if($show_amount=='Yes'){
 		if($total_before_discount==0){
+			
+				$grand_total=explode('.',$total_value);
+				$rupees=$grand_total[0];
+				$paisa_text='';
+				if(sizeof($grand_total)==2)
+				{
+					$grand_total[1]=str_pad($grand_total[1], 2, '0', STR_PAD_RIGHT);
+					$paisa=(int)$grand_total[1];
+					$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
+				}else{ $paisa_text=""; }
+			
+						
+			
+			
 			$html_content.='<tr>
 			<td align="left" style="border-right:none;" colspan="6">
 			<span >Amount Chargeable(in words):- '. $currency_name.' &nbsp; </span>
-			<strong>'.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_value)])).' Only.</strong>
+			<strong>'.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($rupees)])).$paisa_text  .' </strong>
 			</td>
 			</tr>';
 		}else{
+			
+			$grand_total=explode('.',$total_amount);
+			$rupees=$grand_total[0];
+			$paisa_text='';
+			if(sizeof($grand_total)==2)
+			{
+				$grand_total[1]=str_pad($grand_total[1], 2, '0', STR_PAD_RIGHT);
+				
+				$paisa=(int)$grand_total[1];
+				$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
+			}else{ $paisa_text=""; }
+		
 		$html_content.='<tr>
 			<td align="left" style="border-right:none;" colspan="6">
 			<span >Amount Chargeable(in words):- '. $currency_name.' &nbsp; </span>
-			<strong>'.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_amount)])).' Only.</strong>
+			<strong>'.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($rupees)])).$paisa_text  .' </strong>
 			</td>
 			
 		</tr>';

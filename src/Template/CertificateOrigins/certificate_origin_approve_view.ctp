@@ -176,18 +176,43 @@ use Cake\Filesystem\File;
 						<?php}
 						if($total_before_amount==0){
 						?>
+						<?php
+							$grand_total=explode('.',$total_value);
+							$rupees=$grand_total[0];
+							$paisa_text='';
+							if(sizeof($grand_total)==2)
+							{
+								$grand_total[1]=str_pad($grand_total[1], 2, '0', STR_PAD_RIGHT);
+								
+								$paisa=(int)$grand_total[1];
+								$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
+							}else{ $paisa_text=""; }
+						?>
+						
 						<tr>
 												
 						<td style="text-align:left;" colspan="6" ><span >Amount Chargeable(in words):- <?php echo $certificate_origin->currency ?> &nbsp; </span>
-						<strong><?php echo ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_value)])); ?> Only.</strong></td>
+						<strong><?=  ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($rupees)])).$paisa_text   ?> Only.</strong></td>
 						</tr>
-						<?php }else{
+						<?php }else{?>
+						<?php
+							$grand_total=explode('.',$total_amount);
+							$rupees=$grand_total[0];
+							$paisa_text='';
+							if(sizeof($grand_total)==2)
+							{
+								$grand_total[1]=str_pad($grand_total[1], 2, '0', STR_PAD_RIGHT);
+								
+								$paisa=(int)$grand_total[1];
+								$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
+							}else{ $paisa_text=""; }
+						?>
 							<tr>
 												
 						<td style="text-align:left;" colspan="6" ><span >Amount Chargeable(in words):- <?php echo $certificate_origin->currency ?> &nbsp; </span>
-						<strong><?php echo ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total_amount)])); ?> Only.</strong></td>
+						<strong><?= ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($rupees)])).$paisa_text  ?>  Only.</strong></td>
 						</tr>
-						}?>
+						<?php } ?>
 						
 						</tbody>
 					</table>
