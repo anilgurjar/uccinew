@@ -240,8 +240,7 @@ use Cake\Filesystem\File;
 									if (in_array($ext, $arr_ext)) {
 										echo $this->Html->image('/img/coo_invoice/'.$certificate_origin->id.'/'.$file, ['style'=>'width:300px; height:300px;']);
 									}else{
-		echo 
-		'<iframe src="'.$this->Url->build('/img/coo_invoice/'.$certificate_origin->id.'/'.$file).'" title="your_title" align="top" height="300" width="100%" frameborder="0" scrolling="auto" target="Message"></iframe>';
+		echo '<iframe src="'.$this->Url->build('/img/coo_invoice/'.$certificate_origin->id.'/'.$file).'" title="your_title" align="top" height="300" width="100%" frameborder="0" scrolling="auto" target="Message"></iframe>';
 									}
 								echo'</div>'; 
 							}

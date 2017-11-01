@@ -241,7 +241,7 @@ class CertificateOriginsController extends AppController
 		->where(['id' => $udf1])
 		->execute(); */
 		$udf1=780;
-		$sendmail= $this->CertificateOrigins->Companies->find()->where(['role_id'=>5 ,'company_id'=>$udf1])->where(['role_id'=>2 ]);
+		$sendmail= $this->CertificateOrigins->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>5]);
 		pr($sendmail->toArray());    exit;
 		 $this->set(compact('status','amount','id','txnid','sul'));	
 		
