@@ -8,16 +8,16 @@
 //$sql 	= 'SELECT * FROM certificate_origins';
  
 // Merchant key here as provided by Payu
-//$MERCHANT_KEY = "rjQUPktU";
-$MERCHANT_KEY = "AotSe7Ye"; // actual 
+$MERCHANT_KEY = "rjQUPktU";
+//$MERCHANT_KEY = "AotSe7Ye"; // actual 
 
 // Merchant Salt as provided by Payu
-//$SALT = "e5iIg1jwi8";
-$SALT = "7BbsMBTziM";  // actual
+$SALT = "e5iIg1jwi8";
+//$SALT = "7BbsMBTziM";  // actual
 
 // End point - change to https://secure.payu.in for LIVE mode
-//$PAYU_BASE_URL = "https://test.payu.in";
-$PAYU_BASE_URL = "https://secure.payu.in";
+$PAYU_BASE_URL = "https://test.payu.in";
+//$PAYU_BASE_URL = "https://secure.payu.in";
 
 $action = '';
 
