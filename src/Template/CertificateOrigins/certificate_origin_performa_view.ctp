@@ -415,9 +415,7 @@ text-align:center;
 				{
 					$grand_total[1]=str_pad($grand_total[1], 2, '0', STR_PAD_RIGHT);
 					$paisa=(int)$grand_total[1];
-					if(sizeof($paisa)==2)
 					$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
-				}
 				}else{ $paisa_text=""; }
 			
 						
@@ -439,9 +437,7 @@ text-align:center;
 				$grand_total[1]=str_pad($grand_total[1], 2, '0', STR_PAD_RIGHT);
 				
 				$paisa=(int)$grand_total[1];
-				if(sizeof($paisa)==2){
 				$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
-				}
 			}else{ $paisa_text=""; }
 		
 		$html_content.='<tr>
