@@ -136,7 +136,7 @@ use Cake\Filesystem\File;
 							<td style="text-align:center;">'.$certificate_goods->quantity.' </td>
 							<td style="text-align:center;"> '.$certificate_goods->value.'</td></tr>';
 						}
-						pr($certificate_origin);   exit;
+						pr($certificate_origin->total_before_discount);   exit;
 						if($total_before_discount==0){
 						?>
 						<tr>
