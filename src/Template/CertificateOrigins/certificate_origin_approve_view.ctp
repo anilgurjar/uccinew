@@ -202,6 +202,7 @@ use Cake\Filesystem\File;
 						</tr>
 						<?php }else{?>
 						<?php
+						pr($certificate_origin->total_amount);   exit;
 							$grand_total=explode('.',$certificate_origin->total_amount);
 							$rupees=$grand_total[0];
 							$paisa_text='';
