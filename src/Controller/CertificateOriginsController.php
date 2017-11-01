@@ -69,7 +69,7 @@ class CertificateOriginsController extends AppController
        $this->set(compact('certificate_origins'));
 		
     }
-	
+	 
 	public function CertificateOriginApproveView()
     {
 		$this->viewBuilder()->layout('index_layout');
@@ -654,6 +654,103 @@ class CertificateOriginsController extends AppController
 		}		
 		$this->set(compact('certificate_origins'));
 	}
+ 
+	public function certificateOriginPublishedView()
+    {
+		$this->viewBuilder()->layout('index_layout');
+		$user_id=$this->Auth->User('id');
+		$CertificateOrigins = $this->CertificateOrigins->newEntity();
+	  
+		if(isset($this->request->data['view']))
+		{ 
+			$certificate_origin_id=$this->request->data['view'];;
+			$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$certificate_origin_id,'approve'=>0])->contain(['Companies','CertificateOriginGoods'])->toArray();
+			
+			$this->set(compact('certificate_origins'));
+		}
+		
+		if($this->request->is('post')) 
+		{
+			if(isset($this->request->data['certificate_approve_submit']))
+			{
+				
+				$email = new Email();
+				$email->transport('SendGrid');
+				
+				$id=$this->request->data['certificate_approve_submit'];
+				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
+				
+				$this->request->data['approve']=1;
+				$this->request->data['approved_by']=$user_id;
+				$query = $this->CertificateOrigins->find();
+				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
+				$this->request->data['origin_no']=($origin_no[0]->max_value)+1;
+				
+				 $CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				 $email_to=$CertificateOrigins->company->users[0]->email; 
+				 $member_name=$CertificateOrigins->company->users[0]->member_name;
+				 
+				 $Users= $this->CertificateOrigins->Users->get($user_id);
+				
+				 $regards_member_name=$Users->member_name;
+				
+				if($this->CertificateOrigins->save($CertificateOrigins))
+				{
+					
+					  $sub="Your certificate of origin is approved";
+					  $from_name="UCCI";
+					  $email_to=trim($email_to,' ');
+					 $email_to="rohitkumarjoshi43@gmail.com";
+					  if(!empty($email_to)){		
+								
+						 try {
+							   $email->from(['ucciudaipur@gmail.com' => $from_name])
+										->to($email_to)
+										->replyTo('uccisec@hotmail.com')
+										->subject($sub)
+										->profile('default')
+										->template('coo_approve')
+										->emailFormat('html')
+										->viewVars(['member_name'=>$member_name,'regards_member_name'=>$regards_member_name]);
+										$email->send();
+									
+									
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
+
+							} 
+						}
+								
+					
+					
+					$this->Flash->success(__('Certificate of origin has been approved.'));
+					return $this->redirect(['action' => 'certificate_origin_approve']);
+				}
+				$this->Flash->error(__('Unable to approved certificate of origin.'));
+			}
+			else if(isset($this->request->data['certificate_notapprove_submit']))
+			{
+				$id=$this->request->data['certificate_notapprove_submit'];
+				$CertificateOrigins=$this->CertificateOrigins->get($id);
+				
+			//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
+				$this->request->data['approve']=2;
+				 $CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				if($this->CertificateOrigins->save($CertificateOrigins))
+				{
+					$this->Flash->success(__('Certificate of origin has been not approved.'));
+					return $this->redirect(['action' => 'certificate_origin_approve']);
+				}
+				$this->Flash->error(__('Unable to not approved certificate of origin.'));
+			}
+		}
+		
+		$MasterCompanies=$this->CertificateOrigins->MasterCompanies->find();
+		$this->set('MasterCompanies',$MasterCompanies);
+		$this->set(compact('CertificateOrigins'));
+		 
+    }
 
 } 
 	

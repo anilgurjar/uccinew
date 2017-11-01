@@ -34,7 +34,7 @@
 						<td><?= date('d-m-Y', strtotime($certificate_origin->invoice_date)) ?></td>
 						<td><?= $certificate_origin->manufacturer ?></td>
 						<td><?php if($certificate_origin->despatched_by==0){ echo 'Sea'; }else if($certificate_origin->despatched_by==1){ echo 'Air'; }else{ echo 'Road'; } ?></td>
-						<td><?= $this->Form->button(__('View') . $this->Html->tag('i', '', ['class'=>'fa fa-book']),['class'=>'btn btn-info btn-sm','formaction'=>'certificate_origin_approve_view','formtarget'=>'_blank','value'=>$certificate_origin->id,'type'=>'Submit','name'=>'view']);   ?> </td>
+						<td><?= $this->Form->button(__('View') . $this->Html->tag('i', '', ['class'=>'fa fa-book']),['class'=>'btn btn-info btn-sm','formaction'=>'certificate_origin_published_view','formtarget'=>'_blank','value'=>$certificate_origin->id,'type'=>'Submit','name'=>'view']);   ?> </td>
 						</tr>
 
 					
