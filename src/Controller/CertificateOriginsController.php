@@ -226,7 +226,7 @@ class CertificateOriginsController extends AppController
  
 	public function success()
     {
-		$this->viewBuilder()->layout('index_layout');
+		/* $this->viewBuilder()->layout('index_layout');
 		$status=$this->request->data["status"];
 		$amount=$this->request->data["amount"];
 		$txnid=$this->request->data["txnid"];
@@ -239,8 +239,9 @@ class CertificateOriginsController extends AppController
 		$query->update()
 		->set(['transaction_id' => $txnid,'payment_status'=>$status,'status'=>'published'])
 		->where(['id' => $udf1])
-		->execute();
-		
+		->execute(); */
+		$sendmail= $this->CertificateOrigins->Companies->find()->where(['role_id'=>2 ])->where(['role_id'=>2 ]);
+		pr($sendmail->toArray());    exit;
 		 $this->set(compact('status','amount','id','txnid','sul'));	
 		
 	}
