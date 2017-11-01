@@ -8,7 +8,6 @@ $options->set('defaultFont', 'Lato-Hairline');
 $dompdf = new Dompdf($options);
 $dompdf = new Dompdf();
 
-
 foreach($master_member_receipt as $data){
 	$receipt_no = $data->receipt_no; 
 	$amount_type = $data->amount_type;
