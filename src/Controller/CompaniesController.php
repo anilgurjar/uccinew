@@ -256,6 +256,46 @@ class CompaniesController extends AppController
 			}
 			 
             $this->Flash->success(__('The company has been saved.'));
+			$companies= $this->Companies->find()->where(['id'=>$company_id])->contain(['Users']);
+			foreach($$companies as $$companie){
+			// mail send on submit and save start
+			$email = new Email();
+			$email->transport('SendGrid');
+			$sub='Secretary';
+			$sendmails= $this->CertificateOrigins->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>4])->contain(['Users']);
+			foreach($sendmails as $companie){
+			pr($companie->toArray());   exit;	  
+				foreach($companie->users as $user){
+					$mailsend=$user['email'];
+					$name=$user['member_name'];
+					$from_name='UCCI';
+					  try {
+						  $email->from(['ucciudaipur@gmail.com' => $from_name])
+						  ->to($mailsend)
+						  ->replyTo('uccisec@hotmail.com')
+						  ->subject($sub)
+						  ->profile('default')
+						  ->template('coo_secretary_email')
+						  ->emailFormat('html')
+						  ->viewVars(['member_name'=>$name]);
+						  
+							$email->send();
+						 
+						 
+						 
+					   } catch (Exception $e) {
+						
+						echo 'Exception : ',  $e->getMessage(), "\n";
+
+					   }
+					
+				}
+			}
+
+			// mail send on submit and save end
+			
+			
+			
             return $this->redirect(['action' => 'documents']);
         }
 		$companies_data = $this->Companies->find()->where(['id' => $company_id])->first();
