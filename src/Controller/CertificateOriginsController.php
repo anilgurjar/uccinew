@@ -1111,7 +1111,7 @@ class CertificateOriginsController extends AppController
 		if(isset($this->request->data['view']))
 		{ 
 			$certificate_origin_id=$this->request->data['view'];;
-			$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$certificate_origin_id,'approve'=>0])->contain(['Companies','CertificateOriginGoods'])->toArray();
+			$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$certificate_origin_id,'status'=>'published'])->contain(['Companies','CertificateOriginGoods'])->toArray();
 			$company_id=$certificate_origins[0]->company_id;  
 			$DocumentCheck=$this->CertificateOrigins->Companies->find('all')
 				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
