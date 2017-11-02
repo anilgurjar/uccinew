@@ -81,7 +81,7 @@ class CompaniesController extends AppController
 		 
 		$companies= $this->Companies->get($company_id,['contain'=>['Users','CoRegistrations'=>['CoTaxAmounts']]]);
 	   
-		$non_member_exporter_email=$companies->non_memeber_exporter_email;
+		$non_member_exporter_email=$companies->non_member_exporter_email;
 		
 		if($non_member_exporter_email=='yes'){
 			
@@ -418,7 +418,7 @@ class CompaniesController extends AppController
 			
 			$query = $this->Companies->query();
 			$query->update()
-			->set(['non_memeber_exporter_email'=>'no'])
+			->set(['non_member_exporter_email'=>'no'])
 			->where(['id' => $company_id])
 			->execute();
 
