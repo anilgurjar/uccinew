@@ -63,6 +63,8 @@ class CertificateOriginsTable extends Table
 				
 		
 		$this->belongsTo('MasterCompanies');
+		$this->belongsTo('MemberReceipts');
+		$this->belongsTo('MasterTaxations');
 		$this->belongsTo('CertificateOriginAuthorizeds');
 		$this->belongsTo('Users');
 		

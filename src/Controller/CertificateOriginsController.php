@@ -6,8 +6,12 @@ use Cake\Event\Event;
 use Cake\Mailer\Email;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
+use UsersController;
+require_once(ROOT . DS  .'vendor' . DS  . 'dompdf' . DS . 'autoload.inc.php');
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
-class CertificateOriginsController extends AppController
+class CertificateOriginsController extends AppController 
 {
 
 	public function initialize()
@@ -35,6 +39,49 @@ class CertificateOriginsController extends AppController
 		->execute();
 		exit;
 	}
+	
+	function convert_number_to_words($no) {
+	
+	
+	 $words = array('0'=> '' ,'1'=> 'one' ,'2'=> 'two' ,'3' => 'three','4' => 'four','5' => 'five','6' => 'six','7' => 'seven','8' => 'eight','9' => 'nine','10' => 'ten','11' => 'eleven','12' => 'twelve','13' => 'thirteen','14' => 'fouteen','15' => 'fifteen','16' => 'sixteen','17' => 'seventeen','18' => 'eighteen','19' => 'nineteen','20' => 'twenty','30' => 'thirty','40' => 'fourty','50' => 'fifty','60' => 'sixty','70' => 'seventy','80' => 'eighty','90' => 'ninty','100' => 'hundred','1000' => 'thousand','100000' => 'lakh','10000000' => 'crore');
+	if($no == 0)
+	{
+		$words_blank='';
+		$this->response->body($words_blank);
+		return $this->response;
+	}
+	else{
+		$novalue='';
+		$highno=$no;
+		$remainno=0;
+		$value=100;
+		$value1=1000;       
+				while($no>=100){
+					if(($value <= $no) &&($no  < $value1)){
+					$novalue=$words["$value"];
+					$highno = (int)($no/$value);
+					$remainno = $no % $value;
+					break;
+					}
+					$value= $value1;
+					$value1 = $value * 100;
+				}       
+			  if(array_key_exists("$highno",$words))
+			  {
+				 // return $words["$highno"]." ".$novalue." ".$this->convert_number_to_words($remainno);
+				$this->response->body($words["$highno"]." ".$novalue." ".$this->convert_number_to_words($remainno));
+				return $this->response;
+			  }				
+			  else {
+				 $unit=$highno%10;
+				 $ten =(int)($highno/10)*10;            
+				 $words=$words["$ten"]." ".$words["$unit"]." ".$novalue." ".$this->convert_number_to_words($remainno);
+			   }
+			}
+		$this->response->body($words);
+		return $this->response;
+	}
+	
 	
 	
 	public function CertificateOriginViewList() 
@@ -250,8 +297,11 @@ class CertificateOriginsController extends AppController
 		->where(['id' => $udf1])
 		->execute();
 		
+		
+	// mail should secretary 
+	
 		//$companies= $this->CertificateOrigins->Companies->find()->where(['id'=>$udf1]);
-		 $email = new Email();
+		/*  $email = new Email();
 		 $email->transport('SendGrid');
 		$sub='Secretary';
 		$sendmails= $this->CertificateOrigins->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>4])->contain(['Users']);
@@ -282,8 +332,353 @@ class CertificateOriginsController extends AppController
 				   }
 				
 			}
-		}
+		} */
 		 
+		 
+		 
+		 // Mail should Member with receipt attachment
+		 
+		 
+		 $CertificateOrigins=$this->CertificateOrigins->get($udf1);
+		 
+		 
+		 $company_id_coo=$CertificateOrigins->company_id; 
+		 $coo_email=$CertificateOrigins->coo_email;
+		 $payment_amount=$CertificateOrigins->payment_amount;
+		 $payment_tax_amount=$CertificateOrigins->payment_tax_amount;
+	if($coo_email=='yes'){
+		 
+		  $Companies_data=$this->CertificateOrigins->Companies->get($company_id_coo,['contain'=>'Users']);
+		
+		 $member_name=$Companies_data->users[0]->member_name;
+		 $email_to=$Companies_data->users[0]->email;
+		 
+		 $MasterTaxations= $this->CertificateOrigins->MasterTaxations->find()->where(['tax_flag'=>1,'nmef'=>1])->contain(['MasterTaxationRates'])->toArray();
+		 
+			$MemberReceipts=$this->CertificateOrigins->MemberReceipts->newEntity();
+
+			$GeneralReceiptPurposes=$this->CertificateOrigins->MemberReceipts->GeneralReceiptPurposes->newEntity();
+				
+				$fetch_member_receipt=$this->CertificateOrigins->MemberReceipts->find('all')->select(['receipt_no'])->order(['receipt_no' => 'DESC'])->limit(1)->toArray();
+				if(!empty($fetch_member_receipt)){
+					$receipt_no=$fetch_member_receipt[0]['receipt_no']+1;
+				}else{
+					$receipt_no='0001';
+				}
+				$amount=$payment_amount+$payment_tax_amount;
+				$act_amount=$amount;
+				$this->request->data['amount_type']='Cash';
+				$this->request->data['narration']=' Certificate of Origin';
+				$this->request->data['tax_applicable']='Tax';
+				$this->request->data['basic_amount']=@$payment_amount;
+				$this->request->data['taxamount']=@$payment_tax_amount;
+				$this->request->data['amount']=@$amount;
+				$this->request->data['company_id']=$company_id_coo;
+				$this->request->data['receipt_type']='general_receipt';
+				$this->request->data['receipt_no']=@$receipt_no;
+				$this->request->data['date_current']=date("Y-m-d");
+				
+				$this->request->data['general_receipt_purposes']=array();
+				$this->request->data['tax_amounts']=array();
+		
+				
+				$MemberReceipts = $this->CertificateOrigins->MemberReceipts->patchEntity($MemberReceipts, $this->request->data);
+				
+				$GeneralReceiptPurposes->purpose_id=12;
+				$GeneralReceiptPurposes->quantity=1;
+				$GeneralReceiptPurposes->amount=$payment_amount;
+				$GeneralReceiptPurposes->total=$payment_amount;
+				$MemberReceipts->general_receipt_purposes[0]=$GeneralReceiptPurposes;
+				
+				$i=0;
+				foreach($MasterTaxations as $co_tax_amount){
+					    $total=0;
+						$TaxAmounts=$this->CertificateOrigins->MemberReceipts->TaxAmounts->newEntity();
+						$tax_id=$co_tax_amount->tax_id;
+						$tax_percentage=$co_tax_amount->master_taxation_rates[0]->tax_percentage;
+						$total=$payment_amount*$tax_percentage/100;
+						$amount=$total;
+					
+						$TaxAmounts->tax_id=$tax_id;
+						$TaxAmounts->tax_percentage=$tax_percentage;
+						$TaxAmounts->amount=$amount;
+						$MemberReceipts->tax_amounts[$i]=$TaxAmounts;
+					$i++;
+				}
+				
+				
+				//pr($MemberReceipts); $data_save->receipt_id
+				
+				$data_save=$this->CertificateOrigins->MemberReceipts->save($MemberReceipts);
+
+				//pr($data_save); 
+				//	$receipt_id=1872;
+
+		 	    $options = new Options();
+				$options->set('defaultFont', 'Lato-Hairline');
+				$dompdf = new Dompdf($options);
+				$dompdf = new Dompdf();
+		
+				$master_member_receipt=$this->CertificateOrigins->MemberReceipts->find()->where(['receipt_id'=> $data_save->receipt_id])->contain(['TaxAmounts'=>['MasterTaxations'],'Companies'=>function($q){
+				return $q->select(['id','company_organisation','city']);
+				},'GeneralReceiptPurposes'=>['MasterPurposes']])->toArray();
+
+				$MasterCompanies=$this->CertificateOrigins->MemberReceipts->MasterCompanies->find();
+				//pr($master_member_receipt);
+	foreach($master_member_receipt as $data){			
+					$receipt_no = $data->receipt_no; 
+					$amount_type = $data->amount_type;
+					$cheque_no = $data->cheque_no;
+					$bank_id = $data->bank_id;
+					$cheque_date = $data->cheque_date;
+					$drawn_bank = $data->drawn_bank;
+					$narration = $data->narration;	
+					$taxamount=$data->taxamount;
+					$tds_amount = $data->tds_amount;	
+					if(date('m',strtotime($data->date_current)) < 4){
+					$from_year=(date('y',strtotime($data->date_current))-1);
+					$to_year=date('y',strtotime($data->date_current));
+					}else{
+						$from_year=date('y',strtotime($data->date_current));
+						$to_year=(date('y',strtotime($data->date_current))+1);
+					}
+			if($taxamount != 0)
+			{
+				$typeee=1;
+			}
+			foreach($data->general_receipt_purposes as $purpose)
+			{
+				$purpose_name[]=$purpose->master_purpose->purpose_name;
+			}
+			$word_value=explode('.',$data->amount);
+			
+			
+			
+			$html='<html>
+		<head>
+		 <style>
+		  @page { margin: 40px 20px 20px 20px; }
+
+			
+			@font-face {
+				font-family: Lato;
+				src: url("https://fonts.googleapis.com/css?family=Lato");
+			}
+			p{
+				margin:0;font-family: Lato;line-height: 1;
+			}
+			table td{
+				margin:0;font-family: Lato;padding:0;line-height: 1;
+			}
+			
+			.table_rows, .table_rows th, .table_rows td {
+			   border: 1pt thin solid  #000;border-collapse: collapse;padding:2px; 
+			}
+
+			
+			
+			.table_rows th{
+				font-size:14px;
+			}
+			table_rows1, .table_rows1 th, .table_rows1 td {
+			   border: 1pt thin solid  #000 !important;border-collapse: collapse;padding:5px; 
+			}
+			.border_none, .border_none th, .border_none td {
+			   border:none; 
+			}
+				 .h3, h3 {
+			font-size: 25px;
+			font-weight: 700;
+		}
+		.h1, .h2, .h3, h1, h2, h3 {
+			margin-top: 5px;
+			margin-bottom: 1px;
+		}
+			</style>
+		</head>
+		<body><table class="table_rows"><tr><td style="padding-left:1px;">
+		<div align="center">
+						<div style="float:left;position:absolute;margin-left:7%;top:1%">
+							<img src="'.ROOT . DS  . 'webroot' . DS  .'images/project_logo/UCCI LOGO.png" width="90px" height="90px" />
+						</div>
+						<div style="float:right;width:100%">';
+						foreach($MasterCompanies as $MasterCompany) 
+						{
+							$html.=$MasterCompany->company_information;
+							$st_reg_no=$MasterCompany->st_reg_no;
+							$pan_no=$MasterCompany->pan_no;
+							$gst_number=$MasterCompany->gst_number;
+							$compare_date=date("Y-m-d",strtotime($data->date_current)); 
+						
+							$compare_date=strtotime($compare_date);
+							$gst_date=strtotime("2017-07-01");
+							if($gst_date<$compare_date){
+								$text_type="Gst Number";
+								$type_number=$gst_number;
+							}else{
+								
+								$text_type="Service Tax Number";
+								$type_number="ABCDE1234FST001";
+							}
+						}
+						if($typeee == 1){
+							$html.=''.$text_type.' : '.$type_number.'';
+						}
+						$html.='</div>
+					</div>
+		<br/>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+							<center>
+							<span style="width:100%; text-align:center;font-size: 20px;">
+							<u><strong>RECEIPT</strong></u>
+						</span>
+						</center>
+						<br/>
+						
+							<table style="width: 100%;" class="border_none">
+								<tr style="line-height:2;">
+									<td style="width: 50%; text-align:left; font-size:13px;">UCCI/PR'.$num_padded = sprintf("%04d", $receipt_no).'/'.$from_year.'-'.$to_year.'</td>
+									<td style="width: 50%; text-align:right; font-size:13px;">Date: '.date('d-m-Y', strtotime($data->date_current)).'</td>
+								</tr>
+							
+							<tr>
+							<td colspan="2">
+							<p style="width: 100%;font-size: 14px; text-align:justify; margin-top:10px;">
+							Received with thanks from '.$data->company->company_organisation.', '.$data->company->city.'
+							a sum of Rupees '.ucwords($this->convert_number_to_words(($word_value[0])));
+							if(!empty($word_value[1])){
+							if($word_value[1] != 00){
+								$html.=' & paisa '.ucwords($this->convert_number_to_words(($word_value[1])));
+							}}
+							$html.=' Only vide '.$data->amount_type.' '.$data->cheque_no.' dated ';
+							if(!empty($data->bank_id)){
+								$html.=date('d-m-Y',strtotime($data->cheque_date));
+							}else{
+								$html.=date('d-m-Y',strtotime($data->date_current));
+							}
+							
+							if(!empty($data->drawn_bank)){ $html.=' drawn on '.$data->drawn_bank; }    
+							$html.=' on account of '.implode(',',$purpose_name);
+							if(!empty($data->narration)){ $html.=' ('.$data->narration.')'; }
+							
+							$html.='. </p>
+							</td>
+							</tr>
+							</table>
+							
+								<table style="width: 100%;" class="border_none" >
+									<tr>';
+									
+									   
+										
+									 if($typeee == 1){ 
+										  $html.='<td rowspan="2" style="width: 45%; text-align:left;" valign="top">
+											<table  class="table_rows1"  style="width: 100%; font-size:14px; margin-top:50px;border-collapse: collapse;padding:2px;" >';
+											$html.='<tr>
+											<td  style="text-align:right;">Basic Amount</td><td  style="text-align:right;"">'.number_format(($data->basic_amount), 2, '.', '').'</td>
+											</tr>';
+											foreach($data->tax_amounts as $tax_amount)
+											{
+												$html.=' <tr>
+												 <td style="text-align:right;">'.$tax_amount->master_taxation->tax_name.' @ '.number_format(($tax_amount->tax_percentage), 2, '.', '').'%</td>
+												 <td style="text-align:right;">'.number_format(($tax_amount->amount), 2, '.', '').'</td>
+												 </tr>';
+											}
+										   if(!empty($tds_amount)){
+											
+											$html.='<tr>
+											<td style="text-align:right;">Total Amount</td><td style="text-align:right;">
+											'.number_format($data->basic_amount+$taxamount, 2, '.', '').'</td>
+											</tr>	
+									
+											<tr>
+											<td style="text-align:right;">TDS Amount</td><td style="text-align:right;">
+											'.number_format($tds_amount, 2, '.', '').'</td>
+											</tr>';
+											} 
+											$html.='<tr>
+											<td style="text-align:right;"><strong>Grand Total</strong></td>
+											<td style="text-align:right;"><strong>'.number_format($data->amount, 2, '.', '').'</strong></td>
+											</tr>
+											</table>';
+											
+											$html.='</td>
+											<td style="width: 55%; text-align:right;font-size: 15px;"><strong>For: Udaipur Chamber of Commerce & Industry</strong></td>';
+											$html.='</tr>
+											<tr>
+											<td style=" text-align:right;font-size: 15px;"><br/><p  style="width:95%;"><img src="'.ROOT . DS  . 'webroot' . DS  .'images/digital_sign/signature.png" width="100px" height="50px" align="right" /></p><br/><br/><br/><br/>Authorised Signatory</td>
+											</tr>';
+										  }else{ 
+										 
+										 
+										 
+										 $html.='<td colspan="2" style="width: 60%; text-align:right;font-size: 15px;"><strong>For: Udaipur Chamber of Commerce & Industry</strong></td>';
+										$html.='</tr>
+											<tr>
+											<td  style="width: 30%; text-align:center;font-size:16px;"><br/><br/><br/><br/><table class="table_rows" style="font-size:16px; width:100%;"><tr><td style="text-align:center;">
+											Rs. '.number_format($data->amount, 2, '.', '').'
+											</td></tr></table></td>
+											<td style="width: 70%; text-align:right;font-size: 15px;"><br/><p  style="width:95%;"><img src="'.ROOT . DS  . 'webroot' . DS  .'images/digital_sign/signature.png" width="100px" height="50px" align="right" /></p><br/><br/><br/><br/>Authorised Signatory</td>
+											</tr>';
+										 
+										 
+										   } 
+											 
+											
+										
+										$html.='</table></td></tr><tr><td><span style="width: 100%;font-size: 15px;line-height:1;">Note: Cheque/DD subject to clearance in bank.</span></td></tr></table></body></html>';  
+						
+			 
+		}
+		
+		    $dompdf->loadHtml($html);
+			$dompdf->render();
+			$output = $dompdf->output();
+			file_put_contents('coo_payment_receipt.pdf', $output);	
+			
+			$attachments='';
+			$attachments[]='coo_payment_receipt.pdf';
+			$sub='Payment Successfully submited';
+			$email_to='rohitkumarjoshi43@gmail.com';
+				$from_name='UCCI';
+						$email = new Email();
+						$email->transport('SendGrid');
+						 try {
+							   $email->from(['ucciudaipur@gmail.com' => $from_name])
+										->to($email_to)
+										->replyTo('uccisec@hotmail.com')
+										->subject($sub)
+										->profile('default')
+										->template('coo_payment_success')
+										->emailFormat('html')
+										->viewVars(['member_name'=>ucwords($member_name),'amount'=>$act_amount])
+										->attachments($attachments);
+										
+									   $email->send();
+									
+									
+									
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
+
+							} 
+							
+			$query = $this->CertificateOrigins->query();
+			$query->update()
+			->set(['coo_email'=>'no'])
+			->where(['id' => $udf1])
+			->execute();		
+		
+	}
+		
 		 $this->set(compact('status','amount','id','txnid','sul'));	
 		
 	}
