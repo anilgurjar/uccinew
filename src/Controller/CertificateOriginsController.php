@@ -126,9 +126,9 @@ class CertificateOriginsController extends AppController
 		{ 
 			$certificate_origin_id=$this->request->data['view'];;
 			$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$certificate_origin_id,'status'=>'verified'])->contain(['Companies','CertificateOriginGoods'])->toArray();
-			pr($certificate_origins);exit;
+			
 			$company_id=$certificate_origins[0]->company_id; 
-			$DocumentCheck=$this->CertificateOrigins->Companies->find('all')
+			$DocumentCheck=$this->CertificateOrigins->Companies->find()
 				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
 				->count();
 			$this->set(compact('certificate_origins','DocumentCheck'));
