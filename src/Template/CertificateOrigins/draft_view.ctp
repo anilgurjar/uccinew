@@ -192,41 +192,43 @@ input[type="radio"]
 						<tbody>
 							<?php   foreach($certificate_origins as $data){ 
 							$xy=0;
+							$t=0;
+							
 									foreach($data['certificate_origin_goods'] as $dataa)  { $xy++; ?>	
 							<tr>	
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][marks]',['label'=>false,'class'=>'form-control marks','type'=>'text','value'=>$dataa['marks']]);
+								 echo $this->Form->input('certificate_origin_goods['.$t.'][marks]',['label'=>false,'class'=>'form-control marks','type'=>'text','value'=>$dataa['marks']]);
 								?>
 								</td>
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][container_no]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['container_no']]);
+								 echo $this->Form->input('certificate_origin_goods['.$t.'][container_no]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['container_no']]);
 								?>
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][no_and_packing]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['no_and_packing']]);
+								 echo $this->Form->input('certificate_origin_goods['.$t.'][no_and_packing]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['no_and_packing']]);
 								?>
 								</td>
 								
 								<td>
 							   <?php
-								 echo $this->Form->input('certificate_origin_goods[0][description_of_goods]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['description_of_goods']]);
+								 echo $this->Form->input('certificate_origin_goods['.$t.'][description_of_goods]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['description_of_goods']]);
 								?>
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][quantity]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['quantity']]);
+								 echo $this->Form->input('certificate_origin_goods['.$t.'][quantity]',['label'=>false,'class'=>'form-control','type'=>'text','value'=>$dataa['quantity']]);
 								?>
 								
 								</td>
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control totaladd','type'=>'text','value'=>$dataa['value']]);
+								 echo $this->Form->input('certificate_origin_goods[$t][value]',['label'=>false,'class'=>'form-control totaladd','type'=>'text','value'=>$dataa['value']]);
 								?>
 								
 								</td>
@@ -245,7 +247,7 @@ input[type="radio"]
 							   </td>
 								
 							</tr>
-							<?php  }   } ?>
+							<?php $t++; }   } ?>
 						</tbody>
 					</table>
 					</div>

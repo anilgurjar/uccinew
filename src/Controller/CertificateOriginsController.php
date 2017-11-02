@@ -465,7 +465,7 @@ class CertificateOriginsController extends AppController
             'contain' => []
         ]);
 		$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$id])->contain(['Companies','CertificateOriginGoods'])->toArray();
-		//pr($certificate_origins); exit;
+		
 		 
         if ($this->request->is(['patch', 'post', 'put'])) {
 			
@@ -481,7 +481,6 @@ class CertificateOriginsController extends AppController
 					$this->request->data['invoice_attachment']='false';
 				}
 				
-				
 				$amount=200;
 				$Tax=$amount*18/100;
 				$include_tax_amount=$amount+$Tax;
@@ -497,7 +496,7 @@ class CertificateOriginsController extends AppController
 					$this->request->data['coo_email_approvals'][$i]['status']=0;	
 					$i++;	
 				}
-							
+				 		
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 				
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
@@ -509,7 +508,7 @@ class CertificateOriginsController extends AppController
 
 					}
 					$this->Flash->success(__('Your certificate origin good has been saved.'));
-					return $this->redirect(['action' => 'certificateOrigin']);
+					return $this->redirect(['action' => 'certificate-origin-draft-view']);
 					 
 				}
 			}
@@ -519,7 +518,8 @@ class CertificateOriginsController extends AppController
 				$this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
 				$this->request->data['date_current']=date('Y-m-d');
 				$this->request->data['company_id']=$user_id;
-				$files=$this->request->data['file']; 
+				$files=$this->request->data['file'];
+				
 				if(!empty($files[0]['name'])){
 					$this->request->data['invoice_attachment']='true';
 				}else{
@@ -532,6 +532,8 @@ class CertificateOriginsController extends AppController
 				
 				$this->request->data['payment_amount']=200;
 				$this->request->data['payment_tax_amount']=$Tax;
+				$this->request->data['status']='published';
+				$this->request->data['coo_email']='yes';
 				
 				$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 				$i=0;
@@ -540,7 +542,7 @@ class CertificateOriginsController extends AppController
 					$this->request->data['coo_email_approvals'][$i]['status']=0;	
 					$i++;	
 				}
-							
+				 	
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 				
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
@@ -550,9 +552,17 @@ class CertificateOriginsController extends AppController
 					foreach($files as $file){
 					  move_uploaded_file($file['tmp_name'], $file_path.'/' . $file['name']);
 					}
+					 
+					$paymented=$this->CertificateOrigins->find('all')
+						->where(['id'=>$id,'payment_status'=>'success'])->count();
+					if($paymented>0){	
+						//return $this->redirect('https://test.payu.in/_payment');
+						return $this->redirect(['action' => 'certificate-origin-draft-view']);
+					}
+					else{
+						return $this->redirect(['action' => 'paymentTest',$data->id]);
+					}
 					$this->Flash->success(__('Your certificate origin good has been saved.'));
-					//return $this->redirect('https://test.payu.in/_payment');
-					return $this->redirect(['action' => 'paymentTest',$data->id]);
 				}
 			
 			}
