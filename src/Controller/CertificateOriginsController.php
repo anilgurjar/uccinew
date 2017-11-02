@@ -533,6 +533,7 @@ class CertificateOriginsController extends AppController
 				$this->request->data['payment_amount']=200;
 				$this->request->data['payment_tax_amount']=$Tax;
 				$this->request->data['status']='published';
+				$this->request->data['coo_email']='yes';
 				
 				$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 				$i=0;
