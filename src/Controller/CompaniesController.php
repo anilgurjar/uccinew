@@ -206,6 +206,9 @@ class CompaniesController extends AppController
 		$company_id=$this->Auth->User('company_id');
 		$this->viewBuilder()->layout('index_layout');
         $company = $this->Companies->newEntity();
+		$companies= $this->Companies->get($company_id);
+		$company_name=$companies['company_organisation'];
+		//pr($companies);   exit;
         if ($this->request->is('post')) 
 		{
 			$pan_card=$this->request->data['pan_card'];
@@ -256,15 +259,15 @@ class CompaniesController extends AppController
 			}
 			 
             $this->Flash->success(__('The company has been saved.'));
-			$companies= $this->Companies->find()->where(['id'=>$company_id])->contain(['Users']);
-			foreach($$companies as $$companie){
+			
+			
 			// mail send on submit and save start
 			$email = new Email();
 			$email->transport('SendGrid');
 			$sub='Secretary';
 			$sendmails= $this->CertificateOrigins->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>4])->contain(['Users']);
 			foreach($sendmails as $companie){
-			pr($companie->toArray());   exit;	  
+				  
 				foreach($companie->users as $user){
 					$mailsend=$user['email'];
 					$name=$user['member_name'];
@@ -291,7 +294,7 @@ class CompaniesController extends AppController
 					
 				}
 			}
-
+			
 			// mail send on submit and save end
 			
 			
