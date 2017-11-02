@@ -721,7 +721,7 @@ class CertificateOriginsController extends AppController
 				$this->request->data['verify_on']=date('Y-m-d h:i:s');
 				$this->request->data['status']='verified';
 				$query = $this->CertificateOrigins->find();
- 				pr($this->request->data); exit;
+ 				//pr($this->request->data); exit;
 				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
 				/*$email_to=$CertificateOrigins->company->users[0]->email; 
 				$member_name=$CertificateOrigins->company->users[0]->member_name;
@@ -758,7 +758,7 @@ class CertificateOriginsController extends AppController
 						**/	
 					
 					$this->Flash->success(__('Certificate of origin has been verified.'));
-					return $this->redirect(['action' => 'certificate_origin_approve']);
+					return $this->redirect(['action' => 'certificate-origin-view-published']);
 				}
 				$this->Flash->error(__('Unable to verify certificate of origin.'));
 			}
