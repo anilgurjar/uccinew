@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
+use Cake\Mailer\Email;
 /**
  * Companies Controller
  *
@@ -208,7 +209,7 @@ class CompaniesController extends AppController
         $company = $this->Companies->newEntity();
 		$companies= $this->Companies->get($company_id);
 		$company_name=$companies['company_organisation'];
-		//pr($companies);   exit;
+		//pr($company_name);   exit;
         if ($this->request->is('post')) 
 		{
 			$pan_card=$this->request->data['pan_card'];
@@ -265,7 +266,7 @@ class CompaniesController extends AppController
 			$email = new Email();
 			$email->transport('SendGrid');
 			$sub='Secretary';
-			$sendmails= $this->CertificateOrigins->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>4])->contain(['Users']);
+			$sendmails= $this->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>4])->contain(['Users']);
 			foreach($sendmails as $companie){
 				  
 				foreach($companie->users as $user){
@@ -278,9 +279,9 @@ class CompaniesController extends AppController
 						  ->replyTo('uccisec@hotmail.com')
 						  ->subject($sub)
 						  ->profile('default')
-						  ->template('coo_secretary_email')
+						  ->template('company_document_upload_email')
 						  ->emailFormat('html')
-						  ->viewVars(['member_name'=>$name]);
+						  ->viewVars(['member_name'=>$name,'company_name'=>$company_name]);
 						  
 							$email->send();
 						 
