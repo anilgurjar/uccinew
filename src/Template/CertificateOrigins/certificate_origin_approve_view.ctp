@@ -137,9 +137,22 @@ use Cake\Filesystem\File;
 							<td style="text-align:center;">'.$certificate_goods->quantity.' </td>
 							<td style="text-align:center;"> '.$certificate_goods->value.'</td></tr>';
 						}
-						$total_before_discount=$certificate_origin->total_before_discount;
-						 if($total_before_discount!=0){
-							?>
+						
+						echo $total_before_discount=$certificate_origin->total_before_discount;  
+							
+						if($total_before_discount==0){
+						?>
+							<tr>
+								<td colspan="5" style="text-align:right;">
+								<b>Total</b>
+								</td>
+								<!--<td style="text-align:center;"><b><?php //echo $total_qty.' '.$certificate_origin->master_unit->unit_name; ?><b/></td>-->
+								<td style="text-align:center;"><b><?php echo $certificate_origin->currency.' '.$total_value; ?></b></td>
+							</tr>
+						<?php
+						}elseif($total_before_discount > 0) 				
+						{ 
+						?>	
 							<tr>
 							<td colspan="5" style="text-align:right;">
 							<b>Total</b>
@@ -165,22 +178,11 @@ use Cake\Filesystem\File;
 							</td>
 							<td style="text-align:center;"><b><?php echo $certificate_origin->total_amount; ?></b></td>
 							</tr>
-							<?
+						<?php 
 						}
-						else 
-						{ ?>
-							<tr>
-								<td colspan="5" style="text-align:right;">
-								<b>Total</b>
-								</td>
-								<!--<td style="text-align:center;"><b><?php echo $total_qty.' '.$certificate_origin->master_unit->unit_name; ?><b/></td>-->
-								<td style="text-align:center;"><b><?php echo $certificate_origin->currency.' '.$total_value; ?></b></td>
-							</tr>	 
 						
-						<?php }
 						if($total_before_discount==0){
-						?>
-						<?php
+						
 							$grand_total=explode('.',$certificate_origin->total_value);
 							$rupees=$grand_total[0];
 							$paisa_text='';
@@ -201,10 +203,7 @@ use Cake\Filesystem\File;
 						<td style="text-align:left;" colspan="6" ><span >Amount Chargeable(in words):- <?php echo $certificate_origin->currency ?> &nbsp; </span>
 						<strong><?=  ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($rupees)])).$paisa_text   ?> Only.</strong></td>
 						</tr>
-						<?php }else{?>
-						<?php
-						
-						
+						<?php }else{
 							$grand_total=explode('.',$certificate_origin->total_amount);
 							$rupees=$grand_total[0];
 							$paisa_text='';
