@@ -512,7 +512,7 @@ class CompaniesController extends AppController
 			$gst_number=$this->request->data['gst_number'];
 			$export=$this->request->data['export'];
 			$address=$this->request->data['address'];
-			$this->request->data['non_memeber_exporter_email']='yes';
+			$this->request->data['non_member_exporter_email']='yes';
 			$office_telephone=$this->request->data['office_telephone'];
 			$nationality=$this->request->data['nationality'];
 			$member_name=$this->request->data['users'][0]['member_name'];
