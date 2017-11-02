@@ -178,9 +178,9 @@ use Cake\Filesystem\File;
 							</tr>	 
 						
 						<?php }
-						if($certificate_origin->total_before_amount==0){
+						if($total_before_discount>0){
 						
-							$grand_total=explode('.',$certificate_origin->total_value);
+							$grand_total=explode('.',$certificate_origin->total_amount);
 							$rupees=$grand_total[0];
 							$paisa_text='';
 							if(sizeof($grand_total)==2 )
@@ -200,7 +200,7 @@ use Cake\Filesystem\File;
 						<strong><?= ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($rupees)])).$paisa_text   ?> Only.</strong></td>
 						</tr>
 						<?php }else{
-							$grand_total=explode('.',$certificate_origin->total_amount);
+							$grand_total=explode('.',$certificate_origin->total_value);
 							$rupees=$grand_total[0];
 							$paisa_text='';
 							if(sizeof($grand_total)==2 )

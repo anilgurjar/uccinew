@@ -296,7 +296,7 @@ class CertificateOriginsController extends AppController
 		->set(['transaction_id' => $txnid,'payment_status'=>$status,'status'=>'published'])
 		->where(['id' => $udf1])
 		->execute();
-		
+		 $this->set(compact('status','amount','id','txnid','sul'));	
 		
 	// mail should secretary 
 	
@@ -679,7 +679,7 @@ class CertificateOriginsController extends AppController
 		
 	}
 		
-		 $this->set(compact('status','amount','id','txnid','sul'));	
+		
 		
 	}
  
