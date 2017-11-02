@@ -64,8 +64,7 @@ class CertificateOriginsController extends AppController
 	public function CertificateOriginApprove()
     {
        $this->viewBuilder()->layout('index_layout');
-	   
-       $certificate_origins = $this->CertificateOrigins->find()->where(['approve'=>0,'payment_status'=>'success']);
+       $certificate_origins = $this->CertificateOrigins->find()->where(['approve'=>0,'payment_status'=>'success','status'=>'verified']);
        $this->set(compact('certificate_origins'));
 		
     }
@@ -78,10 +77,13 @@ class CertificateOriginsController extends AppController
 	  
 		if(isset($this->request->data['view']))
 		{ 
-			 $certificate_origin_id=$this->request->data['view'];;
+			$certificate_origin_id=$this->request->data['view'];;
 			$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$certificate_origin_id,'approve'=>0])->contain(['Companies','CertificateOriginGoods'])->toArray();
-			
-			$this->set(compact('certificate_origins'));
+			$company_id=$certificate_origins[0]->company_id; 
+			$DocumentCheck=$this->CertificateOrigins->Companies->find('all')
+				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
+				->count();
+			$this->set(compact('certificate_origins','DocumentCheck'));
 		}
 		
 		if($this->request->is('post')) 
@@ -95,8 +97,11 @@ class CertificateOriginsController extends AppController
 				$id=$this->request->data['certificate_approve_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
 				
+				$this->request->data['status']='approved';
 				$this->request->data['approve']=1;
-				$this->request->data['approved_by']=$user_id;
+				$this->request->data['approved_by']=$user_id; 
+				$this->request->data['authorised_by']=$user_id; 
+				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
 				$query = $this->CertificateOrigins->find();
 				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
 				$this->request->data['origin_no']=($origin_no[0]->max_value)+1;
@@ -150,8 +155,11 @@ class CertificateOriginsController extends AppController
 				$id=$this->request->data['certificate_notapprove_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id);
 				
-			//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
+				//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
 				$this->request->data['approve']=2;
+				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
+				$this->request->data['authorised_by']=$user_id;
+				$this->request->data['status']='published';
 				 $CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
 				if($this->CertificateOrigins->save($CertificateOrigins))
 				{
