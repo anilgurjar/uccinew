@@ -111,7 +111,7 @@ class CertificateOriginsController extends AppController
 	public function CertificateOriginApprove()
     {
        $this->viewBuilder()->layout('index_layout');
-       $certificate_origins = $this->CertificateOrigins->find()->where(['approve'=>0,'payment_status'=>'success','status'=>'verified']);
+       $certificate_origins = $this->CertificateOrigins->find()->where(['payment_status'=>'success','status'=>'verified']);
        $this->set(compact('certificate_origins'));
 		
     }
