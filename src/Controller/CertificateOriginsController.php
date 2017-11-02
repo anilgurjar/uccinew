@@ -94,9 +94,9 @@ class CertificateOriginsController extends AppController
 		$CertificateOrigins = $this->CertificateOrigins->newEntity();
 		
 		 if($role_id==1){
-			 $certificate_origins = $this->CertificateOrigins->find()->where(['approve'=>1])->order(['CertificateOrigins.origin_no'=>'DESC']);
+			 $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved'])->order(['CertificateOrigins.origin_no'=>'DESC']);
 		   }else{
-			  $certificate_origins = $this->CertificateOrigins->find()->where(['approve'=>1,'company_id'=>$company_id])->order(['CertificateOrigins.origin_no'=>'DESC']); 
+			  $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved','company_id'=>$company_id])->order(['CertificateOrigins.origin_no'=>'DESC']); 
 		   }
        $this->set(compact('certificate_origins'));
 	}
