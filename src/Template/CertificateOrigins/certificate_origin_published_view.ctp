@@ -270,7 +270,7 @@ use Cake\Filesystem\File;
 					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Verify') ,['class'=>'btn btn-success','type'=>'button','data-toggle'=>'modal','data-target'=>'#verify','value'=>$certificate_origin->id]);
 					?>
 					
-				 <?php
+					<?php
 					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Not Verify') ,['class'=>'btn btn-danger','type'=>'button','data-toggle'=>'modal','data-target'=>'#notverify','value'=>$certificate_origin->id]);
 					?>
 						
@@ -326,7 +326,7 @@ use Cake\Filesystem\File;
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class=" control-label" style="text-align:left !important">Remarks</label>
-														<?php echo $this->Form->input('ucci_content', ['label' => false,'placeholder'=>'Remarks','class'=>'form-control ', 'name'=>'verify_remarks']); ?>
+														<?php echo $this->Form->textarea('ucci_content', ['label' => false,'placeholder'=>'Remarks','class'=>'form-control ', 'name'=>'verify_remarks']); ?>
 												</div>
 											</div>
 										</div>

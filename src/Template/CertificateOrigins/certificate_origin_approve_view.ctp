@@ -276,14 +276,83 @@ use Cake\Filesystem\File;
 				<div class="col-sm-12 no-print">
 					<center>
 					
+					<?php
+					 
+					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Approve') ,['class'=>'btn btn-success','type'=>'button','data-toggle'=>'modal','data-target'=>'#verify','value'=>$certificate_origin->id]);
+					?>
 					
+					<?php
+					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Not Approve') ,['class'=>'btn btn-danger','type'=>'button','data-toggle'=>'modal','data-target'=>'#notverify','value'=>$certificate_origin->id]);
+					?>
+					
+					<div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel" style="text-align:left !important">Do you want to Approve this COO</h4>
+							  </div>
+							  <div class="modal-body">
+								<div class="row">
+								<?php if($DocumentCheck>0){ ?>
+									<div class="col-md-12 pad" >
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class=" control-label" style="text-align:left !important">
+													Documents are still panding, do you wish to continue 
+												</label>
+											</div>
+										</div>
+									</div>
+								<?php }?>
+								</div>
+							  </div>
+							  <div class="modal-footer">
+							  <div class="related_issue"></div>
+								<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
 					<?php
 					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Approve') ,['class'=>'btn btn-success','type'=>'Submit','name'=>'certificate_approve_submit','value'=>$certificate_origin->id]);
-					?>
+					?>	 
+							  </div>
+							</div>
+						  </div>
+						</div>
+					<div class="modal fade" id="notverify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel" style="text-align:left">Do you want to not Approve this COO</h4>
+							  </div>
+							  <div class="modal-body">
+								<div class="row">
+
+									<div class="col-md-12 pad" >
+											 
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class=" control-label" style="text-align:left !important">Remarks</label>
+														<?php echo $this->Form->textarea('ucci_content', ['label' => false,'placeholder'=>'Remarks','class'=>'form-control ', 'name'=>'authorised_remarks']); ?>
+												</div>
+											</div>
+										</div>
+
+									</div>
+							  </div>
+							  <div class="modal-footer">
+							  <div class="related_issue"></div>
+								<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
+								<?php
+								echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-ban']) . __(' Not Approve'),['class'=>'btn btn-danger','type'=>'Submit','name'=>'certificate_notapprove_submit','value'=>$certificate_origin->id]);
+								?> 
+							  </div>
+							</div>
+						  </div>
+						</div>
+				</div>
 					
-					<?php
-					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-ban']) . __(' Not Approve'),['class'=>'btn btn-danger','type'=>'Submit','name'=>'certificate_notapprove_submit','value'=>$certificate_origin->id]);
-					?>
+					
+					
 					</center>
 				</div>
 				
