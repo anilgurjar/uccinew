@@ -711,8 +711,8 @@ class CertificateOriginsController extends AppController
 			if(isset($this->request->data['certificate_approve_submit']))
 			{
 				
-				//$email = new Email();
-				//$email->transport('SendGrid');
+				$email = new Email();
+				$email->transport('SendGrid');
 				
 				$id=$this->request->data['certificate_approve_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
@@ -731,31 +731,28 @@ class CertificateOriginsController extends AppController
 				if($this->CertificateOrigins->save($CertificateOrigins))
 				{
 					
-					 /* $sub="Your certificate of origin is approved";
-					  $from_name="UCCI";
-					  $email_to=trim($email_to,' ');
-					 $email_to="rohitkumarjoshi43@gmail.com";
-					  if(!empty($email_to)){		
-								
-						 try {
-							   $email->from(['ucciudaipur@gmail.com' => $from_name])
-										->to($email_to)
-										->replyTo('uccisec@hotmail.com')
-										->subject($sub)
-										->profile('default')
-										->template('coo_approve')
-										->emailFormat('html')
-										->viewVars(['member_name'=>$member_name,'regards_member_name'=>$regards_member_name]);
-										$email->send();
-									
-									
+					$sub="Your certificate of origin is approved";
+					$from_name="UCCI";
+					$email_to=trim($email_to,' ');
+					$email_to="rohitkumarjoshi43@gmail.com";
+					if(!empty($email_to)){		
+						try {
+							$email->from(['ucciudaipur@gmail.com' => $from_name])
+								->to($email_to)
+								->replyTo('uccisec@hotmail.com')
+								->subject($sub)
+								->profile('default')
+								->template('coo_approve')
+								->emailFormat('html')
+								->viewVars(['member_name'=>$member_name,'regards_member_name'=>$regards_member_name]);
+								$email->send();
 							} catch (Exception $e) {
 								
 								echo 'Exception : ',  $e->getMessage(), "\n";
 
 							} 
 						}
-						**/	
+							
 					
 					$this->Flash->success(__('Certificate of origin has been verified.'));
 					return $this->redirect(['action' => 'certificate-origin-view-published']);
