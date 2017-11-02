@@ -438,6 +438,7 @@ class CertificateOriginsController extends AppController
 				$last_insert_id=$data->id;
 				$this->Flash->success(__('Your certificate origin good has been saved.'));
 				return $this->redirect(['action' => 'draftView',$last_insert_id]);
+				exit;
 				//return $this->redirect('https://test.payu.in/_payment');
 				//return $this->redirect(['action' => 'payment',$data->id]);
 			}
