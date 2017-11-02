@@ -737,8 +737,7 @@ class CertificateOriginsController extends AppController
 				
 					$sub="Certificate of origin is Varified";
 					$from_name="UCCI";
-					//$email_to=trim($emailsend,' ');
-					$email_to="anilgurjer371@gmail.com";
+					$email_to=trim($emailsend,' ');
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -779,8 +778,7 @@ class CertificateOriginsController extends AppController
 				{
 					$sub="Certificate of origin is Not Varified";
 					$from_name="UCCI";
-					//$email_to=trim($mailsendtoemail,' ');
-					$email_to="anilgurjer371@gmail.com";
+					$email_to=trim($mailsendtoemail,' ');
 					foreach($CertificateOrigins['company']['users'] as $CertificateOrigin)
 					{
 						$mailsendtomember=$CertificateOrigin['member_name'];
