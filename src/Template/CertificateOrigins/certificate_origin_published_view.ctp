@@ -43,7 +43,7 @@ use Cake\Filesystem\File;
 		<div class="box-body">
 			<?= $this->Form->create($CertificateOrigins) ?>
 			<?php
-			
+			 
 			foreach($certificate_origins as $certificate_origin)
 			{
 				?>
@@ -165,7 +165,7 @@ use Cake\Filesystem\File;
 							</td>
 							<td style="text-align:center;"><b><?php echo $certificate_origin->total_amount; ?></b></td>
 							</tr>
-							<?
+							<?php
 						}
 						else 
 						{ ?>
@@ -198,7 +198,7 @@ use Cake\Filesystem\File;
 						<tr>
 												
 						<td style="text-align:left;" colspan="6" ><span >Amount Chargeable(in words):- <?php echo $certificate_origin->currency ?> &nbsp; </span>
-						<strong><?=  ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($rupees)])).$paisa_text   ?> Only.</strong></td>
+						<strong><?= ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($rupees)])).$paisa_text   ?> Only.</strong></td>
 						</tr>
 						<?php }else{?>
 						<?php
@@ -250,16 +250,8 @@ use Cake\Filesystem\File;
 							}
 
 						}
-					
-					
-					
 					?>
-					
-					
-					
 				</div>
-				
-				
 				<div class="col-sm-12">
 					<center><h4><strong><u>CERTIFICATION</u><strong></h4></center>
 					<p>It is hereby certified that to the best of our knowledge and belief the goods mentioned above are the product of Indian Republic and are wholly of Indian Origin.</p>
@@ -288,30 +280,32 @@ use Cake\Filesystem\File;
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<h4 class="modal-title" id="myModalLabel" style="text-align:left !important">Do you want to approve this COO</h4>
+								<h4 class="modal-title" id="myModalLabel" style="text-align:left !important">Do you want to verify this COO</h4>
 							  </div>
 							  <div class="modal-body">
 								<div class="row">
-
+								<?php if($DocumentCheck>0){ ?>
 									<div class="col-md-12 pad" >
-											 
-											<div class="col-md-12">
-												<div class="form-group">
-													<label class=" control-label" style="text-align:left !important">Remarks</label>
-													
-														<?php echo $this->Form->input('ucci_content', ['label' => false,'placeholder'=>'UCCI','class'=>'form-control transl2']); ?>
-													
-												</div>
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class=" control-label" style="text-align:left !important">
+												
+												Documents are still panding, do you wish to continue 
+												</label>
+												
+													 
+												
 											</div>
 										</div>
-
 									</div>
+								<?php }?>
+								</div>
 							  </div>
 							  <div class="modal-footer">
 							  <div class="related_issue"></div>
 								<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
 								<?php
-									echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Approve') ,['class'=>'btn btn-success','type'=>'Submit','name'=>'certificate_approve_submit','value'=>$certificate_origin->id]);
+									echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Verify') ,['class'=>'btn btn-success','type'=>'Submit','name'=>'certificate_approve_submit','value'=>$certificate_origin->id]);
 								?>	 
 							  </div>
 							</div>
@@ -322,7 +316,7 @@ use Cake\Filesystem\File;
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<h4 class="modal-title" id="myModalLabel" style="text-align:left">Do you want to Reject this COO</h4>
+								<h4 class="modal-title" id="myModalLabel" style="text-align:left">Do you want to not verify this COO</h4>
 							  </div>
 							  <div class="modal-body">
 								<div class="row">
@@ -343,7 +337,7 @@ use Cake\Filesystem\File;
 							  <div class="related_issue"></div>
 								<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
 								<?php
-									echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Reject') ,['class'=>'btn btn-danger','type'=>'Submit','name'=>'certificate_approve_submit','value'=>$certificate_origin->id]);
+									echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Not Verify') ,['class'=>'btn btn-danger','type'=>'Submit','name'=>'certificate_notapprove_submit','value'=>$certificate_origin->id]);
 								?>	 
 							  </div>
 							</div>
