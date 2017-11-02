@@ -665,7 +665,7 @@ class CertificateOriginsController extends AppController
 		$company_id=$this->Auth->User('company_id'); 
 		$Companies=$this->CertificateOrigins->Companies->get($company_id);
 		$role_id=$Companies->role_id;
-		if($role_id==1 || $role_id==5){	
+		if($role_id==1 || $role_id==4){	
 			$certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'draft']);
 		}
 		else{
@@ -680,7 +680,7 @@ class CertificateOriginsController extends AppController
 		$company_id=$this->Auth->User('company_id'); 
 		$Companies=$this->CertificateOrigins->Companies->get($company_id);
 		$role_id=$Companies->role_id;
-		if($role_id==1 || $role_id==5){	
+		if($role_id==1 || $role_id==4){	
 			$certificate_origins =$this->CertificateOrigins->find()->where(['status'=>'published','payment_status'=>'success']);
 		}
 		else{
