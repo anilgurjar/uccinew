@@ -517,6 +517,7 @@ class CompaniesController extends AppController
 			$nationality=$this->request->data['nationality'];
 			$member_name=$this->request->data['users'][0]['member_name'];
 			$email=$this->request->data['users'][0]['email'];
+			$exporteremail=$this->request->data['users'][0]['exporter_email'];
 			$mobile_no=$this->request->data['users'][0]['mobile_no'];
 			$amount=$this->request->data['co_registrations'][0]['amount'];
 			$tax_amount=$this->request->data['co_registrations'][0]['tax_amount'];
@@ -545,7 +546,7 @@ class CompaniesController extends AppController
 					->execute();
 				$query = $this->Companies->Users->query();
 				$query->update()
-					->set(['member_name'=>$member_name,'email'=>$email,'mobile_no'=>$mobile_no])
+					->set(['member_name'=>$member_name,'email'=>$email,'exporter_email'=>$exporteremail,'mobile_no'=>$mobile_no])
 					->where(['company_id' => $find_id,'member_nominee_type'=>'first'])
 					->execute();
 				$find_id_CoRegistration=$this->Companies->CoRegistrations->find()->where(['company_id'=>$find_id])->count();

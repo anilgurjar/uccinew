@@ -776,7 +776,8 @@ class CertificateOriginsController extends AppController
 				
 				$id=$this->request->data['certificate_notapprove_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id , ['contain'=>['Companies'=>['Users']]]);
-				
+			
+				$remarks=$this->request->data['verify_remarks'];
 				$this->request->data['verify_by']=$user_id;
 				$this->request->data['verify_on']=date('Y-m-d h:i:s');
 				$this->request->data['status']='draft';
@@ -786,14 +787,15 @@ class CertificateOriginsController extends AppController
 				$email->transport('SendGrid');
 			if($this->CertificateOrigins->save($CertificateOrigins))
 				{
-					$sub="Certificate of origin is Not Varified";
-					$from_name="UCCI";
-					$email_to=trim($mailsendtoemail,' ');
+					
 					foreach($CertificateOrigins['company']['users'] as $CertificateOrigin)
 					{
 						$mailsendtomember=$CertificateOrigin['member_name'];
 						$mailsendtoemail=$CertificateOrigin['email'];
-				
+						$sub="Certificate of origin is Not Varified";
+						$from_name="UCCI";
+						//$email_to=trim($mailsendtoemail,' ');
+						$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -803,7 +805,7 @@ class CertificateOriginsController extends AppController
 								->profile('default')
 								->template('coo_not_varify')
 								->emailFormat('html')
-								->viewVars(['member_name'=>$email_to]);
+								->viewVars(['member_name'=>$mailsendtomember,'remarks'=>$remarks]);
 								$email->send();
 							} catch (Exception $e) {
 								
