@@ -1064,7 +1064,7 @@ class CertificateOriginsController extends AppController
 		$this->viewBuilder()->layout('index_layout');
 		$user_id=$this->Auth->User('id');
 		$certificate_origin_id=$this->request->data['view'];
-		$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$certificate_origin_id,'approve'=>1])->contain(['Companies','CertificateOriginGoods'])->toArray();
+		$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$certificate_origin_id,'status'=>'approved'])->contain(['Companies','CertificateOriginGoods'])->toArray();
 		$approved_by=$certificate_origins[0]->approved_by;
 		$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->where(['user_id'=>$approved_by])->contain(['Users'])->toArray();
 		
