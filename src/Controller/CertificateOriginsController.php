@@ -88,7 +88,7 @@ class CertificateOriginsController extends AppController
 		{
 			if(isset($this->request->data['certificate_approve_submit']))
 			{
-				
+				 
 				$email = new Email();
 				$email->transport('SendGrid');
 				
@@ -146,6 +146,7 @@ class CertificateOriginsController extends AppController
 			}
 			else if(isset($this->request->data['certificate_notapprove_submit']))
 			{
+				
 				$id=$this->request->data['certificate_notapprove_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id);
 				
@@ -698,8 +699,11 @@ class CertificateOriginsController extends AppController
 		{ 
 			$certificate_origin_id=$this->request->data['view'];;
 			$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$certificate_origin_id,'approve'=>0])->contain(['Companies','CertificateOriginGoods'])->toArray();
-			
-			$this->set(compact('certificate_origins'));
+			$company_id=$certificate_origins[0]->company_id;  
+			$DocumentCheck=$this->CertificateOrigins->Companies->find('all')
+				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
+				->count();
+			$this->set(compact('certificate_origins','DocumentCheck'));
 		}
 		
 		if($this->request->is('post')) 
@@ -709,28 +713,25 @@ class CertificateOriginsController extends AppController
 				
 				//$email = new Email();
 				//$email->transport('SendGrid');
-				pr($this->request->data); exit;
+				
 				$id=$this->request->data['certificate_approve_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
 				
-				$this->request->data['approve']=1;
-				$this->request->data['approved_by']=$user_id;
+				$this->request->data['verify_by']=$user_id;
+				$this->request->data['verify_on']=date('Y-m-d h:i:s');
+				$this->request->data['status']='verified';
 				$query = $this->CertificateOrigins->find();
-				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
-				$this->request->data['origin_no']=($origin_no[0]->max_value)+1;
-				
-				 $CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
-				 $email_to=$CertificateOrigins->company->users[0]->email; 
-				 $member_name=$CertificateOrigins->company->users[0]->member_name;
-				 
-				 $Users= $this->CertificateOrigins->Users->get($user_id);
-				
-				 $regards_member_name=$Users->member_name;
+ 				//pr($this->request->data); exit;
+				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				/*$email_to=$CertificateOrigins->company->users[0]->email; 
+				$member_name=$CertificateOrigins->company->users[0]->member_name;
+				$Users= $this->CertificateOrigins->Users->get($user_id);
+				$regards_member_name=$Users->member_name;*/
 				
 				if($this->CertificateOrigins->save($CertificateOrigins))
 				{
 					
-					  $sub="Your certificate of origin is approved";
+					 /* $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
 					 $email_to="rohitkumarjoshi43@gmail.com";
@@ -754,28 +755,30 @@ class CertificateOriginsController extends AppController
 
 							} 
 						}
-								
+						**/	
 					
-					
-					$this->Flash->success(__('Certificate of origin has been approved.'));
-					return $this->redirect(['action' => 'certificate_origin_approve']);
+					$this->Flash->success(__('Certificate of origin has been verified.'));
+					return $this->redirect(['action' => 'certificate-origin-view-published']);
 				}
-				$this->Flash->error(__('Unable to approved certificate of origin.'));
+				$this->Flash->error(__('Unable to verify certificate of origin.'));
 			}
 			else if(isset($this->request->data['certificate_notapprove_submit']))
 			{
+				
 				$id=$this->request->data['certificate_notapprove_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id);
 				
-			//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
-				$this->request->data['approve']=2;
-				 $CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				$this->request->data['verify_by']=$user_id;
+				$this->request->data['verify_on']=date('Y-m-d h:i:s');
+				$this->request->data['status']='draft';
+				 
+				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
 				if($this->CertificateOrigins->save($CertificateOrigins))
 				{
-					$this->Flash->success(__('Certificate of origin has been not approved.'));
-					return $this->redirect(['action' => 'certificate_origin_approve']);
+					$this->Flash->success(__('Certificate of origin has been not verify.'));
+					return $this->redirect(['action' => 'certificate-origin-view-published']);
 				}
-				$this->Flash->error(__('Unable to not approved certificate of origin.'));
+				$this->Flash->error(__('Unable to not verify certificate of origin.'));
 			}
 		}
 		
