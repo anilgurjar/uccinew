@@ -905,7 +905,7 @@ class CertificateOriginsController extends AppController
 					$this->request->data['coo_email_approvals'][$i]['status']=0;	
 					$i++;	
 				} */
-				 		
+				 	pr($certificate_origin_good); exit;	
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 			
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
