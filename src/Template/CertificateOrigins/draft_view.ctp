@@ -153,7 +153,7 @@ input[type="radio"]
 					<?php if(!empty($certificate_origin_good->verify_remarks)){ ?>	
 					<div class="col-sm-6 ">
 						<div class="form-group">
-							<label class="col-sm-4 control-label" style="font-color:red">Rturn Reason</label>
+							<label class="col-sm-4 control-label" style="color:red">Rturn Reason</label>
 							<div class="col-sm-8">
 							<?php
 								echo $certificate_origin_good->verify_remarks;
