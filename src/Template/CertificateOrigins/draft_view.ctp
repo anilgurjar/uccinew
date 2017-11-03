@@ -120,7 +120,7 @@ input[type="radio"]
 						 $options['Yes']='Yes';
 						 $options['No']='No';
 			           
-						echo $this->Form->input('show_amount', array('type' => 'radio','label' => false,'options' => $options,'value'=>'Yes','hiddenField' => false)); 
+						echo $this->Form->input('show_amount', array('type' => 'radio','label' => false,'options' => $options,'value'=>$certificate_origin_good->show_amount,'hiddenField' => false)); 
 						 unset($options);
 						 ?>
 						 </div>
@@ -197,7 +197,7 @@ input[type="radio"]
 								} 
 								?>
 								<th>Value
-								<?= $this->Form->input('currency', ['empty'=> '--Select--','label' => false,'class'=>'form-control select2','options'=>$MasterCurrency,'style'=>''])  ?></th>
+								<?= $this->Form->input('currency', ['empty'=> '--Select--','label' => false,'class'=>'form-control select2','options'=>$MasterCurrency,'style'=>'','value'=>$certificate_origin_good->currency])  ?></th>
 								<label id="certificate-origin-goods-0-unit-id-error" class="error" for="certificate-origin-goods-0-unit-id" style="display: none;"></label></th><th></th>
 							</tr>
 						</thead>
