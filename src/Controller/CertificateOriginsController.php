@@ -827,11 +827,11 @@ class CertificateOriginsController extends AppController
 			
 			$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 			$i=0;
-			foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
+			/* foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
 				$this->request->data['coo_email_approvals'][$i]['user_id']=$CertificateAuthorized->user_id;	
 				$this->request->data['coo_email_approvals'][$i]['status']=0;	
 				$i++;	
-			}
+			} */
 			$this->request->data['status'] = 'draft';			
 			$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 			 	
