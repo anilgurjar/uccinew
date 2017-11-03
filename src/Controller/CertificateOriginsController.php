@@ -148,7 +148,9 @@ class CertificateOriginsController extends AppController
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
 				$this->request->data['approved_by']=$user_id; 
-				$this->request->data['authorised_by']=$user_id; 
+				$this->request->data['authorised_by']=$user_id;
+				$this->request->data['verify_remarks']=''; 
+				$this->request->data['authorised_remarks']=''; 
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
 				$query = $this->CertificateOrigins->find();
 				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
@@ -1185,6 +1187,7 @@ class CertificateOriginsController extends AppController
 				$this->request->data['verify_by']=$user_id;
 				$this->request->data['verify_on']=date('Y-m-d h:i:s');
 				$this->request->data['status']='draft';
+				$this->request->data['authorised_remarks']='';
 				 
 				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
 				$email = new Email();
