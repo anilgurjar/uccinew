@@ -910,7 +910,7 @@ class CertificateOriginsController extends AppController
 			
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 				{ 
-						pr($certificate_origin_good); exit;
+						
 						$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
 						$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice/'.$data->id;
 						foreach($files as $file){
@@ -922,6 +922,7 @@ class CertificateOriginsController extends AppController
 					return $this->redirect(['action' => 'certificate-origin-draft-view']);
 					 
 				}
+				pr($data); exit;
 			}
 			else if(isset($this->request->data['certificate_origin_publish']))
 			{ 
