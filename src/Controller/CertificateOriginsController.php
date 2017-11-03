@@ -943,7 +943,7 @@ class CertificateOriginsController extends AppController
 				$this->request->data['payment_tax_amount']=$Tax;
 				$this->request->data['status']='draft';
 				$this->request->data['coo_email']='yes';
-				
+				$this->request->data['verify_remarks']='';
 				$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 				$i=0;
 				/* foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
@@ -1146,6 +1146,7 @@ class CertificateOriginsController extends AppController
 				$this->request->data['verify_by']=$user_id;
 				$this->request->data['verify_on']=date('Y-m-d h:i:s');
 				$this->request->data['status']='verified';
+				
 				$query = $this->CertificateOrigins->find();
  				//pr($this->request->data); exit;
 				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
