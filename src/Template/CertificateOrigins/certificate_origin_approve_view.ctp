@@ -183,7 +183,7 @@ use Cake\Filesystem\File;
 						
 						if($total_before_discount==0){
 						
-							$grand_total=explode('.',$certificate_origin->total_value);
+							$grand_total=explode('.',$total_value);
 							$rupees=$grand_total[0];
 							$paisa_text='';
 							if(sizeof($grand_total)==2 )
