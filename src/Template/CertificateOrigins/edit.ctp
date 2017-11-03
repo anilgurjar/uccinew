@@ -176,14 +176,15 @@ input[type="radio"]
 							</tr>
 							<tr>
 								<th>Marks</th><th>Container No.</th><th>No. & kind of packings</th><th>Description of Goods</th><th>Quantity<?php
-								/* foreach($MasterUnits as $MasterUnit)
+								 foreach($MasterCurrencies as $MasterCurrencie)
 								{
-									$units_options[]=['text'=>$MasterUnit->unit_name,'value'=>$MasterUnit->id];
+									$MasterCurrency[]=['text'=>$MasterCurrencie->unit_name,'value'=>$MasterCurrencie->id];
 								} 
 								?>
-								<?= $this->Form->input('unit_id', ['empty'=> '--Select--','label' => false,'class'=>'form-control ','options'=>$units_options,'style'=>'']) */ ?>
-								<label id="certificate-origin-goods-0-unit-id-error" class="error" for="certificate-origin-goods-0-unit-id" style="display: none;"></label></th><th>Value
-								<?= $this->Form->input('currency', ['empty'=> '--Select--','label' => false,'class'=>'form-control ','style'=>'','value'=>'INR']) ?></th><th></th>
+								
+								<th>Value
+								<?= $this->Form->input('currency', ['empty'=> '--Select--','label' => false,'class'=>'form-control select2','options'=>$MasterCurrency,'style'=>''])  ?></th>
+								<label id="certificate-origin-goods-0-unit-id-error" class="error" for="certificate-origin-goods-0-unit-id" style="display: none;"></label></th><th></th>
 							</tr>
 						</thead>
 						<tbody>
