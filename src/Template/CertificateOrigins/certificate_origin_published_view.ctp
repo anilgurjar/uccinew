@@ -145,7 +145,7 @@ use Cake\Filesystem\File;
 							<b>Total</b>
 							</td>
 							<!--<td style="text-align:center;"><b><?php echo $total_qty.' '.$certificate_origin->master_unit->unit_name; ?><b/></td>-->
-							<td style="text-align:center;"><b><?php echo $certificate_origin->currency.' '.$certificate_origin->total_before_discount; ?></b></td>
+							<td style="text-align:center;"><b><?php echo $certificate_origin->total_before_discount; ?></b></td>
 							</tr>
 							<tr>
 							<td colspan="5" style="text-align:right;">
@@ -163,7 +163,7 @@ use Cake\Filesystem\File;
 							<td colspan="5" style="text-align:right;">
 							<b>Total Amount</b>
 							</td>
-							<td style="text-align:center;"><b><?php echo $certificate_origin->total_amount; ?></b></td>
+							<td style="text-align:center;"><b><?php echo $certificate_origin->currency.' '.$certificate_origin->total_amount; ?></b></td>
 							</tr>
 							<?php
 						}
