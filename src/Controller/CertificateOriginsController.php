@@ -922,7 +922,7 @@ class CertificateOriginsController extends AppController
 					return $this->redirect(['action' => 'certificate-origin-draft-view']);
 					 
 				}
-				pr($data); exit;
+				pr($certificate_origin_good); exit;
 			}
 			else if(isset($this->request->data['certificate_origin_publish']))
 			{ 
