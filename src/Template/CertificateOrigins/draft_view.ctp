@@ -193,7 +193,7 @@ input[type="radio"]
 								<th>Marks</th><th>Container No.</th><th>No. & kind of packings</th><th>Description of Goods</th><th>Quantity<?php
 								 foreach($MasterCurrencies as $MasterCurrencie)
 								{
-									$MasterCurrency[]=['text'=>$MasterCurrencie->unit_name,'value'=>$MasterCurrencie->id];
+									$MasterCurrency[]=['text'=>$MasterCurrencie->currency_type,'value'=>$MasterCurrencie->currency_type];
 								} 
 								?>
 								<th>Value
