@@ -108,6 +108,14 @@ use Cake\Filesystem\File;
 							<?= $certificate_origin->port_of_discharge ?>
 						  </div>
 						</div>
+						<?php if(!empty($certificate_origin->authorised_remarks)){   ?>
+						<div class="col-sm-12 value_padding">
+						  <label class="col-sm-4">Remarks</label>
+						  <div class="col-sm-8">
+							<?= $certificate_origin->authorised_remarks ?>
+						  </div>
+						</div>
+						<?php  }  ?>
 					</div>
 				</div>
 				<div class="col-sm-12">
