@@ -362,7 +362,7 @@ text-align:center;
 		</td>
 		
 		
-		<td style="text-align:center;"><b>'. $currency_name.' '.$total_before_discount.'</b></td>
+		<td style="text-align:center;"><b>'.$total_before_discount.'</b></td>
 		
 		</tr>';
 		$discount=number_format($discount, 2, '.', '');
@@ -398,7 +398,7 @@ text-align:center;
 		</td>
 		
 		
-		<td style="text-align:center;"><b>'.$total_amount.'</b></td>
+		<td style="text-align:center;"><b>'. $currency_name.' '.$total_amount.'</b></td>
 		
 		</tr>';
 		}
