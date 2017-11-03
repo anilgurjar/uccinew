@@ -878,7 +878,8 @@ class CertificateOriginsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
 			
 			if(isset($this->request->data['certificate_origin_draft']))
-			{ 
+			{
+				
 				$this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
 				$this->request->data['date_current']=date('Y-m-d');
 				$this->request->data['company_id']=$user_id;
@@ -897,15 +898,16 @@ class CertificateOriginsController extends AppController
 				$this->request->data['payment_amount']=200;
 				$this->request->data['payment_tax_amount']=$Tax;
 				
-				$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
+				/*$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 				$i=0;
-				/* foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
+				 foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
 					$this->request->data['coo_email_approvals'][$i]['user_id']=$CertificateAuthorized->user_id;	
 					$this->request->data['coo_email_approvals'][$i]['status']=0;	
 					$i++;	
 				} */
 				 		
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
+				pr($certificate_origin_good); exit;
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 				{ 
 					
