@@ -144,7 +144,7 @@ class CertificateOriginsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['company_id'], 'Companies'));
+       // $rules->add($rules->existsIn(['company_id'], 'Companies'));
         $rules->add($rules->existsIn(['unit_id'], 'MasterUnits'));
        // $rules->add($rules->existsIn(['currency_id'], 'MasterCurrencies'));
 
