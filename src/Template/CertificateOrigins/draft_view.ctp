@@ -240,7 +240,7 @@ input[type="radio"]
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[$t][value]',['label'=>false,'class'=>'form-control totaladd','type'=>'text','value'=>$dataa['value']]);
+								 echo $this->Form->input('certificate_origin_goods['.$t.'][value]',['label'=>false,'class'=>'form-control totaladd','type'=>'text','value'=>$dataa['value']]);
 								?>
 								
 								</td>
