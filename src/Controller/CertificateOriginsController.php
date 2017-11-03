@@ -897,14 +897,14 @@ class CertificateOriginsController extends AppController
 				
 				$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 				$i=0;
-				foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
+				/* foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
 					$this->request->data['coo_email_approvals'][$i]['user_id']=$CertificateAuthorized->user_id;	
 					$this->request->data['coo_email_approvals'][$i]['status']=0;	
 					$i++;	
-				}
+				} */
 				 		
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
-				
+				pr($certificate_origin_good);   exit;
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 				{ 
 					$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
