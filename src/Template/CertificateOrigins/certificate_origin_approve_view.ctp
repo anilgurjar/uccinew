@@ -284,7 +284,7 @@ use Cake\Filesystem\File;
 					<?php
 					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Not Approve') ,['class'=>'btn btn-danger','type'=>'button','data-toggle'=>'modal','data-target'=>'#notverify','value'=>$certificate_origin->id]);
 					?>
-					
+					</center>
 					<div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						  <div class="modal-dialog" role="document">
 							<div class="modal-content">
@@ -353,7 +353,7 @@ use Cake\Filesystem\File;
 					
 					
 					
-					</center>
+					
 				</div>
 				
 			 <?php
