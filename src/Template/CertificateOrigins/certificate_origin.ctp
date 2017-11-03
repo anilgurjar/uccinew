@@ -191,8 +191,9 @@ input[type="radio"]
 								} 
 								?>
 								
-								<label id="certificate-origin-goods-0-unit-id-error" class="error" for="certificate-origin-goods-0-unit-id" style="display: none;"></label></th><th>Value
-								<?= $this->Form->input('currency', ['empty'=> '--Select Currency--','label' => false,'class'=>'form-control select2me','options'=>$MasterCurrency,'style'=>''])  ?>
+								<label id="certificate-origin-goods-0-unit-id-error" class="error" for="certificate-origin-goods-0-unit-id" style="display: none;"></label></th><th>Value<br/>
+								<?= $this->Form->input('currency', ['empty'=> '--Select Currency name--','label' => false,'class'=>'form-control select2','options'=>$MasterCurrency,'style'=>''])  ?>
+								<label id="currency-error" class="error" for="currency"></label>
 								</th><th></th>
 							</tr>
 						</thead>
@@ -306,31 +307,31 @@ input[type="radio"]
 			<tr>
 				<td>
 			   <?php
-					echo $this->Form->input('marks1',['class'=>'form-control marks','type'=>'text','label'=>false]);
+					echo $this->Form->input('marks1',['class'=>'form-control marks','type'=>'text','label'=>false,'placeholder'=>'Marks']);
 				?>	
 			   </td>
 			   <td>
 				<?php
-					echo $this->Form->input('container_no1',['class'=>'form-control','type'=>'text','label'=>false]);
+					echo $this->Form->input('container_no1',['class'=>'form-control','type'=>'text','label'=>false,'placeholder'=>'Container No.']);
 				?>
 				</td>
 				<td>
 				 <?php
-					echo $this->Form->input('no_and_packing1',['class'=>'form-control','type'=>'text','label'=>false]);
+					echo $this->Form->input('no_and_packing1',['class'=>'form-control','type'=>'text','label'=>false,'placeholder'=>'No. Of Packing']);
 				?>
 				</td>
 				<td>
 			   <?php
-				echo $this->Form->input('description_of_goods1',['class'=>'form-control','type'=>'text','label'=>false]);
+				echo $this->Form->input('description_of_goods1',['class'=>'form-control','type'=>'text','label'=>false,'placeholder'=>'Description Of Goods']);
 				?>
 				</td>
 				<td>
 				<?php
-				echo $this->Form->input('quantity1',['class'=>'form-control','type'=>'text','label'=>false]);
+				echo $this->Form->input('quantity1',['class'=>'form-control','type'=>'text','label'=>false,'placeholder'=>'Quantity']);
 				?>
 				<td>
 				<?php
-				echo $this->Form->input('value1',['class'=>'form-control totaladd','type'=>'text','label'=>false]);
+				echo $this->Form->input('value1',['class'=>'form-control totaladd','type'=>'text','label'=>false,'placeholder'=>'Currency Value']);
 				?>
 				
 				</td>
@@ -527,8 +528,13 @@ $(document).ready(function(){
 			},
 			currency: {
 				required: true
+			},
+			discount:{
+				number: true
+			},
+			freight_amount:{
+				number: true
 			}
-			
 			
 		},
 		submitHandler: function () {
