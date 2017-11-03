@@ -882,7 +882,7 @@ class CertificateOriginsController extends AppController
 				
 				$this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
 				$this->request->data['date_current']=date('Y-m-d');
-				$this->request->data['company_id']=$user_id;
+				//$this->request->data['company_id']=$user_id;
 				$files=$this->request->data['file']; 
 				if(!empty($files[0]['name'])){
 					$this->request->data['invoice_attachment']='true';
@@ -905,10 +905,10 @@ class CertificateOriginsController extends AppController
 					$this->request->data['coo_email_approvals'][$i]['status']=0;	
 					$i++;	
 				} */
-				 	pr($certificate_origin_good); 	
+				 	 	
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 			
-				pr($certificate_origin_good); exit;
+				
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 				{ 
 						
@@ -930,7 +930,7 @@ class CertificateOriginsController extends AppController
 				 
 				$this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
 				$this->request->data['date_current']=date('Y-m-d');
-				$this->request->data['company_id']=$user_id;
+				//$this->request->data['company_id']=$user_id;
 				$files=$this->request->data['file'];
 				
 				if(!empty($files[0]['name'])){
@@ -1014,7 +1014,7 @@ class CertificateOriginsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
 			$this->request->data['date_current']=date('Y-m-d');
-			$this->request->data['company_id']=$user_id;
+			//$this->request->data['company_id']=$user_id;
 			
 			
 			$files=$this->request->data['file']; 
