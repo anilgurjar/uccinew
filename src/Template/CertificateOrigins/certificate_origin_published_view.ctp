@@ -145,6 +145,7 @@ use Cake\Filesystem\File;
 							<td style="text-align:center;">'.$certificate_goods->quantity.' </td>
 							<td style="text-align:center;"> '.$certificate_goods->value.'</td></tr>';
 						}
+						if($show_amount=='Yes'){
 						$total_before_discount=$certificate_origin->total_before_discount;
 						 if($total_before_discount>0){
 							?>
@@ -226,7 +227,7 @@ use Cake\Filesystem\File;
 						<td style="text-align:left;" colspan="6" ><span >Amount Chargeable(in words):- <?php echo $certificate_origin->currency ?> &nbsp; </span>
 						<strong><?= ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($rupees)])).$paisa_text  ?>  Only.</strong></td>
 						</tr>
-						<?php } ?>
+						<?php } } ?>
 						
 						</tbody>
 					</table>
