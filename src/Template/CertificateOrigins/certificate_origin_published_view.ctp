@@ -112,13 +112,13 @@ use Cake\Filesystem\File;
 					</div>
 				</div>
 				<div class="col-md-12">
-					<?php if(!empty($certificate_origin->verify_remarks)){ ?>	
+					<?php if(!empty($certificate_origin->authorised_remarks)){ ?>	
 					<div class="col-sm-6 ">
 						<div class="form-group">
 							<label class="col-sm-4 control-label" style="color:red">Rturn Reason</label>
 							<div class="col-sm-8">
 							<?php
-								echo $certificate_origin->verify_remarks;
+								echo $certificate_origin->authorised_remarks;
 								 ?> 
 						   </div>
 						</div>
