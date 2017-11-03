@@ -150,7 +150,19 @@ input[type="radio"]
 						</div>	
 					</div>	
 				
+				<?php if(!empty($certificate_origin_good->verify_remarks)){ ?>	
+					<div class="col-sm-6 ">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Remarks</label>
+							<div class="col-sm-8">
+							<?php
+								echo $certificate_origin_good->verify_remarks;
+								 ?> 
+						   </div>
+						</div>
+					</div>
 					
+				<?php } ?>
 					
 				</div>
 				
