@@ -904,7 +904,7 @@ class CertificateOriginsController extends AppController
 				} */
 				 		
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
-				pr($certificate_origin_good);   exit;
+				//pr($certificate_origin_good);   exit;
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 				{ 
 					$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
