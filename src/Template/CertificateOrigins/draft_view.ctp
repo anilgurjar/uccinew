@@ -389,6 +389,22 @@ $(document).ready(function(){
 	$(document).on('keyup','input.totaladd',function() {
 		calculation();
 		calculate2();
+		
+		$("[name^=certificate_origin_goods]").each(function () {
+			if(!$(this).hasClass('marks'))
+			{
+				$(this).rules("add", {
+					required: true
+				});
+			}
+			if($(this).hasClass('Value'))
+			{
+				$(this).rules("add", {
+					number: true
+				});
+			}
+		});
+		
 	});
 	//--
 	$('input').prop('readonly', true);
@@ -403,6 +419,7 @@ $(document).ready(function(){
 	$('#edit_button').on('click',function(){
 		$('input').prop('readonly', false);
 		$('textarea').prop('readonly', false);
+		
 	});
 	//--
 	function calculate2(){  
@@ -484,7 +501,7 @@ $(document).ready(function(){
 				});
 			}
 		});
-			
+		
 		
 	});
 	// Remove Row
