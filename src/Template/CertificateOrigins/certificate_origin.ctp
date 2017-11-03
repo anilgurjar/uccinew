@@ -231,7 +231,7 @@ input[type="radio"]
 								
 								<td>
 								<?php
-								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control  totaladd','type'=>'text','placeholder'=>'Currency Value']);
+								 echo $this->Form->input('certificate_origin_goods[0][value]',['label'=>false,'class'=>'form-control  totaladd Value','type'=>'text','placeholder'=>'Currency Value']);
 								?>
 								
 								</td>
@@ -331,7 +331,7 @@ input[type="radio"]
 				?>
 				<td>
 				<?php
-				echo $this->Form->input('value1',['class'=>'form-control totaladd','type'=>'text','label'=>false,'placeholder'=>'Currency Value']);
+				echo $this->Form->input('value1',['class'=>'form-control totaladd Value','type'=>'text','label'=>false,'placeholder'=>'Currency Value']);
 				?>
 				
 				</td>
@@ -439,6 +439,7 @@ $(document).ready(function(){
 				$(this).find('input').attr('name','certificate_origin_goods['+i+']['+name[j]+']');
 				$(this).find('input').attr('id','certificate-origin-goods-'+i+'-'+name[j]);
 				
+				
 				j++;
 			});
 			
@@ -451,6 +452,12 @@ $(document).ready(function(){
 			{
 				$(this).rules("add", {
 					required: true
+				});
+			}
+			if($(this).hasClass('Value'))
+			{
+				$(this).rules("add", {
+					number: true
 				});
 			}
 		});

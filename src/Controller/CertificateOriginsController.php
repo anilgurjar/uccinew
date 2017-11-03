@@ -827,11 +827,11 @@ class CertificateOriginsController extends AppController
 			
 			$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 			$i=0;
-			foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
+			/* foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
 				$this->request->data['coo_email_approvals'][$i]['user_id']=$CertificateAuthorized->user_id;	
 				$this->request->data['coo_email_approvals'][$i]['status']=0;	
 				$i++;	
-			}
+			} */
 			$this->request->data['status'] = 'draft';			
 			$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 			 	
@@ -871,8 +871,10 @@ class CertificateOriginsController extends AppController
             'contain' => []
         ]);
 		$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$id])->contain(['Companies','CertificateOriginGoods'])->toArray();
+		foreach($certificate_origins as $certificate_origin){
+			$oldimage=$certificate_origin['invoice_attachment'];
+		}
 		
-		 
         if ($this->request->is(['patch', 'post', 'put'])) {
 			
 			if(isset($this->request->data['certificate_origin_draft']))
@@ -884,7 +886,7 @@ class CertificateOriginsController extends AppController
 				if(!empty($files[0]['name'])){
 					$this->request->data['invoice_attachment']='true';
 				}else{
-					$this->request->data['invoice_attachment']='false';
+					$this->request->data['invoice_attachment']=$oldimage;
 				}
 				
 				$amount=200;
@@ -906,12 +908,14 @@ class CertificateOriginsController extends AppController
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 				{ 
-					$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
-					$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice/'.$data->id;
-					foreach($files as $file){
-					  move_uploaded_file($file['tmp_name'], $file_path.'/' . $file['name']);
+					
+						$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
+						$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice/'.$data->id;
+						foreach($files as $file){
+						  move_uploaded_file($file['tmp_name'], $file_path.'/' . $file['name']);
 
-					}
+						}
+					
 					$this->Flash->success(__('Your certificate origin good has been saved.'));
 					return $this->redirect(['action' => 'certificate-origin-draft-view']);
 					 
@@ -928,7 +932,7 @@ class CertificateOriginsController extends AppController
 				if(!empty($files[0]['name'])){
 					$this->request->data['invoice_attachment']='true';
 				}else{
-					$this->request->data['invoice_attachment']='false';
+					$this->request->data['invoice_attachment']=$oldimage;
 				}
 				
 				$amount=200;
