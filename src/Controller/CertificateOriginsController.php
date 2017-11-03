@@ -932,7 +932,7 @@ class CertificateOriginsController extends AppController
 				if(!empty($files[0]['name'])){
 					$this->request->data['invoice_attachment']='true';
 				}else{
-					$this->request->data['invoice_attachment']='false';
+					$this->request->data['invoice_attachment']=$oldimage;
 				}
 				
 				$amount=200;
