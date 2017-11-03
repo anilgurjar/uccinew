@@ -937,7 +937,7 @@ class CertificateOriginsController extends AppController
 				
 				$this->request->data['payment_amount']=200;
 				$this->request->data['payment_tax_amount']=$Tax;
-				$this->request->data['status']='published';
+				$this->request->data['status']='draft';
 				$this->request->data['coo_email']='yes';
 				
 				$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
@@ -960,7 +960,15 @@ class CertificateOriginsController extends AppController
 					 
 					$paymented=$this->CertificateOrigins->find('all')
 						->where(['id'=>$id,'payment_status'=>'success'])->count();
-					if($paymented>0){	
+					if($paymented>0){
+						$query = $this->CertificateOrigins->query();
+							$query->update()
+							->set(['status' => 'published'])
+							->where(['id' => $data->id])
+							->execute();
+
+
+					
 						//return $this->redirect('https://test.payu.in/_payment');
 						return $this->redirect(['action' => 'certificate-origin-draft-view']);
 					}
