@@ -563,8 +563,7 @@ class CompaniesController extends AppController
 							->set(['amount'=>$amount,'tax_amount'=>$tax_amount,'total_amount'=>$total_amount,'master_financial_year_id'=>$master_financial_year_id])
 							->where(['company_id' => $find_id])
 							->execute();
-						pr($co_tax_amounts); exit;
-			
+						
 						
 						foreach($co_tax_amounts as $co_tax_amoun){
 
@@ -617,6 +616,7 @@ class CompaniesController extends AppController
 					}
 				//$Companies=$this->Companies->find()->where(['id'=>$find_id])->contain(['Users','CoRegistrations'=>['CoTaxAmounts']]);
 				$Companies=$this->Companies->get($find_id, ['contain'=>['Users','CoRegistrations'=>['CoTaxAmounts']]]);
+				pr($Companies); exit;
 				 $Companies_datas = base64_encode($Companies);
 				 
 				 $Companies_data = json_encode($Companies_datas);
