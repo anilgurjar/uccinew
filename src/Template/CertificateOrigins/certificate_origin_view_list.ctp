@@ -3,9 +3,24 @@
   <!-- Horizontal Form -->
   <div class="box box-primary">
 	<div class="box-header with-border no-print">
-	<center>
-	  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN</strong></h3>
-	</center>
+		<div class="col-md-2">
+			<?php	 echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control exporter','name'=>'exporter','type'=>'text','placeholder'=>'Exporter Name']);  ?>
+		</div>	
+		<div class="col-md-2">
+			<?php	 echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
+		</div>	
+		<div class=" col-md-2  input-group input-large date-picker input-daterange " data-date-format="dd-mm-yyyy">
+			<?php echo $this->Form->input('from', ['label' => false,'class'=>'form-control','placeholder'=>'Date From']); ?>
+			<span class="input-group-addon" style="background-color:e5e5e5 !important;">
+			To </span>
+			<?php echo $this->Form->input('to', ['label' => false,'class'=>'form-control','placeholder'=>'Date To']); ?>
+		</div>
+		<input type="button" class="go" value="GO">
+	</div>
+	<div class="box-header with-border no-print">
+		<center>
+		  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN</strong></h3>
+		</center>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
@@ -53,3 +68,22 @@
     </div>
   </div>
 </div>
+<?php
+echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js');
+
+?>
+<script>
+$(document).ready(function(){ 
+alert();
+	
+	$('.go').click(function(){
+    alert("The paragraph was clicked.");
+	});	
+		
+	
+});
+</script>	
+	
+ 
+				
+				

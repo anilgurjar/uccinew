@@ -1,10 +1,11 @@
 <div>
 <p> Dear <?php echo $member_name; if(empty($member_name)){ echo"Sir";  } ?>,</p>
-<p>Please find below login details for further proceedings which signifies your user name and password details.
+<p>Thanking you for becoming non-member-exporter. you can know generate certificate of origins by accessing your account with below mention credentials.
 
 </p>
 
 <p>
+URL : http://ucciudaipur.com/app/users/login
 <strong>
 Username : <?php echo $username; ?> <br/>
 Password:  <?php echo $password; ?> 
@@ -14,7 +15,7 @@ Password:  <?php echo $password; ?>
 </p>
 
 
-<p>The below  process are outlined particularly for users who wish to upload a documents</p>
+<p>In process to get the certificate of origin approved from the UCCI, you need to upload and submit the hard copy of below documents at registered address of UCCI.</p>
 
 <p>
 1. First, you will have  to upload your documents to company documents zone as directed above.<br/>
