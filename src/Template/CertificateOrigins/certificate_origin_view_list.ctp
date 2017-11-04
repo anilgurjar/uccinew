@@ -2,21 +2,26 @@
 <div class="col-md-12">
   <!-- Horizontal Form -->
   <div class="box box-primary">
-	<div class="box-header with-border no-print">
-		<div class="col-md-2">
-			<?php	 echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control exporter','name'=>'exporter','type'=>'text','placeholder'=>'Exporter Name']);  ?>
+	<!-- <div class="box-header with-border no-print ">
+		<div class="col-sm-2">
+			<?php	// echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control exporter','name'=>'exporter','type'=>'text','placeholder'=>'Exporter Name']);  ?>
 		</div>	
-		<div class="col-md-2">
-			<?php	 echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
+		<div class="col-sm-2">
+			<?php	 //echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
 		</div>	
-		<div class=" col-md-2  input-group input-large date-picker input-daterange " data-date-format="dd-mm-yyyy">
-			<?php echo $this->Form->input('from', ['label' => false,'class'=>'form-control','placeholder'=>'Date From']); ?>
-			<span class="input-group-addon" style="background-color:e5e5e5 !important;">
-			To </span>
-			<?php echo $this->Form->input('to', ['label' => false,'class'=>'form-control','placeholder'=>'Date To']); ?>
+		<div class=" col-sm-2  " data-date-format="dd-mm-yyyy">
+			<div class=" input-group input-large  input-daterange date-picker">	
+				<?php //echo $this->Form->input('from', ['label' => false,'class'=>'form-control ','placeholder'=>'Date From']); ?>
+				<span class="input-group-addon" style="background-color:e5e5e5 !important;">
+				To </span>
+				<?php //echo $this->Form->input('to', ['label' => false,'class'=>'form-control ','placeholder'=>'Date To']); ?>
+			</div>	
 		</div>
-		<input type="button" class="go" value="GO">
-	</div>
+		<div class="col-sm-2">
+			<input type="button" class="go" value="GO">
+		</div>
+		
+	</div> --->
 	<div class="box-header with-border no-print">
 		<center>
 		  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN</strong></h3>
@@ -74,7 +79,7 @@ echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js');
 ?>
 <script>
 $(document).ready(function(){ 
-alert();
+//alert();
 	
 	$('.go').click(function(){
     alert("The paragraph was clicked.");

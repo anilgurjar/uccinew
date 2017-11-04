@@ -832,7 +832,14 @@ class CertificateOriginsController extends AppController
 				$this->request->data['coo_email_approvals'][$i]['status']=0;	
 				$i++;	
 			} */
-			$this->request->data['status'] = 'draft';			
+			$this->request->data['status'] = 'draft';
+			$currency_type=$this->request->data['currency'];
+			$currency_units=$this->CertificateOrigins->MasterCurrencies->find()->where(['currency_type'=>$currency_type]);	
+			foreach($currency_units as $currency_unit){
+				$currency_unit = $currency_unit['fractional_unit'];
+			}
+			$this->request->data['currency_unit'] = $currency_unit;
+			
 			$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 			 	
 			if ($data=$this->CertificateOrigins->save($certificate_origin_good))
@@ -905,7 +912,13 @@ class CertificateOriginsController extends AppController
 					$this->request->data['coo_email_approvals'][$i]['status']=0;	
 					$i++;	
 				} */
-				 	 	
+				$currency_type=$this->request->data['currency'];
+				$currency_units=$this->CertificateOrigins->MasterCurrencies->find()->where(['currency_type'=>$currency_type]);	
+				foreach($currency_units as $currency_unit){
+					$currency_unit = $currency_unit['fractional_unit'];
+				}
+				
+				$this->request->data['currency_unit'] = $currency_unit;	 	
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 			
 				
@@ -955,7 +968,13 @@ class CertificateOriginsController extends AppController
 					$this->request->data['coo_email_approvals'][$i]['status']=0;	
 					$i++;	
 				} */
-				 	
+				$currency_type=$this->request->data['currency'];
+				$currency_units=$this->CertificateOrigins->MasterCurrencies->find()->where(['currency_type'=>$currency_type]);	
+				foreach($currency_units as $currency_unit){
+					$currency_unit = $currency_unit['fractional_unit'];
+				}
+			
+				$this->request->data['currency_unit'] = $currency_unit;	
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 				
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
