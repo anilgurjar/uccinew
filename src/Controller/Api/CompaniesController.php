@@ -616,7 +616,7 @@ class CompaniesController extends AppController
 					}
 				//$Companies=$this->Companies->find()->where(['id'=>$find_id])->contain(['Users','CoRegistrations'=>['CoTaxAmounts']]);
 				$Companies=$this->Companies->get($find_id, ['contain'=>['Users','CoRegistrations'=>['CoTaxAmounts']]]);
-				pr($Companies); exit;
+				
 				 $Companies_datas = base64_encode($Companies);
 				 
 				 $Companies_data = json_encode($Companies_datas);
