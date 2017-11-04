@@ -524,7 +524,6 @@ class CompaniesController extends AppController
 			$total_amount=$this->request->data['co_registrations'][0]['total_amount'];
 			$master_financial_year_id=$this->request->data['co_registrations'][0]['master_financial_year_id'];
 			$co_tax_amounts=$this->request->data['co_registrations'][0]['co_tax_amounts'];
-			pr($co_tax_amounts); exit;
 			
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
 			if($find_id_Companies>0){
@@ -564,7 +563,8 @@ class CompaniesController extends AppController
 							->set(['amount'=>$amount,'tax_amount'=>$tax_amount,'total_amount'=>$total_amount,'master_financial_year_id'=>$master_financial_year_id])
 							->where(['company_id' => $find_id])
 							->execute();
-						
+						pr($co_tax_amounts); exit;
+			
 						
 						foreach($co_tax_amounts as $co_tax_amoun){
 
