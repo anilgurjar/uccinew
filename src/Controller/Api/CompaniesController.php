@@ -525,7 +525,6 @@ class CompaniesController extends AppController
 			$master_financial_year_id=$this->request->data['co_registrations'][0]['master_financial_year_id'];
 			$co_tax_amounts=$this->request->data['co_registrations'][0]['co_tax_amounts'];
 			
-			
 			$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name])->count();
 			if($find_id_Companies>0){
 				$find_id_Companies=$this->Companies->find()->where(['company_organisation LIKE'=>$organisation_name]);
@@ -541,7 +540,7 @@ class CompaniesController extends AppController
 				
 				$query = $this->Companies->query();
 				$query->update()
-					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'form_number'=>$form_numbers,'address'=>$address,'office_telephone'=>$office_telephone,'non_memeber_exporter_email'=>'yes','nationality'=>$nationality])
+					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'form_number'=>$form_numbers,'address'=>$address,'office_telephone'=>$office_telephone,'non_member_exporter_email'=>'yes','nationality'=>$nationality])
 					->where(['id' => $find_id])
 					->execute();
 				$query = $this->Companies->Users->query();
@@ -617,13 +616,14 @@ class CompaniesController extends AppController
 					}
 				//$Companies=$this->Companies->find()->where(['id'=>$find_id])->contain(['Users','CoRegistrations'=>['CoTaxAmounts']]);
 				$Companies=$this->Companies->get($find_id, ['contain'=>['Users','CoRegistrations'=>['CoTaxAmounts']]]);
+				
 				 $Companies_datas = base64_encode($Companies);
 				 
 				 $Companies_data = json_encode($Companies_datas);
 				 
 				 
-				$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
-				//$this->redirect('http://www.ucciudaipur.com/nonmembertesting?tyqazwersdfxasd='.$Companies_data);
+				//$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+				$this->redirect('http://www.ucciudaipur.com/nonmembertesting?tyqazwersdfxasd='.$Companies_data);
 				
 			
 				
@@ -643,8 +643,8 @@ class CompaniesController extends AppController
 				 $Companies_data = json_encode($Companies_datas);
 				 
 				 
-				$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
-				//$this->redirect('http://www.ucciudaipur.com/nonmembertesting?tyqazwersdfxasd='.$Companies_data);
+				//$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+				$this->redirect('http://www.ucciudaipur.com/nonmembertesting?tyqazwersdfxasd='.$Companies_data);
 				
 				// return $this->redirect();
 				

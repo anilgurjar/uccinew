@@ -91,7 +91,7 @@ use Cake\Filesystem\File;
 						<div class="col-sm-12 value_padding">
 							<label class="col-sm-4" style="color:red;">Verify By</label>
 							<div class="col-sm-8">
-								
+								<?php echo $verify_member; ?>
 							</div>
 						</div>
 					</div>
