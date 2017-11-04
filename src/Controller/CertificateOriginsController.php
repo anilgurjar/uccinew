@@ -170,7 +170,7 @@ class CertificateOriginsController extends AppController
 					  $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					  $email_to="rohitkumarjoshi43@gmail.com";
+					 // $email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -648,8 +648,8 @@ class CertificateOriginsController extends AppController
 			
 			$attachments='';
 			$attachments[]='coo_payment_receipt.pdf';
-			$sub='Payment Successfully submited';
-			$email_to='rohitkumarjoshi43@gmail.com';
+			$sub='Payment Successfully submitted';
+			//$email_to='rohitkumarjoshi43@gmail.com';
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
@@ -726,7 +726,7 @@ class CertificateOriginsController extends AppController
 	public function CooSendEmail()
     {
 	
-		$send_emails=$this->CertificateOrigins->CooEmailApprovals->find()->where(['status'=>0])->contain(['Users','CertificateOrigins'=>['Companies'=>['Users']]])->limit(5)->toArray();
+		/* $send_emails=$this->CertificateOrigins->CooEmailApprovals->find()->where(['status'=>0])->contain(['Users','CertificateOrigins'=>['Companies'=>['Users']]])->limit(5)->toArray();
 		
 		$email = new Email();
 		$email->transport('SendGrid');
@@ -792,7 +792,7 @@ class CertificateOriginsController extends AppController
 
 					 }		 
 	  }
-	 exit;
+	 exit; */
 		
 	}
 	
@@ -981,7 +981,8 @@ class CertificateOriginsController extends AppController
 						return $this->redirect(['action' => 'certificate-origin-draft-view']);
 					}
 					else{
-						return $this->redirect(['action' => 'paymentTest',$data->id]);
+						//return $this->redirect(['action' => 'paymentTest',$data->id]);
+						return $this->redirect(['action' => 'payment',$data->id]);
 					}
 					$this->Flash->success(__('Your certificate origin good has been saved.'));
 				}
@@ -1170,7 +1171,7 @@ class CertificateOriginsController extends AppController
 					$sub="Certificate of origin is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					if(!empty($email_to)){		
+					/* if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
 								->to($email_to)
@@ -1186,7 +1187,7 @@ class CertificateOriginsController extends AppController
 								echo 'Exception : ',  $e->getMessage(), "\n";
 
 							} 
-						}
+						} */
 				}	
 					$this->Flash->success(__('Certificate of origin has been verified.'));
 					return $this->redirect(['action' => 'certificate-origin-view-published']);
@@ -1217,8 +1218,8 @@ class CertificateOriginsController extends AppController
 						$mailsendtoemail=$CertificateOrigin['email'];
 						$sub="Certificate of origin is Not Varified";
 						$from_name="UCCI";
-						//$email_to=trim($mailsendtoemail,' ');
-						$email_to="anilgurjer371@gmail.com";
+						$email_to=trim($mailsendtoemail,' ');
+						//$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])

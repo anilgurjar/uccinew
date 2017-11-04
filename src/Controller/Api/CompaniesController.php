@@ -381,7 +381,7 @@ class CompaniesController extends AppController
 			$attachments[]='non_member_export_receipt.pdf';
 			$sub='Non Member Registration Fees';
 			
-				$email_to='rohitkumarjoshi43@gmail.com';
+				//$email_to='rohitkumarjoshi43@gmail.com';
 				$to=explode('@',$to);
 
 				$password=uniqid();
@@ -469,7 +469,7 @@ class CompaniesController extends AppController
         	$this->set('_serialize', ['success', 'error', 'taxations','master_membership_fees','master_financial_year_id']);
 	}
 
-	public function nonmemberexporter()
+	public function nonmemberexportertemp()
 	{
 	
 		$Companies=$this->Companies->newEntity();
@@ -501,7 +501,7 @@ class CompaniesController extends AppController
 	
 	}
 	
-	public function nonmemberexportertemp(){
+	public function nonmemberexporter(){
 		$Companies=$this->Companies->newEntity();
 		
 		
@@ -622,8 +622,8 @@ class CompaniesController extends AppController
 				 $Companies_data = json_encode($Companies_datas);
 				 
 				 
-				//$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
-				$this->redirect('http://www.ucciudaipur.com/nonmembertesting?tyqazwersdfxasd='.$Companies_data);
+				$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+				//$this->redirect('http://www.ucciudaipur.com/nonmembertesting?tyqazwersdfxasd='.$Companies_data);
 				
 			
 				
@@ -643,8 +643,8 @@ class CompaniesController extends AppController
 				 $Companies_data = json_encode($Companies_datas);
 				 
 				 
-				//$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
-				$this->redirect('http://www.ucciudaipur.com/nonmembertesting?tyqazwersdfxasd='.$Companies_data);
+				$this->redirect('http://www.ucciudaipur.com/getway?tyqazwersdfxasd='.$Companies_data);
+				//$this->redirect('http://www.ucciudaipur.com/nonmembertesting?tyqazwersdfxasd='.$Companies_data);
 				
 				// return $this->redirect();
 				
