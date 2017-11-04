@@ -88,6 +88,12 @@ use Cake\Filesystem\File;
 								<?= $certificate_origin->other_info ?>
 							</div>
 						</div>
+						<div class="col-sm-12 value_padding">
+							<label class="col-sm-4" style="color:red;">Verify By</label>
+							<div class="col-sm-8">
+								<?= $certificate_origin->other_info ?>
+							</div>
+						</div>
 					</div>
 					<div class="col-sm-6 value_padding">
 						<div class="col-sm-12 value_padding">
@@ -110,6 +116,8 @@ use Cake\Filesystem\File;
 						</div>
 					</div>
 				</div>
+				
+				
 				<div class="col-sm-12">
 					<div class="table-responsive no-padding">
 					<table class="table table-bordered" id="parant_table" style="width:100%;">

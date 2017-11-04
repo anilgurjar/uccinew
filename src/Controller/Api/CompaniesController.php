@@ -469,7 +469,7 @@ class CompaniesController extends AppController
         	$this->set('_serialize', ['success', 'error', 'taxations','master_membership_fees','master_financial_year_id']);
 	}
 
-	public function nonmemberexportertemp()
+	public function nonmemberexporter()
 	{
 	
 		$Companies=$this->Companies->newEntity();
@@ -501,7 +501,7 @@ class CompaniesController extends AppController
 	
 	}
 	
-	public function nonmemberexporter(){
+	public function nonmemberexportertemp(){
 		$Companies=$this->Companies->newEntity();
 		
 		
