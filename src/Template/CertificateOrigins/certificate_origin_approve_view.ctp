@@ -200,7 +200,7 @@ use Cake\Filesystem\File;
 								
 								$paisa=(int)$grand_total[1];
 								if(!empty($paisa)){
-									$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
+									$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).$certificate_origin->currency_unit;
 								}
 							}else{ $paisa_text=""; }
 						
@@ -221,7 +221,7 @@ use Cake\Filesystem\File;
 								
 								$paisa=(int)$grand_total[1];
 								if(!empty($paisa)){
-									$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
+									$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).$certificate_origin->currency_unit;
 								}
 							}else{ $paisa_text=""; }
 						?>

@@ -374,8 +374,8 @@ class CertificateOriginsController extends AppController
 				}
 				$amount=$payment_amount+$payment_tax_amount;
 				$act_amount=$amount;
-				$this->request->data['amount_type']='Cash';
-				$this->request->data['narration']=' Certificate of Origin';
+				$this->request->data['amount_type']='Payumoney';
+				$this->request->data['narration']='Certificate of Origin';
 				$this->request->data['tax_applicable']='Tax';
 				$this->request->data['basic_amount']=@$payment_amount;
 				$this->request->data['taxamount']=@$payment_tax_amount;
