@@ -31,6 +31,8 @@ $freight_amount = $data->freight_amount;
 $total_amount = $data->total_amount;
 $company_address = $data->company->address;
 $unit_name = $data->master_unit->unit_name;
+
+$currency_unit = $data->currency_unit;
 }
 
 $invoice_date = date('d-m-Y',strtotime($invoice_date));
@@ -417,7 +419,7 @@ text-align:center;
 					$grand_total[1]=str_pad($grand_total[1], 2, '0', STR_PAD_RIGHT);
 					$paisa=(int)$grand_total[1];
 					if(!empty($paisa)){
-						$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
+						$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).$currency_unit;
 					}
 				}else{ $paisa_text=""; }
 			
@@ -441,7 +443,7 @@ text-align:center;
 				
 				$paisa=(int)$grand_total[1];
 				if(!empty($paisa)){
-					$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).' Paisa';
+					$paisa_text=' and ' .ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total[1])])).$currency_unit;
 				}
 			}else{ $paisa_text=""; }
 		

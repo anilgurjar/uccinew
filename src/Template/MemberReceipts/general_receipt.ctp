@@ -105,7 +105,7 @@ padding-left: 0px;
 				<label id="member_id-error" class="error" for="member_id"></label>
 			</div>
 			
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-8">
 				<label>Mode of Payment</label>
 				
 					<?php
@@ -114,6 +114,7 @@ padding-left: 0px;
 					$options['Cheque No.'] ='Cheque';
 					$options['D.D. No.'] = 'D.D.';
 					$options['NEFT/RTGS'] = 'NEFT/RTGS';
+					$options['Payumoney'] = 'Payumoney';
 					
 				echo $this->Form->input('amount_type', array('templates' => ['radioWrapper' => '<div class="radio inline radio-div">{{label}}</div>'],'type' => 'radio','label' => false,'options' => $options,'value'=>'Cheque No.','hiddenField' => false)); ?>				
 				
@@ -137,7 +138,8 @@ padding-left: 0px;
 			
 			<?php echo $this->Form->input('cheque_no', ['label' => false,'placeholder'=>'No.','class'=>'form-control']); ?>
 			</div>
-
+			
+			
 			
 			<div class="form-group col-sm-4 display-data  neft_data">
 				<label class="cheque">Cheque Date</label>
@@ -630,13 +632,13 @@ var x=$(this).val();
 			$('input[name="cheque_date"]').attr('disabled','disabled');
 			$('.display-data').css('display','none');
 		}
-		if(amount_type=='NEFT/RTGS')
+		if(amount_type=='NEFT/RTGS' || amount_type=='Payumoney')
 		{
 			$('select[name="bank_id"]').removeAttr('disabled');
 			$('input[name="cheque_date"]').removeAttr('disabled');
 			$('.neft_data').css('display','block');
 		}
-		if(amount_type=='Cheque No.' || amount_type=='D.D. No.' || amount_type=='NEFT/RTGS')
+		if(amount_type=='Cheque No.' || amount_type=='D.D. No.' || amount_type=='NEFT/RTGS' || amount_type=='Payumoney')
 		{
 			if(amount_type=='Cheque No.')
 			{
@@ -650,7 +652,7 @@ var x=$(this).val();
 				$('.neft').css('display','none');
 				$('.dd').css('display','block');
 			}
-			if(amount_type=='NEFT/RTGS')
+			if(amount_type=='NEFT/RTGS' || amount_type=='Payumoney')
 			{
 				$('.cheque').css('display','none');
 				$('.dd').css('display','none');
