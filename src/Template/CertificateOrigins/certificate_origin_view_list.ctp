@@ -2,26 +2,28 @@
 <div class="col-md-12">
   <!-- Horizontal Form -->
   <div class="box box-primary">
-	<!-- <div class="box-header with-border no-print ">
+	 <?php if($role_id==1 or $role_id==4 ){  ?>
+	<div class="box-header with-border no-print ">
 		<div class="col-sm-2">
-			<?php	// echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control exporter','name'=>'exporter','type'=>'text','placeholder'=>'Exporter Name']);  ?>
+			<?php	 echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control exporter','name'=>'exporter','type'=>'text','placeholder'=>'Exporter Name']);  ?>
 		</div>	
 		<div class="col-sm-2">
-			<?php	 //echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
+			<?php echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
 		</div>	
 		<div class=" col-sm-2  " data-date-format="dd-mm-yyyy">
 			<div class=" input-group input-large  input-daterange date-picker">	
-				<?php //echo $this->Form->input('from', ['label' => false,'class'=>'form-control ','placeholder'=>'Date From']); ?>
+				<?php  echo $this->Form->input('from', ['label' => false,'class'=>'form-control from','format'=>"yyyy/mm/dd",'placeholder'=>'Date From']); ?>
 				<span class="input-group-addon" style="background-color:e5e5e5 !important;">
 				To </span>
-				<?php //echo $this->Form->input('to', ['label' => false,'class'=>'form-control ','placeholder'=>'Date To']); ?>
+				<?php    echo $this->Form->input('to', ['label' => false,'class'=>'form-control to ','format'=>"yyyy/mm/dd",'placeholder'=>'Date To']); ?>
 			</div>	
 		</div>
 		<div class="col-sm-2">
 			<input type="button" class="go" value="GO">
 		</div>
 		
-	</div> --->
+	</div> 
+	 <?php   }  ?>
 	<div class="box-header with-border no-print">
 		<center>
 		  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN</strong></h3>
@@ -40,7 +42,7 @@
 							<th>Sr.No.</th><th>Exporter</th><th>Origin No</th><th>Date</th><th>Consignee</th><th>Invoice No.</th><th>Invoice Date</th><th>Manufacturer</th><th>Despatched by</th><th>View</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody class="show_div">
 						
 									
 					<?php $sr=0; foreach ($certificate_origins as $certificate_origin): ?>
@@ -82,9 +84,29 @@ $(document).ready(function(){
 //alert();
 	
 	$('.go').click(function(){
-    alert("The paragraph was clicked.");
+		var exporter = $('.exporter').val();
+		var originno = $('.origin_no').val();
+		var datefrom = $('.from').val();
+		var dateto = $('.to').val();
+		
+		if(exporter !=''  || originno!='' || datefrom!='' || dateto!=''){
+			var url="<?php echo $this->Url->build(['controller'=>'CertificateOrigins','action'=>'filterdata']);?>";
+			url=url+'?exporter='+exporter+'&originno='+originno+'&datefrom='+datefrom+'&dateto='+dateto;
+			alert(url);
+			$.ajax({ 
+					url:url,
+					type:"GET",
+				}).done(function(response){
+					alert(response);
+					$('.show_div').html(response);
+					
+				});
+				
+		}
+	
 	});	
 		
+	
 	
 });
 </script>	

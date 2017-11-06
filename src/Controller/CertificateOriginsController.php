@@ -88,6 +88,7 @@ class CertificateOriginsController extends AppController
 	{
 		$this->viewBuilder()->layout('index_layout');
 		$company_id=$this->Auth->User('company_id'); 
+		
 		$Companies=$this->CertificateOrigins->Companies->get($company_id);
 		
 		$role_id=$Companies->role_id;
@@ -97,8 +98,8 @@ class CertificateOriginsController extends AppController
 			 $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved'])->order(['CertificateOrigins.origin_no'=>'DESC']);
 		   }else{
 			  $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved','company_id'=>$company_id])->order(['CertificateOrigins.origin_no'=>'DESC']); 
-		   }
-       $this->set(compact('certificate_origins'));
+		   }  
+       $this->set(compact('certificate_origins','role_id'));
 	}
 	public function certificateOriginView()
     {
@@ -872,6 +873,77 @@ class CertificateOriginsController extends AppController
 			 
 		 
 	}
+	
+	
+	
+	
+	public function filterdata(){
+		$exporter=$this->request->query['exporter']; 
+		$originno=$this->request->query['originno'];
+		$datefrom=$this->request->query['datefrom']; 
+		$dateto=$this->request->query['dateto'];
+		$datefrom=date('y-m-d', strtotime($datefrom));
+		$dateto=date('y-m-d', strtotime($dateto));
+		
+		if(!empty($exporter)){
+			$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter])->order(['CertificateOrigins.id'=>'DESC']);
+			
+		}
+		else if(!empty($exporter) && !empty($originno)){
+			$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter,'origin_no '=>$originno])->order(['CertificateOrigins.id'=>'DESC']);
+			
+		}
+		else if(!empty($originno)){
+			$Users=$this->CertificateOrigins->find()->where(['origin_no '=>$originno])->order(['CertificateOrigins.id'=>'DESC']);
+			
+		}
+		else if(!empty($datefrom) && !empty($dateto)){
+			$Users=$this->CertificateOrigins->find()->where(['CertificateOrigins.invoice_date BETWEEN :start AND :end'])
+				->bind(':start', $datefrom, 'date')
+				->bind(':end',   $dateto, 'date')
+				->order(['CertificateOrigins.id'=>'DESC']);
+			
+		}
+		else if(!empty($datefrom) && !empty($dateto) && !empty($originno)){
+			$Users=$this->CertificateOrigins->find()->where(['CertificateOrigins.invoice_date BETWEEN :start AND :end','origin_no '=>$originno])
+				->bind(':start', $datefrom, 'date')
+				->bind(':end',   $dateto, 'date')
+				->order(['CertificateOrigins.id'=>'DESC']);
+			
+		}
+		else if(!empty($datefrom) && !empty($dateto) && !empty($exporter)){
+			$Users=$this->CertificateOrigins->find()->where(['CertificateOrigins.invoice_date BETWEEN :start AND :end','exporter '=>$exporter])
+				->bind(':start', $datefrom, 'date')
+				->bind(':end',   $dateto, 'date')
+				->order(['CertificateOrigins.id'=>'DESC']);
+			
+		}
+		
+		else{
+		$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter,'origin_no '=>$originno,'CertificateOrigins.invoice_date BETWEEN :start AND :end'])
+				->bind(':start', $datefrom, 'date')
+				->bind(':end',   $dateto, 'date')
+				->order(['CertificateOrigins.id'=>'DESC']);
+				
+		
+		}		
+		
+		$this->set(compact('Users'));
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//-- DRAFT View
 	public function draftView($id = null)
     {

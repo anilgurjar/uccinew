@@ -31,6 +31,7 @@ input[type="checkbox"]{
 						
 						$options[1] = 'Member Type';
 						$options[2] = 'Individual';
+						//$options[3] = 'Coo Invoice';
 						echo $this->Form->input('type_of_member', array('templates' => ['radioWrapper' => '<div class="radio inline radio-div">{{label}}</div>'],'type' => 'radio','label' => false,'options' => $options,'hiddenField' => false)); ?>
 						<label id="type-of-member-error" class="error" for="type_of_member" style="display: none;"></label>
 						<div id="member" style="display:none;">
