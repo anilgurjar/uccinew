@@ -147,7 +147,32 @@ input[type="radio"]
 								</tr>
 							</table>
 						</div>	
-					</div>	
+					</div>
+			<div class="col-md-12">
+				<div class="form-group">
+						<div class="col-sm-4 ">
+						  <label >Which process you want to use for payment ? </label>
+						   <br/>
+						  <?php
+						 $options['payumoney']='Payumoney';
+						 $options['couponcode']='Coupon Code';
+						echo $this->Form->input('payment_type', array('type' => 'radio','label' => false,'options' => $options,'value'=>'payumoney','hiddenField' => false,'class'=>'process')); 
+						
+						 ?>
+						 
+						</div>
+						
+						<div class="col-sm-4 show_pay" style="display:none;">
+						  <label >coupon code </label>
+						   <br/>
+						 <?php
+							echo $this->Form->input('coupon_code',['label'=>false,'class'=>'form-control','type'=>'text']);  
+							?> 
+						 
+						</div>
+				</div>
+			</div>
+					
 				</div>
 				<div class="col-md-12">
 					<?php if(!empty($certificate_origin_good->verify_remarks)){ ?>	
@@ -164,6 +189,7 @@ input[type="radio"]
 					
 				<?php } ?>
 				</div>
+			
 			
 			
 			
@@ -374,6 +400,17 @@ echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js');
 ?>
 <script>
 
+$(document).on('click','input[name="payment_type"]',function() {
+		var pay=$(this).val();
+		if(pay=='couponcode'){
+			$(".show_pay").show();
+			
+		}else{
+			$(".show_pay").hide();
+		}
+		
+});
+
 $(document).on('click','button.add_more',function() {
 		var row=$('#copy_row tbody').html();
 		$('#file_table tbody').append(row);
@@ -583,6 +620,9 @@ $(document).ready(function(){
 			},
 			freight_amount: {
 				number: true
+			},
+			coupon_code:{
+				required: true
 			}
 			
 		},
