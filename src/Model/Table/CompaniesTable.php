@@ -78,6 +78,9 @@ class CompaniesTable extends Table
         ]);
         $this->hasMany('BusinessVisas', [
             'foreignKey' => 'company_id'
+        ]); 
+		$this->hasMany('CooCoupons', [
+            'foreignKey' => 'company_id'
         ]);
         $this->hasMany('CertificateOrigins', [
             'foreignKey' => 'company_id'

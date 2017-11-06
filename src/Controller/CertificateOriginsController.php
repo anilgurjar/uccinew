@@ -1037,6 +1037,10 @@ class CertificateOriginsController extends AppController
 				$this->request->data['status']='draft';
 				$this->request->data['coo_email']='yes';
 				$this->request->data['verify_remarks']='';
+				$payment_type=$this->request->data['payment_type'];
+				$coupon_code=$this->request->data['coupon_code'];
+				
+				
 				$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 				$i=0;
 				/* foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
@@ -1052,7 +1056,7 @@ class CertificateOriginsController extends AppController
 			
 				$this->request->data['currency_unit'] = $currency_unit;	
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
-				
+
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 				{ 
 					$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
@@ -1061,6 +1065,50 @@ class CertificateOriginsController extends AppController
 					  move_uploaded_file($file['tmp_name'], $file_path.'/' . $file['name']);
 					}
 					 
+				if($payment_type=="couponcode"){
+					
+							$paymented=$this->CertificateOrigins->find('all')
+							->where(['id'=>$id,'payment_status'=>'success'])->count();
+						if($paymented>0){
+								$query = $this->CertificateOrigins->query();
+								$query->update()
+								->set(['status' => 'published'])
+								->where(['id' => $data->id])
+								->execute();
+
+
+
+								//return $this->redirect('https://test.payu.in/_payment');
+								return $this->redirect(['action' => 'certificate-origin-draft-view']);
+
+						}else{
+
+							$coo_company_id=$data->company_id;
+							$CooCoupons_count=$this->CertificateOrigins->Companies->CooCoupons->find()->where(['company_id'=>$coo_company_id,'coupon_code'=>$coupon_code,'flag'=>0])->count();
+							
+								if($CooCoupons_count>0){
+										$CooCoupons=$this->CertificateOrigins->Companies->CooCoupons->newEntity();
+										$CooCoupons_counts=$this->CertificateOrigins->Companies->CooCoupons->find()->where(['company_id'=>$coo_company_id,'coupon_code'=>$coupon_code,'flag'=>0])->toArray();
+										$coupon_id=$CooCoupons_counts[0]->id;
+										$CooCoupons->id=$coupon_id;
+										$CooCoupons->flag=1;
+										
+										$this->CertificateOrigins->Companies->CooCoupons->save($CooCoupons);
+										
+										$query = $this->CertificateOrigins->query();
+										$query->update()
+										->set(['status' => 'published','payment_status'=>'success'])
+										->where(['id' => $data->id])
+										->execute();
+										return $this->redirect(['action' => 'certificate-origin-draft-view']);
+										
+								}else{
+									return $this->redirect(['action' => 'certificate-origin-draft-view']);
+								}
+							
+						}	
+				}else{
+					
 					$paymented=$this->CertificateOrigins->find('all')
 						->where(['id'=>$id,'payment_status'=>'success'])->count();
 					if($paymented>0){
@@ -1079,6 +1127,8 @@ class CertificateOriginsController extends AppController
 						//return $this->redirect(['action' => 'paymentTest',$data->id]);
 						return $this->redirect(['action' => 'payment',$data->id]);
 					}
+				}	
+					
 					$this->Flash->success(__('Your certificate origin good has been saved.'));
 				}
 			
