@@ -12,7 +12,7 @@
 			<table class="table table-bordered" id="parant_table" style="width:100%;">
 				<thead>
 					<tr>
-						<th>Sr.No.</th><th>Company Name</th><th>Valid From</th><th>Valid To</th><th>Coupon Code</th>
+						<th>Sr.No.</th><th>Company Name</th><th>Valid From</th><th>Valid To</th><th>Coupon Code</th><th>Status</th>
 					</tr>
 				</thead>
 				<tbody class="show_div">
@@ -23,6 +23,13 @@
 					<td><?= h($cooCoupon->valid_from) ?></td>
 					<td><?= h($cooCoupon->valid_to) ?></td>
 					<td><?= h($cooCoupon->coupon_code) ?></td>
+					<td ><?php  
+						if($cooCoupon->flag==0){
+							echo "<strong style='color:#dd4b39;'>Unused</strong>";
+						}else{
+							echo "<strong style='color:#00a65a;'>Used</strong>";
+						}
+					?></td>
 					
 				</tr>
 				<?php 		endforeach; ?>
