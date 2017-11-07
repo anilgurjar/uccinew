@@ -479,8 +479,10 @@ Dated <br/> '.date('d-m-Y', strtotime($member_data->date)).'
 					$html.='</td>
 					<td colspan="4" align="right"> 
 					<strong style="font-size:15px;">For: Udaipur Chamber of Commerce & Industry </strong>
-					<br/> <br/> <br/> <br/>
+					<br/> <br/> 
 					<p style="width:100%; text-align:right; font-size: 15px;padding-right:8px;">
+					<img src="'.ROOT . DS  . 'webroot' . DS  .'images/digital_sign/signature.png" width="100px" height="50px" align="right" />
+					 <br/> <br/> <br/> 
 						Authorised Signatory</p>
 					</td>
 					
