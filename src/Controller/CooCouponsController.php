@@ -63,8 +63,8 @@ class CooCouponsController extends AppController
     {
 		$this->viewBuilder()->layout('index_layout');
         $cooCoupon = $this->CooCoupons->newEntity();
-        if ($this->request->is('post')) {
-            $cooCoupon = $this->CooCoupons->patchEntity($cooCoupon, $this->request->data);
+       if ($this->request->is('post')) {
+          
 			$validfrom=$this->request->data['valid_from'];
 			$valid_from=date('Y-m-d', strtotime($validfrom));
 			$validto=$this->request->data['valid_to'];
@@ -73,26 +73,27 @@ class CooCouponsController extends AppController
 			$this->request->data['valid_to']=$valid_to;
 			$coupon_number=$this->request->data['coupon_number'];
 			$company_id=$this->request->data['company_id'];
+			
+			
 			for($i=1;$i<$coupon_number;$i++){
-				if ($data=$this->CooCoupons->save($cooCoupon)) {
-					pr($data);  exit;
-					
-						$coupon_code="ABCD".$company_id.$data['id'];	
-						$query = $this->CooCoupons->query();
-						$query->update()
-							->set(['coupon_code' => $coupon_code])
-							->where(['id' => $data['id']])
-							->execute();
-					
 				
-					$this->Flash->success(__('The coo coupon has been saved.'));
+					$cooCoupon = $this->CooCoupons->newEntity();
+					$cooCoupon = $this->CooCoupons->patchEntity($cooCoupon, $this->request->data);
 
-					return $this->redirect(['action' => 'add']);
-				} else {
-					$this->Flash->error(__('The coo coupon could not be saved. Please, try again.'));
-				}
+					$data=$this->CooCoupons->save($cooCoupon);
+
+					$coupon_code="ABCD".$company_id.$data->id;	
+					$query = $this->CooCoupons->query();
+					$query->update()
+					->set(['coupon_code' => $coupon_code])
+					->where(['id' => $data->id])
+					->execute();
+
 			}
+			
+			 $this->Flash->success(__('The  coo coupon has been saved.'));
         }
+     
 		$master_member=$this->CooCoupons->Companies->find()
 		->where(['member_flag'=>1])
 		->order(['Companies.company_organisation ASC'])
