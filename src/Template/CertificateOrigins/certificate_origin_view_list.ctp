@@ -2,7 +2,8 @@
 <div class="col-md-12">
   <!-- Horizontal Form -->
   <div class="box box-primary">
-	 <?php if($role_id==1 or $role_id==4 ){  ?>
+	<center>
+	<?php if($role_id==1 or $role_id==4 ){  ?>
 	<div class="box-header with-border no-print ">
 		<div class="col-sm-2">
 			<?php	 echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control exporter','name'=>'exporter','type'=>'text','placeholder'=>'Exporter Name']);  ?>
@@ -19,11 +20,13 @@
 			</div>	
 		</div>
 		<div class="col-sm-2">
-			<input type="button" class="go" value="GO">
+			<input type="button"  class="go  btn btn-info btn-sm" value="GO">
 		</div>
 		
-	</div> 
+	</div>
+	
 	 <?php   }  ?>
+	</center>
 	<div class="box-header with-border no-print">
 		<center>
 		  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN</strong></h3>
