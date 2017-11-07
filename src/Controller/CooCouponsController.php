@@ -30,7 +30,7 @@ class CooCouponsController extends AppController
         $this->paginate = [
             'contain' => ['Companies']
         ];
-        $cooCoupons = $this->paginate($this->CooCoupons);
+        $cooCoupons = $this->paginate($this->CooCoupons->find()->where(['flag'=>0]));
 
         $this->set(compact('cooCoupons'));
         $this->set('_serialize', ['cooCoupons']);
