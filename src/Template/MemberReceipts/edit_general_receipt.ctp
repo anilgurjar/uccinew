@@ -99,7 +99,8 @@ padding-left: 0px;
 						$options[] = ['text' => $master_member_data->company_organisation, 'value' => $master_member_data->id , 'state' => $master_member_data->master_state_id]; 
 					
 				}
-				echo $this->Form->input('member_id', ['empty'=> '--Select--','data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;','value'=>$member_receipts->company_id]);  ?>
+
+				echo $this->Form->input('member_id', ['empty'=> '--Select--','data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control select2 state changecompany','options'=>$options,'style'=>'width:100%;','value'=>$member_receipts->company_id]);  ?>
 				<label id="member_id-error" class="error" for="member_id"></label>
 			</div>
 			<div class="form-group col-sm-4">
@@ -344,7 +345,7 @@ $(document).ready(function(){
 			
 			var tds =$(".tds_value").val();
 			var state_id =$(".state").find('option:selected').attr('state');
-			
+			alert(state_id);
 			var grand_total=0;
 			$("#main tbody tr").each(function(){
 			var total_amount =parseFloat($(this).find("td input.total").val());
