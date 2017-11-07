@@ -345,7 +345,7 @@ $(document).ready(function(){
 			
 			var tds =$(".tds_value").val();
 			var state_id =$(".state").find('option:selected').attr('state');
-			alert(state_id);
+			
 			var grand_total=0;
 			$("#main tbody tr").each(function(){
 			var total_amount =parseFloat($(this).find("td input.total").val());

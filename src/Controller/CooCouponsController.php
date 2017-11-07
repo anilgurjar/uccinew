@@ -10,14 +10,23 @@ use App\Controller\AppController;
  */
 class CooCouponsController extends AppController
 {
-
+	public function initialize()
+	{
+		parent::initialize();
+		$this->Auth->allow(['logout']);
+		$member_name=$this->Auth->User('member_name');
+		$this->set('member_name',$member_name);
+		$this->loadComponent('RequestHandler');
+		$this->response->type('ajax');
+	}
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
     public function index()
-    {
+    {	
+		$this->viewBuilder()->layout('index_layout');
         $this->paginate = [
             'contain' => ['Companies']
         ];
@@ -35,7 +44,8 @@ class CooCouponsController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
-    {
+    {	
+		$this->viewBuilder()->layout('index_layout');
         $cooCoupon = $this->CooCoupons->get($id, [
             'contain' => ['Companies']
         ]);
@@ -51,6 +61,7 @@ class CooCouponsController extends AppController
      */
     public function add()
     {
+		$this->viewBuilder()->layout('index_layout');
         $cooCoupon = $this->CooCoupons->newEntity();
         if ($this->request->is('post')) {
             $cooCoupon = $this->CooCoupons->patchEntity($cooCoupon, $this->request->data);
@@ -62,7 +73,11 @@ class CooCouponsController extends AppController
                 $this->Flash->error(__('The coo coupon could not be saved. Please, try again.'));
             }
         }
-        $companies = $this->CooCoupons->Companies->find('list', ['limit' => 200]);
+		$master_member=$this->CooCoupons->Companies->find()
+		->where(['member_flag'=>1])
+		->order(['Companies.company_organisation ASC'])
+		->toArray();
+		$this->set('master_member' ,$master_member);
         $this->set(compact('cooCoupon', 'companies'));
         $this->set('_serialize', ['cooCoupon']);
     }
