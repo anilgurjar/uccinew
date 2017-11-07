@@ -37,13 +37,25 @@
 						}
                         echo $this->Form->input('member_id', ['empty'=> '--Select--','data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
 			</div>
-			<div class="form-group col-sm-3">
+			<!--<div class="form-group col-sm-3">
 			  <label class="">Financial Year</label>
 					<?php 
 						$options=array();
 							$options[1] = '2017-2018';
 						
                         echo $this->Form->input('financial_year', ['empty'=> 'Select a Year','data-placeholder'=>'Select a Year','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
+			</div>-->
+			<div class="form-group col-sm-3">
+			  <label class="">Mode of Payment</label>
+					<?php 
+						$options=array();
+						$options['Cash'] = 'Cash';
+						$options['Cheque No.'] ='Cheque';
+						$options['D.D. No.'] = 'D.D.';
+						$options['NEFT/RTGS'] = 'NEFT/RTGS';
+						$options['Payumoney'] = 'Payumoney';
+						
+                        echo $this->Form->input('amount_type', ['empty'=> 'Select a Year','data-placeholder'=>'Select a Mode of Payment','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
 			</div>
 			<div class="form-group col-sm-3">
 			  <label class="">Send/Unsend</label>
@@ -141,6 +153,7 @@
 					?>
 					<th>Receipt No.</th>
 					<th>Company</th>
+					<th>Mode of Payment</th>
 					<th>Amount</th>
 					<th>Status</th>
 					<th><center>Send Mail/SMS</center><center>
@@ -170,6 +183,7 @@
 					<td><?php echo sprintf("%04d", $member_fee_member_receipt->member_fee->invoice_no); ?></td>
 					<td><?php echo sprintf("%04d", $data->receipt_no); ?></td>
 					<td><?php echo $data->company->company_organisation; ?></td>
+					<td><?php echo $data->amount_type; ?></td>
 					<td><?php echo $total=$data->amount; ?></td>
 					<td width="100px"> <?php if($status==0){echo" <strong style='color:#dd4b39;'> Unsend </strong>"; }elseif($status==1){ echo"<strong style='color:#f39c12;'>Pending </strong>"; }else{ echo"<strong style='color:#00a65a;'>Sent </strong>"; } ?> </td>
 					<td><center>
@@ -223,6 +237,7 @@
 					<td><?php echo date('d-m-Y', strtotime($general_data->date_current)); ?></td>
 					<td><?php echo sprintf("%04d", $general_data->receipt_no); ?></td>
 					<td><?php echo $general_data->company->company_organisation; ?></td>
+					<td><?php echo $general_data->amount_type; ?></td>
 					<td><?php echo $total=$general_data->amount; ?></td>
 					<td width="100px"> <?php if($status==0){echo" <strong style='color:#dd4b39;'> Unsend </strong>"; }elseif($status==1){ echo"<strong style='color:#f39c12;'>Pending </strong>"; }else{ echo"<strong style='color:#00a65a;'>Sent </strong>"; } ?> </td>
 					<td><center>

@@ -1124,8 +1124,8 @@ class CertificateOriginsController extends AppController
 						return $this->redirect(['action' => 'certificate-origin-draft-view']);
 					}
 					else{
-						//return $this->redirect(['action' => 'paymentTest',$data->id]);
-						return $this->redirect(['action' => 'payment',$data->id]);
+						return $this->redirect(['action' => 'paymentTest',$data->id]);
+						//return $this->redirect(['action' => 'payment',$data->id]);
 					}
 				}	
 					

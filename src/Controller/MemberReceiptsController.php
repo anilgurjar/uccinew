@@ -700,6 +700,8 @@ public function MemberReceiptAjaxType(){
 			$purpose_id=$this->request->query['purpose_id'];
 			$bank_id=$this->request->query['bank_id'];
 			$member_id=$this->request->query['member_id'];
+			$amount_type=$this->request->query['amount_type'];
+			
 			if(!empty($this->request->query['from']) && !empty($this->request->query['to'])){
 				$from=date('Y-m-d', strtotime($this->request->query['from']));
 				$to=date('Y-m-d', strtotime($this->request->query['to']));
@@ -719,6 +721,9 @@ public function MemberReceiptAjaxType(){
 			$conditions['MemberReceipts.date_current <=']=$to;
 			if(!empty($purpose_id)){
 				$conditions['MemberReceipts.purpose_id']=$purpose_id;
+			}
+			if(!empty($amount_type)){
+				$conditions['MemberReceipts.amount_type']=$amount_type;
 			}
 			if(!empty($bank_id)){
 				$conditions['MemberReceipts.bank_id']=$bank_id;
