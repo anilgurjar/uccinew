@@ -65,20 +65,40 @@ class CooCouponsController extends AppController
         $cooCoupon = $this->CooCoupons->newEntity();
         if ($this->request->is('post')) {
             $cooCoupon = $this->CooCoupons->patchEntity($cooCoupon, $this->request->data);
-            if ($this->CooCoupons->save($cooCoupon)) {
-                $this->Flash->success(__('The coo coupon has been saved.'));
+			$validfrom=$this->request->data['valid_from'];
+			$valid_from=date('Y-m-d', strtotime($validfrom));
+			$validto=$this->request->data['valid_to'];
+			$valid_to=date('Y-m-d', strtotime($validto));
+			$this->request->data['valid_from']=$valid_from;
+			$this->request->data['valid_to']=$valid_to;
+			$coupon_number=$this->request->data['coupon_number'];
+			$company_id=$this->request->data['company_id'];
+			for($i=1;$i<$coupon_number;$i++){
+				if ($data=$this->CooCoupons->save($cooCoupon)) {
+					pr($data);  exit;
+					
+						$coupon_code="ABCD".$company_id.$data['id'];	
+						$query = $this->CooCoupons->query();
+						$query->update()
+							->set(['coupon_code' => $coupon_code])
+							->where(['id' => $data['id']])
+							->execute();
+					
+				
+					$this->Flash->success(__('The coo coupon has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The coo coupon could not be saved. Please, try again.'));
-            }
+					return $this->redirect(['action' => 'add']);
+				} else {
+					$this->Flash->error(__('The coo coupon could not be saved. Please, try again.'));
+				}
+			}
         }
 		$master_member=$this->CooCoupons->Companies->find()
 		->where(['member_flag'=>1])
 		->order(['Companies.company_organisation ASC'])
 		->toArray();
 		$this->set('master_member' ,$master_member);
-        $this->set(compact('cooCoupon', 'companies'));
+        $this->set(compact('cooCoupon'));
         $this->set('_serialize', ['cooCoupon']);
     }
 

@@ -35,13 +35,13 @@ padding-left: 0px;
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label">Valid From</label>
-							<?php echo $this->Form->input('valid_from', ['label' => false,'placeholder'=>'Valid From','class'=>'form-control date-picker','type'=>'text']); ?>
+							<?php echo $this->Form->input('valid_from', ['label' => false,'placeholder'=>'Valid From','class'=>'form-control date-picker','format'=>"yyyy/MM/dd",'type'=>'text']); ?>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label">Valid To</label>
-							<?php echo $this->Form->input('valid_to', ['label' => false,'placeholder'=>'Valid To','class'=>'form-control date-picker','type'=>'text']); ?>
+							<?php echo $this->Form->input('valid_to', ['label' => false,'placeholder'=>'Valid To','class'=>'form-control date-picker','format'=>"yyyy/MM/dd",'type'=>'text']); ?>
 						</div>
 					</div>
 					<div class="col-md-3">

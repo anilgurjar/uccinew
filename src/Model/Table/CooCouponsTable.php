@@ -54,7 +54,7 @@ class CooCouponsTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
-        $validator
+       /*  $validator
             ->dateTime('valid_from')
             ->requirePresence('valid_from', 'create')
             ->notEmpty('valid_from');
@@ -68,14 +68,16 @@ class CooCouponsTable extends Table
             ->requirePresence('coupon_code', 'create')
             ->notEmpty('coupon_code');
 
-        $validator
+          $validator
+            ->integer('flag')
+            ->requirePresence('flag', 'create')
+            ->notEmpty('flag'); */
+
+		$validator
             ->requirePresence('coupon_number', 'create')
             ->notEmpty('coupon_number');
 
-        $validator
-            ->integer('flag')
-            ->requirePresence('flag', 'create')
-            ->notEmpty('flag');
+      
 
         return $validator;
     }
