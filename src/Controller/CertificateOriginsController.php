@@ -1039,8 +1039,8 @@ class CertificateOriginsController extends AppController
 				$this->request->data['verify_remarks']='';
 				$payment_type=$this->request->data['payment_type'];
 				$coupon_code=$this->request->data['coupon_code'];
-				
-				
+				$this->request->data['payment_type']='';
+				$this->request->data['coupon_code']='';
 				$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 				$i=0;
 				/* foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
@@ -1097,7 +1097,7 @@ class CertificateOriginsController extends AppController
 										
 										$query = $this->CertificateOrigins->query();
 										$query->update()
-										->set(['status' => 'published','payment_status'=>'success'])
+										->set(['status' => 'published','payment_status'=>'success','payment_type'=>$payment_type,'coupon_code'=>$coupon_code])
 										->where(['id' => $data->id])
 										->execute();
 										return $this->redirect(['action' => 'certificate-origin-draft-view']);
