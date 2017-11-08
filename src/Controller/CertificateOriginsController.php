@@ -1039,7 +1039,7 @@ class CertificateOriginsController extends AppController
 				$this->request->data['verify_remarks']='';
 				$payment_type=$this->request->data['payment_type'];
 				$coupon_code=$this->request->data['coupon_code'];
-				$this->request->data['payment_type']='';
+				
 				$this->request->data['coupon_code']='';
 				$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 				$i=0;
