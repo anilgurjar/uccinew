@@ -75,7 +75,7 @@ class CooCouponsController extends AppController
 			$company_id=$this->request->data['company_id'];
 			
 			
-			for($i=1;$i<$coupon_number;$i++){
+			for($i=0;$i<$coupon_number;$i++){
 				
 					$cooCoupon = $this->CooCoupons->newEntity();
 					$cooCoupon = $this->CooCoupons->patchEntity($cooCoupon, $this->request->data);
