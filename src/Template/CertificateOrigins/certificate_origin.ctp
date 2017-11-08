@@ -364,6 +364,7 @@ $(document).on('click','button.delete_row',function() {
 		$(this).closest('tr').remove();
 });
 
+//jQuery.validator.addMethod("accept", function(value, element, param) { return value.match(new RegExp("." + param + "$"));});rules: { fileupload: { accept: "(docx?|doc|pdf)" }}
 
 
 
