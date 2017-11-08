@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use Cake\Event\Event;
+use Cake\Mailer\Email;
 use App\Controller\AppController;
 
 /**
@@ -74,6 +76,15 @@ class CooCouponsController extends AppController
 			$coupon_number=$this->request->data['coupon_number'];
 			$company_id=$this->request->data['company_id'];
 			
+			$coocoupon=$this->CooCoupons->Companies->find()->where(['id'=>$company_id])->contain(['Users']);
+			foreach($coocoupon as $coocoupo){
+				$username=$coocoupo->users[0]['member_name'];
+				$usermail=$coocoupo->users[0]['exporter_email'];
+			
+			}
+			
+			$email_to=$usermail; 
+			$member_name=$username;
 			
 			for($i=0;$i<$coupon_number;$i++){
 				
@@ -88,8 +99,36 @@ class CooCouponsController extends AppController
 					->set(['coupon_code' => $coupon_code])
 					->where(['id' => $data->id])
 					->execute();
-
+					
+					$code[]=$coupon_code;
 			}
+			$email = new Email();
+				$email->transport('SendGrid');
+			
+			$sub="Your Coo Coupon Generate Successfully";
+			  $from_name="UCCI";
+			  $email_to=trim($email_to,' ');
+			 $email_to="anilgurjer371@gmail.com";
+			  if(!empty($email_to)){		
+						
+				 try {
+					   $email->from(['ucciudaipur@gmail.com' => $from_name])
+								->to($email_to)
+								->replyTo('uccisec@hotmail.com')
+								->subject($sub)
+								->profile('default')
+								->template('coo_coupons_generate')
+								->emailFormat('html')
+								->viewVars(['member_name'=>$member_name,'code'=>$code]);
+								$email->send();
+							
+							
+					} catch (Exception $e) {
+						
+						echo 'Exception : ',  $e->getMessage(), "\n";
+
+					} 
+				}
 			 return $this->redirect(['action' => 'index']);
 			 $this->Flash->success(__('The  coo coupon has been saved.'));
         }
