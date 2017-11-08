@@ -90,7 +90,7 @@ class CooCouponsController extends AppController
 					->execute();
 
 			}
-			
+			 return $this->redirect(['action' => 'index']);
 			 $this->Flash->success(__('The  coo coupon has been saved.'));
         }
      
