@@ -32,9 +32,16 @@
 		  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN</strong></h3>
 		</center>
 	</div>
+	
 	<!-- /.box-header -->
 	<!-- form start -->
-	
+	<?php  
+		echo $this->Html->link('<i class="fa fa-download"></i> Export',
+			['controller' => 'CertificateOrigins', 'action' => 'CertificateOriginViewListexcel'],
+			['class' => 'btn btn-primary btn-sm btn-flat pull-right','style'=>'margin-right:30px',
+				'escape' => false]
+		);
+		?>
 	<div class="box-body">
 	 <?= $this->Form->create() ?>
 	  <div class="col-sm-12 no-print">

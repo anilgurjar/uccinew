@@ -115,7 +115,7 @@ use Cake\Filesystem\File;
 					<?php if(!empty($certificate_origin->authorised_remarks)){ ?>	
 					<div class="col-sm-6 ">
 						<div class="form-group">
-							<label class="col-sm-4 control-label" style="color:red">Rturn Reason</label>
+							<label class="col-sm-4 control-label" style="color:red">Return Reason</label>
 							<div class="col-sm-8">
 							<?php
 								echo $certificate_origin->authorised_remarks;

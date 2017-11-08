@@ -101,6 +101,64 @@ class CertificateOriginsController extends AppController
 		   }  
        $this->set(compact('certificate_origins','role_id'));
 	}
+	
+	
+	
+	
+	public function CertificateOriginViewListexcel() 
+	{
+		
+		$company_id=$this->Auth->User('company_id'); 
+		
+		$Companies=$this->CertificateOrigins->Companies->get($company_id);
+		
+		$role_id=$Companies->role_id;
+		$CertificateOrigins = $this->CertificateOrigins->newEntity();
+		
+		 if($role_id==1 or $role_id==4 ){
+			 $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved'])->order(['CertificateOrigins.origin_no'=>'DESC']);
+		   }else{
+			  $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved','company_id'=>$company_id])->order(['CertificateOrigins.origin_no'=>'DESC']); 
+		   }  
+       $this->set(compact('certificate_origins','role_id'));
+	
+		
+			
+			
+			
+		$sr_no=0;
+		$_header=['S.No.', 'Exporter', '>Origin No', 'Date', 'Consignee', 'Invoice No.', 'Invoice Date','Manufacturer', 'Despatched by'];
+		foreach($certificate_origins as $certificate_origin) 
+		{	
+			if($certificate_origin->despatched_by==0){ 
+			$despatched_by='Sea'; 
+			}else if( $certificate_origin->despatched_by==1 ){
+				$despatched_by= 'Air'; 
+			}
+			else{ 
+				$despatched_by= 'Road';
+			} 
+			$contain[]=[ ++$sr_no, $certificate_origin->exporter, $certificate_origin->origin_no, $certificate_origin->date_current, $certificate_origin->consignee, $certificate_origin->invoice_no, date('d-m-Y', strtotime($certificate_origin->invoice_date)), $certificate_origin->manufacturer, 
+			$despatched_by ];
+		}
+		
+		$_serialize = 'contain';
+		
+   		$this->response->download('Coo View List.csv');
+		$this->viewBuilder()->className('CsvView.Csv');
+		$this->set(compact('_header', 'contain', '_serialize'));
+	
+	
+	
+	
+	
+	
+	
+	}
+	
+	
+	
+	
 	public function certificateOriginView()
     {
 		$this->viewBuilder()->layout('index_layout');
