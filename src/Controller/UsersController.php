@@ -163,14 +163,16 @@ class UsersController extends AppController
 	}
 	public function memberExport() {
 		
-		$master_member = $this->Users->find()->order(['Users.company_organisation ASC'])->contain(['MasterCategories','MasterMemberTypes','MasterTurnOvers']);
+		//$master_member = $this->Users->find()->order(['Users.company_organisation ASC'])->contain(['MasterCategories','MasterMemberTypes','MasterTurnOvers']);
+		
+		$master_member = $this->Users->Companies->find()->where(['Companies.member_flag'=>1])->order(['Companies.company_organisation ASC'])->contain(['Users','MasterCategories','CompanyMemberTypes','MasterTurnOvers']);
 		
 		$sr_no=0;
-		$_header=['S.No.', 'Company/Organisation', 'Gst Number','ID Card No.', 'Member Type', 'Member Name', 'Alternate Nominee', 'Category', 'Address', 'City','E-mail', 'Mobile No.', 'Alternate Mobile No', 'Year of Joining', 'Turn Over', 'Due Amount'];
+		$_header=['S.No.', 'Company/Organisation', 'Gst Number','ID Card No.',  'Member Name',  'Category', 'Address', 'City','E-mail', 'Mobile No.',  'Year of Joining', 'Turn Over', 'Due Amount'];
 		
 		foreach($master_member as $data) 
 		{	
-			$contain[]=[ ++$sr_no, $data->company_organisation,$data->gst_number, $data->id_card_no, $data->master_member_type->member_type, $data->member_name, $data->alternate_nominee, $data->master_category->category_name, $data->address, $data->city, $data->email, $data->mobile_no, $data->alternate_mobile_no, date('d-m-Y',strtotime($data->year_of_joining)), $data->master_turn_over->component, $data->due_amount ];
+			$contain[]=[ ++$sr_no, $data->company_organisation,$data->gst_number, $data->id_card_no, $data->users[0]->member_name, @$data->master_category->category_name, $data->address, $data->city, $data->users[0]->email, $data->users[0]->mobile_no, date('d-m-Y',strtotime($data->year_of_joining)), $data->master_turn_over->component, $data->due_amount ];
 		}
 		
 		$_serialize = 'contain';
