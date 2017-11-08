@@ -1,13 +1,10 @@
 <div>
 <p> Dear <?php echo $member_name; if(empty($member_name)){ echo"Sir";  } ?>,</p>
 
-<p>I am pleased to inform you that your certificate of origin has approved.</p>
-
-<p>I wish all the best for your future endeavours.</p>
+<p>We are pleased to inform you that your certificate of origin for customer <?php echo $consignee; ?> has been approved. Kindly login into your account and check the details.</p>
 
 <br/>
-Regards
+<p>Regards
 <br/>
-<?php echo $regards_member_name; ?>
-
+UCCI </p>
 </div>

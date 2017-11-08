@@ -719,6 +719,8 @@ public function MemberReceiptAjaxType(){
 			}
 			$conditions['MemberReceipts.date_current >=']=$from;
 			$conditions['MemberReceipts.date_current <=']=$to;
+			
+			
 			if(!empty($purpose_id)){
 				$conditions['MemberReceipts.purpose_id']=$purpose_id;
 			}
@@ -740,6 +742,7 @@ public function MemberReceiptAjaxType(){
 					return $q1->select(['company_organisation']);
 				}]));
 				 */
+				
 				$member_receipt = $this->paginate($this->MemberReceipts->find()
 				->where($conditions)
 				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])
@@ -754,6 +757,7 @@ public function MemberReceiptAjaxType(){
 					return $q1->select(['company_organisation']);
 				}]));
 				 */
+				
 				$general_receipt = $this->paginate($this->MemberReceipts->find()
 				->where($conditions)
 				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])

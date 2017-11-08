@@ -5,12 +5,12 @@
 </p>
 
 
-<p>Reason:-   <?php echo $remarks; ?>
+<p>Reason :-   <?php echo $remarks; ?>
 
 </p>
 
-<p>Please do apply again in the future while considering above points </p>
-<p>We wish you all the best. </p>
+<p>Kindly correct the COO and submit it again </p>
+<br/>
 <p>Regards </p>
 <p>UCCI</p>
 </div>

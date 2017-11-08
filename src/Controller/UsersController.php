@@ -40,6 +40,15 @@ class UsersController extends AppController
 		$this->set(compact('master_member'));
 	}
 	
+	public function check_invoice_generates($id=null) 
+	{
+		
+			$MemberFeeMemberReceipts=$this->Users->MemberReceipts->MemberFeeMemberReceipts->find()->where(['member_fee_id'=>$id])->count();
+			$this->response->body($MemberFeeMemberReceipts);
+			return $this->response;
+	}
+	
+	
 	public function EmailPrepared(){
 		
 		//$users=$this->Users->find()->toArray();
@@ -2630,7 +2639,7 @@ function convert_number_to_words($no) {
 				$conditions['mail_Send']=$mail_Send;
 			}
 			$member_fee = $this->paginate($this->Users->MemberFees->find()->where($conditions)->order(['MemberFees.date DESC']));
-		
+			
 			$this->set(compact('member_fee'));
 		}
 		else

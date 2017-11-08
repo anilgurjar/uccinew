@@ -149,7 +149,7 @@ class CertificateOriginsController extends AppController
 				
 				$id=$this->request->data['certificate_approve_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
-				
+				$consignee=$CertificateOrigins->consignee;
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
 				$this->request->data['approved_by']=$user_id; 
@@ -175,7 +175,7 @@ class CertificateOriginsController extends AppController
 					  $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 // $email_to="rohitkumarjoshi43@gmail.com";
+					 $email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -186,7 +186,7 @@ class CertificateOriginsController extends AppController
 										->profile('default')
 										->template('coo_approve')
 										->emailFormat('html')
-										->viewVars(['member_name'=>$member_name,'regards_member_name'=>$regards_member_name]);
+										->viewVars(['member_name'=>$member_name,'consignee'=>$consignee]);
 										$email->send();
 									
 									
@@ -654,7 +654,7 @@ class CertificateOriginsController extends AppController
 			$attachments='';
 			$attachments[]='coo_payment_receipt.pdf';
 			$sub='Payment Successfully submitted';
-			//$email_to='rohitkumarjoshi43@gmail.com';
+			$email_to='rohitkumarjoshi43@gmail.com';
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
@@ -1364,7 +1364,7 @@ class CertificateOriginsController extends AppController
 						$sub="Certificate of origin is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						//$email_to="anilgurjer371@gmail.com";
+						$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])

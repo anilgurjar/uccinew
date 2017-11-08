@@ -133,7 +133,14 @@
 					
 					</center></td>
 					<td><center>
-					<?php echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-pencil']) . ' Edit',['class'=>'btn btn-warning btn-xs','type'=>'submit','formtarget'=>'_self','value'=>$data->performa_invoice_no,'name'=>'edit_performa','formaction'=>'MemberPerformaInvoiceEdit']); ?>
+					
+					
+					<?php 
+					$checkGenrateinvoice=$this->requestAction(['controller'=>'Users', 'action'=>'check_invoice_generates'],['pass'=>array($data->id)]);
+					if($checkGenrateinvoice==0){
+						echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-pencil']) . ' Edit',['class'=>'btn btn-warning btn-xs','type'=>'submit','formtarget'=>'_self','value'=>$data->performa_invoice_no,'name'=>'edit_performa','formaction'=>'MemberPerformaInvoiceEdit']);
+					}
+					?>
 					
 					</center></td>
 					</tr>

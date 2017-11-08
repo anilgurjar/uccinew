@@ -105,6 +105,7 @@ class CompaniesController extends AppController
 				$basic_amount=$companies['co_registrations'][0]->amount;
 				$taxamount=$companies['co_registrations'][0]->tax_amount;
 				$amount=$companies['co_registrations'][0]->total_amount;
+				$ac_amount=$$amount;
 				$this->request->data['amount_type']='Cash';
 				$this->request->data['narration']='Non Member Exporters Registration Fees';
 				$this->request->data['tax_applicable']='Tax';
@@ -403,7 +404,7 @@ class CompaniesController extends AppController
 										->profile('default')
 										->template('non_member_exporter')
 										->emailFormat('html')
-										->viewVars(['member_name'=>$member_name,'username'=>$to[0],'password'=>$password])
+										->viewVars(['member_name'=>$member_name,'username'=>$to[0],'password'=>$password,'ac_amount'=>$ac_amount])
 										->attachments($attachments);
 										
 									   $email->send();
