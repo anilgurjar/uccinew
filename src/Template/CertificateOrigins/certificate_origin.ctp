@@ -165,7 +165,7 @@ input[type="radio"]
 			<table id="copy_row" style="display:none;">	
 			<tbody>
 				<tr>
-					<td><?= $this->Form->file('file[]',['multiple'=>'multiple']); ?></td>
+					<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?></td>
 					<td><?= $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']) . __(' Add More'), ['class'=>'btn btn-block btn-primary btn-sm add_more','type'=>'button']) ?>
 					</td>
 					<td>

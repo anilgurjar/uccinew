@@ -141,7 +141,7 @@ input[type="radio"]
 							<label class="col-sm-3 control-label">Invoice Attachment</label>
 							<table id="file_table" style="line-height:2.5">
 								<tr>
-									<td><?= $this->Form->file('file[]',['multiple'=>'multiple']); ?></td>
+									<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?></td>
 									<td><?= $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']) . __(' Add More'), ['class'=>'btn btn-block btn-primary btn-sm add_more','type'=>'button']) ?></td>
 									<td></td>
 								</tr>
@@ -197,7 +197,7 @@ input[type="radio"]
 			<table id="copy_row" style="display:none;">	
 			<tbody>
 				<tr>
-					<td><?= $this->Form->file('file[]',['multiple'=>'multiple']); ?></td>
+					<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?></td>
 					<td><?= $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']) . __(' Add More'), ['class'=>'btn btn-block btn-primary btn-sm add_more','type'=>'button']) ?>
 					</td>
 					<td>
@@ -399,6 +399,34 @@ echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js');
 
 ?>
 <script>
+function file_submit(){
+	
+	var x =$('.invoice_attachment').val();
+	
+	if(x){
+			var ext = x.substring(x.lastIndexOf('.') + 1);
+			if(ext == "pdf" )
+			{
+				return true;
+			} 
+			else
+			{
+				alert("Upload pdf files only");
+				
+				return false;
+			}
+
+		
+	}else{
+		
+		return true;
+	}
+	
+}
+
+
+
+
 
 $(document).on('click','input[name="payment_type"]',function() {
 		var pay=$(this).val();
