@@ -11,7 +11,7 @@
 		<div class="col-sm-2">
 			<?php echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
 		</div>	
-		<div class=" col-sm-3  " data-date-format="dd-mm-yyyy">
+		<div class=" col-sm-2  " data-date-format="dd-mm-yyyy">
 			<div class=" input-group input-large  input-daterange date-picker">	
 				<?php  echo $this->Form->input('from', ['label' => false,'class'=>'form-control from','format'=>"yyyy/mm/dd",'placeholder'=>'Date From']); ?>
 				<span class="input-group-addon" style="background-color:e5e5e5 !important;">
