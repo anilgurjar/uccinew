@@ -233,7 +233,7 @@ class CertificateOriginsController extends AppController
 					  $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 $email_to="rohitkumarjoshi43@gmail.com";
+					 //$email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -712,11 +712,11 @@ class CertificateOriginsController extends AppController
 			$attachments='';
 			$attachments[]='coo_payment_receipt.pdf';
 			$sub='Payment Successfully submitted';
-			$email_to='rohitkumarjoshi43@gmail.com';
+			//$email_to='rohitkumarjoshi43@gmail.com';
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
-						 try {
+						/*  try {
 							   $email->from(['ucciudaipur@gmail.com' => $from_name])
 										->to($email_to)
 										->replyTo('uccisec@hotmail.com')
@@ -735,7 +735,7 @@ class CertificateOriginsController extends AppController
 								
 								echo 'Exception : ',  $e->getMessage(), "\n";
 
-							} 
+							}  */
 							
 			$query = $this->CertificateOrigins->query();
 			$query->update()
@@ -1165,8 +1165,8 @@ class CertificateOriginsController extends AppController
 						return $this->redirect(['action' => 'certificate-origin-draft-view']);
 					}
 					else{
-						return $this->redirect(['action' => 'paymentTest',$data->id]);
-						//return $this->redirect(['action' => 'payment',$data->id]);
+						//return $this->redirect(['action' => 'paymentTest',$data->id]);
+						return $this->redirect(['action' => 'payment',$data->id]);
 					}
 				}	
 					
@@ -1405,9 +1405,9 @@ class CertificateOriginsController extends AppController
 						$sub="Certificate of origin is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						$email_to="anilgurjer371@gmail.com";
+						//$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
-						try {
+						/* try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
 								->to($email_to)
 								->replyTo('uccisec@hotmail.com')
@@ -1421,7 +1421,7 @@ class CertificateOriginsController extends AppController
 								
 								echo 'Exception : ',  $e->getMessage(), "\n";
 
-							} 
+							}  */
 						}
 					}	
 					$this->Flash->success(__('Certificate of origin has been not verify.'));

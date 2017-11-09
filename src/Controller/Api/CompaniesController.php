@@ -106,7 +106,7 @@ class CompaniesController extends AppController
 				$taxamount=$companies['co_registrations'][0]->tax_amount;
 				$amount=$companies['co_registrations'][0]->total_amount;
 				$ac_amount=$$amount;
-				$this->request->data['amount_type']='Cash';
+				$this->request->data['amount_type']='Payumoney';
 				$this->request->data['narration']='Non Member Exporters Registration Fees';
 				$this->request->data['tax_applicable']='Tax';
 				$this->request->data['basic_amount']=@$basic_amount;
