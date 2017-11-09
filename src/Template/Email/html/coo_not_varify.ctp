@@ -11,6 +11,6 @@
 
 <p>Kindly correct the COO and submit it again </p>
 <br/>
-<p>Regards </p>
-<p>UCCI</p>
+<p>Regards <br/>
+<?php echo $regard_member_name; ?></p>
 </div>

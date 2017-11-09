@@ -1311,6 +1311,8 @@ class CertificateOriginsController extends AppController
     {
 		$this->viewBuilder()->layout('index_layout');
 		$user_id=$this->Auth->User('id');
+		$Users=$this->CertificateOrigins->Users->get($user_id);
+		$regard_member_name=$Users->member_name;
 		$CertificateOrigins = $this->CertificateOrigins->newEntity();
 				
 		if(isset($this->request->data['view']))
@@ -1325,6 +1327,7 @@ class CertificateOriginsController extends AppController
 		}
 		if($this->request->is('post')) 
 		{
+						
 			if(isset($this->request->data['certificate_approve_submit']))
 			{
 				
@@ -1415,7 +1418,7 @@ class CertificateOriginsController extends AppController
 								->profile('default')
 								->template('coo_not_varify')
 								->emailFormat('html')
-								->viewVars(['member_name'=>$mailsendtomember,'remarks'=>$remarks]);
+								->viewVars(['member_name'=>$mailsendtomember,'regard_member_name'=>$regard_member_name,'remarks'=>$remarks]);
 								$email->send();
 							} catch (Exception $e) {
 								
