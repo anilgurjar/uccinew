@@ -902,9 +902,9 @@ class CertificateOriginsController extends AppController
 				$currency_unit = $currency_unit['fractional_unit'];
 			}
 			$this->request->data['currency_unit'] = $currency_unit;
-			
-			$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 			 	
+			$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
+			
 			if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 			{ 
 				$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
