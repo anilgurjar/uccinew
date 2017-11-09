@@ -169,7 +169,7 @@ class IndustrialGrievancesController extends AppController
 						$sms1=str_replace(" ", '+', $sms);
 						$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=ucciudr&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
 					}
-					//$email_to='rohitkumarjoshi43@gmail.com';
+					$email_to='anilgurjer371@gmail.com';
 					if(!empty($email_to)){
 						$from_name="UCCI";
 						$subject="Grievance Enquiry Acknowledgement";
