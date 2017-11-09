@@ -127,7 +127,7 @@ class CertificateOriginsController extends AppController
 			
 			
 		$sr_no=0;
-		$_header=['S.No.', 'Exporter', '>Origin No', 'Date', 'Consignee', 'Invoice No.', 'Invoice Date','Manufacturer', 'Despatched by'];
+		$_header=['S.No.', 'Exporter', 'Origin No', 'Date', 'Consignee', 'Invoice No.', 'Invoice Date','Manufacturer', 'Despatched by'];
 		foreach($certificate_origins as $certificate_origin) 
 		{	
 			if($certificate_origin->despatched_by==0){ 
@@ -940,51 +940,34 @@ class CertificateOriginsController extends AppController
 		$originno=$this->request->query['originno'];
 		$datefrom=$this->request->query['datefrom']; 
 		$dateto=$this->request->query['dateto'];
-		$datefrom=date('y-m-d', strtotime($datefrom));
-		$dateto=date('y-m-d', strtotime($dateto));
+		
 		
 		if(!empty($exporter)){
-			$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter])->order(['CertificateOrigins.id'=>'DESC']);
-			
+			//$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter])->order(['CertificateOrigins.id'=>'DESC']);
+			$condition['exporter']=$exporter;
 		}
-		else if(!empty($exporter) && !empty($originno)){
-			$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter,'origin_no '=>$originno])->order(['CertificateOrigins.id'=>'DESC']);
-			
-		}
-		else if(!empty($originno)){
-			$Users=$this->CertificateOrigins->find()->where(['origin_no '=>$originno])->order(['CertificateOrigins.id'=>'DESC']);
-			
-		}
-		else if(!empty($datefrom) && !empty($dateto)){
-			$Users=$this->CertificateOrigins->find()->where(['CertificateOrigins.invoice_date BETWEEN :start AND :end'])
-				->bind(':start', $datefrom, 'date')
-				->bind(':end',   $dateto, 'date')
-				->order(['CertificateOrigins.id'=>'DESC']);
-			
-		}
-		else if(!empty($datefrom) && !empty($dateto) && !empty($originno)){
-			$Users=$this->CertificateOrigins->find()->where(['CertificateOrigins.invoice_date BETWEEN :start AND :end','origin_no '=>$originno])
-				->bind(':start', $datefrom, 'date')
-				->bind(':end',   $dateto, 'date')
-				->order(['CertificateOrigins.id'=>'DESC']);
-			
-		}
-		else if(!empty($datefrom) && !empty($dateto) && !empty($exporter)){
-			$Users=$this->CertificateOrigins->find()->where(['CertificateOrigins.invoice_date BETWEEN :start AND :end','exporter '=>$exporter])
-				->bind(':start', $datefrom, 'date')
-				->bind(':end',   $dateto, 'date')
-				->order(['CertificateOrigins.id'=>'DESC']);
-			
+		 if( !empty($originno)){
+			//$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter,'origin_no '=>$originno])->order(['CertificateOrigins.id'=>'DESC']);
+			$condition['origin_no']=$originno;
 		}
 		
-		else{
-		$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter,'origin_no '=>$originno,'CertificateOrigins.invoice_date BETWEEN :start AND :end'])
-				->bind(':start', $datefrom, 'date')
-				->bind(':end',   $dateto, 'date')
+		if(!empty($datefrom) && !empty($dateto)){
+			//$Users=$this->CertificateOrigins->find()->where(['CertificateOrigins.invoice_date BETWEEN :start AND :end'])
+				///->bind(':start', $datefrom, 'date')
+				//->bind(':end',   $dateto, 'date')
+				//->order(['CertificateOrigins.id'=>'DESC']);
+			$datefrom=date('y-m-d', strtotime($datefrom));
+			$dateto=date('y-m-d', strtotime($dateto));
+			$condition['date_current >=']=$datefrom;
+			$condition['date_current <=']=$dateto;
+		}
+		
+		
+		$Users=$this->CertificateOrigins->find()->where($condition)
 				->order(['CertificateOrigins.id'=>'DESC']);
 				
 		
-		}		
+				
 		
 		$this->set(compact('Users'));
 		
