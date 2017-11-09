@@ -758,13 +758,25 @@ public function MemberReceiptAjaxType(){
 				}]));
 				 */
 				
-				$general_receipt = $this->paginate($this->MemberReceipts->find()
+				/* $general_receipt = $this->paginate($this->MemberReceipts->find()
 				->where($conditions)
 				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees'],'GeneralReceiptPurposes'=>function($q) use($purpose_id){   
 			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
 			}])
-				->order(['MemberReceipts.date_current DESC']));
-				pr($general_receipt);   exit;
+				->order(['MemberReceipts.date_current DESC'])); */
+				//pr($general_receipt);   exit;
+				
+				
+				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
+				$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
+				->leftJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
+			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
+			})
+				->group(['GeneralReceiptPurposes.member_receipt_id'])
+				->having(['total_rows >'=>0])
+				->autoFields(true);
+
+				
 				$this->set(compact('general_receipt'));
 			}
 			
