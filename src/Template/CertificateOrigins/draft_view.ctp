@@ -24,7 +24,7 @@ input[type="radio"]
 			]); 
 		?>
 		<div class="box-body">
-		 <?= $this->Form->create($certificate_origin_good,['method'=>'post','class'=>'form-horizontal','id'=>'certificate_form','enctype' => 'multipart/form-data'])?> 
+		 <?= $this->Form->create($certificate_origin_good,['method'=>'post','class'=>'form-horizontal','id'=>'certificate_form','enctype' => 'multipart/form-data','onsubmit' => 'return file_submit();'])?> 
 					<div class="col-sm-12 no-print">
 					<div class="col-sm-6">
 						<div class="form-group">
@@ -656,7 +656,7 @@ $(document).ready(function(){
 		},
 		submitHandler: function () {
 				
-				$("#certificate_origin").attr('disabled','disabled');
+				//$("#certificate_origin").attr('disabled','disabled');
 				form.submit();
 			}
 		

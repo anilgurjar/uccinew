@@ -57,7 +57,7 @@ class MemberReceiptsController extends AppController
 		$CompanyMemberType->due_amount=0.00;
 		$CompanyMemberType->master_financial_year_id=$master_financial_year_id;
 		$member_user->company_member_types[0]=$CompanyMemberType;
-		pr($this->request->data);
+		//pr($this->request->data);
 		$result=$this->MemberReceipts->Companies->save($member_user);
 		$record_id=$result->id;
 		$company_organisation=$result->company_organisation;
@@ -721,8 +721,8 @@ public function MemberReceiptAjaxType(){
 			$conditions['MemberReceipts.date_current <=']=$to;
 			
 			
-			if(!empty($purpose_id)){
-				$conditions['MemberReceipts.purpose_id']=$purpose_id;
+			if(!empty($purpose_id) && $this->request->query['receipt_type']=='Invoice'){
+				$conditions['memberReceipts.purpose_id']=$purpose_id;
 			}
 			if(!empty($amount_type)){
 				$conditions['MemberReceipts.amount_type']=$amount_type;
@@ -760,9 +760,11 @@ public function MemberReceiptAjaxType(){
 				
 				$general_receipt = $this->paginate($this->MemberReceipts->find()
 				->where($conditions)
-				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])
+				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees'],'GeneralReceiptPurposes'=>function($q) use($purpose_id){   
+			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
+			}])
 				->order(['MemberReceipts.date_current DESC']));
-				
+				pr($general_receipt);   exit;
 				$this->set(compact('general_receipt'));
 			}
 			
