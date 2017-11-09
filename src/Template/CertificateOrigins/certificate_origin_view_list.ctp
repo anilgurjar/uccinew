@@ -11,7 +11,7 @@
 		<div class="col-sm-2">
 			<?php echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
 		</div>	
-		<div class=" col-sm-2  ">
+		<div class=" col-sm-3  ">
 			<div class=" input-group input-large  input-daterange date-picker" data-date-format="dd-mm-yyyy">	
 				<?php  echo $this->Form->input('from', ['label' => false,'class'=>'form-control from ', 'placeholder'=>'Date From']); ?>
 				<span class="input-group-addon" style="background-color:e5e5e5 !important;">
@@ -102,12 +102,12 @@ $(document).ready(function(){
 		if(exporter !=''  || originno!='' || datefrom!='' || dateto!=''){
 			var url="<?php echo $this->Url->build(['controller'=>'CertificateOrigins','action'=>'filterdata']);?>";
 			url=url+'?exporter='+exporter+'&originno='+originno+'&datefrom='+datefrom+'&dateto='+dateto;
-			alert(url);
+			
 			$.ajax({ 
 					url:url,
 					type:"GET",
 				}).done(function(response){
-					alert(response);
+					
 					$('.show_div').html(response);
 					
 				});
