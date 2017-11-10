@@ -25,10 +25,10 @@ Password:  <?php echo $password; ?>
 </p>
 
 <p>
-In case of any trouble in filling the COO, please drop email at ____________ or call us at 0294-________
+In case of any trouble in filling the COO, please drop email at acc.uccisec@gmail.com or call us at 02942492214
 </p>
 
 <p>Regards <br/>
-UCCI
+Secretariat Staff,UCCI
  </p>
 </div>

@@ -12,5 +12,5 @@
 <p>Kindly correct the COO and submit it again </p>
 <br/>
 <p>Regards <br/>
-<?php echo $regard_member_name; ?></p>
+Secretariat Staff,UCCI</p>
 </div>

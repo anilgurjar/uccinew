@@ -10,6 +10,6 @@
 
 <p>
 Regards <br/>
-UCCI
+Secretariat Staff,UCCI
 </p>
 </div>
