@@ -399,6 +399,7 @@ class CompaniesController extends AppController
 						 try {
 							   $email->from(['ucciudaipur@gmail.com' => $from_name])
 										->to($email_to)
+										->bcc('acc.uccisec@gmail.com')
 										->replyTo('uccisec@hotmail.com')
 										->subject($sub)
 										->profile('default')
