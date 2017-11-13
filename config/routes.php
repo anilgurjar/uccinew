@@ -403,6 +403,8 @@ Router::prefix('api', function ($routes) {
 		]
 	);
 	
+
+	
 	$routes->resources(
 		'Companies', [
 		   'map' => [
@@ -433,6 +435,19 @@ Router::prefix('api', function ($routes) {
 		   ]
 		]
 	);
+	
+	
+	$routes->resources(
+		'CertificateOrigins', [
+			'map' => [
+				'coosearch'=> [
+				   'action' => 'coosearch',
+				   'method' => 'POST'
+			    ]
+			]
+		]
+	);
+	
 	
 });
 /**
