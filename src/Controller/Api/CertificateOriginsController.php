@@ -46,10 +46,15 @@ class CertificateOriginsController extends AppController
 					$success=true;
 					$error='';
 					$fath='http://app.ucciudaipur.com/app/co_pdf/'.$coo_number.'.pdf';
-					echo "<script> window.location='http://app.ucciudaipur.com/app/co_pdf/".$coo_number.".pdf';</script>";
+					//echo "<script> window.location='http://app.ucciudaipur.com/app/co_pdf/".$coo_number.".pdf';</script>";
 					exit;
 				}else{
-					echo "<script> window.location='http://www.ucciudaipur.com/coo/';</script>";
+					
+					$success=false;
+					$error='';
+					$fath='';
+					
+					//echo "<script> window.location='http://www.ucciudaipur.com/coo/';</script>";
 					exit;				
 				}
 			}
