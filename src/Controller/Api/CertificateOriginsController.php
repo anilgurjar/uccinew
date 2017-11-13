@@ -46,7 +46,8 @@ class CertificateOriginsController extends AppController
 					$success=true;
 					$error='';
 					$fath='http://app.ucciudaipur.com/app/co_pdf/'.$coo_number.'.pdf';
-					
+					echo "<script> window.location='http://app.ucciudaipur.com/app/co_pdf/".$coo_number.".pdf';</script>";
+					exit;
 				}else{
 					$success=false;
 					$error='';
