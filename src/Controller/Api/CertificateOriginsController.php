@@ -47,7 +47,7 @@ class CertificateOriginsController extends AppController
 					$error='';
 					$fath='http://app.ucciudaipur.com/app/co_pdf/'.$coo_number.'.pdf';
 					//echo "<script> window.location='http://app.ucciudaipur.com/app/co_pdf/".$coo_number.".pdf';</script>";
-					exit;
+				
 				}else{
 					
 					$success=false;
@@ -55,8 +55,11 @@ class CertificateOriginsController extends AppController
 					$fath='';
 					
 					//echo "<script> window.location='http://www.ucciudaipur.com/coo/';</script>";
-					exit;				
+								
 				}
+				
+			$this->set(compact('success', 'error', 'fath'));
+        	$this->set('_serialize', ['success', 'error', 'fath']);
 			}
 			
 					
