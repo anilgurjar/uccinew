@@ -1439,6 +1439,12 @@ class CertificateOriginsController extends AppController
 		$this->set(compact('CertificateOrigins'));
 		 
     }
+	
+	
+	
+	
+	
+	
 
 } 
 	

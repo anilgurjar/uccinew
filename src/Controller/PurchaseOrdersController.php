@@ -25,17 +25,69 @@ public function initialize()
      */
     public function index()
     {
-		$user_id=$this->Auth->User('id');
 		$this->viewBuilder()->layout('index_layout');
-        $this->paginate = [
+		$company_id=$this->Auth->User('company_id'); 
+		
+		$Companies=$this->PurchaseOrders->Companies->get($company_id);
+		
+		$role_id=$Companies->role_id;
+		
+		$user_id=$this->Auth->User('id');
+		 $this->paginate = [
             'contain' => ['Suppliers']
         ];
         $purchaseOrders = $this->paginate($this->PurchaseOrders->find()->order(['purchase_order_no'=>'DESC']));
 
-        $this->set(compact('purchaseOrders'));
+        $this->set(compact('purchaseOrders','role_id'));
         $this->set('_serialize', ['purchaseOrders']);
     }
 
+	
+	
+	
+	
+	
+	
+	public function filterdata(){
+		$supplier=$this->request->query['supplier']; 
+		$purchase_order_no=$this->request->query['purchase_order_no'];
+		$datefrom=$this->request->query['datefrom']; 
+		$dateto=$this->request->query['dateto'];
+		
+		
+		if(!empty($supplier)){
+			$suppliers=$this->PurchaseOrders->Suppliers->find()->where(['name LIKE'=>'%'.$supplier.'%']);
+			foreach($suppliers as $supplier){
+				$condition['supplier_id']=$supplier['id'];
+			}
+			
+			
+		}
+		 if( !empty($purchase_order_no)){
+			//$Users=$this->PurchaseOrders->find()->where(['exporter'=>$exporter,'origin_no '=>$originno])->order(['PurchaseOrders.id'=>'DESC']);
+			$condition['purchase_order_no']=$purchase_order_no;
+		}
+		
+		if(!empty($datefrom) && !empty($dateto)){
+			//$Users=$this->PurchaseOrders->find()->where(['PurchaseOrders.invoice_date BETWEEN :start AND :end'])
+				///->bind(':start', $datefrom, 'date')
+				//->bind(':end',   $dateto, 'date')
+				//->order(['PurchaseOrders.id'=>'DESC']);
+			$datefrom=date('y-m-d', strtotime($datefrom));
+			$dateto=date('y-m-d', strtotime($dateto));
+			$condition['date >=']=$datefrom;
+			$condition['date <=']=$dateto;
+		}
+		
+	
+		$purchaseOrders=$this->PurchaseOrders->find()->where($condition)
+						->contain(['Suppliers'])
+						->order(['PurchaseOrders.id'=>'DESC']);
+				
+		
+		$this->set(compact('purchaseOrders'));
+		
+	}
     /**
      * View method
      *

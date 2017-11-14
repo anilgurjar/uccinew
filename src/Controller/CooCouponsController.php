@@ -108,7 +108,7 @@ class CooCouponsController extends AppController
 			$sub="Your Coo Coupon Generate Successfully";
 			  $from_name="UCCI";
 			  $email_to=trim($email_to,' ');
-			 $email_to="anilgurjer371@gmail.com";
+			// $email_to="anilgurjer371@gmail.com";
 			  if(!empty($email_to)){		
 						
 				 try {

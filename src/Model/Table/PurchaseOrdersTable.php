@@ -36,7 +36,14 @@ class PurchaseOrdersTable extends Table
         $this->table('purchase_orders');
         $this->displayField('id');
         $this->primaryKey('id');
-
+	
+		
+		$this->belongsTo('Companies', [
+            'foreignKey' => 'company_id',
+            'joinType' => 'INNER'
+        ]);
+		
+		
         $this->belongsTo('Suppliers', [
             'foreignKey' => 'supplier_id',
             'joinType' => 'INNER'
