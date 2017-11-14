@@ -43,6 +43,14 @@ class InvoiceAttestationsTable extends Table
             'foreignKey' => 'company_id',
             'joinType' => 'INNER'
         ]);
+		
+		$this->belongsTo('MasterCompanies');
+		$this->belongsTo('MemberReceipts');
+		$this->belongsTo('MasterTaxations');
+		$this->belongsTo('CertificateOriginAuthorizeds');
+		$this->belongsTo('Users');
+		
+		
         /* $this->belongsTo('Units', [
             'foreignKey' => 'unit_id',
             'joinType' => 'INNER'

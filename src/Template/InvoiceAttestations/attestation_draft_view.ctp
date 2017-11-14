@@ -14,7 +14,7 @@ input[type="radio"]
   <div class="box box-primary">
 	<div class="box-header with-border no-print">
 	<center>
-	  <h3 class="box-title"><strong>REVIEW CERTIFICATE OF ORIGIN</strong></h3>
+	  <h3 class="box-title"><strong>REVIEW INVOICE ATTESTATION</strong></h3>
 	</center>
 	</div>
 	<!-- /.box-header -->
@@ -192,10 +192,10 @@ input[type="radio"]
 						echo $this->Form->button(__('Edit') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-warning','button type'=>'button','id'=>'edit_button']);
 					?>
 					<?php
-						echo $this->Form->button(__('Save as Draft') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-primary','button type'=>'Submit','name'=>'coo_attestation_draft','id'=>'certificate_origin']);
+						echo $this->Form->button(__('Save as Draft') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-primary','button type'=>'Submit','name'=>'invoice_attestation_draft','id'=>'certificate_origin']);
 					?>
 					<?php
-						echo $this->Form->button(__('Publish') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-success','button type'=>'Submit','name'=>'certificate_origin_publish','id'=>'certificate_origin_publish']);
+						echo $this->Form->button(__('Publish') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-success','button type'=>'Submit','name'=>'invoice_attestation_publish','id'=>'certificate_origin_publish']);
 					?>
 					</center>
 					

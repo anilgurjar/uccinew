@@ -11,7 +11,7 @@ input[type="radio"]
   <div class="box box-primary">
 	<div class="box-header with-border no-print">
 		<center>
-			<h3 class="box-title"><strong>CERTIFICATE OF ORIGIN</strong></h3>
+			<h3 class="box-title"><strong>INVOICE ATTESTATION</strong></h3>
 		</center>
 	</div>
 	<!-- /.box-header -->
@@ -165,7 +165,7 @@ input[type="radio"]
 				<div class="col-sm-12 no-print">
 					<center>
 						<?php
-						echo $this->Form->button(__('Save as Draft') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-success','button type'=>'Submit','name'=>'coo_invoice_submit','id'=>'certificate_origin']);
+						echo $this->Form->button(__('Save as Draft') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-success','button type'=>'Submit','name'=>'invoice_invoice_submit','id'=>'certificate_origin']);
 						?>
 					</center>
 					
