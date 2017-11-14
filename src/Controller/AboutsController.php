@@ -1,8 +1,18 @@
 <?php
 namespace App\Controller;
-
+use Cake\View\View;
+use Cake\View\ViewBuilder;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 use App\Controller\AppController;
-
+use Cake\ORM\TableRegistry;
+use Cake\Validation\Validation;
+use Cake\Routing\Router;
+use Cake\Mailer\Email;
+use Cake\Event\Event;
+ini_set('max_execution_time', 300);
+ini_set('memory_limit', '256M');
+//use Cake\Network\Email\Email;
 /**
  * Abouts Controller
  *
@@ -22,6 +32,17 @@ class AboutsController extends AppController
 
         $this->set(compact('abouts'));
         $this->set('_serialize', ['abouts']);
+    }
+	public function demo()
+    {
+       $user_id=$this->Auth->User('id');
+	   $this->viewBuilder()->layout('index_layout');
+    }
+	
+	public function demo1()
+    {
+       $user_id=$this->Auth->User('id');
+	   $this->viewBuilder()->layout('index_layout');
     }
 
     /**
