@@ -136,18 +136,18 @@ class InvoiceAttestationsController extends AppController
 	  
 		if(isset($this->request->data['view']))
 		{ 
-			$certificate_origin_id=$this->request->data['view'];;
-			$certificate_origins = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$certificate_origin_id,'status'=>'verified'])->contain(['Companies'])->toArray();
+			$invoice_attestation_id=$this->request->data['view'];;
+			$invoice_attestations = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$invoice_attestation_id,'status'=>'verified'])->contain(['Companies'])->toArray();
 			
 			
-			$verify_bys=$certificate_origins[0]->verify_by; 
+			$verify_bys=$invoice_attestations[0]->verify_by; 
 			$Users_verifys=$this->InvoiceAttestations->Companies->Users->get($verify_bys);
 			$verify_member=$Users_verifys->member_name; 
-			$company_id=$certificate_origins[0]->company_id; 
+			$company_id=$invoice_attestations[0]->company_id; 
 			$DocumentCheck=$this->InvoiceAttestations->Companies->find()
 				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
 				->count();
-			$this->set(compact('certificate_origins','DocumentCheck','verify_member'));
+			$this->set(compact('invoice_attestations','DocumentCheck','verify_member'));
 		}
 		
 		if($this->request->is('post')) 
