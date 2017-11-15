@@ -24,6 +24,7 @@ $origin_no = $data->origin_no;
 $certificate_origin = $data->certificate_origin_goods;
 $current_date = $data->date_current;
 $currency_name = $data->currency;
+$coo_verification_code = $data->coo_verification_code;
 $total_before_discount = $data->total_before_discount;
 $discount = $data->discount;
 $other_info = $data->other_info;
@@ -61,7 +62,14 @@ else
     $errorCorrectionLevel = 'L';
     $matrixPointSize = 2.3;
 	//$qrcode="Co Number: ".$origin_no."";
-	$qrcode="http://ucciudaipur.com/app/co_pdf/".$origin_no.'.pdf';
+	
+	if(!empty($coo_verification_code)){
+		$qrcode="http://ucciudaipur.com/app/co_pdf/".$coo_verification_code.'.pdf';
+	}else{
+		$qrcode="http://ucciudaipur.com/app/co_pdf/".$origin_no.'.pdf';
+	}
+	
+	//$qrcode="http://ucciudaipur.com/app/co_pdf/".$origin_no.'.pdf';
 	//$qrcode="http://ucciudaipur.com/uccinew/co_pdf/".$origin_no.'.pdf';
 	$code=$origin_no;
       $filename = $PNG_TEMP_DIR.$code.'.png';
@@ -517,13 +525,17 @@ Forging this document is a legally punishable offense.
 		$html_content.='</table>';
 
 
-   
+ if(!empty($coo_verification_code)){
+	$path='co_pdf/'.$coo_verification_code.'.pdf';
+ }else{
+	$path='co_pdf/'.$origin_no.'.pdf';
+ } 
     	
 		
 $dompdf->loadHtml($html_content);
 $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
-file_put_contents('co_pdf/'.$origin_no.'.pdf', $dompdf->output());		
+file_put_contents($path, $dompdf->output());		
 	
 $dompdf->stream($name,array('Attachment'=>0));
 exit(0);

@@ -542,7 +542,7 @@ class CompaniesController extends AppController
 				
 				$query = $this->Companies->query();
 				$query->update()
-					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'form_number'=>$form_numbers,'address'=>$address,'office_telephone'=>$office_telephone,'non_member_exporter_email'=>'yes','nationality'=>$nationality])
+					->set(['company_organisation'=>$organisation_name,'gst_number'=>$gst_number,'form_number'=>$form_numbers,'address'=>$address,'master_state_id'=>20,'office_telephone'=>$office_telephone,'non_member_exporter_email'=>'yes','nationality'=>$nationality])
 					->where(['id' => $find_id])
 					->execute();
 				$query = $this->Companies->Users->query();
@@ -636,6 +636,8 @@ class CompaniesController extends AppController
 				$this->request->data['year_of_joining']=date("Y-m-d");
 				$this->request->data['form_number']=$form_number;
 				$this->request->data['role_id']=2;
+				$this->request->data['master_state_id']=20;
+				
 				$Companies=$this->Companies->patchEntity($Companies,$this->request->data,['associated'=>['Users','CompanyMemberTypes','CoRegistrations','CoRegistrations.CoTaxAmounts']]);
 				  
 				if($result=$this->Companies->save($Companies)){

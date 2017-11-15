@@ -40,21 +40,27 @@ class CertificateOriginsController extends AppController
 			{
 			 $CertificateOrigins_count=$this->CertificateOrigins->find()
 			 ->Where(['exporter LIKE' => '%'.$organisation_name.'%','consignee LIKE' => '%'.$consignee.'%','origin_no'=>$coo_number])
-			->count(); 
-				if($CertificateOrigins_count>0){
+			->count();  
+		  if($CertificateOrigins_count>0){
+					
+					$CertificateOrigins=$this->CertificateOrigins->find()
+					->Where(['exporter LIKE' => '%'.$organisation_name.'%','consignee LIKE' => '%'.$consignee.'%','origin_no'=>$coo_number])->toArray();
+					 
+					$coo_verification_code=$CertificateOrigins[0]->coo_verification_code;
+					if(!empty($coo_verification_code)){
+						$fath='http://app.ucciudaipur.com/app/co_pdf/'.$coo_verification_code.'.pdf';
+					}else{
+						$fath='http://app.ucciudaipur.com/app/co_pdf/'.$coo_number.'.pdf';					
+					}
 					
 					$success=true;
 					$error='';
-					$fath='http://app.ucciudaipur.com/app/co_pdf/'.$coo_number.'.pdf';
-					//echo "<script> window.location='http://app.ucciudaipur.com/app/co_pdf/".$coo_number.".pdf';</script>";
-				
+					
 				}else{
 					
 					$success=false;
 					$error='';
 					$fath='';
-					
-					//echo "<script> window.location='http://www.ucciudaipur.com/coo/';</script>";
 								
 				}
 				

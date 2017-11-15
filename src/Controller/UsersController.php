@@ -3305,7 +3305,9 @@ function convert_number_to_words($no) {
 				
                 $passkey = uniqid();
                 $url = Router::Url(['controller' => 'users', 'action' => 'reset_password'], true) . '/' . $passkey;
+				
                 $timeout = time() + DAY;
+				
                  if ($this->Users->updateAll(['passkey' => $passkey, 'timeout' => $timeout], ['id' => $user->id])){
 					
                     $this->sendResetEmail($url, $user);

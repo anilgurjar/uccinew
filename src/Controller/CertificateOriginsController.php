@@ -214,6 +214,10 @@ class CertificateOriginsController extends AppController
 				$this->request->data['authorised_by']=$user_id;
 				$this->request->data['verify_remarks']=''; 
 				$this->request->data['authorised_remarks']=''; 
+				
+				$coo_verification_code=uniqid(); 
+				$this->request->data['coo_verification_code']=$coo_verification_code; 
+				
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
 				$query = $this->CertificateOrigins->find();
 				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
@@ -226,14 +230,16 @@ class CertificateOriginsController extends AppController
 				 $Users= $this->CertificateOrigins->Users->get($user_id);
 				
 				 $regards_member_name=$Users->member_name;
+				 
 				
+				//pr($CertificateOrigins); exit;
 				if($this->CertificateOrigins->save($CertificateOrigins))
 				{
 					
 					  $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 //$email_to="rohitkumarjoshi43@gmail.com";
+					 $email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -1281,8 +1287,34 @@ class CertificateOriginsController extends AppController
     {
 		$this->viewBuilder()->layout('index_layout');
 		$company_id=$this->Auth->User('company_id'); 
+		$user_id=$this->Auth->User('id'); 
 		$Companies=$this->CertificateOrigins->Companies->get($company_id);
 		$role_id=$Companies->role_id;
+		
+		if($this->request->is('post')) 
+		{
+				//echo "hello";		
+			if(isset($this->request->data['certificate_move_submit']))
+			{
+				
+				 $coo_id=$this->request->data['certificate_move_submit'];
+				$CertificateOrigins = $this->CertificateOrigins->get($coo_id);
+		
+				$this->request->data['id']=$this->request->data['certificate_move_submit'];
+				$this->request->data['reason_move']=$this->request->data['reason_move'.$coo_id];
+				$this->request->data['move_by']=$user_id;
+				$this->request->data['payment_status']='success';
+				$this->request->data['status']='published';
+				
+				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				
+				$this->CertificateOrigins->save($CertificateOrigins);
+				
+			}
+		
+		}	
+		
+		
 		if($role_id==1 || $role_id==4){	
 			$certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'draft']);
 		}
@@ -1290,7 +1322,7 @@ class CertificateOriginsController extends AppController
 			$certificate_origins = $this->CertificateOrigins->find()->where(['company_id'=>$company_id,'status'=>'draft']);
 		}
 		
-		$this->set(compact('certificate_origins'));
+		$this->set(compact('certificate_origins','role_id'));
 	}
 	public function certificateOriginViewPublished()
     {
@@ -1439,6 +1471,12 @@ class CertificateOriginsController extends AppController
 		$this->set(compact('CertificateOrigins'));
 		 
     }
+	
+	
+	
+	
+	
+	
 
 } 
 	
