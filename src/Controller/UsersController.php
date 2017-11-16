@@ -31,7 +31,7 @@ class UsersController extends AppController
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
-        $this->Auth->allow(['PerformaInvoiceMailSms','PerformaInvoiceReminderMail','logout', 'idCard','UpdateIdCardMail','FetchMasterMembershipFees','FetchMasterTurnOvers','UpdateInvoiceMail','UpdateInvoiceReminderMail',  'forgotPassword', 'resetPassword','sendResetEmail','EmailShot']);
+        $this->Auth->allow(['PerformaInvoiceMailSms','PerformaInvoiceReminderMail','logout', 'idCard','UpdateIdCardMail','FetchMasterMembershipFees','FetchMasterTurnOvers','UpdateInvoiceMail','UpdateInvoiceReminderMail',  'forgotPassword', 'resetPassword','sendResetEmail','EmailShot','convert_number_to_words']);
     }
 	public function election() 
 	{
