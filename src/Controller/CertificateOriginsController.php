@@ -1504,6 +1504,7 @@ class CertificateOriginsController extends AppController
 		$user_id=$authorized_id;  
 		
 		$certificate_origin_count = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$ids,'status'=>'verified','coo_verify_email'=>'yes'])->count();
+		$this->set(compact('certificate_origin_count'));
 		if($certificate_origin_count>0){
 			$CertificateOrigins = $this->CertificateOrigins->newEntity();
 
