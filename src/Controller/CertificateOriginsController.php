@@ -947,7 +947,7 @@ class CertificateOriginsController extends AppController
 		$datefrom=$this->request->query['datefrom']; 
 		$dateto=$this->request->query['dateto'];
 		
-		
+		$condition['status']='approved';
 		if(!empty($exporter)){
 			//$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter])->order(['CertificateOrigins.id'=>'DESC']);
 			$condition['exporter Like']='%'.$exporter.'%';
