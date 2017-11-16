@@ -3,6 +3,8 @@
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 
+if($certificate_origin_count>0){
+
 ?>
 <style>
 @media print {
@@ -371,4 +373,4 @@ use Cake\Filesystem\File;
     </div>
 	</div>
 </div>
- 
+<?php } ?>

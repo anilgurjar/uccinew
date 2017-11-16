@@ -1518,7 +1518,7 @@ class CertificateOriginsController extends AppController
 			->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
 			->count();
 			
-			$this->set(compact('certificate_origins','DocumentCheck','verify_member','CertificateOrigins'));
+			$this->set(compact('certificate_origins','DocumentCheck','verify_member','CertificateOrigins','certificate_origin_count'));
 			
 			
 		if($this->request->is('post')) 
