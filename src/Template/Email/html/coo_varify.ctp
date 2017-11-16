@@ -6,4 +6,7 @@
 <p> Please <a href='<?php echo $url; ?>'> click here </a> </p>
 <br/>
 
+<p>Regards <br/>
+Secretariat Staff,UCCI
+ </p>
 </div>
