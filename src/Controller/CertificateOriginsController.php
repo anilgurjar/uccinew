@@ -970,10 +970,8 @@ class CertificateOriginsController extends AppController
 		
 		
 		$Users=$this->CertificateOrigins->find()->where($condition)
-				->order(['CertificateOrigins.id'=>'DESC']);
-				
-		
-				
+				->order(['CertificateOrigins.origin_no'=>'DESC']);
+			
 		
 		$this->set(compact('Users'));
 		

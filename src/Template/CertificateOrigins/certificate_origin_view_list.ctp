@@ -99,7 +99,7 @@ $(document).ready(function(){
 		var datefrom = $('.from').val();
 		var dateto = $('.to').val();
 		
-		if(exporter !=''  || originno!='' || datefrom!='' || dateto!=''){
+		
 			var url="<?php echo $this->Url->build(['controller'=>'CertificateOrigins','action'=>'filterdata']);?>";
 			url=url+'?exporter='+exporter+'&originno='+originno+'&datefrom='+datefrom+'&dateto='+dateto;
 			
@@ -112,7 +112,7 @@ $(document).ready(function(){
 					
 				});
 				
-		}
+		
 	
 	});	
 		
