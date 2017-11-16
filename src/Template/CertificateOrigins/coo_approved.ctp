@@ -3,7 +3,7 @@
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 
-if($certificate_origin_count>0){
+if(@$certificate_origin_count>0){
 
 ?>
 <style>
