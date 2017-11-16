@@ -950,7 +950,7 @@ class CertificateOriginsController extends AppController
 		
 		if(!empty($exporter)){
 			//$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter])->order(['CertificateOrigins.id'=>'DESC']);
-			$condition['exporter']=$exporter;
+			$condition['exporter Like']='%'.$exporter.'%';
 		}
 		 if( !empty($originno)){
 			//$Users=$this->CertificateOrigins->find()->where(['exporter'=>$exporter,'origin_no '=>$originno])->order(['CertificateOrigins.id'=>'DESC']);
