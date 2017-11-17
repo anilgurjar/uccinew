@@ -1409,7 +1409,7 @@ class CertificateOriginsController extends AppController
 					$sub="Certificate of origin is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					$email_to='rohitkumarjoshi43@gmail.com';
+					$email_to='coo.uccisec@gmail.com';
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
