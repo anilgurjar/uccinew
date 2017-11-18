@@ -29,7 +29,7 @@
 	</center>
 	<div class="box-header with-border no-print">
 		<center>
-		  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN</strong></h3>
+		  <h3 class="box-title"><strong>Invoice Attestation List</strong></h3>
 		</center>
 	</div>
 	
@@ -66,7 +66,7 @@
 						<td><?= date('d-m-Y', strtotime($invoice_attestatio->invoice_date)) ?></td>
 						<td><?= $invoice_attestatio->manufacturer ?></td>
 						<td><?php if($invoice_attestatio->despatched_by==0){ echo 'Sea'; }else if($invoice_attestatio->despatched_by==1){ echo 'Air'; }else{ echo 'Road'; } ?></td>
-						<td><?= $this->Form->button(__('View') . $this->Html->tag('i', '', ['class'=>'fa fa-book']),['class'=>'btn btn-info btn-sm','formaction'=>'certificate_origin_performa_view','formtarget'=>'_blank','value'=>$invoice_attestatio->id,'type'=>'Submit','name'=>'view']);   ?> </td>
+						<td><?= $this->Form->button(__('View') . $this->Html->tag('i', '', ['class'=>'fa fa-book']),['class'=>'btn btn-info btn-sm','formaction'=>'invoice_attestation_performa_view','formtarget'=>'_blank','value'=>$invoice_attestatio->id,'type'=>'Submit','name'=>'view']);   ?> </td>
 						</tr>
 
 					

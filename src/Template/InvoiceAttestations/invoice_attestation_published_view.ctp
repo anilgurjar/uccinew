@@ -43,8 +43,8 @@ use Cake\Filesystem\File;
 		<div class="box-body">
 			<?= $this->Form->create($InvoiceAttestations) ?>
 			<?php
-			
-			foreach($invoice_attestations as $invoice_attestation)
+			 
+			foreach($certificate_origins as $certificate_origin)
 			{
 				?>
 				<div class="col-sm-12">
@@ -52,46 +52,40 @@ use Cake\Filesystem\File;
 						<div class="col-sm-12 value_padding">
 						  <label class="col-sm-4">Exporter</label>
 						  <div class="col-sm-8">
-							<?= $invoice_attestation->exporter ?>
+							<?= $certificate_origin->exporter ?>
 						  </div>
 						</div>
 						<div class="col-sm-12 value_padding">
 						  <label class="col-sm-4">Consignee</label>
 						  <div class="col-sm-8">
-							<?= $invoice_attestation->consignee ?>
+							<?= $certificate_origin->consignee ?>
 						  </div>
 						</div>
 						<div class="col-sm-12 value_padding">
 						  <label class="col-sm-4">Invoice No. & Date</label>
 						  <div class="col-sm-4">
-							<?= $invoice_attestation->invoice_no ?>
+							<?= $certificate_origin->invoice_no ?>
 						  </div>
 						   <div class="col-sm-4">
-							<?= date('d-m-Y', strtotime($invoice_attestation->invoice_date)) ?>							
+							<?= date('d-m-Y', strtotime($certificate_origin->invoice_date)) ?>							
 						  </div>
 						</div>
 						<div class="col-sm-12 value_padding">
 						  <label class="col-sm-4">Manufacturer</label>
 						  <div class="col-sm-8">
-							<?= $invoice_attestation->manufacturer ?>
+							<?= $certificate_origin->manufacturer ?>
 						  </div>
 						</div>
 						<div class="col-sm-12 value_padding">
 						  <label class="col-sm-4">Despatched by</label>
 						  <div class="col-sm-8">
-							<?php if($invoice_attestation->despatched_by==0){ echo 'Sea'; }else if($invoice_attestation->despatched_by==1){ echo 'Air'; } else{ echo "Road"; } ?>
+							<?php if($certificate_origin->despatched_by==0){ echo 'Sea'; }else if($certificate_origin->despatched_by==1){ echo 'Air'; } else{ echo "Road"; } ?>
 						  </div>
 						</div>
 						<div class="col-sm-12 value_padding">
 							<label class="col-sm-4">Other Info</label>
 							<div class="col-sm-8">
-								<?= $invoice_attestation->other_info ?>
-							</div>
-						</div>
-						<div class="col-sm-12 value_padding">
-							<label class="col-sm-4" style="color:red;">Verify By</label>
-							<div class="col-sm-8">
-								<?php echo $verify_member; ?>
+								<?= $certificate_origin->other_info ?>
 							</div>
 						</div>
 					</div>
@@ -99,34 +93,48 @@ use Cake\Filesystem\File;
 						<div class="col-sm-12 value_padding">
 						  <label class="col-sm-4">Port of Loading</label>
 						  <div class="col-sm-8">
-							<?= $invoice_attestation->port_of_loading ?>
+							<?= $certificate_origin->port_of_loading ?>
 						  </div>
 						</div>
 						<div class="col-sm-12 value_padding">
 						  <label class="col-sm-4">Final Destination</label>
 						  <div class="col-sm-8">
-							<?= $invoice_attestation->final_destination ?>
+							<?= $certificate_origin->final_destination ?>
 						  </div>
 						</div>
 						<div class="col-sm-12 value_padding">
 						  <label class="col-sm-4">Port of Discharge</label>
 						  <div class="col-sm-8">
-							<?= $invoice_attestation->port_of_discharge ?>
+							<?= $certificate_origin->port_of_discharge ?>
 						  </div>
 						</div>
+						
 					</div>
 				</div>
-				
-				
+				<div class="col-md-12">
+					<?php if(!empty($certificate_origin->authorised_remarks)){ ?>	
+					<div class="col-sm-6 ">
+						<div class="form-group">
+							<label class="col-sm-4 control-label" style="color:red">Return Reason</label>
+							<div class="col-sm-8">
+							<?php
+								echo $certificate_origin->authorised_remarks;
+								 ?> 
+						   </div>
+						</div>
+					</div>
+					
+				<?php } ?>
+				</div>
 				
 				<div class="col-sm-12">
 					
 					<?php
 				//	pr($certificate_origin);
-						if($invoice_attestation->invoice_attachment=='true'){
+						if($certificate_origin->invoice_attachment=='true'){
 
-							$dir = new Folder(WWW_ROOT . 'img/coo_invoice_attestation/'.$invoice_attestation->id);
-							$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice_attestation/'.$invoice_attestation->id;
+							$dir = new Folder(WWW_ROOT . 'img/coo_invoice_attestation/'.$certificate_origin->id);
+							$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice_attestation/'.$certificate_origin->id;
 
 							$files = $dir->find('.*', true);
 							$arr_ext = array('jpg', 'jpeg', 'png'); 
@@ -134,24 +142,16 @@ use Cake\Filesystem\File;
 								echo"<div class='col-sm-4'>";
 									$ext = substr(strtolower(strrchr($file, '.')), 1);
 									if (in_array($ext, $arr_ext)) {
-										echo $this->Html->image('/img/coo_invoice_attestation/'.$invoice_attestation->id.'/'.$file, ['style'=>'width:300px; height:300px;']);
+										echo $this->Html->image('/img/coo_invoice_attestation/'.$certificate_origin->id.'/'.$file, ['style'=>'width:300px; height:300px;']);
 									}else{
-		echo '<iframe src="'.$this->Url->build('/img/coo_invoice_attestation/'.$invoice_attestation->id.'/'.$file).'" title="your_title" align="top" height="300" width="100%" frameborder="0" scrolling="auto" target="Message"></iframe>';
+		echo '<iframe src="'.$this->Url->build('/img/coo_invoice_attestation/'.$certificate_origin->id.'/'.$file).'" title="your_title" align="top" height="300" width="100%" frameborder="0" scrolling="auto" target="Message"></iframe>';
 									}
 								echo'</div>'; 
 							}
 
 						}
-					
-					
-					
 					?>
-					
-					
-					
 				</div>
-				
-				
 				<div class="col-sm-12">
 					<center><h4><strong><u>CERTIFICATION</u><strong></h4></center>
 					<p>It is hereby certified that to the best of our knowledge and belief the goods mentioned above are the product of Indian Republic and are wholly of Indian Origin.</p>
@@ -165,22 +165,22 @@ use Cake\Filesystem\File;
 				</div>
 				<div class="col-sm-12 no-print">
 					<center>
-					
 					<?php
 					 
-					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Approve') ,['class'=>'btn btn-success','type'=>'button','data-toggle'=>'modal','data-target'=>'#verify','value'=>$invoice_attestation->id]);
+					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Verify') ,['class'=>'btn btn-success','type'=>'button','data-toggle'=>'modal','data-target'=>'#verify','value'=>$certificate_origin->id]);
 					?>
 					
 					<?php
-					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Not Approve') ,['class'=>'btn btn-danger','type'=>'button','data-toggle'=>'modal','data-target'=>'#notverify','value'=>$invoice_attestation->id]);
+					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Not Verify') ,['class'=>'btn btn-danger','type'=>'button','data-toggle'=>'modal','data-target'=>'#notverify','value'=>$certificate_origin->id]);
 					?>
+						
 					</center>
 					<div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						  <div class="modal-dialog" role="document">
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<h4 class="modal-title" id="myModalLabel" style="text-align:left !important">Do you want to Approve this Invoice Attestation</h4>
+								<h4 class="modal-title" id="myModalLabel" style="text-align:left !important">Do you want to verify this COO</h4>
 							  </div>
 							  <div class="modal-body">
 								<div class="row">
@@ -189,8 +189,12 @@ use Cake\Filesystem\File;
 										<div class="col-md-12">
 											<div class="form-group">
 												<label class=" control-label" style="text-align:left !important">
-													Documents are still panding, do you wish to continue 
+												
+												Documents are still panding, do you wish to continue 
 												</label>
+												
+													 
+												
 											</div>
 										</div>
 									</div>
@@ -200,9 +204,9 @@ use Cake\Filesystem\File;
 							  <div class="modal-footer">
 							  <div class="related_issue"></div>
 								<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
-					<?php
-					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Approve') ,['class'=>'btn btn-success','type'=>'Submit','name'=>'invoice_attestation_approve_submit','value'=>$invoice_attestation->id]);
-					?>	 
+								<?php
+									echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Verify') ,['class'=>'btn btn-success','type'=>'Submit','name'=>'certificate_approve_submit','value'=>$certificate_origin->id]);
+								?>	 
 							  </div>
 							</div>
 						  </div>
@@ -212,7 +216,7 @@ use Cake\Filesystem\File;
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<h4 class="modal-title" id="myModalLabel" style="text-align:left">Do you want to not Approve this COO</h4>
+								<h4 class="modal-title" id="myModalLabel" style="text-align:left">Do you want to not verify this COO</h4>
 							  </div>
 							  <div class="modal-body">
 								<div class="row">
@@ -222,7 +226,7 @@ use Cake\Filesystem\File;
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class=" control-label" style="text-align:left !important">Remarks</label>
-														<?php echo $this->Form->textarea('ucci_content', ['label' => false,'placeholder'=>'Remarks','class'=>'form-control ', 'name'=>'authorised_remarks']); ?>
+														<?php echo $this->Form->textarea('ucci_content', ['label' => false,'placeholder'=>'Remarks','class'=>'form-control ', 'name'=>'verify_remarks']); ?>
 												</div>
 											</div>
 										</div>
@@ -233,15 +237,15 @@ use Cake\Filesystem\File;
 							  <div class="related_issue"></div>
 								<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
 								<?php
-								echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-ban']) . __(' Not Approve'),['class'=>'btn btn-danger','type'=>'Submit','name'=>'invoice_attestation_notapprove_submit','value'=>$invoice_attestation->id]);
-								?> 
+									echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Not Verify') ,['class'=>'btn btn-danger','type'=>'Submit','name'=>'certificate_notapprove_submit','value'=>$certificate_origin->id]);
+								?>	 
 							  </div>
 							</div>
 						  </div>
 						</div>
 				</div>
-				</div>
-			<?php
+				
+			 <?php
 			}
 			echo $this->Form->end(); 
 			?>

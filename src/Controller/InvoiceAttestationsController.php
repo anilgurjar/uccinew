@@ -118,6 +118,29 @@ class InvoiceAttestationsController extends AppController
 	
 	//invoice view end
 	
+	
+	
+	
+	public function InvoiceAttestationPerformaView(){
+		$this->viewBuilder()->layout('index_layout');
+		$user_id=$this->Auth->User('id');
+		$certificate_origin_id=$this->request->data['view'];
+		$invoice_attestaions = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$certificate_origin_id,'status'=>'approved'])->contain(['Companies'])->toArray();
+		$approved_by=$invoice_attestaions[0]->approved_by;
+		$CertificateOriginAuthorizeds=$this->InvoiceAttestations->CertificateOriginAuthorizeds->find()->where(['user_id'=>$approved_by])->contain(['Users'])->toArray();
+		
+		$this->set(compact('invoice_attestaions','CertificateOriginAuthorizeds'));
+		$MasterCompanies=$this->InvoiceAttestations->MasterCompanies->find();
+		$this->set('MasterCompanies',$MasterCompanies);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	//view for approve screen
 	
 	public function InvoiceAttestationApprove()
@@ -465,10 +488,10 @@ class InvoiceAttestationsController extends AppController
 							->where(['id' => $data['id']])
 							->execute();
 
-
+						$last_insert_id=$data['id'];
 					
 						//return $this->redirect('https://test.payu.in/_payment');
-						return $this->redirect(['action' => 'attestation-draft-view']);
+						return $this->redirect(['action' => 'attestation-draft-view',$last_insert_id]);
 					}
 					else{
 						return $this->redirect(['action' => 'paymentTest',$data['id']]);
@@ -490,6 +513,7 @@ class InvoiceAttestationsController extends AppController
 		
 	}
 	// function for view attestation for draft view end
+	
 	
 	
 	
@@ -971,6 +995,185 @@ class InvoiceAttestationsController extends AppController
 		
 	}
  
+	
+	
+	
+	
+	
+	
+	
+	public function invoiceattestationViewPublished()
+    {
+		$this->viewBuilder()->layout('index_layout');
+		$company_id=$this->Auth->User('company_id'); 
+		$Companies=$this->InvoiceAttestations->Companies->get($company_id);
+		$role_id=$Companies->role_id;
+		if($role_id==1 || $role_id==4){	
+			$certificate_origins =$this->InvoiceAttestations->find()->where(['status'=>'published','payment_status'=>'success']);
+		}
+		else{
+			$certificate_origins=array();
+		}		
+		$this->set(compact('certificate_origins'));
+	}
+ 
+	public function invoiceattestationPublishedView()
+    {
+		$this->viewBuilder()->layout('index_layout');
+		$user_id=$this->Auth->User('id');
+		$Users=$this->InvoiceAttestations->Users->get($user_id);
+		$regard_member_name=$Users->member_name;
+		$InvoiceAttestations = $this->InvoiceAttestations->newEntity();
+				
+		if(isset($this->request->data['view']))
+		{ 
+			$certificate_origin_id=$this->request->data['view'];;
+			$certificate_origins = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$certificate_origin_id,'status'=>'published'])->contain(['Companies'])->toArray();
+			$company_id=$certificate_origins[0]->company_id;  
+			$DocumentCheck=$this->InvoiceAttestations->Companies->find('all')
+				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
+				->count();
+			$this->set(compact('certificate_origins','DocumentCheck'));
+		}
+		if($this->request->is('post')) 
+		{
+						
+			if(isset($this->request->data['certificate_approve_submit']))
+			{
+				
+				$email = new Email();
+				$email->transport('SendGrid');
+				
+				$id=$this->request->data['certificate_approve_submit'];
+				$InvoiceAttestations=$this->InvoiceAttestations->get($id,['contain'=>['Companies'=>['Users']]]);
+				$exporter_name=$InvoiceAttestations->exporter;
+				
+				$this->request->data['verify_by']=$user_id;
+				$this->request->data['verify_on']=date('Y-m-d h:i:s');
+				$this->request->data['status']='verified';
+				$this->request->data['coo_verify_email']='yes';
+				
+				
+				
+				$query = $this->InvoiceAttestations->find();
+ 				//pr($this->request->data); exit;
+				$InvoiceAttestations = $this->InvoiceAttestations->patchEntity($InvoiceAttestations, $this->request->data);
+				/*$email_to=$CertificateOrigins->company->users[0]->email; 
+				$member_name=$CertificateOrigins->company->users[0]->member_name;
+				$Users= $this->CertificateOrigins->Users->get($user_id);
+				$regards_member_name=$Users->member_name;*/
+
+			
+
+				if($this->InvoiceAttestations->save($InvoiceAttestations))
+				{
+					
+					$certificates_data = base64_encode($id);
+					
+					//$certificates_data = json_encode($certificates_data);
+					
+				
+					$authorise_person_mails=$this->InvoiceAttestations->CertificateOriginAuthorizeds->find()->contain(['Users']);
+				foreach($authorise_person_mails as $authorise_person_mail){
+					$emailperson_id=$authorise_person_mail['user']->id;
+					$emailperson=$authorise_person_mail['user']->member_name;
+					$emailsend=$authorise_person_mail['user']->email;
+					
+					$emailperson_id = base64_encode($emailperson_id);
+					 $url="http://localhost/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id."";
+					 
+					//$url="http://www.ucciudaipur.com/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id.""; 
+					
+					//$url="http://www.ucciudaipur.com/app/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id.""; 
+					
+					$sub="Invoice Attestation is Varified";
+					$from_name="UCCI";
+					$email_to=trim($emailsend,' ');
+					$email_to='anilgurjer371@gmail.com';
+					if(!empty($email_to)){		
+						try {
+							$email->from(['ucciudaipur@gmail.com' => $from_name])
+								->to($email_to)
+								->replyTo('uccisec@hotmail.com')
+								->subject($sub)
+								->profile('default')
+								->template('coo_varify')
+								->emailFormat('html')
+								->viewVars(['member_name'=>$emailperson,'url'=>$url,'exporter_name'=>$exporter_name]);
+								$email->send();
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
+
+							} 
+						}
+				}	
+				
+					$this->Flash->success(__('Invoice Attestation has been verified.'));
+					return $this->redirect(['action' => 'invoice-attestation-view-published']);
+				}
+				$this->Flash->error(__('Unable to verify Invoice Attestation.'));
+			}
+			else if(isset($this->request->data['invoice_attestation_notapprove_submit']))
+			{
+				
+				$id=$this->request->data['certificate_notapprove_submit'];
+				$InvoiceAttestations=$this->InvoiceAttestations->get($id , ['contain'=>['Companies'=>['Users']]]);
+			
+				$remarks=$this->request->data['verify_remarks'];
+				$this->request->data['verify_by']=$user_id;
+				$this->request->data['verify_on']=date('Y-m-d h:i:s');
+				$this->request->data['status']='draft';
+				$this->request->data['authorised_remarks']='';
+				 
+				$InvoiceAttestations = $this->InvoiceAttestations->patchEntity($InvoiceAttestations, $this->request->data);
+				$email = new Email();
+				$email->transport('SendGrid');
+			if($this->InvoiceAttestations->save($InvoiceAttestations))
+				{
+					
+					foreach($InvoiceAttestations['company']['users'] as $InvoiceAttestation)
+					{
+						$mailsendtomember=$InvoiceAttestation['member_name'];
+						$mailsendtoemail=$InvoiceAttestation['email'];
+						$sub="Certificate of origin is Not Varified";
+						$from_name="UCCI";
+						$email_to=trim($mailsendtoemail,' ');
+						$email_to="anilgurjer371@gmail.com";
+					if(!empty($email_to)){		
+						try {
+							$email->from(['ucciudaipur@gmail.com' => $from_name])
+								->to($email_to)
+								->replyTo('uccisec@hotmail.com')
+								->subject($sub)
+								->profile('default')
+								->template('coo_not_varify')
+								->emailFormat('html')
+								->viewVars(['member_name'=>$mailsendtomember,'regard_member_name'=>$regard_member_name,'remarks'=>$remarks]);
+								$email->send();
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
+
+							} 
+						}
+					}	
+					$this->Flash->success(__('Invoice Attestation has been not verify.'));
+					return $this->redirect(['action' => 'invoice-attestation-view-published']);
+				}
+				$this->Flash->error(__('Unable to not verify Invoice Attestation.'));
+			}
+		}
+		
+		$MasterCompanies=$this->InvoiceAttestations->MasterCompanies->find();
+		$this->set('MasterCompanies',$MasterCompanies);
+		$this->set(compact('InvoiceAttestations'));
+		 
+    }
+
+	
+	
+	
 	
 	
 	

@@ -22,9 +22,7 @@ input[type="radio"]
 	<?php $this->Form->templates([
 				'inputContainer' => '{{content}}'
 			]); 
-		
-		
-		?>
+	?>
 		<div class="box-body">
 		 <?= $this->Form->create($invoice_attestation,['method'=>'post','class'=>'form-horizontal','id'=>'certificate_form','enctype' => 'multipart/form-data','onsubmit' => 'return file_submit();'])?> 
 					<div class="col-sm-12 no-print">
@@ -40,9 +38,7 @@ input[type="radio"]
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Consignee</label>
 							<div class="col-sm-8">
-							<?php  
-							echo $this->Form->input('consignee',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'consignee','style'=>'border:none; border-bottom: 1px dotted #ccc;']);  
-							?>
+								<?php  echo $this->Form->input('consignee',['label'=>false,'class'=>'form-control','type'=>'text','name'=>'consignee','style'=>'border:none; border-bottom: 1px dotted #ccc;']); ?>
 							</div>
 						</div>
 						<div class="form-group">

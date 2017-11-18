@@ -769,7 +769,7 @@ public function MemberReceiptAjaxType(){
 				
 				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
 				$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
-				->leftJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
+				->rightJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
 			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
 			})
 				->group(['GeneralReceiptPurposes.member_receipt_id'])
