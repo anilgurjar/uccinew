@@ -809,4 +809,40 @@ class CompaniesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+	public function hwmFirstForm()
+	{
+		$company = $this->Companies->newEntity();
+		$CompanyMemberTypes = $this->Companies->CompanyMemberTypes->newEntity();
+		$Users = $this->Companies->Users->newEntity();
+		$master_financial_years=$this->Companies->MasterFinancialYears->find()->order(['id'=>'DESC'])->limit(1);
+		foreach($master_financial_years as $master_financial_year){
+			$master_financial_year_id=$master_financial_year->id;
+		}
+		if ($this->request->is('post')) {
+			$this->request->data['member_flag']=3;
+			$this->request->data['role_id']=2;
+            $company = $this->Companies->patchEntity($company, $this->request->data);
+			//pr($this->request->data); exit;
+			//-- COmpany Insert
+            if ($record=$this->Companies->save($company)) {
+				//-- Company Member Type Insert
+                $last_insert_company_id=$record->id;
+				$this->request->data['company_id']=$last_insert_company_id;
+				$this->request->data['master_member_type_id']=4;
+				$this->request->data['master_financial_year_id']=$master_financial_year_id;
+				$this->request->data['flag']=1;
+				$CompanyMemberTypes = $this->Companies->CompanyMemberTypes->patchEntity($CompanyMemberTypes, $this->request->data);
+				$this->Companies->CompanyMemberTypes->save($CompanyMemberTypes);
+				//-- Users Insert
+				$this->request->data['member_nominee_type']='first';
+				$Users = $this->Companies->Users->patchEntity($Users, $this->request->data);
+				$this->Companies->Users->save($Users);
+				$this->redirect('http://www.ucciudaipur.com/hwm2?CaaOdaMsdaPsaArefNdsY__IdsadcD='.$last_insert_company_id);
+             } 
+			else 
+			{  
+				$this->Flash->error(__('The company could not be saved. Please, try again.'));
+            }
+        }
+	}
 }

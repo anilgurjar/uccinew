@@ -71,14 +71,18 @@ legend
 	padding-top: 20px;
 }
 table > thead > tr > th { background-color: rgba(105, 98, 98, 0.82) !important;; }
-
+legend {
+    padding-left: 35px;
+	color: #0a4b7d;
+    font-weight: 700;
+}
 </style>
 
 <div class="col-md-12">
 
-<form action="http://app.ucciudaipur.com/app/api/companies/nonmemberexporter.json" method="post">
+<form action="http://ucciudaipur.com/uccinew/api/companies/hwmFirstForm.json" method="post">
 
-<div class="box box-primary">
+<div class="box box-primary" style="padding-top: 115px !important;">
 
 <div class="box-header with-border">
 <div class="section-heading clearfix sr-animated stripe text-center" data-sr-id="1" style="; visibility: visible;  -webkit-transform: translateY(0) scale(1); opacity: 1;transform: translateY(0) scale(1); opacity: 1;-webkit-transition: -webkit-transform 1s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 1s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; transition: transform 1s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 1s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; ">
@@ -133,46 +137,67 @@ INDUSTRIAL WASTE SURVEY <span class="effect"></span>
 		</div>
  	</div>
 </fieldset>
-<fieldset>
+<fieldset style="margin-top: 20px;">
     <legend>Corporate Descriptions</legend>
 	<div class="col-md-12 pad">
 		<div class="col-md-4">
-		 <div class="form-group">
-			<label class="control-label"> Company Name </label>
-			 <input type="text" name="company_organisation" class="form-control" placeholder="Company Name" required >
-		 </div>
+			<div class="form-group">
+				<label class="control-label"> Company Name </label>
+				 <input type="text" name="company_organisation" class="form-control" placeholder="Company Name" required >
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="control-label">GSTIN</label>
+				<input type="text" name="gst_number" class="form-control" placeholder="Company GST Number">
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="control-label">Company Type</label><br/>
+				<label class="radio-inline">
+					<input type="radio" name="company_type" checked value="Small Scale Unit"> Small Scale Unit
+				<label class="radio-inline">
+					<input type="radio" name="company_type" value="Large Scale Unit">Large Scale Unit
+				</label>
+ 			</div>
+ 		</div>
+	</div>			   
+	<div class="col-md-12 pad">
+		
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="control-label">FAX</label>
+				<input type="text" name="company_fax" class="form-control" placeholder="Company FAX">
+			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="form-group">
 				<label class="control-label">Telephone </label>
-				<input type="text" name="office_telephone" class="form-control" placeholder="Telephone">	 
+				<input type="text" name="office_telephone" class="form-control" placeholder="Company Telephone">	 
 			</div>
 		</div>
 	 
 		<div class="col-md-4">
 		 <div class="form-group">
 			<label class="control-label"> E-Mail </label>
-			 <input type="text" name="company_email_id" class="form-control" placeholder="E-mail" required >
+			 <input type="text" name="company_email_id" class="form-control" placeholder="Company E-mail" required >
 		 </div>
 		</div>
-	</div>			   
+		
+ 	</div>
 	<div class="col-md-12 pad">
-		<div class="col-md-4">
+		<div class="col-md-8">
 			<div class="form-group">
 				<label class="control-label">Address</label>
 				<textarea name="address" class="form-control" rows="2" placeholder="Company Address "></textarea>
 			</div>
 		</div>
-		<div class="col-md-4">
-			<div class="form-group">
-				<label class="control-label">FAX</label>
-				<input type="text" name="company_fax" class="form-control" placeholder="FAX">
-			</div>
-		</div>
- 	</div>
+		
+	</div>
 </fieldset>
 
-<fieldset>
+<fieldset style="margin-top: 20px;">
     <legend>General Facility Information</legend>
 	<div class="col-md-12 pad">
 		<div class="col-md-4">
@@ -246,7 +271,7 @@ INDUSTRIAL WASTE SURVEY <span class="effect"></span>
 		<div class="col-md-6" id="onsite_treatment_facility_type" style="display:none">
 			<div class="form-group">
 				<label class="control-label">Type ?</label>
-				<input type="text" name="onsite_treatment_facility_type" class="form-control" placeholder="Pleasde Discribe ISO Registration Type?">
+				<input type="text" name="onsite_treatment_facility_type" class="form-control" placeholder="Please discribe on-site treatment facility?">
 			</div>
 		</div>
 		<div class="col-md-6" id="expansions_planned_waste" style="display:none">
