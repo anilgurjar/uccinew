@@ -431,6 +431,10 @@ Router::prefix('api', function ($routes) {
 				'nonmemberexportertemp' => [
 				   'action' => 'nonmemberexportertemp',
 				   'method' => 'POST'
+				],
+				'hwmFirstForm' => [
+				   'action' => 'hwmFirstForm',
+				   'method' => 'POST'
 				]
 		   ]
 		]
@@ -442,6 +446,17 @@ Router::prefix('api', function ($routes) {
 			'map' => [
 				'coosearch'=> [
 				   'action' => 'coosearch',
+				   'method' => 'POST'
+			    ]
+			]
+		]
+	);
+	
+	$routes->resources(
+		'CompanyHwmInformations', [
+			'map' => [
+				'hwmSecondForm'=> [
+				   'action' => 'hwmSecondForm',
 				   'method' => 'POST'
 			    ]
 			]
