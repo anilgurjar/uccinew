@@ -304,14 +304,14 @@ class CertificateOriginsController extends AppController
 		$Users=$this->CertificateOrigins->Users->get($user_id);
 		//$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['CertificateOriginGoods']]);
 		
-			$sul='http://localhost/ucci/certificate-origins/success';
-			$furl='http://localhost/ucci/certificate-origins/failure';
+			//$sul='http://localhost/ucci/certificate-origins/success';
+			//$furl='http://localhost/ucci/certificate-origins/failure';
 			
 			//$sul='http://ucciudaipur.com/app/certificate-origins/success';
 			//$furl='http://ucciudaipur.com/app/certificate-origins/failure';
 			
-			//$sul='http://ucciudaipur.com/uccinew/certificate-origins/success';
-			//$furl='http://ucciudaipur.com/uccinew/certificate-origins/failure';
+			$sul='http://ucciudaipur.com/uccinew/certificate-origins/success';
+			$furl='http://ucciudaipur.com/uccinew/certificate-origins/failure';
 			
 			
 			$CertificateOrigins = $this->CertificateOrigins->find()
@@ -970,10 +970,8 @@ class CertificateOriginsController extends AppController
 		
 		
 		$Users=$this->CertificateOrigins->find()->where($condition)
-				->order(['CertificateOrigins.id'=>'DESC']);
-				
-		
-				
+				->order(['CertificateOrigins.origin_no'=>'DESC']);
+			
 		
 		$this->set(compact('Users'));
 		

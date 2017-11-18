@@ -18,7 +18,6 @@ echo '
 			{
 				$("#where").hide();
 			}
-			  
 		});
 		
 		$(".expansions_planned").on("click", function(){
