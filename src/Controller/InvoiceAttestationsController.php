@@ -331,6 +331,59 @@ class InvoiceAttestationsController extends AppController
 	
 	
 	// function for view attestation for draft view start
+	
+	
+	
+	
+	public function invoiceAttestationDraftView()
+    {
+		$this->viewBuilder()->layout('index_layout');
+		$company_id=$this->Auth->User('company_id'); 
+		$user_id=$this->Auth->User('id'); 
+		$Companies=$this->InvoiceAttestations->Companies->get($company_id);
+		$role_id=$Companies->role_id;
+		
+		if($this->request->is('post')) 
+		{
+				//echo "hello";		
+			if(isset($this->request->data['invoice_attestation_move_submit']))
+			{
+				
+				 $coo_id=$this->request->data['invoice_attestation_move_submit'];
+				$InvoiceAttestations = $this->InvoiceAttestations->get($coo_id);
+		
+				$this->request->data['id']=$this->request->data['invoice_attestation_move_submit'];
+				$this->request->data['reason_move']=$this->request->data['reason_move'.$coo_id];
+				$this->request->data['move_by']=$user_id;
+				$this->request->data['payment_status']='success';
+				$this->request->data['status']='published';
+				
+				$InvoiceAttestations = $this->InvoiceAttestations->patchEntity($InvoiceAttestations, $this->request->data);
+				
+				$this->InvoiceAttestations->save($InvoiceAttestations);
+				
+			}
+		
+		}	
+		
+		
+		if($role_id==1 || $role_id==4){	
+			$certificate_origins = $this->InvoiceAttestations->find()->where(['status'=>'draft']);
+		}
+		else{
+			$certificate_origins = $this->InvoiceAttestations->find()->where(['company_id'=>$company_id,'status'=>'draft']);
+		}
+		
+		$this->set(compact('certificate_origins','role_id'));
+	}
+	
+	
+	
+	
+	
+	
+	
+
 	public function attestationDraftView($id = null){
 		$this->viewBuilder()->layout('index_layout');
 		$user_id=$this->Auth->User('id');
@@ -1002,7 +1055,7 @@ class InvoiceAttestationsController extends AppController
 	
 	
 	
-	public function invoiceattestationViewPublished()
+	public function invoiceattestAtionViewPublished()
     {
 		$this->viewBuilder()->layout('index_layout');
 		$company_id=$this->Auth->User('company_id'); 
@@ -1028,24 +1081,24 @@ class InvoiceAttestationsController extends AppController
 		if(isset($this->request->data['view']))
 		{ 
 			$certificate_origin_id=$this->request->data['view'];;
-			$certificate_origins = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$certificate_origin_id,'status'=>'published'])->contain(['Companies'])->toArray();
-			$company_id=$certificate_origins[0]->company_id;  
+			$InvoiceAttestations = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$certificate_origin_id,'status'=>'published'])->contain(['Companies'])->toArray();
+			$company_id=$InvoiceAttestations[0]->company_id;  
 			$DocumentCheck=$this->InvoiceAttestations->Companies->find('all')
 				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
 				->count();
-			$this->set(compact('certificate_origins','DocumentCheck'));
+			$this->set(compact('InvoiceAttestations','DocumentCheck'));
 		}
 		if($this->request->is('post')) 
-		{
-						
-			if(isset($this->request->data['certificate_approve_submit']))
+		{  		
+			if(isset($this->request->data['invoice_attestation_approve_submit']))
 			{
-				
+				echo"hello"; exit;
 				$email = new Email();
 				$email->transport('SendGrid');
 				
-				$id=$this->request->data['certificate_approve_submit'];
+				$id=$this->request->data['invoice_attestation_approve_submit'];
 				$InvoiceAttestations=$this->InvoiceAttestations->get($id,['contain'=>['Companies'=>['Users']]]);
+				pr($InvoiceAttestations);    exit;
 				$exporter_name=$InvoiceAttestations->exporter;
 				
 				$this->request->data['verify_by']=$user_id;
@@ -1110,16 +1163,15 @@ class InvoiceAttestationsController extends AppController
 				}	
 				
 					$this->Flash->success(__('Invoice Attestation has been verified.'));
-					return $this->redirect(['action' => 'invoice-attestation-view-published']);
+					return $this->redirect(['action' => 'invoice-attestation-published-view']);
 				}
 				$this->Flash->error(__('Unable to verify Invoice Attestation.'));
 			}
 			else if(isset($this->request->data['invoice_attestation_notapprove_submit']))
 			{
-				
 				$id=$this->request->data['certificate_notapprove_submit'];
 				$InvoiceAttestations=$this->InvoiceAttestations->get($id , ['contain'=>['Companies'=>['Users']]]);
-			
+				pr($InvoiceAttestations);    exit;
 				$remarks=$this->request->data['verify_remarks'];
 				$this->request->data['verify_by']=$user_id;
 				$this->request->data['verify_on']=date('Y-m-d h:i:s');
@@ -1159,7 +1211,7 @@ class InvoiceAttestationsController extends AppController
 						}
 					}	
 					$this->Flash->success(__('Invoice Attestation has been not verify.'));
-					return $this->redirect(['action' => 'invoice-attestation-view-published']);
+					return $this->redirect(['action' => 'invoice-attestation-published-view']);
 				}
 				$this->Flash->error(__('Unable to not verify Invoice Attestation.'));
 			}

@@ -4,7 +4,7 @@
   <div class="box box-primary">
 	<div class="box-header with-border no-print">
 	<center>
-	  <h3 class="box-title"><strong>CERTIFICATE OF ORIGIN</strong></h3>
+	  <h3 class="box-title"><strong>APPROVE INVOICE ATTESTATION</strong></h3>
 	</center>
 	</div>
 	<!-- /.box-header -->
