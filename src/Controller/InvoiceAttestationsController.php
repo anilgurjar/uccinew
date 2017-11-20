@@ -90,6 +90,7 @@ class InvoiceAttestationsController extends AppController
 							$s = $pdf->getTemplatesize($pageId);
 							$pdf->AddPage($s['orientation'], $s);
 							$pdf->useImportedPage($pageId);
+							$pdf->Image('img/coo_signature/coo_authorized_1.png',150,200,20);
 						}
 					// import page 1
 					//$tplIdx = $pdf->importPage(1);
@@ -100,8 +101,8 @@ class InvoiceAttestationsController extends AppController
 					$pdf->SetFont('Helvetica');
 					$pdf->SetTextColor(255, 0, 0);
 					$pdf->SetXY(30, 30);
-					$pdf->Image('img/coo_signature/coo_authorized_1.png',170,240,20);
-					$pdf->Image('img/coo_signature/coo_authorized_1.png',130,200,20);
+					
+					//$pdf->Image('img/coo_signature/coo_authorized_1.png',130,200,20);
 					$pdf->Output();
 		}
 		
@@ -1131,7 +1132,7 @@ class InvoiceAttestationsController extends AppController
 		$user_id=$this->Auth->User('id');
 		$Users=$this->InvoiceAttestations->Users->get($user_id);
 		$regard_member_name=$Users->member_name;
-		$InvoiceAttestations = $this->InvoiceAttestations->newEntity();
+		$InvoiceAttestations_new = $this->InvoiceAttestations->newEntity();
 				
 		if(isset($this->request->data['view']))
 		{ 
@@ -1147,13 +1148,13 @@ class InvoiceAttestationsController extends AppController
 		{  	
 			if(isset($this->request->data['invoice_attestation_approve_submit']))
 			{
-				pr($this->request->data); exit;
+				
 				$email = new Email();
 				$email->transport('SendGrid');
 				
 				$id=$this->request->data['invoice_attestation_approve_submit'];
 				$InvoiceAttestations=$this->InvoiceAttestations->get($id,['contain'=>['Companies'=>['Users']]]);
-				pr($InvoiceAttestations);    exit;
+				
 				$exporter_name=$InvoiceAttestations->exporter;
 				
 				$this->request->data['verify_by']=$user_id;
@@ -1218,7 +1219,7 @@ class InvoiceAttestationsController extends AppController
 				}	
 				
 					$this->Flash->success(__('Invoice Attestation has been verified.'));
-					return $this->redirect(['action' => 'invoice-attestation-published-view']);
+					return $this->redirect(['action' => 'invoice-attestation-view-published']);
 				}
 				$this->Flash->error(__('Unable to verify Invoice Attestation.'));
 			}
@@ -1226,7 +1227,7 @@ class InvoiceAttestationsController extends AppController
 			{
 				$id=$this->request->data['invoice_attestation_notapprove_submit'];
 				$InvoiceAttestations=$this->InvoiceAttestations->get($id , ['contain'=>['Companies'=>['Users']]]);
-				pr($InvoiceAttestations);    exit;
+				
 				$remarks=$this->request->data['verify_remarks'];
 				$this->request->data['verify_by']=$user_id;
 				$this->request->data['verify_on']=date('Y-m-d h:i:s');
@@ -1266,7 +1267,7 @@ class InvoiceAttestationsController extends AppController
 						}
 					}	
 					$this->Flash->success(__('Invoice Attestation has been not verify.'));
-					return $this->redirect(['action' => 'invoice-attestation-published-view']);
+					return $this->redirect(['action' => 'invoice-attestation-view-published']);
 				}
 				$this->Flash->error(__('Unable to not verify Invoice Attestation.'));
 			}
@@ -1274,7 +1275,7 @@ class InvoiceAttestationsController extends AppController
 		
 		$MasterCompanies=$this->InvoiceAttestations->MasterCompanies->find();
 		$this->set('MasterCompanies',$MasterCompanies);
-		$this->set(compact('InvoiceAttestations'));
+		$this->set(compact('InvoiceAttestations_new'));
 		 
     }
 

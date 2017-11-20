@@ -41,7 +41,7 @@ use Cake\Filesystem\File;
 	<!-- form start -->
 	
 		<div class="box-body">
-			<?= $this->Form->create($InvoiceAttestations) ?>
+			<?= $this->Form->create($InvoiceAttestations_new) ?>
 			<?php
 			 
 			foreach($InvoiceAttestations as $InvoiceAttestation)
