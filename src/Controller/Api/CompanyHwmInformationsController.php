@@ -22,11 +22,13 @@ class CompanyHwmInformationsController extends AppController
          if ($this->request->is('post')) {
 			 
 			$company_waste_informations=$this->request->data['company_waste_informations'];
+		 
 			$CompanyWasteInformations = $this->CompanyHwmInformations->CompanyWasteInformations->newEntities($company_waste_informations);
 			if ($this->CompanyHwmInformations->CompanyWasteInformations->saveMany($CompanyWasteInformations)) {
 			}
-			
+			$$this->request->data['company_id']=$company_waste_informations[0]['company_id'];
             $companyHwmInformation = $this->CompanyHwmInformations->patchEntity($companyHwmInformation, $this->request->data);
+			pr($companyHwmInformation); exit;
             if ($this->CompanyHwmInformations->save($companyHwmInformation)) {
             } 
         }
