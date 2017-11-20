@@ -8,8 +8,13 @@ use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use UsersController;
 require_once(ROOT . DS  .'vendor' . DS  . 'dompdf' . DS . 'autoload.inc.php');
+
+require_once(ROOT . DS  .'vendor' . DS  . 'pdfs' . DS . 'fpdf.php');
+require_once(ROOT . DS  .'vendor' . DS  . 'pdfs' . DS . 'src' . DS . 'autoload.php');
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use setasign\Fpdi\Fpdi;
+
 
 /**
  * InvoiceAttestations Controller
@@ -57,6 +62,51 @@ class InvoiceAttestationsController extends AppController
 		
 		$role_id=$Companies->role_id;
 		$InvoiceAttestations = $this->InvoiceAttestations->newEntity();
+		
+		
+		
+		
+		if(isset($this->request->data['view']))
+		{ 
+		
+			$invoice_attestaions=$this->request->data['view'];
+			$invoiceattestations=$this->InvoiceAttestations->get($invoice_attestaions);
+			
+				$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice_attestation/'.$invoice_attestaions.'/'.$invoiceattestations['file_name'];
+
+				
+				
+				
+			
+					// initiate FPDI
+					$pdf = new Fpdi();
+					// add a page
+					//$pdf->AddPage();
+					// set the source file
+					$pageCount =$pdf->setSourceFile($file_path);
+					 //$this->setSourceFile($filess);
+						for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+							$pageId = $pdf->ImportPage($pageNo);
+							$s = $pdf->getTemplatesize($pageId);
+							$pdf->AddPage($s['orientation'], $s);
+							$pdf->useImportedPage($pageId);
+						}
+					// import page 1
+					//$tplIdx = $pdf->importPage(1);
+					// use the imported page and place it at position 10,10 with a width of 100 mm
+					//$pdf->useTemplate($tplIdx, 5, 5, 200);
+
+					// now write some text above the imported page
+					$pdf->SetFont('Helvetica');
+					$pdf->SetTextColor(255, 0, 0);
+					$pdf->SetXY(30, 30);
+					$pdf->Image('img/coo_signature/coo_authorized_1.png',170,240,20);
+					$pdf->Image('img/coo_signature/coo_authorized_1.png',130,200,20);
+					$pdf->Output();
+		}
+		
+		
+		
 		
 		 if($role_id==1 or $role_id==4 ){
 			 $invoice_attestation = $this->InvoiceAttestations->find()->where(['status'=>'approved'])->order(['InvoiceAttestations.origin_no'=>'DESC']);
@@ -127,6 +177,8 @@ class InvoiceAttestationsController extends AppController
 		$certificate_origin_id=$this->request->data['view'];
 		$invoice_attestaions = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$certificate_origin_id,'status'=>'approved'])->contain(['Companies'])->toArray();
 		$approved_by=$invoice_attestaions[0]->approved_by;
+	
+		
 		$CertificateOriginAuthorizeds=$this->InvoiceAttestations->CertificateOriginAuthorizeds->find()->where(['user_id'=>$approved_by])->contain(['Users'])->toArray();
 		
 		$this->set(compact('invoice_attestaions','CertificateOriginAuthorizeds'));
@@ -159,7 +211,7 @@ class InvoiceAttestationsController extends AppController
 	  
 		if(isset($this->request->data['view']))
 		{ 
-			$invoice_attestation_id=$this->request->data['view'];;
+			$invoice_attestation_id=$this->request->data['view'];
 			$invoice_attestations = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$invoice_attestation_id,'status'=>'verified'])->contain(['Companies'])->toArray();
 			
 			
@@ -1089,10 +1141,10 @@ class InvoiceAttestationsController extends AppController
 			$this->set(compact('InvoiceAttestations','DocumentCheck'));
 		}
 		if($this->request->is('post')) 
-		{  		
+		{  	
 			if(isset($this->request->data['invoice_attestation_approve_submit']))
 			{
-				echo"hello"; exit;
+				pr($this->request->data); exit;
 				$email = new Email();
 				$email->transport('SendGrid');
 				
@@ -1150,7 +1202,7 @@ class InvoiceAttestationsController extends AppController
 								->replyTo('uccisec@hotmail.com')
 								->subject($sub)
 								->profile('default')
-								->template('coo_varify')
+								->template('invoice_attestation_varify')
 								->emailFormat('html')
 								->viewVars(['member_name'=>$emailperson,'url'=>$url,'exporter_name'=>$exporter_name]);
 								$email->send();
@@ -1169,7 +1221,7 @@ class InvoiceAttestationsController extends AppController
 			}
 			else if(isset($this->request->data['invoice_attestation_notapprove_submit']))
 			{
-				$id=$this->request->data['certificate_notapprove_submit'];
+				$id=$this->request->data['invoice_attestation_notapprove_submit'];
 				$InvoiceAttestations=$this->InvoiceAttestations->get($id , ['contain'=>['Companies'=>['Users']]]);
 				pr($InvoiceAttestations);    exit;
 				$remarks=$this->request->data['verify_remarks'];
@@ -1199,7 +1251,7 @@ class InvoiceAttestationsController extends AppController
 								->replyTo('uccisec@hotmail.com')
 								->subject($sub)
 								->profile('default')
-								->template('coo_not_varify')
+								->template('invoice_attestation_not_varify')
 								->emailFormat('html')
 								->viewVars(['member_name'=>$mailsendtomember,'regard_member_name'=>$regard_member_name,'remarks'=>$remarks]);
 								$email->send();
@@ -1259,11 +1311,14 @@ class InvoiceAttestationsController extends AppController
 			$this->request->data['payment_tax_amount']=$Tax;
 			$this->request->data['status'] = 'draft';
 			$files=$this->request->data['file']; 
+			$file_name=$this->request->data['file'][0]['name']; 
+			$this->request->data['file_name']=$file_name;
 			if(!empty($files[0]['name'])){
 				$this->request->data['invoice_attachment']='true';
 			}else{
 				$this->request->data['invoice_attachment']='false';
 			}
+			
 			$invoiceAttestation = $this->InvoiceAttestations->patchEntity($invoiceAttestation, $this->request->data);
             if ($data=$this->InvoiceAttestations->save($invoiceAttestation)) 
 			{ 
