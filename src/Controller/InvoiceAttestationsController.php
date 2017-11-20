@@ -1130,16 +1130,7 @@ class InvoiceAttestationsController extends AppController
 		$regard_member_name=$Users->member_name;
 		$InvoiceAttestations = $this->InvoiceAttestations->newEntity();
 				
-		if(isset($this->request->data['view']))
-		{ 
-			$certificate_origin_id=$this->request->data['view'];;
-			$InvoiceAttestations = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$certificate_origin_id,'status'=>'published'])->contain(['Companies'])->toArray();
-			$company_id=$InvoiceAttestations[0]->company_id;  
-			$DocumentCheck=$this->InvoiceAttestations->Companies->find('all')
-				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
-				->count();
-			$this->set(compact('InvoiceAttestations','DocumentCheck'));
-		}
+		
 		if($this->request->is('post')) 
 		{  	
 			if(isset($this->request->data['invoice_attestation_approve_submit']))
