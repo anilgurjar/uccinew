@@ -782,7 +782,7 @@ class InvoiceAttestationsController extends AppController
 				
 				$MemberReceipts = $this->InvoiceAttestations->MemberReceipts->patchEntity($MemberReceipts, $this->request->data);
 				
-				$GeneralReceiptPurposes->purpose_id=28;
+				$GeneralReceiptPurposes->purpose_id=27;
 				$GeneralReceiptPurposes->quantity=1;
 				$GeneralReceiptPurposes->amount=$payment_amount;
 				$GeneralReceiptPurposes->total=$payment_amount;
