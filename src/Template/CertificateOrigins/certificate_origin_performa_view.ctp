@@ -31,10 +31,17 @@ $other_info = $data->other_info;
 $freight_amount = $data->freight_amount;
 $total_amount = $data->total_amount;
 $company_address = $data->company->address;
-$unit_name = $data->master_unit->unit_name;
+//$unit_name = $data->master_unit->unit_name;
 
 $currency_unit = $data->currency_unit;
 }
+
+ $old_date="2017-11-21";
+ $old_date=strtotime($old_date);
+ 
+ $current_new_date=date('Y-m-d');
+ $current_new_date=strtotime($current_new_date);
+
 
 $invoice_date = date('d-m-Y',strtotime($invoice_date));
 $current_date = date('d.m.Y',strtotime($current_date));
@@ -485,16 +492,24 @@ text-align:center;
 			<br/>';
 			
 			
+			
 			if(!empty($CertificateOriginAuthorizeds[0]->signature)){
 				
 				$html_content.='<img src="'.ROOT . DS  . 'webroot' . DS  .''.$CertificateOriginAuthorizeds[0]->signature.'" width="90px" height="90px" style="" alt="">';
 				
 				}
 				
-			$html_content.='<br/>
-			
+			$html_content.='<br/>';
 							
-						<p>Authorised Signatory</p>
+					if($old_date<=$current_new_date){
+						$html_content.='<p>'.$CertificateOriginAuthorizeds[0]->user->member_name.' <br/>President UCCI</p>';
+					 
+					}else{
+						$html_content.='<p>Authorised Signatory</p>';
+					 
+					}
+							
+						$html_content.='
 			</td>
 		</tr>
 		</table>
