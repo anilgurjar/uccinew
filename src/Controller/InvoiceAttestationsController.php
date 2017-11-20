@@ -90,20 +90,7 @@ class InvoiceAttestationsController extends AppController
 							$s = $pdf->getTemplatesize($pageId);
 							$pdf->AddPage($s['orientation'], $s);
 							$pdf->useImportedPage($pageId);
-							$pdf->Image('img/coo_signature/coo_authorized_1.png',150,200,20);
-						
-						function Footer()
-					{
-						// Position at 1.5 cm from bottom
-						$this->SetY(-15);
-						// Arial italic 8
-													
-						$this->SetFont('Arial','I',8);
-						// Page number
-						$image=$pdf->Image('img/coo_signature/coo_authorized_1.png',130,200,20);
-						$this->Cell(0,10,'Page '.$image.'/{nb}',0,0,'C');
-					}
-					
+							$pdf->Image('img/coo_signature/2.png',150,200,20);
 						
 						}
 					// import page 1
