@@ -58,7 +58,7 @@ class CompanyHwmInformationsController extends AppController
 				$this->request->data['chemical_composition_sheet']=$UploadURL;
 			}
             $companyHwmInformation = $this->CompanyHwmInformations->patchEntity($companyHwmInformation, $this->request->data);
-			pr($companyHwmInformation); exit;
+			//pr($companyHwmInformation); exit;
             if ($this->CompanyHwmInformations->save($companyHwmInformation)) {
             } 
         }
