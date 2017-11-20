@@ -822,7 +822,7 @@ class CompaniesController extends AppController
 			$this->request->data['member_flag']=3;
 			$this->request->data['role_id']=2;
             $company = $this->Companies->patchEntity($company, $this->request->data);
-			//pr($this->request->data); exit;
+			//pr($company);  exit;
 			//-- COmpany Insert
             if ($record=$this->Companies->save($company)) {
 				//-- Company Member Type Insert
