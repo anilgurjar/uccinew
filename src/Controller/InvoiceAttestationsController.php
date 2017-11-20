@@ -90,7 +90,7 @@ class InvoiceAttestationsController extends AppController
 							$s = $pdf->getTemplatesize($pageId);
 							$pdf->AddPage($s['orientation'], $s);
 							$pdf->useImportedPage($pageId);
-							$pdf->Image('img/coo_signature/coo_authorized_1.png',150,200,20);
+							//$pdf->Image('img/coo_signature/coo_authorized_1.png',150,200,20);
 						
 						function Footer()
 					{
@@ -102,7 +102,7 @@ class InvoiceAttestationsController extends AppController
 						// Page number
 						$image=$pdf->Image('img/coo_signature/coo_authorized_1.png',130,200,20);
 						$this->Cell(0,10,'Page '.$image.'/{nb}',0,0,'C');
-					}
+					} 
 					
 						
 						}
@@ -463,6 +463,7 @@ class InvoiceAttestationsController extends AppController
 		$invoice_attestations = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$id])->contain(['Companies'])->toArray();
 		foreach($invoice_attestations as $invoice_attestation){
 			$oldimage=$invoice_attestation['invoice_attachment'];
+			$oldfile_name=$invoice_attestation['file_name'];
 		}
 		
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -475,11 +476,14 @@ class InvoiceAttestationsController extends AppController
 				$this->request->data['company_id']=$company_id;
 				$files=$this->request->data['file']; 
 				$file_name=$this->request->data['file'][0]['name']; 
-				$this->request->data['file_name']=$file_name;
+			
+				
 				if(!empty($files[0]['name'])){
 					$this->request->data['invoice_attachment']='true';
+					$this->request->data['file_name']=$file_name;
 				}else{
 					$this->request->data['invoice_attachment']=$oldimage;
+					$this->request->data['file_name']=$oldfile_name;
 				}
 				$amount=200;
 				$Tax=$amount*18/100;
@@ -500,7 +504,6 @@ class InvoiceAttestationsController extends AppController
 				
 				
 				$invoice_attestation = $this->InvoiceAttestations->patchEntity($invoice_attestation, $this->request->data);
-				
 				if ($data=$this->InvoiceAttestations->save($invoice_attestation))
 				{ 	
 						$dir = new Folder(WWW_ROOT . 'img/coo_invoice_attestation/'.$data['id'], true, 0755);
