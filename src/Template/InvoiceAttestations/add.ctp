@@ -110,45 +110,30 @@ input[type="radio"]
 				 ?>  
 				   </div>
 				</div>
-				
-				<div class="form-group">
-				<div class="col-sm-8 ">
-				  <label >Do you want to show value in pdf ?</label>
-				   <br/>
-				  <?php
-				 $options['Yes']='Yes';
-				 $options['No']='No';
-			   
-				echo $this->Form->input('show_amount', array('type' => 'radio','label' => false,'options' => $options,'value'=>'Yes','hiddenField' => false)); 
-				 unset($options);
-				 ?>
-				 </div>
-				</div>
-				
 			</div>
-			
-			<div class="col-sm-6 ">
+			<div class="col-sm-6">
 				<div class="form-group">
-					<label class="col-sm-4 control-label">Other Information</label>
-					<div class="col-sm-8">
+					<label class="col-sm-4 control-label">Invoice Attachment</label>
+					<table id="file_table" style="line-height:2.5">
+						<tr>
+							<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?></td>
+							<!--<td><?php //$this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']) . __(' Add More'), ['class'=>'btn btn-block btn-primary btn-sm add_more','type'=>'button']) ?></td>-->
+							<td></td>
+						</tr>
+					</table>
+				</div>	
+			</div>	
+			<div class="col-sm-10 ">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Other Information</label>
+					<div class="col-sm-5">
 					<?php
 						 echo $this->Form->textarea('other_info',['label'=>false,'class'=>'form-control','type'=>'text']);
 						 ?> 
 				   </div>
 				</div>
 			</div>
-			<div class="col-sm-6">
-				<div class="form-group">
-					<label class="col-sm-3 control-label">Invoice Attachment</label>
-					<table id="file_table" style="line-height:2.5">
-						<tr>
-							<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?></td>
-							<td><?= $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']) . __(' Add More'), ['class'=>'btn btn-block btn-primary btn-sm add_more','type'=>'button']) ?></td>
-							<td></td>
-						</tr>
-					</table>
-				</div>	
-			</div>	
+			
 			
 		</div>
 			<table id="copy_row" style="display:none;">	
@@ -248,6 +233,9 @@ $(document).ready(function(){
 				required: true
 			},
 			final_destination: {
+				required: true
+			},
+			'file[]': {
 				required: true
 			},
 			port_of_discharge: {

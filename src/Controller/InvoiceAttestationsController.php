@@ -457,6 +457,8 @@ class InvoiceAttestationsController extends AppController
 				$this->request->data['date_current']=date('Y-m-d');
 				$this->request->data['company_id']=$company_id;
 				$files=$this->request->data['file']; 
+				$file_name=$this->request->data['file'][0]['name']; 
+				$this->request->data['file_name']=$file_name;
 				if(!empty($files[0]['name'])){
 					$this->request->data['invoice_attachment']='true';
 				}else{
@@ -1130,7 +1132,16 @@ class InvoiceAttestationsController extends AppController
 		$regard_member_name=$Users->member_name;
 		$InvoiceAttestations = $this->InvoiceAttestations->newEntity();
 				
-		
+		if(isset($this->request->data['view']))
+		{ 
+			$certificate_origin_id=$this->request->data['view'];;
+			$InvoiceAttestations = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$certificate_origin_id,'status'=>'published'])->contain(['Companies'])->toArray();
+			$company_id=$InvoiceAttestations[0]->company_id;  
+			$DocumentCheck=$this->InvoiceAttestations->Companies->find('all')
+				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
+				->count();
+			$this->set(compact('InvoiceAttestations','DocumentCheck'));
+		}
 		if($this->request->is('post')) 
 		{  	
 			if(isset($this->request->data['invoice_attestation_approve_submit']))
