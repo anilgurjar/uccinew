@@ -91,6 +91,20 @@ class InvoiceAttestationsController extends AppController
 							$pdf->AddPage($s['orientation'], $s);
 							$pdf->useImportedPage($pageId);
 							$pdf->Image('img/coo_signature/coo_authorized_1.png',150,200,20);
+						
+						function Footer()
+					{
+						// Position at 1.5 cm from bottom
+						$this->SetY(-15);
+						// Arial italic 8
+													
+						$this->SetFont('Arial','I',8);
+						// Page number
+						$image=$pdf->Image('img/coo_signature/coo_authorized_1.png',130,200,20);
+						$this->Cell(0,10,'Page '.$image.'/{nb}',0,0,'C');
+					}
+					
+						
 						}
 					// import page 1
 					//$tplIdx = $pdf->importPage(1);
@@ -101,8 +115,10 @@ class InvoiceAttestationsController extends AppController
 					$pdf->SetFont('Helvetica');
 					$pdf->SetTextColor(255, 0, 0);
 					$pdf->SetXY(30, 30);
+					// Page footer
 					
-					//$pdf->Image('img/coo_signature/coo_authorized_1.png',130,200,20);
+
+					
 					$pdf->Output();
 		}
 		
