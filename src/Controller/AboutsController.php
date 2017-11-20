@@ -44,6 +44,11 @@ class AboutsController extends AppController
        $user_id=$this->Auth->User('id');
 	   $this->viewBuilder()->layout('index_layout');
     }
+	public function demo3()
+    {
+       $user_id=$this->Auth->User('id');
+	   $this->viewBuilder()->layout('index_layout');
+    }
 
     /**
      * View method

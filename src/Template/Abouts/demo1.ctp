@@ -453,7 +453,7 @@ INDUSTRIAL WASTE SURVEY <span class="effect"></span>
 				<input type="text" class="form-control storage_method" name="storage_method[]">
 			</td>
 			<td>
-				<input type="text" class="form-control size_storage_container" name=" []">
+				<input type="text" class="form-control size_storage_container" name="size_storage_container[]">
 			</td>
 			<td>
 				<button type="button" class="btn btn-primary btn-xs add_row"><i class="fa fa-plus"></i></button>		
