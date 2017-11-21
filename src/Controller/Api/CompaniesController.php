@@ -664,16 +664,31 @@ class CompaniesController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
+	public function CompanyInformation()
+	{
+		$company_id=$this->request->data['company_id'];
+		$companies = $this->Companies->find()->where(['id'=> $company_id])->count();
+		if($companies>0){
+			$companies = $this->Companies->find()->where(['id'=> $company_id])->first();
+			$success=true;
+			$error='';
+			$response=$companies;
+			$this->set(compact('success', 'error', 'response'));
+			$this->set('_serialize', ['success', 'error', 'response']);
+		}
+		else
+		{
+			$success=false;
+			$error='no data found';
+ 			$this->set(compact('success', 'error', 'response'));
+			$this->set('_serialize', ['success', 'error', 'response']);
+		}
+	}
     public function index()
     {
         $user_id=$this->Auth->User('id');
 		$this->viewBuilder()->layout('index_layout');
-		
-		
         $companies = $this->Companies->find()->contain(['Users']);
-			
-		
-		
         $this->set(compact('companies'));
         $this->set('_serialize', ['companies']);
     }

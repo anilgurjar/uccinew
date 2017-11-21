@@ -435,6 +435,10 @@ Router::prefix('api', function ($routes) {
 				'hwmFirstForm' => [
 				   'action' => 'hwmFirstForm',
 				   'method' => 'POST'
+				],
+				'CompanyInformation' => [
+				   'action' => 'CompanyInformation',
+				   'method' => 'POST'
 				]
 		   ]
 		]
