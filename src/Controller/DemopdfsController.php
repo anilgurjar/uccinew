@@ -122,18 +122,19 @@ class DemopdfsController extends AppController
 							$pageId = $pdf->ImportPage($pageNo);
 							$s = $pdf->getTemplatesize($pageId);
 							$pdf->AddPage($s['orientation'], $s);
-							$pdf->useImportedPage($pageId);
+							//$pdf->useImportedPage($pageId);
+							$pdf->useTemplate($pageId, 5, 5, 200);
 						}
 					// import page 1
-					//$tplIdx = $pdf->importPage(1);
+					
 					// use the imported page and place it at position 10,10 with a width of 100 mm
-					//$pdf->useTemplate($tplIdx, 5, 5, 200);
+					
 
 					// now write some text above the imported page
 					$pdf->SetFont('Helvetica');
 					$pdf->SetTextColor(255, 0, 0);
 					$pdf->SetXY(30, 30);
-					$pdf->Image('img/coo_signature/coo_authorized_1.png',170,240,20);
+					//$pdf->Image('img/coo_signature/coo_authorized_1.png',170,240,20);
 					$pdf->Output();
 				}	
 				
