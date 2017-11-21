@@ -755,7 +755,7 @@ class InvoiceAttestationsController extends AppController
 		->where(['id' => $udf1])
 		->execute();
 		 $this->set(compact('status','amount','id','txnid','sul'));	
-		pr($udf1);   exit;
+		pr($query);   exit;
 	// mail should secretary 
 	
 		//$companies= $this->InvoiceAttestations->Companies->find()->where(['id'=>$udf1]);
