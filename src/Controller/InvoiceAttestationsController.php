@@ -48,6 +48,43 @@ class InvoiceAttestationsController extends AppController
     }
 	
 	
+	///filter data start
+	public function filterdata(){
+		$exporter=$this->request->query['exporter']; 
+		$originno=$this->request->query['originno'];
+		$datefrom=$this->request->query['datefrom']; 
+		$dateto=$this->request->query['dateto'];
+		
+		$condition['status']='approved';
+		if(!empty($exporter)){
+			$condition['exporter Like']='%'.$exporter.'%';
+		}
+		 if( !empty($originno)){
+			$condition['origin_no']=$originno;
+		}
+		
+		if(!empty($datefrom) && !empty($dateto)){
+			$datefrom=date('y-m-d', strtotime($datefrom));
+			$dateto=date('y-m-d', strtotime($dateto));
+			$condition['date_current >=']=$datefrom;
+			$condition['date_current <=']=$dateto;
+		}
+		
+		
+		$Users=$this->InvoiceAttestations->find()->where($condition)
+				->order(['InvoiceAttestations.origin_no'=>'DESC']);
+			
+		
+		$this->set(compact('Users'));
+		
+	}
+	
+	///filter data end
+	
+	
+	
+	
+	
 	
 	
 	
