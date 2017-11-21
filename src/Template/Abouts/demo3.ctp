@@ -7,45 +7,12 @@ $company_id=$_GET['CaaOdaMsdaPsaArefNdsY__IdsadcD'];
 	$response = curl_exec($ch);
 	curl_close($ch);
 echo '	<pre>';
-print_r($response);
+print_r($response->response->id);
 echo '</pre>';
-
-
-
-/*
-
-///----------
-$curl = curl_init();
-curl_setopt_array($curl, array(
-  CURLOPT_URL => "http://ucciudaipur.com/uccinew/api/companies/CompanyInformation.json",
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => "",
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => "GET",
-  CURLOPT_HTTPHEADER => array(
-    "cache-control: no-cache",
-    "postman-token: e5163c4c-95ca-565f-6639-7ef6998cd10c"
-  ),
-));
-
-$response1 = curl_exec($curl);
-$response_data = json_decode($response1);
-$err = curl_error($curl);
-
-curl_close($curl);
-
-if ($err) {
-  echo "cURL Error #:" . $err;
-} else {
  
-	$taxations = $response_data->taxations;
-	$master_membership_fees = $response_data->master_membership_fees;
-	$master_financial_year_id = $response_data->master_financial_year_id;
-  
-}
-*/
+
+
+ 
 echo '
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://ucciudaipur.com/app/assets/plugins/bootstrap-datepicker/css/datepicker3.css"/> 
