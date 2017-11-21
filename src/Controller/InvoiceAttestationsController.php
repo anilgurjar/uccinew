@@ -1382,6 +1382,7 @@ class InvoiceAttestationsController extends AppController
 			}
 			
 			$invoiceAttestation = $this->InvoiceAttestations->patchEntity($invoiceAttestation, $this->request->data);
+			
             if ($data=$this->InvoiceAttestations->save($invoiceAttestation)) 
 			{ 
 				$dir = new Folder(WWW_ROOT . 'img/coo_invoice_attestation/'.$data['id'], true, 0755);
