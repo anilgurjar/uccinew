@@ -102,6 +102,47 @@ echo '
 		});
 			
 	}
+	//-- GENERAL
+	function add_row1()
+	{
+		var new_line=$("#monthlys tbody").html();
+		$("#monthly_tables tbody").append(new_line);
+		rename_rows1();
+	}
+	$(document).on("click",".add_row1",function(){ 
+		add_row1();
+	});
+	$(document).ready(function(){
+		add_row1();
+ 	});
+	$(document).on("click",".remove_row1",function(){ 
+		$(this).closest("tr").remove();
+		rename_rows1();
+	});
+	//-- END GENERAL
+	function rename_rows1()
+	{
+		var i =0;
+		$("#monthly_tables tbody tr").each(function(){
+			
+			$(this).find("td input.number").attr({name:"company_waste_informations["+i+"][number]"});
+
+			$(this).find("td input.waste_type").attr({name:"company_waste_informations["+i+"][waste_type]"});
+			
+			$(this).find("td input.volume").attr({name:"company_waste_informations["+i+"][volume]"});
+					
+			$(this).find("td input.inventory").attr({name:"company_waste_informations["+i+"][inventory]"});
+			
+			$(this).find("td input.company_id").attr({name:"company_waste_informations["+i+"][company_id]"});
+			
+			$(this).find("td input.storage_method").attr({name:"company_waste_informations["+i+"][storage_method]"});
+			
+			$(this).find("td input.size_storage_container").attr({name:"company_waste_informations["+i+"][size_storage_container]"});
+			
+			i++;
+		});
+			
+	}
 	 
 	
 </script>
@@ -421,6 +462,54 @@ INDUSTRIAL WASTE SURVEY <span class="effect"></span>
 			</div>
 		</div>
 	</div>
+	<div class="col-md-12 pad">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="control-label">Industry Code from HW Rules 2003 </label>
+				<input type="text" name="office_telephone" class="form-control" placeholder="Industry Code from HW Rules 2003">	 
+			</div>
+		</div>
+		<div class="col-md-7">
+			<div class="form-group">
+				<label class="control-label">Do you currently run an on-site treatment facility (incinerator/ effluent treatment plant or other facility)?</label><br/>
+				<label class="radio-inline">
+					<input type="radio" name="company_service_type" checked value="yes">Yes
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="company_service_type" value="no"> No
+				</label>
+ 			</div>
+		</div>
+ 	</div>
+	<div class="col-sm-12 no-print" style="margin-top:20px;" id="monthly_tables">
+		<label class="control-label"> Describe the Details. </label>
+			<table class="table table-bordered">	
+				<thead>
+					<tr>
+						<th rowspan="2">Code No. as per Sch-1 of HW Rules, 2003</th>
+						<th colspan="2">Waste type/Description</th>
+						<th colspan="2">Quantity/ Month</th>
+						<th colspan="2">Inventory</th>
+						<th colspan="2">Storage Method</th>
+						<th width="3%" rowspan="2" ></th>
+					</tr>
+					<tr>
+						<th>Incinerable</th>
+						<th>Non-Incinerable</th>
+						<th>Incinerable</th>
+						<th>Non-Incinerable</th>
+						<th>Incinerable</th>
+						<th>Non-Incinerable</th>
+						<th>Incinerable</th>
+						<th>Non-Incinerable</th>
+						
+						 
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
 </fieldset>
 </div>
 
@@ -433,6 +522,44 @@ INDUSTRIAL WASTE SURVEY <span class="effect"></span>
 </div>
 
 </form>
+<table id="monthlys" style="display:none;">
+	<tbody>
+		<tr>
+			<td>
+				<input type="text" class="form-control number" name="number[]">
+			</td>
+			<td>
+				<input type="text" class="form-control waste_type" name="waste_type[]"> 
+			</td>
+			<td>
+				<input type="text" class="form-control volume" name="volume[]">
+			</td>
+			<td>
+				<input type="text" class="form-control inventory" name="inventory[]">
+				<input type="hidden" class="form-control company_id" value="'.$company_id.'" name="company_id[]">
+			</td>
+			<td>
+				<input type="text" class="form-control storage_method" name="storage_method[]">
+			</td>
+			<td>
+				<input type="text" class="form-control size_storage_container" name="size_storage_container[]">
+			</td>
+			<td>
+				<input type="text" class="form-control size_storage_container" name="size_storage_container[]">
+			</td>
+			<td>
+				<input type="text" class="form-control size_storage_container" name="size_storage_container[]">
+			</td>
+			<td>
+				<input type="text" class="form-control size_storage_container" name="size_storage_container[]">
+			</td>
+			<td>
+				<button type="button" class="btn btn-primary btn-xs add_row1"><i class="fa fa-plus"></i></button>		
+				<button type="button" class="btn  btn-danger btn-xs remove_row1"><i class="fa fa-times"></i></button>		
+			</td>
+		</tr>
+	</tbody>
+</table>
 <table id="monthly" style="display:none;">
 	<tbody>
 		<tr>

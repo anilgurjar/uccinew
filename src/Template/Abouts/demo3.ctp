@@ -5,10 +5,12 @@ $company_id=$_GET['CaaOdaMsdaPsaArefNdsY__IdsadcD'];
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
 	$response = curl_exec($ch);
+	$response_data = json_decode($response);
 	curl_close($ch);
 echo '	<pre>';
-print_r($response->response->id);
+print_r();
 echo '</pre>';
+$company_name=$response_data->response->company_organisation;
  
 
 
@@ -78,8 +80,8 @@ echo '
 	//-- GENERAL
 	function add_row()
 	{
-		var new_line=$("#monthly tbody").html();
-		$("#monthly_table tbody").append(new_line);
+		var new_line=$("#monthlys tbody").html();
+		$("#monthly_tables tbody").append(new_line);
 		rename_rows();
 	}
 	$(document).on("click",".add_row",function(){ 
@@ -96,7 +98,7 @@ echo '
 	function rename_rows()
 	{
 		var i =0;
-		$("#monthly_table tbody tr").each(function(){
+		$("#monthly_tables tbody tr").each(function(){
 			
 			$(this).find("td input.number").attr({name:"company_waste_informations["+i+"][number]"});
 
@@ -204,47 +206,9 @@ UDAIPUR CHAMBER OF COMMERCE & INDUSTRY <span class="effect"></span>
 		 </div>
 		</div>
  	</div>
-	<div class="col-md-12 pad">
-		<div class="col-md-4">
-			<div class="form-group">
-				<label class="control-label">Industry Code from HW Rules 2003 </label>
-				<input type="text" name="office_telephone" class="form-control" placeholder="Industry Code from HW Rules 2003">	 
-			</div>
-		</div>
-		<div class="col-md-7">
-			<div class="form-group">
-				<label class="control-label">Do you currently run an on-site treatment facility (incinerator/ effluent treatment plant or other facility)?</label><br/>
-				<label class="radio-inline">
-					<input type="radio" name="company_service_type" checked value="yes">Yes
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="company_service_type" value="no"> No
-				</label>
- 			</div>
-		</div>
- 	</div>
-	<div class="col-md-12 pad">
-		
-		<div class="col-md-6">
-			<div class="form-group">
-				<label class="control-label">Do you have any information on the chemical composition of the waste ?</label><br/>
-				<label class="radio-inline">
-					<input type="radio" name="chemical_composition" class="chemical_composition" checked value="yes"> Yes
-				<label class="radio-inline">
-					<input type="radio" name="chemical_composition" class="chemical_composition" value="no">No
-				</label>
- 			</div>
-		</div>
-		<div class="col-md-6" id="chemical_composition_sheet">
-			<div class="form-group">
-				<label class="control-label">please describe their potential effect on incinerable/non incinerable   waste generation</label><br/>
-				<input type="text" name="office_telephone" class="form-control" >	 
- 			</div>
-		</div>
- 	</div>
- 
-  
- 	<div class="col-sm-12 no-print" style="margin-top:20px;" id="monthly_table">
+	
+   
+ 	<div class="col-sm-12 no-print" style="margin-top:20px;" id="monthly_tables">
 	<label class="control-label"> Describe the Details. </label>
 		<table class="table table-bordered">	
 			<thead>
@@ -273,58 +237,7 @@ UDAIPUR CHAMBER OF COMMERCE & INDUSTRY <span class="effect"></span>
 			</tbody>
 		</table>
 	</div>
- 
- 
-     
-	<div class="col-md-12 pad">
-		 
-		<div class="col-md-6">
-			<div class="form-group">
-				<label class="control-label">Describe your current disposal arrangements for this waste (incinerable/non-incinerable ) </label><br/>
-				<label class="radio-inline">
-					<input type="radio" name="company_service_type" class="company_service_type" checked value="on site"> On site 
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="company_service_type" class="company_service_type"  value="off site">off site
-				</label>
-				
-				
- 			</div>
-		</div>
-		<div id="on_site" >
-			<div class="col-md-6">
-				<div class="form-group">
-					<label class="control-label">what disposal method is used (burn, bury, surface stockpile, transport elsewhere, other please specify)? </label><br/>
-					<input type="text" name="on_site_disposal_method" class="form-control" placeholder="Please provide company name">	 
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-12 pad">	
-		<div id="off_site" style="display:none;">
-			<div class="col-md-6">
-				<div class="form-group">
-					<label class="control-label">Company Name </label><br/>
-					<input type="text" name="off_site_company_name" class="form-control" placeholder="Please provide company name">	 
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="form-group">
-					<label class="control-label">Address </label><br/>
-					 <textarea class="form-control" name="off_site_address" row="1" placeholder="Please provide address"></textarea>
-				</div>
-			</div>
-		</div>
-	</div>
  	<div class="col-md-12 pad">
-		<div class="col-md-8">
-			<div class="form-group">
-				<label class="control-label">If not disposal, what do you currently do with this waste? </label><br/>
-				 <textarea class="form-control" name="off_site_address" row="1" placeholder=""></textarea>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-12 pad">
 		<div class="box-footer" style="margin: 30px;" >
 			<center>
 				<button type="submit" id="submit_member" name="registration_submit" class="btn btn-success">Submit</button>
@@ -335,7 +248,7 @@ UDAIPUR CHAMBER OF COMMERCE & INDUSTRY <span class="effect"></span>
 	
 </div>
 </form>
-<table id="monthly" style="display:none;">
+<table id="monthlys" style="display:none;">
 	<tbody>
 		<tr>
 			<td>
