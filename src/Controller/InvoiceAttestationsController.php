@@ -657,7 +657,7 @@ class InvoiceAttestationsController extends AppController
 						$last_insert_id=$data['id'];
 					
 						//return $this->redirect('https://test.payu.in/_payment');
-						return $this->redirect(['action' => 'attestation-draft-view',$last_insert_id]);
+						return $this->redirect(['action' => 'invoice-attestation-draft-view']);
 					}
 					else{
 						return $this->redirect(['action' => 'paymentTest',$data['id']]);
