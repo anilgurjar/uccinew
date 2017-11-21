@@ -1478,7 +1478,7 @@ class InvoiceAttestationsController extends AppController
 		if($certificate_origin_count>0){
 			$InvoiceAttestations = $this->InvoiceAttestations->newEntity();
 	  
-			$invoice_attestations = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$invoice_attestation_id,'status'=>'verified'])->contain(['Companies'])->toArray();
+			$invoice_attestations = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$ids,'status'=>'verified'])->contain(['Companies'])->toArray();
 			
 			
 			$verify_bys=$invoice_attestations[0]->verify_by; 
@@ -1492,15 +1492,15 @@ class InvoiceAttestationsController extends AppController
 			
 		if($this->request->is('post')) 
 		{
-			if(isset($this->request->data['certificate_approve_submit']))
+			if(isset($this->request->data['invoice_attestation_approve_submit']))
 			{
 				 
 				$email = new Email();
 				$email->transport('SendGrid');
-				
-				$id=$this->request->data['certificate_approve_submit'];
-				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
-				$consignee=$CertificateOrigins->consignee;
+											
+				$id=$this->request->data['invoice_attestation_approve_submit'];
+				$InvoiceAttestations=$this->InvoiceAttestations->get($id,['contain'=>['Companies'=>['Users']]]);
+				$consignee=$InvoiceAttestations->consignee;
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
 				$this->request->data['approved_by']=$user_id; 
@@ -1508,32 +1508,31 @@ class InvoiceAttestationsController extends AppController
 				$this->request->data['verify_remarks']=''; 
 				$this->request->data['authorised_remarks']=''; 
 				$this->request->data['coo_verify_email']='no'; 
-				
-				$coo_verification_code=uniqid(); 
-				$this->request->data['coo_verification_code']=$coo_verification_code; 
-				
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
-				$query = $this->CertificateOrigins->find();
+				$query = $this->InvoiceAttestations->find();
 				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
 				$this->request->data['origin_no']=($origin_no[0]->max_value)+1;
 				
-				 $CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
-				 $email_to=$CertificateOrigins->company->users[0]->email; 
-				 $member_name=$CertificateOrigins->company->users[0]->member_name;
+				 $InvoiceAttestations = $this->InvoiceAttestations->patchEntity($InvoiceAttestations, $this->request->data);
+				
+				 $email_to=$InvoiceAttestations->company->users[0]->email; 
+				 $member_name=$InvoiceAttestations->company->users[0]->member_name;
 				 
-				 $Users= $this->CertificateOrigins->Users->get($user_id);
+				 $Users= $this->InvoiceAttestations->Users->get($user_id);
 				
 				 $regards_member_name=$Users->member_name;
-				 
 				
 				
-				if($this->CertificateOrigins->save($CertificateOrigins))
+				
+				
+				
+				if($this->InvoiceAttestations->save($InvoiceAttestations))
 				{
 					
-					  $sub="Your certificate of origin is approved";
+					  $sub="Your Invoice Attestation is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					$email_to="rohitkumarjoshi43@gmail.com";
+					  $email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -1542,7 +1541,7 @@ class InvoiceAttestationsController extends AppController
 										->replyTo('uccisec@hotmail.com')
 										->subject($sub)
 										->profile('default')
-										->template('coo_approve')
+										->template('invoice_attestation_approve')
 										->emailFormat('html')
 										->viewVars(['member_name'=>$member_name,'consignee'=>$consignee]);
 										$email->send();
@@ -1557,16 +1556,16 @@ class InvoiceAttestationsController extends AppController
 								
 					
 					
-					$this->Flash->success(__('Certificate of origin has been approved.'));
-					return $this->redirect(['action' => 'coo_approved']);
+					$this->Flash->success(__('Invoice Attestation has been approved.'));
+					return $this->redirect(['action' => 'invoice_attestation_approved']);
 				}
 				$this->Flash->error(__('Unable to approved certificate of origin.'));
 			}
-			else if(isset($this->request->data['certificate_notapprove_submit']))
+			else if(isset($this->request->data['invoice_attestation_notapprove_submit']))
 			{
 				
-				$id=$this->request->data['certificate_notapprove_submit'];
-				$CertificateOrigins=$this->CertificateOrigins->get($id);
+				$id=$this->request->data['invoice_attestation_notapprove_submit'];
+				$InvoiceAttestations=$this->InvoiceAttestations->get($id);
 				
 				//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
 				$this->request->data['approve']=2;
@@ -1575,21 +1574,19 @@ class InvoiceAttestationsController extends AppController
 				$this->request->data['status']='published';
 				$this->request->data['coo_verify_email']='no'; 
 				
-				 $CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				 $InvoiceAttestations = $this->InvoiceAttestations->patchEntity($InvoiceAttestations, $this->request->data);
 				
-				if($this->CertificateOrigins->save($CertificateOrigins))
+				if($this->InvoiceAttestations->save($InvoiceAttestations))
 				{
-					$this->Flash->success(__('Certificate of origin has been not approved.'));
-					return $this->redirect(['action' => 'coo_approved']);
+					$this->Flash->success(__('Invoice Attestation has been not approved.'));
+					return $this->redirect(['action' => 'invoice_attestation_approved']);
 				}
-				$this->Flash->error(__('Unable to not approved certificate of origin.'));
+				$this->Flash->error(__('Unable to not approved Invoice Attestation.'));
 			}
+			
+			
+			
 		}
-		
-			
-			
-			
-			
 			
 		}else{
 			
@@ -1597,10 +1594,6 @@ class InvoiceAttestationsController extends AppController
 			
 		}
 	}
-	
-	
-	
-	
 	
 	
 	
