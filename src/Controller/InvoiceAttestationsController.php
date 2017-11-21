@@ -126,10 +126,11 @@ class InvoiceAttestationsController extends AppController
 							$pageId = $pdf->ImportPage($pageNo);
 							$s = $pdf->getTemplatesize($pageId);
 							$pdf->AddPage($s['orientation'], $s);
-							$pdf->useImportedPage($pageId);
+							$pdf->useTemplate($pageId, 5, 5, 200);
+							//$pdf->useImportedPage($pageId);
 							//$pdf->Image('img/coo_signature/coo_authorized_1.png',150,200,20);
 						
-				/* 		function Footer()
+				/* 		funct//ion Footer()
 					{
 						// Position at 1.5 cm from bottom
 						$this->SetY(-15);
@@ -565,13 +566,11 @@ class InvoiceAttestationsController extends AppController
 				$this->request->data['company_id']=$company_id;
 				$files=$this->request->data['file'];
 				$file_name=$this->request->data['file'][0]['name']; 
-				
+				$this->request->data['file_name']=$file_name;
 				if(!empty($files[0]['name'])){
 					$this->request->data['invoice_attachment']='true';
-					$this->request->data['file_name']=$file_name;
 				}else{
 					$this->request->data['invoice_attachment']=$oldimage;
-					$this->request->data['file_name']=$oldfile_name;
 				}
 				
 				$amount=200;
