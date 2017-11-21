@@ -26,7 +26,7 @@ class InvoiceAttestationsController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['logout', 'index','CooSendEmail']);
+		$this->Auth->allow(['logout', 'index','CooSendEmail','invoiceAttestationApproved']);
 		$member_name=$this->Auth->User('member_name');
 		$this->set('member_name',$member_name);
 	}
@@ -700,14 +700,14 @@ class InvoiceAttestationsController extends AppController
 		$Users=$this->InvoiceAttestations->Users->get($user_id);
 		//$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['CertificateOriginGoods']]);
 		
-			//$sul='http://localhost/uccinew/InvoiceAttestations/success';
-			//$furl='http://localhost/uccinew/InvoiceAttestations/failure';
+			$sul='http://localhost/uccinew/InvoiceAttestations/success';
+			$furl='http://localhost/uccinew/InvoiceAttestations/failure';
 			
 			//$sul='http://ucciudaipur.com/app/InvoiceAttestations/success';
 			//$furl='http://ucciudaipur.com/app/InvoiceAttestations/failure';
 			
-			$sul='http://ucciudaipur.com/uccinew/InvoiceAttestations/success';
-			$furl='http://ucciudaipur.com/uccinew/InvoiceAttestations/failure';
+			//$sul='http://ucciudaipur.com/uccinew/InvoiceAttestations/success';
+			//$furl='http://ucciudaipur.com/uccinew/InvoiceAttestations/failure';
 			
 		$InvoiceAttestations = $this->InvoiceAttestations->find()
 			->where(['InvoiceAttestations.id'=>$id]);
@@ -725,11 +725,11 @@ class InvoiceAttestationsController extends AppController
 		$Users=$this->InvoiceAttestations->Users->get($user_id);
 		//$InvoiceAttestations=$this->InvoiceAttestations->get($id]);
 		
-			$sul='http://localhost/uccinew/InvoiceAttestations/success';
-			$furl='http://localhost/uccinew/InvoiceAttestations/failure';
+			//$sul='http://localhost/uccinew/InvoiceAttestations/success';
+			//$furl='http://localhost/uccinew/InvoiceAttestations/failure';
 			
-			//$sul='http://ucciudaipur.com/uccinew/InvoiceAttestations/success';
-			//$furl='http://ucciudaipur.com/uccinew/InvoiceAttestations/failure';
+			$sul='http://ucciudaipur.com/uccinew/InvoiceAttestations/success';
+			$furl='http://ucciudaipur.com/uccinew/InvoiceAttestations/failure';
 			
 			
 			$InvoiceAttestations = $this->InvoiceAttestations->find()
@@ -1105,10 +1105,10 @@ class InvoiceAttestationsController extends AppController
 		    $dompdf->loadHtml($html);
 			$dompdf->render();
 			$output = $dompdf->output();
-			file_put_contents('coo_payment_receipt.pdf', $output);	
+			file_put_contents('attestation_payment_receipt.pdf', $output);	
 			
 			$attachments='';
-			$attachments[]='coo_payment_receipt.pdf';
+			$attachments[]='attestation_payment_receipt.pdf';
 			$sub='Payment Successfully submitted';
 			$email_to='anilgurjer371@gmail.com';
 				$from_name='UCCI';
@@ -1237,32 +1237,33 @@ class InvoiceAttestationsController extends AppController
 				$regards_member_name=$Users->member_name;*/
 
 			
-
 				if($this->InvoiceAttestations->save($InvoiceAttestations))
-				{
-					
-					$certificates_data = base64_encode($id);
+				{ 
+					$certificates_data = json_encode($id);
+					$certificates_data = base64_encode($certificates_data);
 					
 					//$certificates_data = json_encode($certificates_data);
 					
-				
+
 					$authorise_person_mails=$this->InvoiceAttestations->CertificateOriginAuthorizeds->find()->contain(['Users']);
 				foreach($authorise_person_mails as $authorise_person_mail){
 					$emailperson_id=$authorise_person_mail['user']->id;
 					$emailperson=$authorise_person_mail['user']->member_name;
 					$emailsend=$authorise_person_mail['user']->email;
 					
-					$emailperson_id = base64_encode($emailperson_id);
-					 $url="http://localhost/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id."";
+					 $emailperson_id_new = json_encode($emailperson_id);
+				     $emailperson_id_new = base64_encode($emailperson_id_new);
+					
+					 $url="http://localhost/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new."";
 					 
-					//$url="http://www.ucciudaipur.com/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id.""; 
+					//$url="http://www.ucciudaipur.com/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
 					//$url="http://www.ucciudaipur.com/app/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id.""; 
 					
 					$sub="Invoice Attestation is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					$email_to='anilgurjer371@gmail.com';
+					$email_to='rohitkumarjoshi43@gmail.com';
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1457,4 +1458,150 @@ class InvoiceAttestationsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+	
+	
+	
+		
+	public function invoiceAttestationApproved($coo_id=null,$authorized_id=null)
+    {
+		$this->viewBuilder()->layout('index_layout');
+		
+		$ids = base64_decode($coo_id);
+		$ids = json_decode($ids);
+		$authorized_id = base64_decode($authorized_id); 
+		$authorized_id = json_decode($authorized_id);
+		$user_id=$authorized_id;  
+		
+		
+		$certificate_origin_count = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$ids,'status'=>'verified','coo_verify_email'=>'yes'])->count();
+		$this->set(compact('certificate_origin_count'));
+		if($certificate_origin_count>0){
+			$InvoiceAttestations = $this->InvoiceAttestations->newEntity();
+	  
+			$invoice_attestations = $this->InvoiceAttestations->find()->where(['InvoiceAttestations.id'=>$invoice_attestation_id,'status'=>'verified'])->contain(['Companies'])->toArray();
+			
+			
+			$verify_bys=$invoice_attestations[0]->verify_by; 
+			$Users_verifys=$this->InvoiceAttestations->Companies->Users->get($verify_bys);
+			$verify_member=$Users_verifys->member_name; 
+			$company_id=$invoice_attestations[0]->company_id; 
+			$DocumentCheck=$this->InvoiceAttestations->Companies->find()
+				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
+				->count();
+			$this->set(compact('invoice_attestations','DocumentCheck','verify_member','InvoiceAttestations','certificate_origin_count'));
+			
+		if($this->request->is('post')) 
+		{
+			if(isset($this->request->data['certificate_approve_submit']))
+			{
+				 
+				$email = new Email();
+				$email->transport('SendGrid');
+				
+				$id=$this->request->data['certificate_approve_submit'];
+				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
+				$consignee=$CertificateOrigins->consignee;
+				$this->request->data['status']='approved';
+				//$this->request->data['approve']=1;
+				$this->request->data['approved_by']=$user_id; 
+				$this->request->data['authorised_by']=$user_id;
+				$this->request->data['verify_remarks']=''; 
+				$this->request->data['authorised_remarks']=''; 
+				$this->request->data['coo_verify_email']='no'; 
+				
+				$coo_verification_code=uniqid(); 
+				$this->request->data['coo_verification_code']=$coo_verification_code; 
+				
+				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
+				$query = $this->CertificateOrigins->find();
+				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
+				$this->request->data['origin_no']=($origin_no[0]->max_value)+1;
+				
+				 $CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				 $email_to=$CertificateOrigins->company->users[0]->email; 
+				 $member_name=$CertificateOrigins->company->users[0]->member_name;
+				 
+				 $Users= $this->CertificateOrigins->Users->get($user_id);
+				
+				 $regards_member_name=$Users->member_name;
+				 
+				
+				
+				if($this->CertificateOrigins->save($CertificateOrigins))
+				{
+					
+					  $sub="Your certificate of origin is approved";
+					  $from_name="UCCI";
+					  $email_to=trim($email_to,' ');
+					$email_to="rohitkumarjoshi43@gmail.com";
+					  if(!empty($email_to)){		
+								
+						 try {
+							   $email->from(['ucciudaipur@gmail.com' => $from_name])
+										->to($email_to)
+										->replyTo('uccisec@hotmail.com')
+										->subject($sub)
+										->profile('default')
+										->template('coo_approve')
+										->emailFormat('html')
+										->viewVars(['member_name'=>$member_name,'consignee'=>$consignee]);
+										$email->send();
+									
+									
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
+
+							} 
+						}
+								
+					
+					
+					$this->Flash->success(__('Certificate of origin has been approved.'));
+					return $this->redirect(['action' => 'coo_approved']);
+				}
+				$this->Flash->error(__('Unable to approved certificate of origin.'));
+			}
+			else if(isset($this->request->data['certificate_notapprove_submit']))
+			{
+				
+				$id=$this->request->data['certificate_notapprove_submit'];
+				$CertificateOrigins=$this->CertificateOrigins->get($id);
+				
+				//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
+				$this->request->data['approve']=2;
+				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
+				$this->request->data['authorised_by']=$user_id;
+				$this->request->data['status']='published';
+				$this->request->data['coo_verify_email']='no'; 
+				
+				 $CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				
+				if($this->CertificateOrigins->save($CertificateOrigins))
+				{
+					$this->Flash->success(__('Certificate of origin has been not approved.'));
+					return $this->redirect(['action' => 'coo_approved']);
+				}
+				$this->Flash->error(__('Unable to not approved certificate of origin.'));
+			}
+		}
+		
+			
+			
+			
+			
+			
+		}else{
+			
+			$this->Flash->success(__('Certificate of origin has been taken action'));
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 }
