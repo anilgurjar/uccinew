@@ -1254,11 +1254,11 @@ class InvoiceAttestationsController extends AppController
 					 $emailperson_id_new = json_encode($emailperson_id);
 				     $emailperson_id_new = base64_encode($emailperson_id_new);
 					
-					 $url="http://localhost/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new."";
+					// $url="http://localhost/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new."";
 					 
-					//$url="http://www.ucciudaipur.com/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new.""; 
+					$url="http://www.ucciudaipur.com/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
-					//$url="http://www.ucciudaipur.com/app/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id.""; 
+					//$url="http://www.ucciudaipur.com/app/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
 					$sub="Invoice Attestation is Varified";
 					$from_name="UCCI";
