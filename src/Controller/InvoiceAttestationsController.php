@@ -694,14 +694,14 @@ class InvoiceAttestationsController extends AppController
 		$Users=$this->InvoiceAttestations->Users->get($user_id);
 		//$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['CertificateOriginGoods']]);
 		
-			$sul='http://localhost/uccinew/InvoiceAttestations/success';
-			$furl='http://localhost/uccinew/InvoiceAttestations/failure';
+			//$sul='http://localhost/uccinew/InvoiceAttestations/success';
+			//$furl='http://localhost/uccinew/InvoiceAttestations/failure';
 			
 			//$sul='http://ucciudaipur.com/app/InvoiceAttestations/success';
 			//$furl='http://ucciudaipur.com/app/InvoiceAttestations/failure';
 			
-			//$sul='http://ucciudaipur.com/uccinew/InvoiceAttestations/success';
-			//$furl='http://ucciudaipur.com/uccinew/InvoiceAttestations/failure';
+			$sul='http://ucciudaipur.com/uccinew/InvoiceAttestations/success';
+			$furl='http://ucciudaipur.com/uccinew/InvoiceAttestations/failure';
 			
 		$InvoiceAttestations = $this->InvoiceAttestations->find()
 			->where(['InvoiceAttestations.id'=>$id]);
@@ -755,7 +755,7 @@ class InvoiceAttestationsController extends AppController
 		->where(['id' => $udf1])
 		->execute();
 		 $this->set(compact('status','amount','id','txnid','sul'));	
-		pr($query->toArray());   exit;
+		
 	// mail should secretary 
 	
 		//$companies= $this->InvoiceAttestations->Companies->find()->where(['id'=>$udf1]);
