@@ -569,8 +569,7 @@ class InvoiceAttestationsController extends AppController
 
 				$this->request->data['file_name']=$file_name;
 
-				pr($oldfile_name);
-				pr($file_name);    exit;
+			
 
 				if(!empty($files[0]['name'])){
 					$this->request->data['invoice_attachment']='true';
@@ -598,7 +597,7 @@ class InvoiceAttestationsController extends AppController
 				} */
 				
 				$invoice_attestation = $this->InvoiceAttestations->patchEntity($invoice_attestation, $this->request->data);
-				
+				pr($$invoice_attestation); exit;
 				if ($data=$this->InvoiceAttestations->save($invoice_attestation))
 				{ 
 					$dir = new Folder(WWW_ROOT . 'img/coo_invoice_attestation/'.$data['id'], true, 0755);
