@@ -575,6 +575,7 @@ class InvoiceAttestationsController extends AppController
 					$this->request->data['invoice_attachment']='true';
 				}else{
 					$this->request->data['invoice_attachment']=$oldimage;
+					$this->request->data['file_name']=$oldfile_name;
 				}
 				
 				$amount=200;
