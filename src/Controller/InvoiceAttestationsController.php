@@ -748,13 +748,14 @@ class InvoiceAttestationsController extends AppController
 		$udf1=$this->request->data["udf1"];
 		$productinfo=$this->request->data["productinfo"];
 		$email=$this->request->data["email"];
+		
 		$query = $this->InvoiceAttestations->query();
 		$query->update()
 		->set(['transaction_id' => $txnid,'payment_status'=>$status,'status'=>'published'])
 		->where(['id' => $udf1])
 		->execute();
 		 $this->set(compact('status','amount','id','txnid','sul'));	
-		
+		pr($udf1);   exit;
 	// mail should secretary 
 	
 		//$companies= $this->InvoiceAttestations->Companies->find()->where(['id'=>$udf1]);
