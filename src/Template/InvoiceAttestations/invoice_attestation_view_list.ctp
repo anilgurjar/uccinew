@@ -36,11 +36,11 @@
 	<!-- /.box-header -->
 	<!-- form start -->
 	<?php  
-		echo $this->Html->link('<i class="fa fa-download"></i> Export',
+		/* echo $this->Html->link('<i class="fa fa-download"></i> Export',
 			['controller' => 'InvoiceAttestations', 'action' => 'InvoiceAttestationViewListexcel'],
 			['class' => 'btn btn-primary btn-sm btn-flat pull-right','style'=>'margin-right:30px',
 				'escape' => false]
-		);
+		); */
 		?>
 	<div class="box-body">
 	 <?= $this->Form->create() ?>
