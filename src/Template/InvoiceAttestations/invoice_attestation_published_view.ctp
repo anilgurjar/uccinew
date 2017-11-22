@@ -132,23 +132,13 @@ use Cake\Filesystem\File;
 					<?php
 				//	pr($InvoiceAttestation);
 						if($InvoiceAttestation->invoice_attachment=='true'){
-
-							$dir = new Folder(WWW_ROOT . 'img/coo_invoice_attestation/'.$InvoiceAttestation->id);
-							$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice_attestation/'.$InvoiceAttestation->id;
-
-							$files = $dir->find('.*', true);
-							$arr_ext = array('jpg', 'jpeg', 'png'); 
-							foreach($files as $file){
+							
 								echo"<div class='col-sm-4'>";
-									$ext = substr(strtolower(strrchr($file, '.')), 1);
-									if (in_array($ext, $arr_ext)) {
-										echo $this->Html->image('/img/coo_invoice_attestation/'.$InvoiceAttestation->id.'/'.$file, ['style'=>'width:300px; height:300px;']);
-									}else{
-		echo '<iframe src="'.$this->Url->build('/img/coo_invoice_attestation/'.$InvoiceAttestation->id.'/'.$file).'" title="your_title" align="top" height="300" width="100%" frameborder="0" scrolling="auto" target="Message"></iframe>';
-									}
+									
+		echo '<iframe src="'.$this->Url->build('/img/coo_invoice_attestation/'.$InvoiceAttestation->id.'/'.$InvoiceAttestation->file_name).'" title="your_title" align="top" height="300" width="100%" frameborder="0" scrolling="auto" target="Message"></iframe>';
+									
 								echo'</div>'; 
-							}
-
+							
 						}
 					?>
 				</div>

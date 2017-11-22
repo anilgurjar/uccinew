@@ -317,7 +317,7 @@ class InvoiceAttestationsController extends AppController
 					  $sub="Your Invoice Attestation is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 $email_to="anilgurjer371@gmail.com";
+					 //$email_to="anilgurjer371@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -551,6 +551,7 @@ class InvoiceAttestationsController extends AppController
 						  move_uploaded_file($file['tmp_name'], $file_path.'/' . $file['name']);
 
 						}
+					
 					$last_insert_id=$data['id'];
 					$this->Flash->success(__('Your certificate origin good has been saved.'));
 					return $this->redirect(['action' => 'attestation-draft-view',$last_insert_id]);
@@ -666,8 +667,8 @@ class InvoiceAttestationsController extends AppController
 						return $this->redirect(['action' => 'invoice-attestation-draft-view']);
 					}
 					else{
-						return $this->redirect(['action' => 'paymentTest',$data['id']]);
-						//return $this->redirect(['action' => 'payment',$data['id']]);
+						//return $this->redirect(['action' => 'paymentTest',$data['id']]);
+						return $this->redirect(['action' => 'payment',$data['id']]);
 					}
 				//}	
 					
@@ -728,8 +729,8 @@ class InvoiceAttestationsController extends AppController
 			//$sul='http://localhost/uccinew/InvoiceAttestations/success';
 			//$furl='http://localhost/uccinew/InvoiceAttestations/failure';
 			
-			$sul='http://ucciudaipur.com/uccinew/InvoiceAttestations/success';
-			$furl='http://ucciudaipur.com/uccinew/InvoiceAttestations/failure';
+			$sul='http://ucciudaipur.com/app/InvoiceAttestations/success';
+			$furl='http://ucciudaipur.com/app/InvoiceAttestations/failure';
 			
 			
 			$InvoiceAttestations = $this->InvoiceAttestations->find()
@@ -889,7 +890,8 @@ class InvoiceAttestationsController extends AppController
 
 				$MasterCompanies=$this->InvoiceAttestations->MemberReceipts->MasterCompanies->find();
 				//pr($master_member_receipt);
-	foreach($master_member_receipt as $data){			
+				foreach($master_member_receipt as $data)
+				{			
 					$receipt_no = $data->receipt_no; 
 					$amount_type = $data->amount_type;
 					$cheque_no = $data->cheque_no;
@@ -1110,7 +1112,7 @@ class InvoiceAttestationsController extends AppController
 			$attachments='';
 			$attachments[]='attestation_payment_receipt.pdf';
 			$sub='Payment Successfully submitted';
-			$email_to='anilgurjer371@gmail.com';
+			//$email_to='anilgurjer371@gmail.com';
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
@@ -1254,16 +1256,16 @@ class InvoiceAttestationsController extends AppController
 					 $emailperson_id_new = json_encode($emailperson_id);
 				     $emailperson_id_new = base64_encode($emailperson_id_new);
 					
-					// $url="http://localhost/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new."";
+					 //$url="http://localhost/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new."";
 					 
-					$url="http://www.ucciudaipur.com/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new.""; 
+					//$url="http://www.ucciudaipur.com/uccinew/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
-					//$url="http://www.ucciudaipur.com/app/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new.""; 
+					$url="http://www.ucciudaipur.com/app/invoice-attestations/invoice_attestation_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
 					$sub="Invoice Attestation is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					$email_to='rohitkumarjoshi43@gmail.com';
+					//$email_to='rohitkumarjoshi43@gmail.com';
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1312,7 +1314,7 @@ class InvoiceAttestationsController extends AppController
 						$sub="Certificate of origin is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						$email_to="anilgurjer371@gmail.com";
+						//$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1532,7 +1534,7 @@ class InvoiceAttestationsController extends AppController
 					  $sub="Your Invoice Attestation is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					  $email_to="rohitkumarjoshi43@gmail.com";
+					 //$email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
