@@ -65,14 +65,17 @@ class SuppliersTable extends Table
             ->requirePresence('company', 'create')
             ->notEmpty('company');
 
-        $validator
-            ->email('email')
-            ->requirePresence('email', 'create');
-
+        
         $validator
             ->requirePresence('mobile', 'create');
 
-      /*    $validator
+      /*    
+	  $validator
+            ->email('email')
+            ->requirePresence('email', 'create');
+
+	  
+	  $validator
             ->requirePresence('gst_number', 'create')
             ->notEmpty('gst_number');
 
