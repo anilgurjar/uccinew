@@ -19,12 +19,18 @@ class CompanyHwmInformationsController extends AppController
 	{
 		$companyHwmInformation = $this->CompanyHwmInformations->newEntity();
 		$CompanyWasteInformations = $this->CompanyHwmInformations->CompanyWasteInformations->newEntity();
+		$CompanyWastageInformations = $this->CompanyHwmInformations->CompanyWastageInformations->newEntity();
          if ($this->request->is('post')) {
 			 
 			$company_waste_informations=$this->request->data['company_waste_informations'];
 			$CompanyWasteInformations = $this->CompanyHwmInformations->CompanyWasteInformations->newEntities($company_waste_informations);
 			if ($this->CompanyHwmInformations->CompanyWasteInformations->saveMany($CompanyWasteInformations)) {
 			}
+			$company_wastage_informations=$this->request->data['company_wastage_informations'];
+			$CompanyWastageInformations = $this->CompanyHwmInformations->CompanyWastageInformations->newEntities($company_wastage_informations);
+			if ($this->CompanyHwmInformations->CompanyWastageInformations->saveMany($CompanyWastageInformations)) {
+			}
+			
 			$this->request->data['company_id']=$company_waste_informations[0]['company_id'];
 			
 			$constituents_present=$this->request->data['constituents_present'];
