@@ -69,11 +69,13 @@ class SuppliersTable extends Table
         $validator
             ->requirePresence('mobile', 'create');
 
-      /*    
+      /* 
+	  
 	  $validator
             ->email('email')
             ->requirePresence('email', 'create');
 
+			
 	  
 	  $validator
             ->requirePresence('gst_number', 'create')
