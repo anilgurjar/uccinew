@@ -317,7 +317,7 @@ class InvoiceAttestationsController extends AppController
 					  $sub="Your Invoice Attestation is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					  $email_to="anilgurjer371@gmail.com";
+					 // $email_to="anilgurjer371@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -553,7 +553,7 @@ class InvoiceAttestationsController extends AppController
 						}
 					
 					$last_insert_id=$data['id'];
-					$this->Flash->success(__('Your certificate origin good has been saved.'));
+					$this->Flash->success(__('Your Invoice Attestation has been saved.'));
 					return $this->redirect(['action' => 'attestation-draft-view',$last_insert_id]);
 					 
 				}
@@ -590,13 +590,6 @@ class InvoiceAttestationsController extends AppController
 				$this->request->data['verify_remarks']='';
 				
 				
-				/*$CertificateOriginAuthorizeds=$this->InvoiceAttestations->CertificateOriginAuthorizeds->find()->toArray();
-				$i=0;
-				 foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
-					$this->request->data['coo_email_approvals'][$i]['user_id']=$CertificateAuthorized->user_id;	
-					$this->request->data['coo_email_approvals'][$i]['status']=0;	
-					$i++;	
-				} */
 				
 				$invoice_attestation = $this->InvoiceAttestations->patchEntity($invoice_attestation, $this->request->data);
 				
@@ -667,12 +660,12 @@ class InvoiceAttestationsController extends AppController
 						return $this->redirect(['action' => 'invoice-attestation-draft-view']);
 					}
 					else{
-						return $this->redirect(['action' => 'paymentTest',$data['id']]);
-						//return $this->redirect(['action' => 'payment',$data['id']]);
+						//return $this->redirect(['action' => 'paymentTest',$data['id']]);
+						 return $this->redirect(['action' => 'payment',$data['id']]);
 					}
 				//}	
 					
-					$this->Flash->success(__('Your certificate origin good has been saved.'));
+					$this->Flash->success(__('Your Invoice Attestation has been saved.'));
 				}
 			
 			}
@@ -813,6 +806,14 @@ class InvoiceAttestationsController extends AppController
 		 $payment_tax_amount=$InvoiceAttestations['payment_tax_amount'];
 	
 	if($coo_email=='yes'){
+		 
+		 
+		$query = $this->InvoiceAttestations->query();
+		$query->update()
+		->set(['coo_email'=>'no'])
+		->where(['id' => $udf1])
+		->execute();
+		 
 		 
 		  $Companies_data=$this->InvoiceAttestations->Companies->get($company_id_coo,['contain'=>'Users']);
 		
@@ -1112,7 +1113,7 @@ class InvoiceAttestationsController extends AppController
 			$attachments='';
 			$attachments[]='attestation_payment_receipt.pdf';
 			$sub='Payment Successfully submitted';
-			$email_to='rohitkumarjoshi43@gmail.com';
+			//$email_to='rohitkumarjoshi43@gmail.com';
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
@@ -1137,11 +1138,7 @@ class InvoiceAttestationsController extends AppController
 
 							} 
 							
-			$query = $this->InvoiceAttestations->query();
-			$query->update()
-			->set(['coo_email'=>'no'])
-			->where(['id' => $udf1])
-			->execute();		
+					
 		
 	}
 		
@@ -1244,9 +1241,7 @@ class InvoiceAttestationsController extends AppController
 					$certificates_data = json_encode($id);
 					$certificates_data = base64_encode($certificates_data);
 					
-					//$certificates_data = json_encode($certificates_data);
 					
-
 					$authorise_person_mails=$this->InvoiceAttestations->CertificateOriginAuthorizeds->find()->contain(['Users']);
 				foreach($authorise_person_mails as $authorise_person_mail){
 					$emailperson_id=$authorise_person_mail['user']->id;
@@ -1265,7 +1260,7 @@ class InvoiceAttestationsController extends AppController
 					$sub="Invoice Attestation is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					$email_to='rohitkumarjoshi43@gmail.com';
+					//$email_to='rohitkumarjoshi43@gmail.com';
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1311,10 +1306,10 @@ class InvoiceAttestationsController extends AppController
 					{
 						$mailsendtomember=$InvoiceAttestation['member_name'];
 						$mailsendtoemail=$InvoiceAttestation['email'];
-						$sub="Certificate of origin is Not Varified";
+						$sub="Invoice Attestation is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						$email_to="anilgurjer371@gmail.com";
+						//$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1534,7 +1529,7 @@ class InvoiceAttestationsController extends AppController
 					  $sub="Your Invoice Attestation is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 $email_to="rohitkumarjoshi43@gmail.com";
+					// $email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -1592,7 +1587,7 @@ class InvoiceAttestationsController extends AppController
 			
 		}else{
 			
-			$this->Flash->success(__('Certificate of origin has been taken action'));
+			$this->Flash->success(__('Invoice Attestation has been taken action'));
 			
 		}
 	}

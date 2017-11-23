@@ -125,20 +125,16 @@ echo '
 		var i =0;
 		$("#monthly_tables tbody tr").each(function(){
 			
-			$(this).find("td input.number").attr({name:"company_waste_informations["+i+"][number]"});
-
-			$(this).find("td input.waste_type").attr({name:"company_waste_informations["+i+"][waste_type]"});
-			
-			$(this).find("td input.volume").attr({name:"company_waste_informations["+i+"][volume]"});
-					
-			$(this).find("td input.inventory").attr({name:"company_waste_informations["+i+"][inventory]"});
-			
-			$(this).find("td input.company_id").attr({name:"company_waste_informations["+i+"][company_id]"});
-			
-			$(this).find("td input.storage_method").attr({name:"company_waste_informations["+i+"][storage_method]"});
-			
-			$(this).find("td input.size_storage_container").attr({name:"company_waste_informations["+i+"][size_storage_container]"});
-			
+			$(this).find("td input.company_id").attr({name:"company_wastage_informations["+i+"][company_id]"});
+			$(this).find("td input.code_hm_rule").attr({name:"company_wastage_informations["+i+"][code_hm_rule]"});
+			$(this).find("td input.waste_description_incinerable").attr({name:"company_wastage_informations["+i+"][waste_description_incinerable]"});
+			$(this).find("td input.waste_description_non").attr({name:"company_wastage_informations["+i+"][waste_description_non]"});
+			$(this).find("td input.quantity_month_incinerable").attr({name:"company_wastage_informations["+i+"][quantity_month_incinerable]"});
+			$(this).find("td input.quantity_month_non").attr({name:"company_wastage_informations["+i+"][quantity_month_non]"});
+			$(this).find("td input.inventory_incinerable").attr({name:"company_wastage_informations["+i+"][inventory_incinerable]"});
+			$(this).find("td input.inventory_non").attr({name:"company_wastage_informations["+i+"][inventory_non]"});
+			$(this).find("td input.storage_method_incinerable").attr({name:"company_wastage_informations["+i+"][storage_method_incinerable]"});
+			$(this).find("td input.storage_method_non").attr({name:"company_wastage_informations["+i+"][storage_method_non]"});
 			i++;
 		});
 			
@@ -270,7 +266,7 @@ INDUSTRIAL WASTE SURVEY <span class="effect"></span>
 		</div>
 		<div class="col-md-6">
 			<div class="form-group">
-				<label class="control-label">Please Select Type</label><br/>
+				<label class="control-label">Your current disposal arrangements for this waste (incinerable/non-incinerable ) </label><br/>
 				<label class="radio-inline">
 					<input type="radio" name="company_service_type" class="company_service_type" checked value="off site">off site
 				</label>
@@ -456,7 +452,7 @@ INDUSTRIAL WASTE SURVEY <span class="effect"></span>
 				<div class="checkbox-list">
  					<label class="checkbox-inline"><input type="checkbox" name="potential_reuse[]" value="Possible with no processing">Possible with no processing</label><br/>
 					<label class="checkbox-inline"><input type="checkbox" name="potential_reuse[]" value="Possible with Processing">Possible with Processing</label><br/>
-					<label class="checkbox-inline"><input type="checkbox" name="potential_reuse[]" value="Not possible and Not probable"> Not possible and Not probable</label> <br/>
+					<label class="checkbox-inline"><input type="checkbox" name="potential_reuse[]" value="Not possible and Not probable"> Not possible and Not probable</label><br/>
 					<label class="checkbox-inline"><input type="checkbox" name="potential_reuse[]" value="Unknown"> Unknown</label>
 				</div>
 			</div>
@@ -466,17 +462,17 @@ INDUSTRIAL WASTE SURVEY <span class="effect"></span>
 		<div class="col-md-4">
 			<div class="form-group">
 				<label class="control-label">Industry Code from HW Rules 2003 </label>
-				<input type="text" name="office_telephone" class="form-control" placeholder="Industry Code from HW Rules 2003">	 
+				<input type="text" name="industry_code_2003" class="form-control" placeholder="Industry Code from HW Rules 2003">	 
 			</div>
 		</div>
 		<div class="col-md-7">
 			<div class="form-group">
 				<label class="control-label">Do you currently run an on-site treatment facility (incinerator/ effluent treatment plant or other facility)?</label><br/>
 				<label class="radio-inline">
-					<input type="radio" name="company_service_type" checked value="yes">Yes
+					<input type="radio" name="on_site_treatment_facility" checked value="yes">Yes
 				</label>
 				<label class="radio-inline">
-					<input type="radio" name="company_service_type" value="no"> No
+					<input type="radio" name="on_site_treatment_facility" value="no"> No
 				</label>
  			</div>
 		</div>
@@ -526,32 +522,32 @@ INDUSTRIAL WASTE SURVEY <span class="effect"></span>
 	<tbody>
 		<tr>
 			<td>
-				<input type="text" class="form-control number" name="number[]">
+				<input type="text" class="form-control code_hm_rule" name="number[]">
 			</td>
 			<td>
-				<input type="text" class="form-control waste_type" name="waste_type[]"> 
+				<input type="text" class="form-control waste_description_incinerable" name="waste_type[]"> 
 			</td>
 			<td>
-				<input type="text" class="form-control volume" name="volume[]">
+				<input type="text" class="form-control waste_description_non" name="volume[]">
 			</td>
 			<td>
-				<input type="text" class="form-control inventory" name="inventory[]">
+				<input type="text" class="form-control quantity_month_incinerable" name="inventory[]">
 				<input type="hidden" class="form-control company_id" value="'.$company_id.'" name="company_id[]">
 			</td>
 			<td>
-				<input type="text" class="form-control storage_method" name="storage_method[]">
+				<input type="text" class="form-control quantity_month_non" name="storage_method[]">
 			</td>
 			<td>
-				<input type="text" class="form-control size_storage_container" name="size_storage_container[]">
+				<input type="text" class="form-control inventory_incinerable" name="size_storage_container[]">
 			</td>
 			<td>
-				<input type="text" class="form-control size_storage_container" name="size_storage_container[]">
+				<input type="text" class="form-control inventory_non" name="size_storage_container[]">
 			</td>
 			<td>
-				<input type="text" class="form-control size_storage_container" name="size_storage_container[]">
+				<input type="text" class="form-control storage_method_incinerable" name="size_storage_container[]">
 			</td>
 			<td>
-				<input type="text" class="form-control size_storage_container" name="size_storage_container[]">
+				<input type="text" class="form-control storage_method_non" name="size_storage_container[]">
 			</td>
 			<td>
 				<button type="button" class="btn btn-primary btn-xs add_row1"><i class="fa fa-plus"></i></button>		

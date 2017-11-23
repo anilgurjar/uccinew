@@ -41,6 +41,7 @@ class CompanyHwmInformationsTable extends Table
             'joinType' => 'INNER'
         ]);
 		$this->belongsTo('CompanyWasteInformations');
+		$this->belongsTo('CompanyWastageInformations');
     }
 
     /**
