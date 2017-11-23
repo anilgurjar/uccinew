@@ -1,12 +1,26 @@
+ <style>
+input[type="radio"]
+{
+	margin-right: 8px;
+	margin-left: 6px;
+	margin-top: 6px;
+}
+.control-label{
+	text-align:left !important;
+}
+ </style>
 <div class="col-md-12">
   <!-- Horizontal Form -->
   <div class="box box-primary">
-	<div class="box-header with-border">
-	  <h3 class="box-title">Add Business Visa</h3>
+	<div class="box-header with-border no-print">
+	<center>
+	  <h3 class="box-title"><strong>REVIEW BUSINESS VISSA</strong></h3>
+	</center>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
-	<?php echo $this->Form->create($businessVisa, ['type' => 'post','id'=>'bussinesForm']); ?>
+	<!-- form start -->
+	<?php echo $this->Form->create($business_visas, ['type' => 'post','id'=>'bussinesForm']); ?>
 	<div class="box-body">
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Sender Address</label>
@@ -89,17 +103,93 @@
 		<center>
 			
 			<?php
-			echo $this->Form->button(__('Save as Draft') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-success','button type'=>'Submit','name'=>'business_submit']);
-			?>		   
+				echo $this->Form->button(__('Edit') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-warning','button type'=>'button','id'=>'edit_button']);
+			?>
+			<?php
+				echo $this->Form->button(__('Save as Draft') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-primary','button type'=>'Submit','name'=>'business_vissa_draft']);
+			?>
+			<?php
+				echo $this->Form->button(__('Publish') . $this->Html->tag('i', '', ['class'=>'fa fa-submit']),['class'=>'btn btn-success','button type'=>'Submit','name'=>'business_vissa_publish']);
+			?>	
 		</center>
 	  </div>
 	  <!-- /.box-footer -->
 	<?php echo $this->Form->end(); ?>
-	
-  </div>
-  <!-- /.box -->
-         
-           
-             
 </div>
-       
+<?php
+echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js');
+
+?>
+<script>
+
+$(document).ready(function(){ 
+	
+	$('#edit_button').on('click',function(){
+		$('input').prop('readonly', false);
+		$('textarea').prop('readonly', false);
+		
+	});
+	
+	$('input').prop('readonly', true);
+	$('textarea').prop('readonly', true);
+	// validate the comment form when it is submitted
+	// validate signup form on keyup and submit
+	$("#bussinesForm").validate({
+		rules: {
+			sender_address: {
+				required: true
+			},
+			company_id: {
+				required: true
+			},
+			subject: {
+				required: true
+			},
+			company_manufacture: {
+				required: true
+			},
+			visitor_name: {
+				required: true
+			},
+			visitor_designation: {
+				required: true
+			},
+			visit_country: {
+				required: true
+			},
+			visit_month: {
+				required: true
+			},
+			visit_reason: {
+				required: true
+			},
+			passport_no: {
+				required: true
+			},
+			issue_date: {
+				required: true
+			},
+			issue_place: {
+				required: true
+			},
+			expiry_date: {
+				required: true
+			}
+			
+		},
+		submitHandler: function () {
+				
+				
+				form.submit();
+			}
+		
+	});
+	
+	
+});
+</script>	
+	
+ 
+				
+				
+   
