@@ -37,7 +37,7 @@
 	<!-- form start -->
 	<?php  
 		echo $this->Html->link('<i class="fa fa-download"></i> Export',
-			['controller' => 'CertificateOrigins', 'action' => 'CertificateOriginViewListexcel'],
+			['controller' => 'BusinessVisas', 'action' => 'BussinessVissaViewListexcel'],
 			['class' => 'btn btn-primary btn-sm btn-flat pull-right','style'=>'margin-right:30px',
 				'escape' => false]
 		);
@@ -49,24 +49,28 @@
 				<table class="table table-bordered" id="parant_table" style="width:100%;">
 					<thead>
 						<tr>
-							<th>Sr.No.</th><th>Exporter</th><th>Origin No</th><th>Date</th><th>Consignee</th><th>Invoice No.</th><th>Invoice Date</th><th>Manufacturer</th><th>Despatched by</th><th>View</th>
+							<th>Sr.No.</th><th>Company/Organisation</th><th>Origin No</th><th>Company Manufacture</th><th>Visitor Name</th><th>Visit Country</th><th>Visit Month</th><th>Visit Reason</th><th>Passport No</th><th>Issue Date</th><th>Issue Place</th><th>Expiry Date</th><th>View</th>
 						</tr>
 					</thead>
 					<tbody class="show_div">
 						
 									
-					<?php $sr=0; foreach ($certificate_origins as $certificate_origin): ?>
+					<?php $sr=0; foreach ($bussiness_vissas as $bussiness_vissa): 
+					?>
 					<tr>
 					    <td><?= ++$sr ?></td>
-						<td><?= $certificate_origin->exporter ?></td>
-						<td><?= $certificate_origin->origin_no ?></td>
-						<td><?= $certificate_origin->date_current ?></td>
-						<td><?= $certificate_origin->consignee ?></td>
-						<td><?= $certificate_origin->invoice_no ?></td>
-						<td><?= date('d-m-Y', strtotime($certificate_origin->invoice_date)) ?></td>
-						<td><?= $certificate_origin->manufacturer ?></td>
-						<td><?php if($certificate_origin->despatched_by==0){ echo 'Sea'; }else if($certificate_origin->despatched_by==1){ echo 'Air'; }else{ echo 'Road'; } ?></td>
-						<td><?= $this->Form->button(__('View') . $this->Html->tag('i', '', ['class'=>'fa fa-book']),['class'=>'btn btn-info btn-sm','formaction'=>'certificate_origin_performa_view','formtarget'=>'_blank','value'=>$certificate_origin->id,'type'=>'Submit','name'=>'view']);   ?> </td>
+						<td><?= $bussiness_vissa['company']['company_organisation'] ?></td>
+						<td><?= $bussiness_vissa['origin_no'] ?></td>
+						<td><?= $bussiness_vissa['company_manufacture'] ?></td>
+						<td><?= $bussiness_vissa['visitor_name'] ?></td>
+						<td><?= $bussiness_vissa['visit_country'] ?></td>
+						<td><?= $bussiness_vissa['visit_month'] ?></td>
+						<td><?= $bussiness_vissa['visit_reason'] ?></td>
+						<td><?= $bussiness_vissa['passport_no'] ?></td>
+						<td><?= date('d-m-Y', strtotime($bussiness_vissa['issue_date'])) ?></td>
+						<td><?= $bussiness_vissa['issue_place'] ?></td>
+						<td><?= date('d-m-Y', strtotime($bussiness_vissa['expiry_date'])) ?></td>
+						<td><?= $this->Form->button(__('View') . $this->Html->tag('i', '', ['class'=>'fa fa-book']),['class'=>'btn btn-info btn-sm','formaction'=>'bussiness_vissa_performa_view','formtarget'=>'_blank','value'=>$bussiness_vissa['id'],'type'=>'Submit','name'=>'view']);   ?> </td>
 						</tr>
 
 					

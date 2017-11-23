@@ -44,6 +44,7 @@ class BusinessVisasTable extends Table
 		$this->belongsTo('MasterCompanies');
 		$this->belongsTo('MemberReceipts');
 		$this->belongsTo('MasterTaxations');
+		$this->belongsTo('CompanyMemberTypes');
 		$this->belongsTo('CertificateOriginAuthorizeds');
 		$this->belongsTo('Users');
 		

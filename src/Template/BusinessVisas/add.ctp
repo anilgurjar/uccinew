@@ -21,11 +21,14 @@
 				$options=array();
 				
 				foreach($members as $master_member_data)
-				{
-					$options[$master_member_data->id] = $master_member_data->company_organisation;
+				{ 
+				$name = $master_member_data['company_organisation'];
+				$id = $master_member_data['id'];
+				//pr($options[$master_member_data['id']]);     exit;
 				}
 
-				echo $this->Form->input('company_id', ['empty'=> '--Select--','data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
+				echo $this->Form->input('company_name', ['data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control ','type'=>'text','value'=>$name,'style'=>'width:100%;border:none','readonly'=>'readonly']);
+				echo $this->Form->input('company_id', ['data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control ','type'=>'hidden','value'=>$id,'style'=>'width:100%;border:none','readonly'=>'readonly']);	?>
 				</div>
 				<label class="col-sm-2 control-label">Subject</label>
 		  <div class="col-sm-4">
