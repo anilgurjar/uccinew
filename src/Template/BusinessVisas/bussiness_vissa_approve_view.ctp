@@ -34,7 +34,7 @@ use Cake\Filesystem\File;
   <div class="box box-primary">
 	<div class="box-header with-border">
 	<center>
-	  <h3 class="box-title"><strong>BUSSINESS VISSA  VIEW</strong></h3>
+	  <h3 class="box-title"><strong>BUSSINESS VISSA</strong></h3>
 	</center>
 	</div>
 	<!-- /.box-header -->
@@ -43,10 +43,10 @@ use Cake\Filesystem\File;
 		<div class="box-body">
 			<?= $this->Form->create($BusinessVisas) ?>
 			<?php
-			 
-			foreach($bussiness_vissas as $businessVisa)
-			{      
-			if($membertype==1){
+			
+			foreach($business_vissas as $businessVisa)
+			{
+				if($membertype==1){
 			?>
 				<table class="vertical-table" style="width:100%;">
 					 <tr>
@@ -170,22 +170,22 @@ use Cake\Filesystem\File;
 			<?php  } ?>
 				<div class="col-sm-12 no-print">
 					<center>
+					
 					<?php
 					 
-					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Verify') ,['class'=>'btn btn-success','type'=>'button','data-toggle'=>'modal','data-target'=>'#verify','value'=>$businessVisa['id']]);
+					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Approve') ,['class'=>'btn btn-success','type'=>'button','data-toggle'=>'modal','data-target'=>'#verify','value'=>$businessVisa['id']]);
 					?>
 					
 					<?php
-					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Not Verify') ,['class'=>'btn btn-danger','type'=>'button','data-toggle'=>'modal','data-target'=>'#notverify','value'=>$businessVisa['id']]);
+					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Not Approve') ,['class'=>'btn btn-danger','type'=>'button','data-toggle'=>'modal','data-target'=>'#notverify','value'=>$businessVisa['id']]);
 					?>
-						
 					</center>
 					<div class="modal fade" id="verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						  <div class="modal-dialog" role="document">
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<h4 class="modal-title" id="myModalLabel" style="text-align:left !important">Do you want to verify this COO</h4>
+								<h4 class="modal-title" id="myModalLabel" style="text-align:left !important">Do you want to Approve this COO</h4>
 							  </div>
 							  <div class="modal-body">
 								<div class="row">
@@ -194,12 +194,8 @@ use Cake\Filesystem\File;
 										<div class="col-md-12">
 											<div class="form-group">
 												<label class=" control-label" style="text-align:left !important">
-												
-												Documents are still panding, do you wish to continue 
+													Documents are still panding, do you wish to continue 
 												</label>
-												
-													 
-												
 											</div>
 										</div>
 									</div>
@@ -209,9 +205,9 @@ use Cake\Filesystem\File;
 							  <div class="modal-footer">
 							  <div class="related_issue"></div>
 								<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
-								<?php
-									echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Verify') ,['class'=>'btn btn-success','type'=>'Submit','name'=>'bussiness_vissa_approve_submit','value'=>$businessVisa['id']]);
-								?>	 
+					<?php
+					echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Approve') ,['class'=>'btn btn-success','type'=>'Submit','name'=>'bussiness_vissa_approve_submit','value'=>$businessVisa['id']]);
+					?>	 
 							  </div>
 							</div>
 						  </div>
@@ -221,7 +217,7 @@ use Cake\Filesystem\File;
 							<div class="modal-content">
 							  <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<h4 class="modal-title" id="myModalLabel" style="text-align:left">Do you want to not verify this COO</h4>
+								<h4 class="modal-title" id="myModalLabel" style="text-align:left">Do you want to not Approve this COO</h4>
 							  </div>
 							  <div class="modal-body">
 								<div class="row">
@@ -231,7 +227,7 @@ use Cake\Filesystem\File;
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class=" control-label" style="text-align:left !important">Remarks</label>
-														<?php echo $this->Form->textarea('ucci_content', ['label' => false,'placeholder'=>'Remarks','class'=>'form-control ', 'name'=>'verify_remarks']); ?>
+														<?php echo $this->Form->textarea('ucci_content', ['label' => false,'placeholder'=>'Remarks','class'=>'form-control ', 'name'=>'authorised_remarks']); ?>
 												</div>
 											</div>
 										</div>
@@ -242,12 +238,17 @@ use Cake\Filesystem\File;
 							  <div class="related_issue"></div>
 								<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
 								<?php
-									echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-check-circle-o']) . __(' Not Verify') ,['class'=>'btn btn-danger','type'=>'Submit','name'=>'bussiness_vissa_notapprove_submit','value'=>$businessVisa['id']]);
-								?>	 
+								echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-ban']) . __(' Not Approve'),['class'=>'btn btn-danger','type'=>'Submit','name'=>'bussiness_vissa_notapprove_submit','value'=>$businessVisa['id']]);
+								?> 
 							  </div>
 							</div>
 						  </div>
 						</div>
+				</div>
+					
+					
+					
+					
 				</div>
 				
 			 <?php
