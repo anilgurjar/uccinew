@@ -100,6 +100,14 @@ input[type="radio"]
 			<?php echo $this->Form->input('expiry_date', ['label' => false,'placeholder'=>'Date of Expiry','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy', 'type'=>'text']); ?>
 		  </div>
 		</div>
+		<?php foreach($business_visa_datas as $business_visa_data){    if(!empty($business_visa_data['verify_remarks'])){ ?>
+		<div class="form-group">
+		  <label class="col-sm-2 control-label" style="color:red;">Return Reason</label>
+		  <div class="col-sm-4">
+				<?php   echo $business_visa_data['verify_remarks'];  ?>
+		  </div>
+		</div>
+		<?php } }?>
 	</div>
 	  <!-- /.box-body -->
 	  <div class="box-footer">

@@ -54,7 +54,14 @@ use Cake\Filesystem\File;
 						<td style="text-align:right;"><?= h(date('jS F, Y',strtotime($businessVisa['date_current']))) ?></td>
 					</tr>
 					<tr>
-						<th colspan="2"><br/><b><?= h($businessVisa['sender_address']) ?></b></th>
+						<th ><br/><b><?= h($businessVisa['sender_address']) ?></b></th>
+						<td  align='right'>
+							<?php if(!empty($businessVisa['authorised_remarks'])){ ?>	
+								<label style="color:red;">Return Reason</label>
+								<?php
+									echo $businessVisa['authorised_remarks'];   
+								} ?>
+						</td>
 					</tr>
 					 <tr>
 						<td colspan="2"><br/>Sub:<b><?= h($businessVisa['subject']) ?></b></td>
@@ -112,6 +119,14 @@ use Cake\Filesystem\File;
 				<table class="vertical-table" style="width:100%;">
 					 <tr>
 						<td style="width:30%;">UCCI/VISA-41/R-9457/2016-17</td>
+					
+						<td  align='right'>
+							<?php if(!empty($businessVisa['authorised_remarks'])){ ?>	
+								<label style="color:red;">Return Reason</label>
+								<?php
+									echo $businessVisa['authorised_remarks'];   
+								} ?>
+						</td>
 					</tr>
 					<tr>	
 						<td style="text-align:left;"><b><?= h(date('jS F, Y',strtotime($businessVisa['date_current']))) ?></b></td>
