@@ -1,3 +1,9 @@
+ <?php
+//use Cake\View\Helper\UrlHelper::build();
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
+
+?>
  <style>
 input[type="radio"]
 {
@@ -154,7 +160,24 @@ input[type="radio"]
 				<?php } ?>
 				</div>
 			
-			
+			<div class="col-sm-12">
+					
+					<?php
+				//	pr($certificate_origin);
+						if($invoice_attestation['invoice_attachment']=='true'){
+							
+							echo"<div class='col-sm-4'>";
+							echo '<iframe src="'.$this->Url->build('/img/coo_invoice_attestation/'.$invoice_attestation['id'].'/'.$invoice_attestation['file_name']).'" title="your_title" align="top" height="300" width="100%" frameborder="0" scrolling="auto" target="Message"></iframe>';
+							echo'</div>'; 
+						}
+					
+					
+					
+					?>
+					
+					
+					
+				</div>
 			
 			
 				

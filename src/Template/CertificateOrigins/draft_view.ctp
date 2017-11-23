@@ -1,3 +1,9 @@
+ <?php
+//use Cake\View\Helper\UrlHelper::build();
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
+
+?>
  <style>
 input[type="radio"]
 {
@@ -205,6 +211,40 @@ input[type="radio"]
 				</tr>
 			</tbody>
 			</table>				
+				
+				<div class="col-sm-12">
+					
+					<?php
+					//pr($certificate_origin_good);   exit;
+						if($certificate_origin_good['invoice_attachment']=='true'){
+
+							$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$certificate_origin_good['id']);
+							$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice/'.$certificate_origin_good['id'];
+
+							$files = $dir->find('.*', true);
+							$arr_ext = array('jpg', 'jpeg', 'png'); 
+							foreach($files as $file){
+								echo"<div class='col-sm-4'>";
+									$ext = substr(strtolower(strrchr($file, '.')), 1);
+									if (in_array($ext, $arr_ext)) {
+										echo $this->Html->image('/img/coo_invoice/'.$certificate_origin_good['id'].'/'.$file, ['style'=>'width:300px; height:300px;']);
+									}else{
+		echo '<iframe src="'.$this->Url->build('/img/coo_invoice/'.$certificate_origin_good['id'].'/'.$file).'" title="your_title" align="top" height="300" width="100%" frameborder="0" scrolling="auto" target="Message"></iframe>';
+									}
+								echo'</div>'; 
+							}
+
+						}
+					
+					
+					
+					?>
+					
+					
+					
+				</div>
+				
+				
 				
 				<div class="col-sm-12 no-print">
 					<div class="table-responsive no-padding">
