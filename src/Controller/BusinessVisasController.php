@@ -800,6 +800,7 @@ class BusinessVisasController extends AppController
 			$DocumentCheck=$this->BusinessVisas->Companies->find('all')
 				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
 				->count();
+				
 			$this->set(compact('bussiness_vissas','DocumentCheck','membertype'));
 		}
 		if($this->request->is('post')) 
