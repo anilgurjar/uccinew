@@ -4,6 +4,9 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Mailer\Email;
+require_once(ROOT . DS  .'vendor' . DS  . 'dompdf' . DS . 'autoload.inc.php');
+use Dompdf\Dompdf;
+use Dompdf\Options;
 /**
  * BusinessVisas Controller
  *
@@ -924,7 +927,7 @@ class BusinessVisasController extends AppController
 				$consignee=$BusinessVisas->consignee;
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
-				$this->request->data['approved_by']=$user_id; 
+				$this->request->data['approve_by']=$user_id; 
 				$this->request->data['authorised_by']=$user_id;
 				$this->request->data['verify_remarks']=''; 
 				$this->request->data['authorised_remarks']=''; 
@@ -1085,6 +1088,31 @@ class BusinessVisasController extends AppController
 	
 	
 	}
+	
+	
+	
+	
+	
+	
+	
+	public function bussinessVissaPerformaView(){
+		$this->viewBuilder()->layout('index_layout');
+		$company_id=$this->Auth->User('company_id');
+		$user_id=$this->Auth->User('id');
+		$certificate_origin_id=$this->request->data['view'];
+		$bussiness_vissas = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$certificate_origin_id,'status'=>'approved'])->contain(['Companies'])->toArray();
+		$approved_by=$bussiness_vissas[0]['approve_by'];
+		$CertificateOriginAuthorizeds=$this->BusinessVisas->CertificateOriginAuthorizeds->find()->where(['user_id'=>$approved_by])->contain(['Users'])->toArray();
+		$membertypes=$this->BusinessVisas->CompanyMemberTypes->find()->where(['company_id'=>$company_id]);
+			foreach($membertypes as $membertype){
+				$membertype=$membertype['master_member_type_id'];
+			}
+		$this->set(compact('bussiness_vissas','CertificateOriginAuthorizeds','membertype'));
+		$MasterCompanies=$this->BusinessVisas->MasterCompanies->find();
+		$this->set('MasterCompanies',$MasterCompanies);
+		
+	}
+	
 	
 	
 	
