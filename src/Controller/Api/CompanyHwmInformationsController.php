@@ -28,7 +28,7 @@ class CompanyHwmInformationsController extends AppController
 			}
 			$company_wastage_informations=$this->request->data['company_wastage_informations'];
 			$CompanyWastageInformations = $this->CompanyHwmInformations->CompanyWastageInformations->newEntities($company_wastage_informations);
-			pr($CompanyWastageInformations); exit; 
+			//pr($CompanyWastageInformations); exit; 
 			if ($this->CompanyHwmInformations->CompanyWastageInformations->saveMany($CompanyWastageInformations)) {
 			}
 			

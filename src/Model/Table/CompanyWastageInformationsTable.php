@@ -53,7 +53,7 @@ class CompanyWastageInformationsTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
-
+/*
         $validator
             ->requirePresence('code_hm_rule', 'create')
             ->notEmpty('code_hm_rule');
@@ -94,7 +94,7 @@ class CompanyWastageInformationsTable extends Table
             ->dateTime('timestamp')
             ->requirePresence('timestamp', 'create')
             ->notEmpty('timestamp');
-
+*/
         return $validator;
     }
 
