@@ -142,6 +142,54 @@ class BusinessVisasController extends AppController
     }
 
 	//-- DRAFT View
+	
+	public function draftView()
+    {
+		$this->viewBuilder()->layout('index_layout');
+		$company_id=$this->Auth->User('company_id'); 
+		$user_id=$this->Auth->User('id'); 
+		$Companies=$this->BusinessVisas->Companies->get($company_id);
+		$role_id=$Companies->role_id;
+		
+		if($this->request->is('post')) 
+		{
+				//echo "hello";		
+			if(isset($this->request->data['certificate_move_submit']))
+			{
+				
+				 $coo_id=$this->request->data['certificate_move_submit'];
+				$BusinessVisas = $this->BusinessVisas->get($coo_id);
+		
+				$this->request->data['id']=$this->request->data['certificate_move_submit'];
+				$this->request->data['reason_move']=$this->request->data['reason_move'.$coo_id];
+				$this->request->data['move_by']=$user_id;
+				$this->request->data['payment_status']='success';
+				$this->request->data['status']='published';
+				
+				$BusinessVisas = $this->BusinessVisas->patchEntity($BusinessVisas, $this->request->data);
+				
+				$this->BusinessVisas->save($BusinessVisas);
+				
+			}
+		
+		}	
+		
+		
+		if($role_id==1 || $role_id==4){	
+			$bussiness_vissas = $this->BusinessVisas->find()->where(['status'=>'draft'])->contain(['Companies']);
+		}
+		else{
+			$bussiness_vissas = $this->BusinessVisas->find()->where(['company_id'=>$company_id,'status'=>'draft'])->contain(['Companies']);
+		}
+		
+		$this->set(compact('bussiness_vissas','role_id'));
+	}
+	
+	
+	
+	
+	
+	
 	public function businessVissaDraftView($id = null)
     {
 		$this->viewBuilder()->layout('index_layout');
@@ -1024,7 +1072,7 @@ class BusinessVisasController extends AppController
 	
 	
 	
-	public function BussinessVissaViewList() 
+	public function bussinessVissaViewList() 
 	{
 		$this->viewBuilder()->layout('index_layout');
 		$company_id=$this->Auth->User('company_id'); 
