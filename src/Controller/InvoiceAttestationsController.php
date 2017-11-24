@@ -127,6 +127,7 @@ class InvoiceAttestationsController extends AppController
 							$s = $pdf->getTemplatesize($pageId);
 							$pdf->AddPage($s['orientation'], $s);
 							$pdf->useTemplate($pageId, 1, 1, 180);
+							//$pdf->useTemplate($pageId,0,0);
 							//$pdf->useImportedPage($pageId);
 							//$pdf->Image('img/coo_signature/coo_authorized_1.png',150,200,20);
 						

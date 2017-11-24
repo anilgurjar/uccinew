@@ -263,7 +263,7 @@ class BusinessVisasController extends AppController
 
 					
 						//return $this->redirect('https://test.payu.in/_payment');
-						return $this->redirect(['action' => 'business-vissa-draft-view']);
+						return $this->redirect(['action' => 'draft-view']);
 					}
 					else{
 						return $this->redirect(['action' => 'paymentTest',$data->id]);
@@ -790,12 +790,16 @@ class BusinessVisasController extends AppController
 		$BusinessVisas = $this->BusinessVisas->newEntity();
 		if(isset($this->request->data['view']))
 		{ 
-			$certificate_origin_id=$this->request->data['view'];;
+			$certificate_origin_id=$this->request->data['view'];
+			$bussiness_vissas_data =$this->BusinessVisas->get($certificate_origin_id);
+			
 			$bussiness_vissas = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$certificate_origin_id,'status'=>'published'])->contain(['Companies'])->toArray();
-			$membertypes=$this->BusinessVisas->CompanyMemberTypes->find()->where(['company_id'=>$company_id]);
+			$membertypes=$this->BusinessVisas->CompanyMemberTypes->find()->where(['company_id'=>$bussiness_vissas_data->company_id]);
+			
 			foreach($membertypes as $membertype){
-				$membertype=$membertype['master_member_type_id'];
+				 $membertype=$membertype['master_member_type_id'];
 			}
+			
 			$company_id=$bussiness_vissas[0]->company_id;  
 			$DocumentCheck=$this->BusinessVisas->Companies->find('all')
 				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
