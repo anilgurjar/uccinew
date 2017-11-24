@@ -298,14 +298,14 @@ class BusinessVisasController extends AppController
 		$Users=$this->BusinessVisas->Users->get($user_id);
 		
 		
-			$sul='http://localhost/uccinew/business-visas/success';
-			$furl='http://localhost/uccinew/business-visas/failure';
+			//$sul='http://localhost/uccinew/business-visas/success';
+			//$furl='http://localhost/uccinew/business-visas/failure';
 			
 			//$sul='http://ucciudaipur.com/app/business-visas/success';
 			//$furl='http://ucciudaipur.com/app/business-visas/failure';
 			
-			//$sul='http://ucciudaipur.com/uccinew/business-visas/success';
-			//$furl='http://ucciudaipur.com/uccinew/business-visas/failure';
+			$sul='http://ucciudaipur.com/uccinew/business-visas/success';
+			$furl='http://ucciudaipur.com/uccinew/business-visas/failure';
 			
 			
 			$BusinessVisas = $this->BusinessVisas->find()
