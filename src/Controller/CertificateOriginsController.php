@@ -84,6 +84,26 @@ class CertificateOriginsController extends AppController
 	
 	
 	
+	public function CertificateOriginViewList() 
+	{
+		$this->viewBuilder()->layout('index_layout');
+		$company_id=$this->Auth->User('company_id'); 
+		
+		$Companies=$this->CertificateOrigins->Companies->get($company_id);
+		
+		$role_id=$Companies->role_id;
+		$CertificateOrigins = $this->CertificateOrigins->newEntity();
+		
+		 if($role_id==1 or $role_id==4 ){
+			 $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved'])->order(['CertificateOrigins.origin_no'=>'DESC']);
+		   }else{
+			  $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved','company_id'=>$company_id])->order(['CertificateOrigins.origin_no'=>'DESC']); 
+		   }  
+       $this->set(compact('certificate_origins','role_id'));
+	}
+	
+	
+	
 	
 	public function CertificateOriginViewListexcel() 
 	{
@@ -139,22 +159,6 @@ class CertificateOriginsController extends AppController
 	
 	
 	
-	public function CertificateOriginViewList() 
-	{
-		$this->viewBuilder()->layout('index_layout');
-		$company_id=$this->Auth->User('company_id'); 
-		$Companies=$this->CertificateOrigins->Companies->get($company_id);
-		
-		$role_id=$Companies->role_id;
-		$CertificateOrigins = $this->CertificateOrigins->newEntity();
-		
-		 if($role_id==1 or $role_id==4 ){
-			 $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved'])->order(['CertificateOrigins.origin_no'=>'DESC']);
-		   }else{
-			  $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved','company_id'=>$company_id])->order(['CertificateOrigins.origin_no'=>'DESC']); 
-		   }
-       $this->set(compact('certificate_origins','role_id'));
-	}
 	public function certificateOriginView()
     {
 		$this->viewBuilder()->layout('index_layout');
@@ -182,10 +186,10 @@ class CertificateOriginsController extends AppController
 			$certificate_origin_id=$this->request->data['view'];;
 			$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$certificate_origin_id,'status'=>'verified'])->contain(['Companies','CertificateOriginGoods'])->toArray();
 			
+			
 			$verify_bys=$certificate_origins[0]->verify_by; 
 			$Users_verifys=$this->CertificateOrigins->Companies->Users->get($verify_bys);
 			$verify_member=$Users_verifys->member_name; 
-			
 			$company_id=$certificate_origins[0]->company_id; 
 			$DocumentCheck=$this->CertificateOrigins->Companies->find()
 				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
@@ -203,7 +207,7 @@ class CertificateOriginsController extends AppController
 				
 				$id=$this->request->data['certificate_approve_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
-				
+				$consignee=$CertificateOrigins->consignee;
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
 				$this->request->data['approved_by']=$user_id; 
@@ -211,10 +215,8 @@ class CertificateOriginsController extends AppController
 				$this->request->data['verify_remarks']=''; 
 				$this->request->data['authorised_remarks']=''; 
 				
-				
 				$coo_verification_code=uniqid(); 
 				$this->request->data['coo_verification_code']=$coo_verification_code; 
-				
 				
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
 				$query = $this->CertificateOrigins->find();
@@ -228,14 +230,16 @@ class CertificateOriginsController extends AppController
 				 $Users= $this->CertificateOrigins->Users->get($user_id);
 				
 				 $regards_member_name=$Users->member_name;
+				 
 				
+				//pr($CertificateOrigins); exit;
 				if($this->CertificateOrigins->save($CertificateOrigins))
 				{
 					
 					  $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 // $email_to="rohitkumarjoshi43@gmail.com";
+					 $email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -246,7 +250,7 @@ class CertificateOriginsController extends AppController
 										->profile('default')
 										->template('coo_approve')
 										->emailFormat('html')
-										->viewVars(['member_name'=>$member_name,'regards_member_name'=>$regards_member_name]);
+										->viewVars(['member_name'=>$member_name,'consignee'=>$consignee]);
 										$email->send();
 									
 									
@@ -436,7 +440,7 @@ class CertificateOriginsController extends AppController
 				$amount=$payment_amount+$payment_tax_amount;
 				$act_amount=$amount;
 				$this->request->data['amount_type']='Payumoney';
-				$this->request->data['narration']=' Certificate of Origin';
+				$this->request->data['narration']='Certificate of Origin';
 				$this->request->data['tax_applicable']='Tax';
 				$this->request->data['basic_amount']=@$payment_amount;
 				$this->request->data['taxamount']=@$payment_tax_amount;
@@ -714,7 +718,7 @@ class CertificateOriginsController extends AppController
 			$attachments='';
 			$attachments[]='coo_payment_receipt.pdf';
 			$sub='Payment Successfully submitted';
-			//$email_to='rohitkumarjoshi43@gmail.com';
+			$email_to='rohitkumarjoshi43@gmail.com';
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
@@ -862,6 +866,78 @@ class CertificateOriginsController extends AppController
 	}
 	
 	
+ 
+
+	public function CertificateOrigin()
+    {
+		$this->viewBuilder()->layout('index_layout');
+		$user_id=$this->Auth->User('company_id');
+		$certificate_origin_good = $this->CertificateOrigins->newEntity();
+		if($this->request->is('post')) 
+		{				
+			$this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
+			$this->request->data['date_current']=date('Y-m-d');
+			$this->request->data['company_id']=$user_id;
+			$files=$this->request->data['file']; 
+			
+			if(!empty($files[0]['name'])){
+				$this->request->data['invoice_attachment']='true';
+			}else{
+				$this->request->data['invoice_attachment']='false';
+			}
+			 
+			$amount=200;
+			$Tax=$amount*18/100;
+			$include_tax_amount=$amount+$Tax;
+			
+			
+			$this->request->data['payment_amount']=200;
+			$this->request->data['payment_tax_amount']=$Tax;
+			
+			$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
+			$i=0;
+			/* foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
+				$this->request->data['coo_email_approvals'][$i]['user_id']=$CertificateAuthorized->user_id;	
+				$this->request->data['coo_email_approvals'][$i]['status']=0;	
+				$i++;	
+			} */
+			$this->request->data['status'] = 'draft';
+			$currency_type=$this->request->data['currency'];
+			$currency_units=$this->CertificateOrigins->MasterCurrencies->find()->where(['currency_type'=>$currency_type]);	
+			foreach($currency_units as $currency_unit){
+				$currency_unit = $currency_unit['fractional_unit'];
+			}
+			$this->request->data['currency_unit'] = $currency_unit;
+			 	
+			$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
+			
+			if ($data=$this->CertificateOrigins->save($certificate_origin_good))
+			{ 
+				$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
+				$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice/'.$data->id;
+				foreach($files as $file){
+				  move_uploaded_file($file['tmp_name'], $file_path.'/' . $file['name']);
+				}
+				$last_insert_id=$data->id;
+				$this->Flash->success(__('Your certificate origin good has been saved.'));
+				return $this->redirect(['action' => 'draftView',$last_insert_id]);
+				exit;
+				//return $this->redirect('https://test.payu.in/_payment');
+				//return $this->redirect(['action' => 'payment',$data->id]);
+			}
+			
+			$this->Flash->error(__('Unable to add your certificate origin goods.'));
+		}
+		$this->set('certificate_origin_good', $certificate_origin_good);
+		$Users=$this->CertificateOrigins->Companies->find()->select(['company_organisation'])->where(['id'=>$user_id])->toArray();
+		$MasterUnits=$this->CertificateOrigins->MasterUnits->find()->toArray();
+		$MasterCurrencies=$this->CertificateOrigins->MasterCurrencies->find()->toArray();
+		$this->set('company_organisation' , $Users[0]->company_organisation);
+		$this->set(compact('MasterUnits','MasterCurrencies'));
+			 
+		 
+	}
+	
 	
 	
 	
@@ -906,80 +982,13 @@ class CertificateOriginsController extends AppController
 	
 	
 	
- 
-
-	public function CertificateOrigin()
-    {
-		$this->viewBuilder()->layout('index_layout');
-		$user_id=$this->Auth->User('company_id');
-		$certificate_origin_good = $this->CertificateOrigins->newEntity();
-		if($this->request->is('post')) 
-		{				
-			$this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
-			$this->request->data['date_current']=date('Y-m-d');
-			$this->request->data['company_id']=$user_id;
-			$files=$this->request->data['file']; 
-			
-			if(!empty($files[0]['name'])){
-				$this->request->data['invoice_attachment']='true';
-			}else{
-				$this->request->data['invoice_attachment']='false';
-			}
-			 
-			$amount=200;
-			$Tax=$amount*18/100;
-			$include_tax_amount=$amount+$Tax;
-			
-			
-			$this->request->data['payment_amount']=200;
-			$this->request->data['payment_tax_amount']=$Tax;
-			
-			$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
-			$i=0;
-			/* foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
-				$this->request->data['coo_email_approvals'][$i]['user_id']=$CertificateAuthorized->user_id;	
-				$this->request->data['coo_email_approvals'][$i]['status']=0;	
-				$i++;	
-			} */
-			$this->request->data['status'] = 'draft';	
-			
-			$currency_type=$this->request->data['currency'];
-			$currency_units=$this->CertificateOrigins->MasterCurrencies->find()->where(['currency_type'=>$currency_type]);	
-			foreach($currency_units as $currency_unit){
-				$currency_unit = $currency_unit['fractional_unit'];
-			}
-			$this->request->data['currency_unit'] = $currency_unit;
-			
-
-			
-			$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
-			 	
-			if ($data=$this->CertificateOrigins->save($certificate_origin_good))
-			{ 
-				$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
-				$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice/'.$data->id;
-				foreach($files as $file){
-				  move_uploaded_file($file['tmp_name'], $file_path.'/' . $file['name']);
-				}
-				$last_insert_id=$data->id;
-				$this->Flash->success(__('Your certificate origin good has been saved.'));
-				return $this->redirect(['action' => 'draftView',$last_insert_id]);
-				exit;
-				//return $this->redirect('https://test.payu.in/_payment');
-				//return $this->redirect(['action' => 'payment',$data->id]);
-			}
-			
-			$this->Flash->error(__('Unable to add your certificate origin goods.'));
-		}
-		$this->set('certificate_origin_good', $certificate_origin_good);
-		$Users=$this->CertificateOrigins->Companies->find()->select(['company_organisation'])->where(['id'=>$user_id])->toArray();
-		$MasterUnits=$this->CertificateOrigins->MasterUnits->find()->toArray();
-		$MasterCurrencies=$this->CertificateOrigins->MasterCurrencies->find()->toArray();
-		$this->set('company_organisation' , $Users[0]->company_organisation);
-		$this->set(compact('MasterUnits','MasterCurrencies'));
-			 
-		 
-	}
+	
+	
+	
+	
+	
+	
+	
 	//-- DRAFT View
 	public function draftView($id = null)
     {
@@ -1024,15 +1033,13 @@ class CertificateOriginsController extends AppController
 					$this->request->data['coo_email_approvals'][$i]['status']=0;	
 					$i++;	
 				} */
-				 	 
 				$currency_type=$this->request->data['currency'];
 				$currency_units=$this->CertificateOrigins->MasterCurrencies->find()->where(['currency_type'=>$currency_type]);	
 				foreach($currency_units as $currency_unit){
-				$currency_unit = $currency_unit['fractional_unit'];
+					$currency_unit = $currency_unit['fractional_unit'];
 				}
-
-				$this->request->data['currency_unit'] = $currency_unit;	
-					 
+				
+				$this->request->data['currency_unit'] = $currency_unit;	 	
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
 			
 				
@@ -1075,6 +1082,10 @@ class CertificateOriginsController extends AppController
 				$this->request->data['status']='draft';
 				$this->request->data['coo_email']='yes';
 				$this->request->data['verify_remarks']='';
+				$payment_type=$this->request->data['payment_type'];
+				$coupon_code=$this->request->data['coupon_code'];
+				
+				
 				$CertificateOriginAuthorizeds=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->toArray();
 				$i=0;
 				/* foreach($CertificateOriginAuthorizeds as $CertificateAuthorized){
@@ -1082,17 +1093,15 @@ class CertificateOriginsController extends AppController
 					$this->request->data['coo_email_approvals'][$i]['status']=0;	
 					$i++;	
 				} */
-				 	
-					$currency_type=$this->request->data['currency'];
-					$currency_units=$this->CertificateOrigins->MasterCurrencies->find()->where(['currency_type'=>$currency_type]);	
-					foreach($currency_units as $currency_unit){
+				$currency_type=$this->request->data['currency'];
+				$currency_units=$this->CertificateOrigins->MasterCurrencies->find()->where(['currency_type'=>$currency_type]);	
+				foreach($currency_units as $currency_unit){
 					$currency_unit = $currency_unit['fractional_unit'];
-					}
-
-					$this->request->data['currency_unit'] = $currency_unit;
-				
+				}
+			
+				$this->request->data['currency_unit'] = $currency_unit;	
 				$certificate_origin_good = $this->CertificateOrigins->patchEntity($certificate_origin_good, $this->request->data);
-				
+
 				if ($data=$this->CertificateOrigins->save($certificate_origin_good))
 				{ 
 					$dir = new Folder(WWW_ROOT . 'img/coo_invoice/'.$data->id, true, 0755);
@@ -1101,6 +1110,50 @@ class CertificateOriginsController extends AppController
 					  move_uploaded_file($file['tmp_name'], $file_path.'/' . $file['name']);
 					}
 					 
+				if($payment_type=="couponcode"){
+					
+							$paymented=$this->CertificateOrigins->find('all')
+							->where(['id'=>$id,'payment_status'=>'success'])->count();
+						if($paymented>0){
+								$query = $this->CertificateOrigins->query();
+								$query->update()
+								->set(['status' => 'published'])
+								->where(['id' => $data->id])
+								->execute();
+
+
+
+								//return $this->redirect('https://test.payu.in/_payment');
+								return $this->redirect(['action' => 'certificate-origin-draft-view']);
+
+						}else{
+
+							$coo_company_id=$data->company_id;
+							$CooCoupons_count=$this->CertificateOrigins->Companies->CooCoupons->find()->where(['company_id'=>$coo_company_id,'coupon_code'=>$coupon_code,'flag'=>0])->count();
+							
+								if($CooCoupons_count>0){
+										$CooCoupons=$this->CertificateOrigins->Companies->CooCoupons->newEntity();
+										$CooCoupons_counts=$this->CertificateOrigins->Companies->CooCoupons->find()->where(['company_id'=>$coo_company_id,'coupon_code'=>$coupon_code,'flag'=>0])->toArray();
+										$coupon_id=$CooCoupons_counts[0]->id;
+										$CooCoupons->id=$coupon_id;
+										$CooCoupons->flag=1;
+										
+										$this->CertificateOrigins->Companies->CooCoupons->save($CooCoupons);
+										
+										$query = $this->CertificateOrigins->query();
+										$query->update()
+										->set(['status' => 'published','payment_status'=>'success','transaction_id'=>$coupon_code])
+										->where(['id' => $data->id])
+										->execute();
+										return $this->redirect(['action' => 'certificate-origin-draft-view']);
+										
+								}else{
+									return $this->redirect(['action' => 'certificate-origin-draft-view']);
+								}
+							
+						}	
+				}else{
+					
 					$paymented=$this->CertificateOrigins->find('all')
 						->where(['id'=>$id,'payment_status'=>'success'])->count();
 					if($paymented>0){
@@ -1116,9 +1169,11 @@ class CertificateOriginsController extends AppController
 						return $this->redirect(['action' => 'certificate-origin-draft-view']);
 					}
 					else{
-						//return $this->redirect(['action' => 'paymentTest',$data->id]);
-						return $this->redirect(['action' => 'payment',$data->id]);
+						return $this->redirect(['action' => 'paymentTest',$data->id]);
+						//return $this->redirect(['action' => 'payment',$data->id]);
 					}
+				}	
+					
 					$this->Flash->success(__('Your certificate origin good has been saved.'));
 				}
 			
@@ -1230,8 +1285,34 @@ class CertificateOriginsController extends AppController
     {
 		$this->viewBuilder()->layout('index_layout');
 		$company_id=$this->Auth->User('company_id'); 
+		$user_id=$this->Auth->User('id'); 
 		$Companies=$this->CertificateOrigins->Companies->get($company_id);
 		$role_id=$Companies->role_id;
+		
+		if($this->request->is('post')) 
+		{
+				//echo "hello";		
+			if(isset($this->request->data['certificate_move_submit']))
+			{
+				
+				 $coo_id=$this->request->data['certificate_move_submit'];
+				$CertificateOrigins = $this->CertificateOrigins->get($coo_id);
+		
+				$this->request->data['id']=$this->request->data['certificate_move_submit'];
+				$this->request->data['reason_move']=$this->request->data['reason_move'.$coo_id];
+				$this->request->data['move_by']=$user_id;
+				$this->request->data['payment_status']='success';
+				$this->request->data['status']='published';
+				
+				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				
+				$this->CertificateOrigins->save($CertificateOrigins);
+				
+			}
+		
+		}	
+		
+		
 		if($role_id==1 || $role_id==4){	
 			$certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'draft']);
 		}
@@ -1239,7 +1320,7 @@ class CertificateOriginsController extends AppController
 			$certificate_origins = $this->CertificateOrigins->find()->where(['company_id'=>$company_id,'status'=>'draft']);
 		}
 		
-		$this->set(compact('certificate_origins'));
+		$this->set(compact('certificate_origins','role_id'));
 	}
 	public function certificateOriginViewPublished()
     {
@@ -1260,6 +1341,8 @@ class CertificateOriginsController extends AppController
     {
 		$this->viewBuilder()->layout('index_layout');
 		$user_id=$this->Auth->User('id');
+		$Users=$this->CertificateOrigins->Users->get($user_id);
+		$regard_member_name=$Users->member_name;
 		$CertificateOrigins = $this->CertificateOrigins->newEntity();
 				
 		if(isset($this->request->data['view']))
@@ -1274,6 +1357,7 @@ class CertificateOriginsController extends AppController
 		}
 		if($this->request->is('post')) 
 		{
+						
 			if(isset($this->request->data['certificate_approve_submit']))
 			{
 				
@@ -1290,6 +1374,7 @@ class CertificateOriginsController extends AppController
 				$this->request->data['coo_verify_email']='yes';
 				
 				
+				
 				$query = $this->CertificateOrigins->find();
  				//pr($this->request->data); exit;
 				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
@@ -1297,24 +1382,34 @@ class CertificateOriginsController extends AppController
 				$member_name=$CertificateOrigins->company->users[0]->member_name;
 				$Users= $this->CertificateOrigins->Users->get($user_id);
 				$regards_member_name=$Users->member_name;*/
-				
+
+			
+
 				if($this->CertificateOrigins->save($CertificateOrigins))
 				{
+					
 					$certificates_data = base64_encode($id);
-										
+					
+					//$certificates_data = json_encode($certificates_data);
+					
+				
 					$authorise_person_mails=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->contain(['Users']);
 				foreach($authorise_person_mails as $authorise_person_mail){
 					$emailperson_id=$authorise_person_mail['user']->id;
 					$emailperson=$authorise_person_mail['user']->member_name;
 					$emailsend=$authorise_person_mail['user']->email;
+					
 					$emailperson_id = base64_encode($emailperson_id);
+					 // $url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
+					 
+					$url="http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 					
-					$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+					//$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 					
-				
 					$sub="Certificate of origin is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
+					$email_to='rohitkumarjoshi43@gmail.com';
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1333,6 +1428,7 @@ class CertificateOriginsController extends AppController
 							} 
 						}
 				}	
+				
 					$this->Flash->success(__('Certificate of origin has been verified.'));
 					return $this->redirect(['action' => 'certificate-origin-view-published']);
 				}
@@ -1363,7 +1459,7 @@ class CertificateOriginsController extends AppController
 						$sub="Certificate of origin is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						//$email_to="anilgurjer371@gmail.com";
+						$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1373,7 +1469,7 @@ class CertificateOriginsController extends AppController
 								->profile('default')
 								->template('coo_not_varify')
 								->emailFormat('html')
-								->viewVars(['member_name'=>$mailsendtomember,'remarks'=>$remarks]);
+								->viewVars(['member_name'=>$mailsendtomember,'regard_member_name'=>$regard_member_name,'remarks'=>$remarks]);
 								$email->send();
 							} catch (Exception $e) {
 								
@@ -1403,7 +1499,7 @@ class CertificateOriginsController extends AppController
 		
 		 $ids = base64_decode($coo_id);
 		 $authorized_id = base64_decode($authorized_id);
-		 $user_id=$authorized_id;  
+		$user_id=$authorized_id;  
 		
 		$certificate_origin_count = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$ids,'status'=>'verified','coo_verify_email'=>'yes'])->count();
 		$this->set(compact('certificate_origin_count'));
@@ -1467,7 +1563,7 @@ class CertificateOriginsController extends AppController
 					  $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					// $email_to="rohitkumarjoshi43@gmail.com";
+					$email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {

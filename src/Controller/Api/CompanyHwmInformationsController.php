@@ -21,13 +21,14 @@ class CompanyHwmInformationsController extends AppController
 		$CompanyWasteInformations = $this->CompanyHwmInformations->CompanyWasteInformations->newEntity();
 		$CompanyWastageInformations = $this->CompanyHwmInformations->CompanyWastageInformations->newEntity();
          if ($this->request->is('post')) {
-			 
+			
 			$company_waste_informations=$this->request->data['company_waste_informations'];
 			$CompanyWasteInformations = $this->CompanyHwmInformations->CompanyWasteInformations->newEntities($company_waste_informations);
 			if ($this->CompanyHwmInformations->CompanyWasteInformations->saveMany($CompanyWasteInformations)) {
 			}
 			$company_wastage_informations=$this->request->data['company_wastage_informations'];
 			$CompanyWastageInformations = $this->CompanyHwmInformations->CompanyWastageInformations->newEntities($company_wastage_informations);
+			//pr($CompanyWastageInformations); exit; 
 			if ($this->CompanyHwmInformations->CompanyWastageInformations->saveMany($CompanyWastageInformations)) {
 			}
 			
@@ -66,7 +67,7 @@ class CompanyHwmInformationsController extends AppController
             $companyHwmInformation = $this->CompanyHwmInformations->patchEntity($companyHwmInformation, $this->request->data);
 			//pr($companyHwmInformation); exit;
             if ($this->CompanyHwmInformations->save($companyHwmInformation)) {
-				$this->redirect('http://www.ucciudaipur.com/hwm3?CaaOdaMsdaPsaArefNdsY__IdsadcD='.$company_waste_informations[0]['company_id']);
+				$this->redirect('http://www.ucciudaipur.com/hwm3');
             } 
         }
 	}
