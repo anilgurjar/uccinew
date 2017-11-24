@@ -62,13 +62,9 @@ else
     $filename = $PNG_TEMP_DIR.'test.png';
     $errorCorrectionLevel = 'L';
     $matrixPointSize = 2.3;
-	//$qrcode="Co Number: ".$origin_no."";
 	
-	if(!empty($bs_verification_code)){
-		$qrcode="http://ucciudaipur.com/uccinew/co_pdf/".$bs_verification_code.'.pdf';
-	}else{
-		$qrcode="http://ucciudaipur.com/uccinew/co_pdf/".$origin_no.'.pdf';
-	}
+		$qrcode="http://ucciudaipur.com/uccinew/bussiness_vissa_pdf/".$bs_verification_code.'.pdf';
+	
 	
 	//$qrcode="http://ucciudaipur.com/app/co_pdf/".$origin_no.'.pdf';
 	//$qrcode="http://ucciudaipur.com/uccinew/co_pdf/".$origin_no.'.pdf';
