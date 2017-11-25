@@ -990,7 +990,7 @@ class BusinessVisasController extends AppController
 				$consignee=$BusinessVisas->visitor_name;
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
-				$this->request->data['approved_by']=$user_id; 
+				$this->request->data['approve_by']=$user_id; 
 				$this->request->data['authorised_by']=$user_id;
 				$this->request->data['verify_remarks']=''; 
 				$this->request->data['authorised_remarks']=''; 
@@ -999,7 +999,7 @@ class BusinessVisasController extends AppController
 				$query = $this->BusinessVisas->find();
 				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
 				$this->request->data['origin_no']=($origin_no[0]->max_value)+1;
-				pr($this->request->data); 
+				
 				 $BusinessVisas = $this->BusinessVisas->patchEntity($BusinessVisas, $this->request->data);
 				pr($BusinessVisas); exit;
 				 $email_to=$BusinessVisas->company->users[0]->email; 
