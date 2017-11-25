@@ -822,7 +822,7 @@ class BusinessVisasController extends AppController
 				$this->request->data['verify_by']=$user_id;
 				$this->request->data['verify_on']=date('Y-m-d h:i:s');
 				$this->request->data['status']='verified';
-				$this->request->data['business_vissa_email']='yes';
+				$this->request->data['business_verify_email']='yes';
 				
 				
 				$query = $this->BusinessVisas->find();
@@ -994,7 +994,7 @@ class BusinessVisasController extends AppController
 				$this->request->data['authorised_by']=$user_id;
 				$this->request->data['verify_remarks']=''; 
 				$this->request->data['authorised_remarks']=''; 
-				$this->request->data['business_vissa_email']='no'; 
+				$this->request->data['business_verify_email']='no'; 
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
 				$query = $this->BusinessVisas->find();
 				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
@@ -1059,7 +1059,7 @@ class BusinessVisasController extends AppController
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
 				$this->request->data['authorised_by']=$user_id;
 				$this->request->data['status']='published';
-				$this->request->data['business_vissa_email']='no'; 
+				$this->request->data['business_verify_email']='no'; 
 				
 				 $BusinessVisas = $this->BusinessVisas->patchEntity($BusinessVisas, $this->request->data);
 				
