@@ -965,7 +965,7 @@ class BusinessVisasController extends AppController
 			$bussiness_vissas = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified'])->contain(['Companies'=>['CompanyMemberTypes']])->toArray();
 			
 			$companys=$bussiness_vissas[0]->company; 
-			pr($companys); exit;
+			pr($companys['company_member_types'][0]->master_member_type_id); exit;
 			
 			$verify_bys=$bussiness_vissas[0]->verify_by;
 			$Users_verifys=$this->BusinessVisas->Companies->Users->get($verify_bys);
