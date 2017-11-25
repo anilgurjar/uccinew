@@ -315,7 +315,7 @@ border-left: none   !important;
 		<tr>
 			
 			
-			<td style="text-align:right;" colspan="3">
+			<td style="" colspan="3">
 			For : Udaipur Chamber of Commerce & Industry
 			<br/>
 			<br/>
