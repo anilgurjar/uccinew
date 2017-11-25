@@ -840,7 +840,7 @@ class BusinessVisasController extends AppController
 					$emailsend=$authorise_person_mail['user']->email;
 					$emailperson_id = base64_encode($emailperson_id);
 					
-					$url="http://www.ucciudaipur.com/app/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id.""; 
+					$url="http://www.ucciudaipur.com/uccinew/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id.""; 
 					
 				
 					$sub="Bussiness Vissa is Varified";
@@ -940,6 +940,147 @@ class BusinessVisasController extends AppController
 		
     }
 	 
+	public function bussinessVissaApproved($coo_id=null,$authorized_id=null)
+    {
+		$this->viewBuilder()->layout('index_layout');
+		
+		$ids = base64_decode($coo_id);
+		$ids = json_decode($ids);
+		$authorized_id = base64_decode($authorized_id); 
+		$authorized_id = json_decode($authorized_id);
+		$user_id=$authorized_id;  
+		
+		
+		$certificate_origin_count = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified','business_vissa_email'=>'yes'])->count();
+		$this->set(compact('certificate_origin_count'));
+		pr($certificate_origin_count);  exit;
+		$company_id=$certificate_origin_count
+		if($certificate_origin_count>0){
+			$BusinessVisas = $this->BusinessVisas->newEntity();
+	  
+			$bussiness_vissas = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified'])->contain(['Companies'])->toArray();
+			
+			
+			$verify_bys=$bussiness_vissas[0]->verify_by; 
+			$Users_verifys=$this->BusinessVisas->Companies->Users->get($verify_bys);
+			$verify_member=$Users_verifys->member_name; 
+			$membertypes=$this->BusinessVisas->CompanyMemberTypes->find()->where(['company_id'=>$company_id]);
+			foreach($membertypes as $membertype){
+				$membertype=$membertype['master_member_type_id'];
+			}
+			
+			$company_id=$bussiness_vissas[0]->company_id; 
+			$DocumentCheck=$this->BusinessVisas->Companies->find()
+				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
+				->count();
+			$this->set(compact('bussiness_vissas','DocumentCheck','verify_member','BusinessVisas','membertype','certificate_origin_count'));
+			
+		if($this->request->is('post')) 
+		{
+			if(isset($this->request->data['invoice_attestation_approve_submit']))
+			{
+				 
+				$email = new Email();
+				$email->transport('SendGrid');
+											
+				$id=$this->request->data['invoice_attestation_approve_submit'];
+				$BusinessVisas=$this->BusinessVisas->get($id,['contain'=>['Companies'=>['Users']]]);
+				$consignee=$BusinessVisas->consignee;
+				$this->request->data['status']='approved';
+				//$this->request->data['approve']=1;
+				$this->request->data['approved_by']=$user_id; 
+				$this->request->data['authorised_by']=$user_id;
+				$this->request->data['verify_remarks']=''; 
+				$this->request->data['authorised_remarks']=''; 
+				$this->request->data['business_vissa_email']='no'; 
+				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
+				$query = $this->BusinessVisas->find();
+				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
+				$this->request->data['origin_no']=($origin_no[0]->max_value)+1;
+				
+				 $BusinessVisas = $this->BusinessVisas->patchEntity($BusinessVisas, $this->request->data);
+				
+				 $email_to=$BusinessVisas->company->users[0]->email; 
+				 $member_name=$BusinessVisas->company->users[0]->member_name;
+				 
+				 $Users= $this->BusinessVisas->Users->get($user_id);
+				
+				 $regards_member_name=$Users->member_name;
+				
+				
+				
+				
+				
+				if($this->BusinessVisas->save($BusinessVisas))
+				{
+					
+					  $sub="Your Invoice Attestation is approved";
+					  $from_name="UCCI";
+					  $email_to=trim($email_to,' ');
+					 $email_to="rohitkumarjoshi43@gmail.com";
+					  if(!empty($email_to)){		
+								
+						 try {
+							   $email->from(['ucciudaipur@gmail.com' => $from_name])
+										->to($email_to)
+										->replyTo('uccisec@hotmail.com')
+										->subject($sub)
+										->profile('default')
+										->template('invoice_attestation_approve')
+										->emailFormat('html')
+										->viewVars(['member_name'=>$member_name,'consignee'=>$consignee]);
+										$email->send();
+									
+									
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
+
+							} 
+						}
+								
+					
+					
+					$this->Flash->success(__('Bussiness Vissa has been approved.'));
+					return $this->redirect(['action' => 'bussiness_vissa_approved']);
+				}
+				$this->Flash->error(__('Unable to approved Bussiness Vissa.'));
+			}
+			else if(isset($this->request->data['invoice_attestation_notapprove_submit']))
+			{
+				
+				$id=$this->request->data['invoice_attestation_notapprove_submit'];
+				$BusinessVisas=$this->BusinessVisas->get($id);
+				
+				//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
+				$this->request->data['approve']=2;
+				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
+				$this->request->data['authorised_by']=$user_id;
+				$this->request->data['status']='published';
+				$this->request->data['coo_verify_email']='no'; 
+				
+				 $BusinessVisas = $this->BusinessVisas->patchEntity($BusinessVisas, $this->request->data);
+				
+				if($this->BusinessVisas->save($BusinessVisas))
+				{
+					$this->Flash->success(__('Bussiness Vissa has been not approved.'));
+					return $this->redirect(['action' => 'bussiness_vissa_approved']);
+				}
+				$this->Flash->error(__('Unable to not approved Bussiness Vissa.'));
+			}
+			
+			
+			
+		}
+			
+		}else{
+			
+			$this->Flash->success(__('Bussiness Vissa has been taken action'));
+			
+		}
+	}
+	
+	
 	public function bussinessVissaApproveView()
     {
 		$this->viewBuilder()->layout('index_layout');
@@ -1063,8 +1204,6 @@ class BusinessVisasController extends AppController
 		$this->set(compact('BusinessVisas'));
 		 
     }
-	
-	
 	
 	
 	
