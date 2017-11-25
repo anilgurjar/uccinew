@@ -192,7 +192,7 @@ border-left: none   !important;
 	$html_content.='<tr>
 			<td align="" style="border-right:none;" colspan="2" >
 			
-			<b>UCCI : MISC : 46/IE/'. $from_year .'-'. $to_year.'/'. $origin_no .'</b>
+			<b>UCCI/VISA-'.$origin_no.'/R-9457/'. $from_year .'-'. $to_year.'</b>
 			
 			</td>
 			<td align="right"  style="border-left:none;">
