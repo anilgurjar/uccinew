@@ -445,7 +445,7 @@ function file_submit(){
 	
 	if(x){
 			var ext = x.substring(x.lastIndexOf('.') + 1);
-			if(ext == "pdf" )
+			if(ext == "pdf" || ext == "PDF" )
 			{
 				return true;
 			} 
