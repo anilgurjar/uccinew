@@ -854,7 +854,7 @@ class BusinessVisasController extends AppController
 								->replyTo('uccisec@hotmail.com')
 								->subject($sub)
 								->profile('default')
-								->template('coo_varify')
+								->template('bussiness_vissa_verify')
 								->emailFormat('html')
 								->viewVars(['member_name'=>$emailperson,'url'=>$url,'exporter_name'=>$exporter_name]);
 								$email->send();
