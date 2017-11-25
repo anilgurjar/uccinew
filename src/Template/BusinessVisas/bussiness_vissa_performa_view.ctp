@@ -68,7 +68,7 @@ else
 	
 	//$qrcode="http://ucciudaipur.com/app/co_pdf/".$origin_no.'.pdf';
 	//$qrcode="http://ucciudaipur.com/uccinew/co_pdf/".$origin_no.'.pdf';
-	$code=$origin_no;
+	$code=$bs_verification_code;
       $filename = $PNG_TEMP_DIR.$code.'.png';
           QRcode::png($qrcode, $filename, $errorCorrectionLevel, $matrixPointSize, 2); 
                                   
