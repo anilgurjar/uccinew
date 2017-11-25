@@ -1051,9 +1051,9 @@ class BusinessVisasController extends AppController
 			else if(isset($this->request->data['invoice_attestation_notapprove_submit']))
 			{
 				
-				$id=$this->request->data['invoice_attestation_notapprove_submit'];
+				echo $id=$this->request->data['invoice_attestation_notapprove_submit'];
 				$BusinessVisas=$this->BusinessVisas->get($id);
-				
+				exit;
 				//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
 				$this->request->data['approve']=2;
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
