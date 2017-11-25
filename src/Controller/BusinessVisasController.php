@@ -21,7 +21,7 @@ class BusinessVisasController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['logout']);
+		$this->Auth->allow(['logout','bussinessVissaApproved']);
 		$member_name=$this->Auth->User('member_name');
 		$this->set('member_name',$member_name);
 	}
