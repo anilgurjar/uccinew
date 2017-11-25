@@ -1001,7 +1001,7 @@ class BusinessVisasController extends AppController
 				$this->request->data['origin_no']=($origin_no[0]->max_value)+1;
 				
 				 $BusinessVisas = $this->BusinessVisas->patchEntity($BusinessVisas, $this->request->data);
-				pr($BusinessVisas); exit;
+				
 				 $email_to=$BusinessVisas->company->users[0]->email; 
 				 $member_name=$BusinessVisas->company->users[0]->member_name;
 				 
@@ -1016,7 +1016,7 @@ class BusinessVisasController extends AppController
 				if($this->BusinessVisas->save($BusinessVisas))
 				{
 					
-					  $sub="Your Invoice Attestation is approved";
+					  $sub="Your Bussiness Vissa is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
 					 $email_to="rohitkumarjoshi43@gmail.com";
