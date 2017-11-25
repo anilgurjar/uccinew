@@ -952,8 +952,7 @@ class BusinessVisasController extends AppController
 		$ids = json_decode($ids);
 		$authorized_id = base64_decode($authorized_id); 
 		$authorized_id = json_decode($authorized_id);
-		echo $user_id=$authorized_id;  
-		exit;
+		$user_id=$authorized_id;  
 		
 		$certificate_origin_count = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified','business_vissa_email'=>'yes'])->count();
 		$this->set(compact('certificate_origin_count'));
@@ -1002,7 +1001,7 @@ class BusinessVisasController extends AppController
 				$this->request->data['origin_no']=($origin_no[0]->max_value)+1;
 				
 				 $BusinessVisas = $this->BusinessVisas->patchEntity($BusinessVisas, $this->request->data);
-				
+				pr($BusinessVisas); exit;
 				 $email_to=$BusinessVisas->company->users[0]->email; 
 				 $member_name=$BusinessVisas->company->users[0]->member_name;
 				 
