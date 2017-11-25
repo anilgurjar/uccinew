@@ -2,21 +2,21 @@
 <div class="col-md-12">
   <!-- Horizontal Form -->
   <div class="box box-primary">
-	<center>
-	<?php if($role_id==1 or $role_id==4 ){  ?>
+	<!--<center>
+	<?php //if($role_id==1 or $role_id==4 ){  ?>
 	<div class="box-header with-border no-print ">
 		<div class="col-sm-2">
-			<?php	 echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control exporter','name'=>'exporter','type'=>'text','placeholder'=>'Exporter Name']);  ?>
+			<?php	 //echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control exporter','name'=>'exporter','type'=>'text','placeholder'=>'Exporter Name']);  ?>
 		</div>	
 		<div class="col-sm-2">
-			<?php echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
+			<?php //echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
 		</div>	
 		<div class=" col-sm-3  ">
 			<div class=" input-group input-large  input-daterange date-picker" data-date-format="dd-mm-yyyy">	
-				<?php  echo $this->Form->input('from', ['label' => false,'class'=>'form-control from ', 'placeholder'=>'Date From']); ?>
+				<?php  //echo $this->Form->input('from', ['label' => false,'class'=>'form-control from ', 'placeholder'=>'Date From']); ?>
 				<span class="input-group-addon" style="background-color:e5e5e5 !important;">
 				To </span>
-				<?php    echo $this->Form->input('to', ['label' => false,'class'=>'form-control to ','format'=>"yyyy/mm/dd",'placeholder'=>'Date To']); ?>
+				<?php   // echo $this->Form->input('to', ['label' => false,'class'=>'form-control to ','format'=>"yyyy/mm/dd",'placeholder'=>'Date To']); ?>
 			</div>	
 		</div>
 		<div class="col-sm-2">
@@ -25,11 +25,11 @@
 		
 	</div>
 	
-	 <?php   }  ?>
-	</center>
+	 <?php  // }  ?>
+	</center>-->
 	<div class="box-header with-border no-print">
 		<center>
-		  <h3 class="box-title"><strong>BUSSINESS VISSA</strong></h3>
+		  <h3 class="box-title"><strong>BUSINESS VISA</strong></h3>
 		</center>
 	</div>
 	
