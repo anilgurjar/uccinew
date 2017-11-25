@@ -954,7 +954,7 @@ class BusinessVisasController extends AppController
 		$certificate_origin_count = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified','business_vissa_email'=>'yes'])->count();
 		$this->set(compact('certificate_origin_count'));
 		pr($certificate_origin_count);  exit;
-		$company_id=$certificate_origin_count
+		$company_id=$certificate_origin_count;
 		if($certificate_origin_count>0){
 			$BusinessVisas = $this->BusinessVisas->newEntity();
 	  
