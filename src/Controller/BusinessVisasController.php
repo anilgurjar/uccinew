@@ -1160,7 +1160,7 @@ class BusinessVisasController extends AppController
 			foreach($membertypes as $membertype){
 				$membertype=$membertype['master_member_type_id'];
 			}
-		pr($bussiness_vissas->toArray());   exit;	
+		pr($bussiness_vissas);   exit;	
 		$this->set(compact('bussiness_vissas','CertificateOriginAuthorizeds','membertype'));
 		$MasterCompanies=$this->BusinessVisas->MasterCompanies->find();
 		$this->set('MasterCompanies',$MasterCompanies);
