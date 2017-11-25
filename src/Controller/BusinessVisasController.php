@@ -242,7 +242,7 @@ class BusinessVisasController extends AppController
 				$this->request->data['payment_amount']=150;
 				$this->request->data['payment_tax_amount']=$Tax;
 				$this->request->data['status']='draft';
-				$this->request->data['coo_email']='yes';
+				$this->request->data['business_vissa_email']='yes';
 				$this->request->data['verify_remarks']='';
 				
 				$i=0;
