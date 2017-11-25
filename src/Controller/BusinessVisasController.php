@@ -822,7 +822,7 @@ class BusinessVisasController extends AppController
 				$this->request->data['verify_by']=$user_id;
 				$this->request->data['verify_on']=date('Y-m-d h:i:s');
 				$this->request->data['status']='verified';
-				$this->request->data['business_vissa_email']='yes';
+				$this->request->data['business_verify_email']='yes';
 				
 				
 				$query = $this->BusinessVisas->find();
@@ -954,7 +954,6 @@ class BusinessVisasController extends AppController
 		$authorized_id = json_decode($authorized_id);
 		$user_id=$authorized_id;  
 		
-		
 		$certificate_origin_count = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified','business_vissa_email'=>'yes'])->count();
 		$this->set(compact('certificate_origin_count'));
 		
@@ -991,11 +990,11 @@ class BusinessVisasController extends AppController
 				$consignee=$BusinessVisas->visitor_name;
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
-				$this->request->data['approved_by']=$user_id; 
+				$this->request->data['approve_by']=$user_id; 
 				$this->request->data['authorised_by']=$user_id;
 				$this->request->data['verify_remarks']=''; 
 				$this->request->data['authorised_remarks']=''; 
-				$this->request->data['business_vissa_email']='no'; 
+				$this->request->data['business_verify_email']='no'; 
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
 				$query = $this->BusinessVisas->find();
 				$origin_no=$query->select(['max_value' => $query->func()->max('origin_no')])->toArray();
@@ -1017,7 +1016,7 @@ class BusinessVisasController extends AppController
 				if($this->BusinessVisas->save($BusinessVisas))
 				{
 					
-					  $sub="Your Invoice Attestation is approved";
+					  $sub="Your Bussiness Vissa is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
 					 $email_to="rohitkumarjoshi43@gmail.com";
@@ -1060,7 +1059,7 @@ class BusinessVisasController extends AppController
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
 				$this->request->data['authorised_by']=$user_id;
 				$this->request->data['status']='published';
-				$this->request->data['business_vissa_email']='no'; 
+				$this->request->data['business_verify_email']='no'; 
 				
 				 $BusinessVisas = $this->BusinessVisas->patchEntity($BusinessVisas, $this->request->data);
 				
