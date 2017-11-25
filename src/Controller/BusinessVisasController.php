@@ -844,7 +844,7 @@ class BusinessVisasController extends AppController
 					
 					$url="http://www.ucciudaipur.com/uccinew/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
-					$url="http://www.ucciudaipur.com/app/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
+					//$url="http://www.ucciudaipur.com/app/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
 				
 					$sub="Bussiness Vissa is Varified";
