@@ -1052,15 +1052,15 @@ class BusinessVisasController extends AppController
 			else if(isset($this->request->data['bussiness_vissa_notapprove_submit']))
 			{
 				
-				echo $id=$this->request->data['bussiness_vissa_notapprove_submit'];
+				$id=$this->request->data['bussiness_vissa_notapprove_submit'];
 				$BusinessVisas=$this->BusinessVisas->get($id);
-				exit;
+				
 				//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
 				$this->request->data['approve']=2;
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');
 				$this->request->data['authorised_by']=$user_id;
 				$this->request->data['status']='published';
-				$this->request->data['coo_verify_email']='no'; 
+				$this->request->data['business_vissa_email']='no'; 
 				
 				 $BusinessVisas = $this->BusinessVisas->patchEntity($BusinessVisas, $this->request->data);
 				
