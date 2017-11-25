@@ -204,7 +204,7 @@ border-left: none   !important;
 	$html_content.='<tr ><td colspan="3">';
 		if($membertype==1){
 			
-				'<table >
+				$html_content.='<table >
 					 <tr >
 						<td colspan="3" class="bordernone"><br/><b>'.   $sender_address . '</b></td>
 					</tr>
