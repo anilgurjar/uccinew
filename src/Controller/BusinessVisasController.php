@@ -822,7 +822,7 @@ class BusinessVisasController extends AppController
 				$this->request->data['verify_by']=$user_id;
 				$this->request->data['verify_on']=date('Y-m-d h:i:s');
 				$this->request->data['status']='verified';
-				$this->request->data['coo_verify_email']='yes';
+				$this->request->data['business_vissa_email']='yes';
 				
 				
 				$query = $this->BusinessVisas->find();
@@ -831,6 +831,7 @@ class BusinessVisasController extends AppController
 				
 				if($this->BusinessVisas->save($BusinessVisasdatas1))
 				{
+					$certificates_data = json_encode($id);
 					$certificates_data = base64_encode($id);
 										
 					$authorise_person_mails=$this->BusinessVisas->CertificateOriginAuthorizeds->find()->contain(['Users']);
@@ -838,9 +839,12 @@ class BusinessVisasController extends AppController
 					$emailperson_id=$authorise_person_mail['user']->id;
 					$emailperson=$authorise_person_mail['user']->member_name;
 					$emailsend=$authorise_person_mail['user']->email;
-					$emailperson_id = base64_encode($emailperson_id);
+					$emailperson_id_new = json_encode($emailperson_id);
+					$emailperson_id_new = base64_encode($emailperson_id_new);
 					
-					$url="http://www.ucciudaipur.com/uccinew/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id.""; 
+					$url="http://www.ucciudaipur.com/uccinew/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
+					
+					$url="http://www.ucciudaipur.com/app/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
 				
 					$sub="Bussiness Vissa is Varified";
@@ -953,13 +957,13 @@ class BusinessVisasController extends AppController
 		
 		$certificate_origin_count = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified','business_vissa_email'=>'yes'])->count();
 		$this->set(compact('certificate_origin_count'));
-		pr($certificate_origin_count);  exit;
+		
 		$company_id=$certificate_origin_count;
 		if($certificate_origin_count>0){
 			$BusinessVisas = $this->BusinessVisas->newEntity();
 	  
-			$bussiness_vissas = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified'])->contain(['Companies'])->toArray();
-			
+			$bussiness_vissas = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified'])->contain(['Companies'=>['CompanyMemberTypes']])->toArray();
+			pr($bussiness_vissas); exit;
 			
 			$verify_bys=$bussiness_vissas[0]->verify_by; 
 			$Users_verifys=$this->BusinessVisas->Companies->Users->get($verify_bys);
