@@ -958,7 +958,7 @@ class BusinessVisasController extends AppController
 		$certificate_origin_count = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified','business_vissa_email'=>'yes'])->count();
 		$this->set(compact('certificate_origin_count'));
 		
-		$company_id=$certificate_origin_count;
+		
 		if($certificate_origin_count>0){
 			$BusinessVisas = $this->BusinessVisas->newEntity();
 	  
@@ -979,15 +979,16 @@ class BusinessVisasController extends AppController
 			
 		if($this->request->is('post')) 
 		{
-			if(isset($this->request->data['invoice_attestation_approve_submit']))
-			{
+			if(isset($this->request->data['bussiness_vissa_approve_submit']))
+			{ 
+		
 				 
 				$email = new Email();
 				$email->transport('SendGrid');
 											
-				$id=$this->request->data['invoice_attestation_approve_submit'];
+				$id=$this->request->data['bussiness_vissa_approve_submit'];
 				$BusinessVisas=$this->BusinessVisas->get($id,['contain'=>['Companies'=>['Users']]]);
-				$consignee=$BusinessVisas->consignee;
+				$consignee=$BusinessVisas->visitor_name;
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
 				$this->request->data['approved_by']=$user_id; 
@@ -1048,10 +1049,10 @@ class BusinessVisasController extends AppController
 				}
 				$this->Flash->error(__('Unable to approved Bussiness Vissa.'));
 			}
-			else if(isset($this->request->data['invoice_attestation_notapprove_submit']))
+			else if(isset($this->request->data['bussiness_vissa_notapprove_submit']))
 			{
 				
-				echo $id=$this->request->data['invoice_attestation_notapprove_submit'];
+				echo $id=$this->request->data['bussiness_vissa_notapprove_submit'];
 				$BusinessVisas=$this->BusinessVisas->get($id);
 				exit;
 				//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
@@ -1120,7 +1121,7 @@ class BusinessVisasController extends AppController
 				
 				$id=$this->request->data['bussiness_vissa_approve_submit'];
 				$BusinessVisas=$this->BusinessVisas->get($id,['contain'=>['Companies'=>['Users']]]);
-				$consignee=$BusinessVisas->consignee;
+				$consignee=$BusinessVisas->visitor_name;
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
 				$this->request->data['approve_by']=$user_id; 
