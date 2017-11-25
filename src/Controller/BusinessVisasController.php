@@ -442,7 +442,7 @@ class BusinessVisasController extends AppController
 				
 				$MemberReceipts = $this->BusinessVisas->MemberReceipts->patchEntity($MemberReceipts, $this->request->data);
 				
-				$GeneralReceiptPurposes->purpose_id=12;
+				$GeneralReceiptPurposes->purpose_id=18;
 				$GeneralReceiptPurposes->quantity=1;
 				$GeneralReceiptPurposes->amount=$payment_amount;
 				$GeneralReceiptPurposes->total=$payment_amount;
