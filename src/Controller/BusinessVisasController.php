@@ -966,6 +966,7 @@ class BusinessVisasController extends AppController
 			
 			$companys=$bussiness_vissas[0]->company; 
 			pr($companys); exit;
+			
 			$verify_bys=$bussiness_vissas[0]->verify_by;
 			$Users_verifys=$this->BusinessVisas->Companies->Users->get($verify_bys);
 			$verify_member=$Users_verifys->member_name; 
