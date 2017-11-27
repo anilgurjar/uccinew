@@ -954,7 +954,7 @@ class BusinessVisasController extends AppController
 		$authorized_id = json_decode($authorized_id);
 		$user_id=$authorized_id;  
 		
-		$certificate_origin_count = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified','business_vissa_email'=>'yes'])->count();
+		$certificate_origin_count = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified','business_verify_email'=>'yes'])->count();
 		$this->set(compact('certificate_origin_count'));
 		
 		
