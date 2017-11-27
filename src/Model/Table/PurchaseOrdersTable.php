@@ -55,6 +55,8 @@ class PurchaseOrdersTable extends Table
 			'casecadeCallbacks'=>true
         ]);
 		 $this->belongsTo('MasterCompanies');
+		 $this->belongsTo('MasterTaxations');
+		 $this->belongsTo('MasterTaxationRates');
 		
     }
 

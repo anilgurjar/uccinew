@@ -53,13 +53,20 @@
 							
 							 <div class="col-md-4">
 								<div class="form-group">
-									<label class="control-label">Address</label>
-									<?php echo $this->Form->input('address', ['label' => false,'placeholder'=>'address','class'=>'form-control','rows'=>'3']); ?>
+									<label class="control-label">State</label>
+									<?php echo $this->Form->input('master_state_id', ['label' => false,'options'=>$state,'placeholder'=>'State  Name','class'=>'form-control','value'=>$supplier]); ?>
 								</div>
 							</div>
 							
 					</div>
-					
+					<div class="col-md-12 pad">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="control-label">Address</label>
+								<?php echo $this->Form->input('address', ['label' => false,'placeholder'=>'address','class'=>'form-control','rows'=>'3']); ?>
+							</div>
+						</div>
+					</div>
 			
 				</div>
 			</div>

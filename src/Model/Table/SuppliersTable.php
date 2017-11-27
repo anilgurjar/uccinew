@@ -39,6 +39,8 @@ class SuppliersTable extends Table
         $this->hasMany('PurchaseOrders', [
             'foreignKey' => 'supplier_id'
         ]);
+		$this->belongsTo('MasterStates');
+		
     }
 
     /**

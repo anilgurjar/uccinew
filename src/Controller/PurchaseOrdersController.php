@@ -100,11 +100,13 @@ public function initialize()
 		$user_id=$this->Auth->User('id');
 		$this->viewBuilder()->layout('index_layout');
         $purchaseOrder = $this->PurchaseOrders->get($id, [
-            'contain' => ['Suppliers', 'PurchaseOrderRows']
+            'contain' => ['Suppliers', 'PurchaseOrderRows','Suppliers'=>['MasterStates']]
         ]);
 		$MasterCompanies=$this->PurchaseOrders->MasterCompanies->find();
-        $this->set('purchaseOrder', $purchaseOrder); 
-		$this->set('MasterCompanies', $MasterCompanies);
+	
+	
+		$this->set('purchaseOrder', $purchaseOrder); 
+       $this->set('MasterCompanies', $MasterCompanies);
         $this->set('_serialize', ['purchaseOrder']);
     }
 
@@ -142,11 +144,111 @@ public function initialize()
                 $this->Flash->error(__('The purchase order could not be saved. Please, try again.'));
             }
         }
-        $suppliers = $this->PurchaseOrders->Suppliers->find('list', ['limit' => 200]);
-        $this->set(compact('purchaseOrder', 'suppliers'));
+        $suppliers = $this->PurchaseOrders->Suppliers->find()->contain(['MasterStates']);
+		 $this->set(compact('purchaseOrder', 'suppliers'));
         $this->set('_serialize', ['purchaseOrder']);
     }
 
+	
+	
+	
+	public function CalculateTaxPurchaseOrders()
+  {
+	  
+	$this->viewBuilder()->layout('ajax_layout');
+	$total_amount=$this->request->data['total_amount'];
+	$state_id=$this->request->data['state_id']; 
+	$total_tax=0;		
+	$grand_total_amount = 0;
+	$total_basic_amount = 0;
+	$total_service_tax=0;
+	
+	$i=0;
+	
+	$taxation=$this->PurchaseOrders->MasterTaxations->find('all',array('fields' => array('tax_name','tax_id'),'conditions'=>array('tax_flag'=>1)))->toArray();
+	foreach($taxation as $data)
+	{  
+		
+		if($state_id==20){
+			if($data['tax_name']!='IGST'){
+				$taxation_rate = $this->PurchaseOrders->MasterTaxationRates->find('all',array('fields' => array('id','tax_percentage'),'conditions'=>array('master_taxation_id'=>$data['tax_id'],'tax_date <='=>date('Y-m-d')),'order'=>'tax_date DESC','limit'=>1))->toArray(); 
+				
+				foreach($taxation_rate as $tax_value)
+				{
+					
+					$tax_amount=($total_amount*$tax_value['tax_percentage'])/100;
+					$tax_amount=number_format($tax_amount, 4, '.', '');
+					$total_tax+=$tax_amount; 
+					$tax[$data['tax_id']][$data['tax_name']][(string) $tax_value['tax_percentage']][$i]=$tax_amount;
+					$i++;
+				}
+			}
+			
+		}else{
+			if($data['tax_name']=='IGST'){
+				$taxation_rate = $this->PurchaseOrders->MasterTaxationRates->find('all',array('fields' => array('id','tax_percentage'),'conditions'=>array('master_taxation_id'=>$data['tax_id'],'tax_date <='=>date('Y-m-d')),'order'=>'tax_date DESC','limit'=>1))->toArray(); 
+				foreach($taxation_rate as $tax_value)
+				{
+					
+					$tax_amount=($total_amount*$tax_value['tax_percentage'])/100;
+					$tax_amount=number_format($tax_amount, 4, '.', '');
+					$total_tax+=$tax_amount; 
+					$tax[$data['tax_id']][$data['tax_name']][(string) $tax_value['tax_percentage']][$i]=$tax_amount;
+					$i++;
+				}
+			}
+			
+		}
+	}
+	
+	$total_basic_amount = $total_amount; 
+	$grand_total_amount = $total_amount + $total_tax;
+	
+	echo '<tr class="Tax">
+	<td colspan="3" align="right">Basic Amount</td>
+	<td><input type="hidden" name="basic_amount" value="'.number_format($total_basic_amount,2, '.', '').'">'.number_format($total_basic_amount,2, '.', '').'</td>
+	</tr>';
+	$sr=0;
+	foreach(@$tax as $tax_data1=>$tax_key11)
+	{
+		
+		$tax_amounts_add=0;
+		foreach($tax_key11 as $tax_data=>$tax_key)
+		{
+			
+			
+			foreach($tax_key as $tax_key1=>$tax_key2)
+			{
+				foreach($tax_key2 as $tax_amounts)
+				{
+					$tax_amounts_add+=$tax_amounts;
+				}
+			}
+			echo '<tr class="Tax">
+			<td colspan="3" align="right"><input type="hidden" name="tax_amounts['.$sr.'][tax_id]" value="'.$tax_data1.'"><input type="hidden" name="tax_amounts['.$sr.'][tax_percentage]" value="'.number_format($tax_key1, 2, '.', '').'">'.$tax_data.' @ '.number_format($tax_key1, 2, '.', '').'%</td><td><input type="hidden" name="tax_amounts['.$sr.'][amount]" value="'.number_format($tax_amounts_add, 2, '.', '').'">'.number_format($tax_amounts_add, 2, '.', '').'</td></tr>';
+			
+		}
+		$sr++;
+	}
+	echo '<tr class="Tax">
+	<td colspan="3" align="right">Total Tax</td>
+	<td><input type="hidden" name="taxamount" value="'.number_format($total_tax, 2, '.', '').'">'.number_format($total_tax, 2, '.', '').'</td>
+	</tr>
+		<tr>
+		<td colspan="3" align="right">Total Amount</td>
+		<td id="grand_total">'.number_format($grand_total_amount, 2, '.', '').'</td>
+	</tr>
+	
+	<tr>
+		<td colspan="3" align="right"><strong>Grant Total</strong></td>
+		<td id="grand_total"><input type="hidden" name="amount" value="'.number_format($grand_total_amount, 2, '.', '').'"><strong>'.number_format($grand_total_amount, 2, '.', '').'</strong></td>
+	</tr>';
+	exit;
+  }
+	
+	
+	
+	
     /**
      * Edit method
      *
@@ -176,8 +278,8 @@ public function initialize()
                 $this->Flash->error(__('The purchase order could not be saved. Please, try again.'));
             }
         }
-        $suppliers = $this->PurchaseOrders->Suppliers->find('list', ['limit' => 200]);
-        $this->set(compact('purchaseOrder', 'suppliers'));
+        $suppliers = $this->PurchaseOrders->Suppliers->find()->contain(['MasterStates']);
+		$this->set(compact('purchaseOrder', 'suppliers'));
         $this->set('_serialize', ['purchaseOrder']);
     }
 

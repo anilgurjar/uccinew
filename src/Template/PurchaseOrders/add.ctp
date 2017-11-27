@@ -114,8 +114,14 @@ padding-left: 0px;
 			<div class="form-group col-sm-4">
 			  <label>Supplier name</label>
 				<?php  
-						
-				echo $this->Form->input('supplier_id', ['empty'=> '--Select--','data-placeholder'=>'Select a supplier','label' => false,'class'=>'form-control select2','style'=>'width:100%;']);  ?>
+				
+				$options=array();
+				foreach($suppliers as $supplier)
+				{
+					$options[] = ['text' => $supplier['name'], 'value' => $supplier['id'], 'state' => $supplier['master_state_id']]; 
+				}
+					
+				echo $this->Form->input('supplier_id', ['empty'=> '--Select--','data-placeholder'=>'Select a supplier','label' => false,'options'=>$options,'class'=>'form-control select2  suppliercompany supplier state','style'=>'width:100%;']);  ?>
 				<label id="supplier-id-error" class="error" for="supplier-id"></label>
 			</div>
 			
@@ -129,7 +135,7 @@ padding-left: 0px;
 									$options['Cash'] = 'Cash';
 									$options['NEFT/RTGS'] = 'NEFT/RTGS';
 										
-									echo $this->Form->input('payment_type', array('templates' => ['radioWrapper' => '<div class="radio inline radio-div">{{label}}</div>'],'type' => 'radio','label' => false,'options' => $options,'value'=>'Cheque','hiddenField' => false)); ?>				
+									echo $this->Form->input('payment_type', array('templates' => ['radioWrapper' => '<div class="radio inline radio-div  ">{{label}}</div>'],'type' => 'radio','label' => false,'options' => $options,'value'=>'Cheque','hiddenField' => false)); ?>				
 					
 			</div>
 			
@@ -184,7 +190,7 @@ padding-left: 0px;
 		
 		
 		
-		<div class="col-sm-12 no-print" style="margin-top:20px;" id="main">		
+		<div class="col-sm-12 no-print main1" style="margin-top:20px;" id="main">		
 			<table class="table table-bordered">	
 			<thead style="">
 				<tr>
@@ -230,8 +236,12 @@ padding-left: 0px;
 		<tfoot id="tax_view">
 			
 			<tr>
+			<td colspan="3" align="right">Total</td>
+			<td id="grand_total"> <input type="hidden" name="amount"  class="totalvalue" value="0"><strong>0</strong></td>
+			</tr>
+			<tr>
 			<td colspan="3" align="right">Grant Total</td>
-			<td id="grand_total"> <input type="hidden" name="amount" value="0"><strong>0</strong></td>
+			<td id="grand_total"> <input type="hidden" name="total_amount" value="0"><strong>0</strong></td>
 			</tr>
 			
 		</tfoot>			
@@ -253,8 +263,8 @@ padding-left: 0px;
   </div>
   </div>
   
-  <table id="sample" style="display:none;">
-	<tbody>
+  <table id="sample" style="display:none;" >
+	<tbody class="main">
 		<tr class="new">
 			<td>
 				<?php echo $this->Form->input('purchase_order_rows[0][item_name]', ['label' => false,'placeholder'=>'Item Name','class'=>'form-control item_name','id'=>'purchase_order_rows-0-item_name','autocomplete'=>'off','type'=>'textarea','rows'=>'3']); ?>
@@ -268,10 +278,10 @@ padding-left: 0px;
 				<div>
 			</td>-->
 			<td>
-				<?php echo $this->Form->input('purchase_order_rows[0][quty]', ['label' => false,'placeholder'=>'Quantity','class'=>'form-control quantity calculate','id'=>'genaral_receipt_purposes-0-quantity','autocomplete'=>'off']); ?>
+				<?php echo $this->Form->input('purchase_order_rows[0][quty]', ['label' => false,'placeholder'=>'Quantity','class'=>'form-control quantity calculate calculatetax','id'=>'genaral_receipt_purposes-0-quantity','autocomplete'=>'off']); ?>
 			</td>
 			<td>
-				<?php echo $this->Form->input('purchase_order_rows[0][rate]', ['label' => false,'placeholder'=>'Rate','class'=>'form-control amount calculate','id'=>'genaral_receipt_purposes-0-amount','autocomplete'=>'off']); ?>
+				<?php echo $this->Form->input('purchase_order_rows[0][rate]', ['label' => false,'placeholder'=>'Rate','class'=>'form-control amount calculate calculatetax','id'=>'genaral_receipt_purposes-0-amount','autocomplete'=>'off']); ?>
 			</td>
 			<td>
 				<?php echo $this->Form->input('purchase_order_rows[0][amount]', ['label' => false,'placeholder'=>'Total','class'=>'form-control total','readonly']); ?>
@@ -290,6 +300,47 @@ padding-left: 0px;
  <?php echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js'); ?>
 <script>
 $(document).ready(function(){
+	
+	
+	/* $('.suppliercompany').on('change',function() {
+	calculate2();
+}); */
+
+	function calculate2()
+	{    
+		var purpose_array=new Array();
+			
+			var state_id =$(".state").find('option:selected').attr('state');
+
+			var grand_total=0;
+			$(".main1 tbody tr").each(function(){
+				var total_amount =parseFloat($(this).find("td input.total").val());
+				grand_total+=total_amount;
+			});
+			
+			
+			var grand_total1=grand_total.toFixed(2)
+			
+			var m_data = new FormData();
+				m_data.append('total_amount',grand_total1);
+				m_data.append('state_id',state_id);
+				
+				
+			$.ajax({
+			url:"<?php echo $this->Url->build(['controller'=>'PurchaseOrders','action'=>'CalculateTaxPurchaseOrders']); ?>",
+				data: m_data,
+				processData: false,
+				contentType: false,
+				type: 'POST',
+				dataType:'text',
+				success:function(data){
+					 $('#tax_view').html(data); 
+					}
+		  });
+	}
+	
+	
+	
 
 	function calculate()
 	{ 
@@ -313,10 +364,13 @@ $(document).ready(function(){
 	$(document).on("keyup",".calculate,.tds_value",function()
 	{ 
 		var qty=$(this).closest('tr').find('td input.quantity').val();
+		if(qty==''){ qty=0;  }
 		var amt=$(this).closest('tr').find('td input.amount').val();
+		if(amt==''){ amt=0;  }
 		var total = qty*amt;
 		total =parseFloat(total).toFixed(2);
 		$(this).closest('tr').find('td input.total').val(total);
+		calculate2();
 		calculate();
 	});
 	
@@ -390,6 +444,7 @@ $(document).ready(function(){
 			
 		});
 		calculate();
+		calculate2();
 	});
 	
 	$("#configform").validate({

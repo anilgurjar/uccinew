@@ -74,7 +74,8 @@ class SuppliersController extends AppController
                 $this->Flash->error(__('The supplier could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('supplier'));
+		$state=$this->Suppliers->MasterStates->find('list');
+        $this->set(compact('supplier','state'));
         $this->set('_serialize', ['supplier']);
     }
 
@@ -90,7 +91,7 @@ class SuppliersController extends AppController
 		$this->viewBuilder()->layout('index_layout');
 		$user_id=$this->Auth->User('id');
         $supplier = $this->Suppliers->get($id, [
-            'contain' => []
+            'contain' => ['MasterStates']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
 			$this->request->data['edited_by']=$user_id;
@@ -103,7 +104,8 @@ class SuppliersController extends AppController
                 $this->Flash->error(__('The supplier could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('supplier'));
+		$state=$this->Suppliers->MasterStates->find('list');
+        $this->set(compact('supplier','state'));
         $this->set('_serialize', ['supplier']);
     }
 

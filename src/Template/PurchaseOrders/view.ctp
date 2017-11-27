@@ -148,12 +148,12 @@ Date & Time <br/> '.date('d-m-Y', strtotime($purchaseOrder->date)).' & '.$purcha
 		$i++;
 		$total+=$purchase_order_row->amount;
 		$html.='<tr>
-		<td>'.$i.'</td>
+		<td style="text-align:center">'.$i.'</td>
 		
-		<td colspan="2">'.$this->Text->autoParagraph($purchase_order_row->item_name).'</td>
-		<td>'.$purchase_order_row->quty.'</td>
-		<td>'.$purchase_order_row->rate.'</td>
-		<td align="right">'.$purchase_order_row->amount.'</td>
+		<td colspan="2" style="text-align:center">'.$this->Text->autoParagraph($purchase_order_row->item_name).'</td>
+		<td style="text-align:center">'.$purchase_order_row->quty.'</td>
+		<td style="text-align:center">'.$purchase_order_row->rate.'</td>
+		<td align="center">'.$purchase_order_row->amount.'</td>
 				
 		</tr>';
 		
@@ -161,12 +161,23 @@ Date & Time <br/> '.date('d-m-Y', strtotime($purchaseOrder->date)).' & '.$purcha
 	
 		$html.='<tr>
 		<td colspan="5" align="right">Total</td>
-		<td align="right"><strong>'.number_format($total, 2, '.', '').' </strong></td>
+		<td align="center"><strong>'.number_format($total, 2, '.', '').' </strong></td>
+		</tr>';
+		
+		$html.='<tr class="Tax">
+			
+			<td colspan="5" align="right">Total Tax</td>
+			<td align="center"><strong>'.$purchaseOrder->taxamount.' </strong></td>
+		</tr>
+		<tr>
+		<td colspan="5" align="right"> Grand Total</td>
+		<td align="center"><strong>'.$purchaseOrder->amount.' </strong></td>
 	</tr>';	
+		
 	
 	$html.='<tr>
 		
-		<td colspan="6"><strong>(Rupees (in words) :  '.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($total)])).' </strong></td>
+		<td colspan="6"><strong>Rupees (in words) :  '.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($purchaseOrder->amount)])).' </strong></td>
 	</tr>';	
 	
 	$html.='<tr>

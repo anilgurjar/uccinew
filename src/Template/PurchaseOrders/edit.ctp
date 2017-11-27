@@ -84,8 +84,14 @@ padding-left: 0px;
 			<div class="form-group col-sm-4">
 			  <label>Supplier name</label>
 				<?php  
-						
-				echo $this->Form->input('supplier_id', ['empty'=> '--Select--','data-placeholder'=>'Select a supplier','label' => false,'class'=>'form-control select2','style'=>'width:100%;']);  ?>
+				
+				$options=array();
+				foreach($suppliers as $supplier)
+				{
+					$options[] = ['text' => $supplier['name'], 'value' => $supplier['id'], 'state' => $supplier['master_state_id']]; 
+				}
+					
+				echo $this->Form->input('supplier_id', ['empty'=> '--Select--','data-placeholder'=>'Select a supplier','label' => false,'options'=>$options,'class'=>'form-control select2  suppliercompany supplier state','style'=>'width:100%;']);  ?>
 				<label id="supplier-id-error" class="error" for="supplier-id"></label>
 			</div>
 			
@@ -153,7 +159,7 @@ padding-left: 0px;
 		
 		
 		
-		<div class="col-sm-12 no-print" style="margin-top:20px;" id="main">		
+		<div class="col-sm-12 no-print main1" style="margin-top:20px;" id="main">		
 			<table class="table table-bordered">	
 			<thead style="">
 				<tr>
@@ -286,9 +292,45 @@ $(document).ready(function(){
 			
 	calculate();
 
+calculate2();
+function calculate2()
+	{    
+		var purpose_array=new Array();
+			
+			var state_id =$(".state").find('option:selected').attr('state');
+			
+			var grand_total=0;
+			$(".main1 tbody tr").each(function(){
+				var total_amount =parseFloat($(this).find("td input.total").val());
+				grand_total+=total_amount;
+			});
+			
+			
+			grand_total=grand_total.toFixed(2)
+			
+			var m_data = new FormData();
+				m_data.append('total_amount',grand_total);
+				m_data.append('state_id',state_id);
+				
+				
+			$.ajax({
+			url:"<?php echo $this->Url->build(['controller'=>'PurchaseOrders','action'=>'CalculateTaxPurchaseOrders']); ?>",
+				data: m_data,
+				processData: false,
+				contentType: false,
+				type: 'POST',
+				dataType:'text',
+				success:function(data){
+					 $('#tax_view').html(data); 
+					}
+		  });
+	}
+	
 
-
-
+	
+	
+	
+	
 	function calculate()
 	{ 
 		var purpose_array=new Array();
@@ -316,12 +358,14 @@ $(document).ready(function(){
 		total =parseFloat(total).toFixed(2);
 		$(this).closest('tr').find('td input.total').val(total);
 		calculate();
+		calculate2();
 	});
 	
 	function add_row()
 	{
 		var new_line=$("#sample tbody").html();
 		$("#main tbody.main").append(new_line);
+		calculate2();
 		//$('#main tbody tr:last select.purpose_id').select2();
 	}
 	
@@ -388,6 +432,7 @@ $(document).ready(function(){
 			
 		});
 		calculate();
+		calculate2();
 	});
 	
 	 $("#configform").validate({
