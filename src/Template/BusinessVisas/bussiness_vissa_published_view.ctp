@@ -113,6 +113,9 @@ use Cake\Filesystem\File;
 						<th scope="row" style="text-align:left;"><br/><?= __('6. Place of Birth') ?></th>
 						<td style="text-align:left;"><br/><b><?= h($businessVisa['birth_place']) ?></b></td>
 					</tr>
+					<tr>
+						<td colspan="2" ><br/><p>We recommend that the above individual can be invited to &nbsp; <b><?= h($businessVisa['issue_place']) ?></b>&nbsp; in &nbsp; <b><?= h($businessVisa['visit_country']) ?></b>&nbsp; from &nbsp; <b><?= h($businessVisa['issue_date']) ?></b>&nbsp; to &nbsp;<b><?= h($businessVisa['expiry_date']) ?></b>&nbsp; on behalf of &nbsp; <b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp; for &nbsp;<b><?= h($businessVisa['visit_reason']) ?></b></p></td>
+					</tr>
 					<?php if($membertype==1){ ?> 
 					<tr>
 						<td colspan="2"><br/><p>We wish him all the success, as this visit be beneficial to both the countries.</p></td>
@@ -206,9 +209,7 @@ use Cake\Filesystem\File;
 						<th scope="row" style="text-align:left;"><br/><?= __('6. Place of Birth') ?></th>
 						<td style="text-align:left;"><br/><b><?= h($businessVisa['birth_place']) ?></b></td>
 					</tr>
-					<tr>
-						<td colspan="2" ><br/><p>We recommend that the above individual can be invited to &nbsp; <b><?= h($businessVisa['issue_place']) ?></b>&nbsp; in &nbsp; <b><?= h($businessVisa['visit_country']) ?></b>&nbsp; from &nbsp; <b><?= h($businessVisa['issue_date']) ?></b>&nbsp; to &nbsp;<b><?= h($businessVisa['expiry_date']) ?></b>&nbsp; on behalf of &nbsp; <b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp; for &nbsp;<b><?= h($businessVisa['visit_reason']) ?></b></p></td>
-					</tr>
+					
 					<?php if($membertype==1){ ?> 
 					<tr>
 						<td colspan="2"><br/><p>We wish him all the success, as this visit be beneficial to both the countries.</p></td>
