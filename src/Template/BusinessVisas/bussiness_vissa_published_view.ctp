@@ -61,7 +61,7 @@ use Cake\Filesystem\File;
 						</td>
 					</tr>
 					<tr>
-						<th colspan="2"><br/>To</br><b><?= h($businessVisa['sender_address']) ?></b></th>
+						<th colspan="2"><br/>To</br><b><?= $this->Text->autoParagraph($businessVisa['sender_address']) ?></b></th>
 					</tr>
 					 <tr>
 						<td colspan="2"><br/>Sub:<b><?= h($businessVisa['subject']) ?></b></td>
