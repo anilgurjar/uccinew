@@ -128,7 +128,7 @@ Date & Time <br/> '.date('d-m-Y', strtotime($purchaseOrder->date)).' & '.$purcha
 		<td  colspan="3" valign="top">
 			Delivery: '.$purchaseOrder->delivery.'<br/>
 			Payment: By '.$purchaseOrder->payment_type.'<br/>
-			Cust. TIN No: '.$purchaseOrder->tin_no.'<br/>
+			Discount : '.$purchaseOrder->tin_no.'<br/>
 			Freight: '.$purchaseOrder->freight.' <br/>
 			Tax: CGST, SGST : (As  applicable to all)
 		</td>
