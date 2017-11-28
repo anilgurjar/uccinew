@@ -796,12 +796,16 @@ class BusinessVisasController extends AppController
 			$bussiness_vissas = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$certificate_origin_id,'status'=>'published'])->contain(['Companies'])->toArray();
 			$membertypes=$this->BusinessVisas->CompanyMemberTypes->find()->where(['company_id'=>$bussiness_vissas_data->company_id]);
 			
+			foreach($membertypes as $membertype){
+				 $membertype=$membertype['master_member_type_id'];
+			}
+			
 			$company_id=$bussiness_vissas[0]->company_id;  
 			$DocumentCheck=$this->BusinessVisas->Companies->find('all')
 				->where(['id'=>$company_id,'pan_card'=>'','company_registration'=>'','ibc_code'=>''])
 				->count();
 				
-			$this->set(compact('bussiness_vissas','DocumentCheck'));
+			$this->set(compact('bussiness_vissas','DocumentCheck','membertype'));
 		}
 		if($this->request->is('post')) 
 		{
