@@ -94,12 +94,13 @@
 				
 				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me','options'=>$category]); ?>
 			</div>
+			
+		</div>
+		<div class="form-group">
 			<label class="col-sm-2 control-label">Date of Birth</label>
 			  <div class="col-sm-4">	
 				<?php echo $this->Form->input('date_of_birth', ['label' => false,'placeholder'=>'Date of Birth','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy', 'type'=>'text']); ?>
 			  </div>
-		</div>
-		<div class="form-group">
 			<label class="col-sm-2 control-label">Place of Birth</label>
 			<div class="col-sm-4">	
 				<?php 
