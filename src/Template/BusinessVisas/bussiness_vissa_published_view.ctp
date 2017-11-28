@@ -77,7 +77,7 @@ use Cake\Filesystem\File;
 					</tr>
 					  <?php   }  else{ ?>
 					<tr>
-						<td colspan="2"><br/><p>This is to inform you that M/s  &nbsp;<b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp;  is a company having its office  &nbsp; <b><?= h($businessVisa['company']['address']) ?>,&nbsp; <?= h($businessVisa['company']['city']) ?> &nbsp;- <?= h($businessVisa['company']['pincode']) ?></b>.</p></td>
+						<td colspan="2"><br/><p>This is to inform you that M/s  &nbsp;<b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp; is a company having its office  &nbsp; <b><?= h($businessVisa['company']['address']) ?>,&nbsp; <?= h($businessVisa['company']['city']) ?> &nbsp;- <?= h($businessVisa['company']['pincode']) ?></b>.</p></td>
 					</tr>
 					
 					<?php  }  ?>
@@ -177,7 +177,7 @@ use Cake\Filesystem\File;
 						<td colspan="2"><p>The Udaipur Chamber of Commerce & Industry presents its compliments to  &nbsp;<?= h($businessVisa['sender_address']) ?>.</p></td>
 					</tr>
 					<tr>
-						<td colspan="2"><br/><p>This is to inform you that M/s &nbsp;<b><?= h($businessVisa['company']['company_organisation']) ?>&nbsp; is a company having its registered office &nbsp;<?= h($businessVisa['company']['address']) ?>&nbsp;, &nbsp; <?= h($businessVisa['company']['city']) ?> &nbsp;- &nbsp;<?= h($businessVisa['company']['pincode']) ?></b>&nbsp; Further M/s &nbsp; <?= h($businessVisa['company']['company_organisation']) ?>&nbsp;is our registered member. The company is involved in manufacturing of  &nbsp;<b> <?= h($businessVisa['company_manufacture']) ?></b>&nbsp; and they are one of our old, prestigious & important member.</p></td>
+						<td colspan="2"><br/><p>This is to inform you that M/s &nbsp;<b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp; is a company having its registered office &nbsp;<?= h($businessVisa['company']['address']) ?>&nbsp;, &nbsp; <?= h($businessVisa['company']['city']) ?> &nbsp;- &nbsp;<?= h($businessVisa['company']['pincode']) ?></b>&nbsp; Further M/s &nbsp; <?= h($businessVisa['company']['company_organisation']) ?>&nbsp;is our registered member. The company is involved in manufacturing of  &nbsp;<b> <?= h($businessVisa['company_manufacture']) ?></b>&nbsp; and they are one of our old, prestigious & important member.</p></td>
 					</tr>
 					
 					<?php   }   ?>
