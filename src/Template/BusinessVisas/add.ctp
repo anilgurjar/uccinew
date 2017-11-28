@@ -104,7 +104,7 @@
 			<label class="col-sm-2 control-label">Category Of Bussiness Vissa</label>
 			<div class="col-sm-4">	
 				<?php 
-				$category=array(2=>"Going Offshore",3=>"Inviting Foreign Nationals to India");
+				$category=array(1=>"Going Offshore",2=>"Inviting Foreign Nationals to India");
 				
 				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me','options'=>$category]); ?>
 			</div>
