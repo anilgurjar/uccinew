@@ -34,7 +34,7 @@ use Cake\Filesystem\File;
   <div class="box box-primary">
 	<div class="box-header with-border">
 	<center>
-	  <h3 class="box-title"><strong>BUSINESS VISA  VIEW</strong></h3>
+	  <h3 class="box-title"><strong>Business Visa Recommendations  View</strong></h3>
 	</center>
 	</div>
 	<!-- /.box-header -->
@@ -46,7 +46,7 @@ use Cake\Filesystem\File;
 			 
 			foreach($bussiness_vissas as $businessVisa)
 			{      
-			if($membertype==1){
+			if($businessVisa['category_type']==1){
 			?>
 				<table class="vertical-table" style="width:100%;">
 					 <tr>
@@ -114,7 +114,7 @@ use Cake\Filesystem\File;
 					</tr>
 				</table>
 			<?php   } 
-			else{?>
+			elseif($businessVisa['category_type']==2){?>
 				<!--non member vissa  start-->
 				<table class="vertical-table" style="width:100%;">
 					 <tr>
@@ -168,6 +168,87 @@ use Cake\Filesystem\File;
 					</tr>
 					<tr>
 						<td colspan="2"><p>It is requested that Multiple Visits Entry Business Visa for visit  <b><?= h($businessVisa['visit_country']) ?></b> may kindly be issued.</p></td>
+					</tr>
+					<tr>
+						<td colspan="2"><p>Thanking you in anticipation,</p></td>
+					</tr>
+					<tr>
+						<td colspan="2"><p>Yours Sincerely,</p></td>
+					</tr>
+					<tr>
+						<th colspan="2"><p>For Udaipur Chamber of Commerce & Industry,</p></th>
+					</tr>
+					<tr>
+						<th colspan="2"><br/><br/><p>Authorised Signatory</p></th>
+					</tr>
+				</table>
+			<?php  } 
+			else{?>
+				<!--non member vissa  start-->
+				<table class="vertical-table" style="width:100%;">
+					 <tr>
+						<td style="width:30%;">UCCI/VISA-41/R-9457/2016-17</td>
+						<td style="text-align:right;"><b><?= h(date('jS F, Y',strtotime($businessVisa['date_current']))) ?></b></td>
+						<td  align='right'>
+							<?php if(!empty($businessVisa['authorised_remarks'])){ ?>	
+							<label style="color:red;">Return Reason</label>
+							<?php
+								echo $businessVisa['authorised_remarks'];   
+							} ?>
+						</td>
+					</tr>
+					<tr>
+						<th colspan="2"><br/>To</br><b><?= h($businessVisa['sender_address']) ?></b></th>
+					</tr>
+					 <tr>
+						<td colspan="2"><br/>Sub:<b><?= h($businessVisa['subject']) ?></b></td>
+					</tr>
+					 <tr>
+						<td colspan="2"><br/>Dear Sir,</td>
+					</tr>
+					<tr>
+						<td colspan="2"><p>The Udaipur Chamber of Commerce & Industry presents its compliments to the Embassy of India in <?= h($businessVisa['sender_address']) ?>.</p></td>
+					</tr>
+					<tr>
+						<td colspan="2"><br/><p>This is to inform you that M/s <b><?= h($businessVisa['company']['company_organisation']) ?>is a company having its registered office <?= h($businessVisa['company']['address']) ?>, <?= h($businessVisa['company']['city']) ?> - <?= h($businessVisa['company']['pincode']) ?></b>Further M/s<?= h($businessVisa['company']['company_organisation']) ?>is our registered member. The company is involved in manufacturing of  <b> <?= h($businessVisa['company_manufacture']) ?></b>and they are one of our old, prestigious & important member.</p></td>
+					</tr>
+					<tr>
+						<td colspan="2"><br/><p>M/s <b><?= h($businessVisa['company']['company_organisation']) ?></b>has invited the following National of<b><?= h($businessVisa['sender_address']) ?></b>visit<b><?= h($businessVisa['visit_place']) ?><?= h($businessVisa['visit_country']) ?></b>for
+						<b><?= h($businessVisa['visit_reason']) ?></b>.</p></td>
+						
+					</tr>
+					<tr>
+						<td colspan="2"><p>His necessary particulars are given below: -  </p></td>
+					</tr>
+					<tr>
+						<th scope="row" style="text-align:left;"><?= __('1. Name.') ?></th>
+						<td style="text-align:left;"><b> <?= h($businessVisa['visitor_name']) ?></b></td>
+					</tr>
+					<tr>
+						<th scope="row" style="text-align:left;"><?= __('2. Passport No.') ?></th>
+						<td style="text-align:left;"><b><?= h($businessVisa['passport_no']) ?></b></td>
+					</tr>
+					<tr>
+						<th scope="row" style="text-align:left;"><br/><?= __('3. Date of Issue') ?></th>
+						<td style="text-align:left;"><br/><b><?= h(date('d-m-Y',strtotime($businessVisa['issue_date']))) ?></b></td>
+					</tr>
+					<tr>
+						<th scope="row" style="text-align:left;"><br/><?= __('4. Date of Expiry') ?></th>
+						<td style="text-align:left;"><br/><b><?= h(date('d-m-Y',strtotime($businessVisa['expiry_date']))) ?></b></td>
+					</tr>
+					<tr>
+						<th scope="row" style="text-align:left;"><br/><?= __('5. Date of Birth') ?></th>
+						<td style="text-align:left;"><br/><b><?= h($businessVisa['birth_of_date']) ?></b></td>
+					</tr>
+					<tr>
+						<th scope="row" style="text-align:left;"><br/><?= __('6. Place of Birth') ?></th>
+						<td style="text-align:left;"><br/><b><?= h($businessVisa['birth_place']) ?></b></td>
+					</tr>
+					<tr>
+						<td ><br/><p>We recommend that the above individual can be invited to<b><?= h($businessVisa['visit_place']) ?></b>in<b><?= h($businessVisa['visit_country']) ?></b>from<b><?= h($businessVisa['issue_date']) ?></b> to<b><?= h($businessVisa['expiry_date']) ?></b>on behalf of <b><?= h($businessVisa['company']['company_organisation']) ?></b>for<b><?= h($businessVisa['visit_reason']) ?></b></p></td>
+					</tr>
+					<tr>
+						<td colspan="2"><p>It is requested that Business Visa for visit to <b><?= h($businessVisa['visit_place']) ?></b>in<b><?= h($businessVisa['visit_country']) ?></b>from<b><?= h($businessVisa['issue_date']) ?></b> to<b><?= h($businessVisa['expiry_date']) ?></b> may kindly be issued as this visit be beneficial to both the countries..</p></td>
 					</tr>
 					<tr>
 						<td colspan="2"><p>Thanking you in anticipation,</p></td>

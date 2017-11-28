@@ -2,7 +2,7 @@
   <!-- Horizontal Form -->
   <div class="box box-primary">
 	<div class="box-header with-border">
-	  <h3 class="box-title">Add Business Visa</h3>
+	  <h3 class="box-title">Add Business Visa Recommendations</h3>
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
@@ -85,6 +85,26 @@
 		  <div class="col-sm-4">	
 			<?php echo $this->Form->input('expiry_date', ['label' => false,'placeholder'=>'Date of Expiry','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy', 'type'=>'text']); ?>
 		  </div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Category Of Bussiness Vissa</label>
+			<div class="col-sm-4">	
+				<?php 
+				$category=array(1=>"Member & Non-Member",2=>"Going Offshore or Inviting Foreign Nationals to India",3=>"Addressed to Embassy or Consulate");
+				
+				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me','options'=>$category]); ?>
+			</div>
+			<label class="col-sm-2 control-label">Date of Birth</label>
+			  <div class="col-sm-4">	
+				<?php echo $this->Form->input('date_of_birth', ['label' => false,'placeholder'=>'Date of Birth','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy', 'type'=>'text']); ?>
+			  </div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Place of Birth</label>
+			<div class="col-sm-4">	
+				<?php 
+				echo $this->Form->input('birth_place', ['label' => false,'placeholder'=>'Birth Place','class'=>'form-control ']); ?>
+			</div>
 		</div>
 	</div>
 	  <!-- /.box-body -->

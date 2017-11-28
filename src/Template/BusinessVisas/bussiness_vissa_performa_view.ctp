@@ -149,7 +149,7 @@ border-right: none  !important;
 border-left: none   !important;	
 }
 </style>
-<body><center><strong>Business Visa</strong></center><br/>';
+<body><center><strong>Business Visa Recommendations</strong></center><br/>';
 				foreach($MasterCompanies as $MasterCompany) 
 				{
 					$html1=$MasterCompany->company_information;
