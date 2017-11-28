@@ -100,8 +100,7 @@
 				<?php 
 				echo $this->Form->input('birth_place', ['label' => false,'placeholder'=>'Birth Place','class'=>'form-control ']); ?>
 			</div>
-		</div>
-		<div class="form-group">
+		
 			<label class="col-sm-2 control-label">Category Of Bussiness Vissa</label>
 			<div class="col-sm-4">	
 				<?php 
@@ -109,13 +108,7 @@
 				
 				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me','options'=>$category]); ?>
 			</div>
-			<label class="col-sm-2 control-label">To Vissa Recomdation</label>
-			<div class="col-sm-4">	
-				<?php 
-				$tocategory=array(2=>"Embassy",3=>"Consulate");
-				
-				echo $this->Form->input('to_category_type', ['label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me','options'=>$tocategory]); ?>
-			</div>
+			
 		</div>
 	</div>
 	  <!-- /.box-body -->
