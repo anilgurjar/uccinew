@@ -45,7 +45,6 @@ use Cake\Filesystem\File;
 			<?php
 			foreach($bussiness_vissas as $businessVisa)
 			{ ?>
-				<!--non member vissa  start-->
 				<table class="vertical-table" style="width:100%;">
 					 <tr>
 						<td style="width:30%;">UCCI/VISA-<?= h($businessVisa['origin_no'])?>/R-9457/2016-17</td>
