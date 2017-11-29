@@ -23,14 +23,8 @@ input[type="radio"]
 	<?php echo $this->Form->create($business_visas, ['type' => 'post','id'=>'bussinesForm']); ?>
 	<div class="box-body">
 		<div class="form-group">
-			<label class="col-sm-2 control-label">Sender Address</label>
-			<div class="col-sm-4">
-		  <?php echo $this->Form->input('sender_address', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
-			</div>
-		</div>
-		<div class="form-group">
-		  <label class="col-sm-2 control-label">Company/Organisation</label>
-		  <div class="col-sm-4">
+			<label class="col-sm-2 control-label">Company/Organisation</label>
+			  <div class="col-sm-4">
 				<?php
 				$options=array();
 				
@@ -43,42 +37,62 @@ input[type="radio"]
 
 				echo $this->Form->input('company_name', ['data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control ','type'=>'text','value'=>$name,'style'=>'width:100%;border:none','readonly'=>'readonly']);
 				echo $this->Form->input('company_id', ['data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control ','type'=>'hidden','value'=>$id,'style'=>'width:100%;border:none','readonly'=>'readonly']);	?>
-				</div>
-				<label class="col-sm-2 control-label">Subject</label>
-		  <div class="col-sm-4">
-			<?php echo $this->Form->input('subject', ['label' => false,'placeholder'=>'subject Name','class'=>'form-control']); ?>
-		  </div>
-		  <label class="col-sm-2 control-label">Manufacturer</label>
-		  <div class="col-sm-4">
-			<?php echo $this->Form->input('company_manufacture', ['label' => false,'placeholder'=>'Company Manufacturer','class'=>'form-control']); ?>
-		  </div>
-			
-		  
-		  
+			</div>
+			<label class="col-sm-2 control-label">Send To</label>
+			<div class="col-sm-4">
+				<?php 
+				$sendor_type=array('Embassy '=>"Embassy ",'Consulate'=>"Consulate");
+				
+				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Sender Type','class'=>'form-control select2me','options'=>$sendor_type]); ?>
+			</div>
 		</div>
 		<div class="form-group">
-		  <label class="col-sm-2 control-label">Name of Visitor</label>
-		  <div class="col-sm-4">
-			<?php echo $this->Form->input('visitor_name', ['label' => false,'placeholder'=>'Name of Visitor','class'=>'form-control']); ?>
-		  </div>
-		  <label class="col-sm-2 control-label">Designation</label>
-		  <div class="col-sm-4">
-			<?php echo $this->Form->input('visitor_designation', ['label' => false,'placeholder'=>'Visitor Designation','class'=>'form-control']); ?>
-		  </div>
-		   <label class="col-sm-2 control-label">Visit Country</label>
-		  <div class="col-sm-4">
-			<?php echo $this->Form->input('visit_country', ['label' => false,'placeholder'=>'Country Name','class'=>'form-control']); ?>
-		  </div>
+			<label class="col-sm-2 control-label">Sender Name</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('sender_name', ['label' => false,'placeholder'=>'Sender Name','class'=>'form-control']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Sender Country</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('sender_country', ['label' => false,'placeholder'=>'Sender Country','class'=>'form-control']); ?>
+			</div>
 		</div>
 		<div class="form-group">
-		  <label class="col-sm-2 control-label">Visit Month</label>
-		  <div class="col-sm-4">
-			<?php echo $this->Form->input('visit_month', ['label' => false,'placeholder'=>'Visit Month','class'=>'form-control date-picker','data-date-format'=>'mm-yyyy', 'type'=>'text']); ?>
-		  </div>
-		  <label class="col-sm-2 control-label">Reason for Visit</label>
-		  <div class="col-sm-4">
-			<?php echo $this->Form->input('visit_reason', ['label' => false,'placeholder'=>'Reason for Visit','class'=>'form-control']); ?>
-		  </div>
+			<label class="col-sm-2 control-label">Sender Address</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('sender_address', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Subject</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('subject', ['label' => false,'placeholder'=>'subject Name','class'=>'form-control']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Manufacturer</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('company_manufacture', ['label' => false,'placeholder'=>'Company Manufacturer','class'=>'form-control']); ?>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Name of Visitor</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('visitor_name', ['label' => false,'placeholder'=>'Name of Visitor','class'=>'form-control']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Designation</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('visitor_designation', ['label' => false,'placeholder'=>'Visitor Designation','class'=>'form-control']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Visit Country</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('visit_country', ['label' => false,'placeholder'=>'Country Name','class'=>'form-control']); ?>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Visit Month</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('visit_month', ['label' => false,'placeholder'=>'Visit Month','class'=>'form-control date-picker','data-date-format'=>'mm-yyyy', 'type'=>'text']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Reason for Visit</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('visit_reason', ['label' => false,'placeholder'=>'Reason for Visit','class'=>'form-control']); ?>
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Passport No. </label>
@@ -91,21 +105,31 @@ input[type="radio"]
 			</div>
 		</div>
 		<div class="form-group">
-		  <label class="col-sm-2 control-label">Place of Issue</label>
-		  <div class="col-sm-4">
-			<?php echo $this->Form->input('issue_place', ['label' => false,'placeholder'=>'Place of Issue','class'=>'form-control']); ?>
-		  </div>
-		   <label class="col-sm-2 control-label">Date of Expiry</label>
-		  <div class="col-sm-4">	
-			<?php echo $this->Form->input('expiry_date', ['label' => false,'placeholder'=>'Date of Expiry','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy', 'type'=>'text']); ?>
-		  </div>
+			<label class="col-sm-2 control-label">Place of Issue</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('issue_place', ['label' => false,'placeholder'=>'Place of Issue','class'=>'form-control']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Date of Expiry</label>
+			<div class="col-sm-4">	
+				<?php echo $this->Form->input('expiry_date', ['label' => false,'placeholder'=>'Date of Expiry','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy', 'type'=>'text']); ?>
+			</div>
 		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Category Of Bussiness Vissa</label>
+			<div class="col-sm-4">	
+				<?php 
+				$category=array(1=>"Going Offshore",2=>"Inviting Foreign Nationals to India");
+				
+				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me','options'=>$category]); ?>
+			</div>
+		</div>
+		
 		<?php foreach($business_visa_datas as $business_visa_data){    if(!empty($business_visa_data['verify_remarks'])){ ?>
 		<div class="form-group">
-		  <label class="col-sm-2 control-label" style="color:red;">Return Reason</label>
-		  <div class="col-sm-4">
+			<label class="col-sm-2 control-label" style="color:red;">Return Reason</label>
+			<div class="col-sm-4">
 				<?php   echo $business_visa_data['verify_remarks'];  ?>
-		  </div>
+			</div>
 		</div>
 		<?php } }?>
 	</div>
@@ -137,11 +161,13 @@ $(document).ready(function(){
 	
 	$('#edit_button').on('click',function(){
 		$('input').prop('readonly', false);
+		$('select').attr('disable', false);
 		$('textarea').prop('readonly', false);
 		
 	});
 	
 	$('input').prop('readonly', true);
+	$('select').attr('disable', true);
 	$('textarea').prop('readonly', true);
 	// validate the comment form when it is submitted
 	// validate signup form on keyup and submit

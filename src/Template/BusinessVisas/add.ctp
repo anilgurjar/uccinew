@@ -25,7 +25,7 @@
 				echo $this->Form->input('company_name', ['data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control ','type'=>'text','value'=>$name,'style'=>'width:100%;border:none','readonly'=>'readonly']);
 				echo $this->Form->input('company_id', ['data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control ','type'=>'hidden','value'=>$id,'style'=>'width:100%;border:none','readonly'=>'readonly']);	?>
 			</div>
-			<label class="col-sm-2 control-label">Sender Type</label>
+			<label class="col-sm-2 control-label">Send To</label>
 			<div class="col-sm-4">
 				<?php 
 				$sendor_type=array('Embassy '=>"Embassy ",'Consulate'=>"Consulate");
