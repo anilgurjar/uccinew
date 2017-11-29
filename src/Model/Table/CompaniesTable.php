@@ -108,10 +108,19 @@ class CompaniesTable extends Table
             'foreignKey' => 'user_id'
         ]);
 		
-		 $this->hasMany('UserProfiles', [
+		$this->hasMany('UserProfiles', [
             'foreignKey' => 'company_id'
         ]);
-		
+		$this->hasMany('CompanyWasteInformations', [
+            'foreignKey' => 'company_id'
+        ]); 
+		$this->hasMany('CompanyWastageInformations', [
+            'foreignKey' => 'company_id'
+        ]);
+		$this->hasMany('CompanyHwmInformations', [
+            'foreignKey' => 'company_id'
+        ]);
+ 		
     }
 
     /**

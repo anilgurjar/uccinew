@@ -384,7 +384,6 @@ class CompaniesController extends AppController
 			
 				//$email_to='rohitkumarjoshi43@gmail.com';
 				$to=explode('@',$to);
-
 				$password=uniqid();
 				$user_save = $this->Companies->Users->newEntity();
 				$this->request->data['id']=$user_ids;
@@ -834,8 +833,11 @@ class CompaniesController extends AppController
 			$master_financial_year_id=$master_financial_year->id;
 		}
 		if ($this->request->is('post')) {
-			$this->request->data['member_flag']=3;
-			$this->request->data['role_id']=2;
+			$email = new Email();
+			$email->transport('SendGrid');
+			$this->request->data['member_flag']=date('Y-m-d',strtotime($this->request->data['year_of_joining']));
+			$this->request->data['member_flag']=2;
+			$this->request->data['role_id']=6;
             $company = $this->Companies->patchEntity($company, $this->request->data);
 			//pr($company);  exit;
 			//-- COmpany Insert
@@ -850,7 +852,35 @@ class CompaniesController extends AppController
 				$this->Companies->CompanyMemberTypes->save($CompanyMemberTypes);
 				//-- Users Insert
 				$this->request->data['member_nominee_type']='first';
+				$to=$this->request->data['email'];
+				$member_name=$this->request->data['member_name'];
+				$sub='Login Credentials';
+  				$to=explode('@',$to);
+				$password=uniqid();
+				$this->request->data['id']=$user_ids;
+				$this->request->data['username']=$to[0];
+				$this->request->data['password']=$password;
 				$Users = $this->Companies->Users->patchEntity($Users, $this->request->data);
+					/*$from_name='UCCI';
+					$email = new Email();
+					$email->transport('SendGrid');
+					 try {
+						   $email->from(['ucciudaipur@gmail.com' => $from_name])
+									->to($email_to)
+									->bcc('acc.uccisec@gmail.com')
+									->replyTo('uccisec@hotmail.com')
+									->subject($sub)
+									->profile('default')
+									->template('hwm_login_credentia')
+									->emailFormat('html')
+									->viewVars(['member_name'=>$member_name,'username'=>$to[0],'password'=>$password);
+								   $email->send();
+								
+						} catch (Exception $e) {
+							
+							echo 'Exception : ',  $e->getMessage(), "\n";
+						} 
+					*/
 				$this->Companies->Users->save($Users);
 				$this->redirect('http://www.ucciudaipur.com/hwm2?CaaOdaMsdaPsaArefNdsY__IdsadcD='.$last_insert_company_id);
              } 
