@@ -105,7 +105,7 @@ use Cake\Filesystem\File;
 					</tr>
 					<tr>
 						<th scope="row" style="text-align:left;"><br/><?= __('5. Date of Birth') ?></th>
-						<td style="text-align:left;"><br/><b><?= h($businessVisa['birth_of_date']) ?></b></td>
+						<td style="text-align:left;"><br/><b><?= h(date('d-m-Y',strtotime($businessVisa['date_of_birth']))) ?></b></td>
 					</tr>
 					<tr>
 						<th scope="row" style="text-align:left;"><br/><?= __('6. Place of Birth') ?></th>
