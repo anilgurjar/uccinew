@@ -9,36 +9,9 @@
 	<?php echo $this->Form->create($businessVisa, ['type' => 'post','id'=>'bussinesForm']); ?>
 	<div class="box-body">
 	
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Sender Name</label>
-			<div class="col-sm-4">
-				<?php echo $this->Form->input('sender_name', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
-			</div>
-
-		<label class="col-sm-2 control-label">Sender Type</label>
-			<div class="col-sm-4">
-				<?php echo $this->Form->input('sender_type', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
-			</div>
-
-			
-	</div>
-	
 		<div class="form-group">
-		
-			<label class="col-sm-2 control-label">Sender Country</label>
-			<div class="col-sm-4">
-				<?php echo $this->Form->input('sender_type', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
-			</div>
-		
-			<label class="col-sm-2 control-label">Sender Address</label>
-			<div class="col-sm-4">
-				<?php echo $this->Form->input('sender_country', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
-			</div>
-			
-		</div>
-		<div class="form-group">
-		  <label class="col-sm-2 control-label">Company/Organisation</label>
-		  <div class="col-sm-4">
+			<label class="col-sm-2 control-label">Company/Organisation</label>
+			  <div class="col-sm-4">
 				<?php
 				$options=array();
 				
@@ -51,18 +24,38 @@
 
 				echo $this->Form->input('company_name', ['data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control ','type'=>'text','value'=>$name,'style'=>'width:100%;border:none','readonly'=>'readonly']);
 				echo $this->Form->input('company_id', ['data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control ','type'=>'hidden','value'=>$id,'style'=>'width:100%;border:none','readonly'=>'readonly']);	?>
-				</div>
-				<label class="col-sm-2 control-label">Subject</label>
-		  <div class="col-sm-4">
-			<?php echo $this->Form->input('subject', ['label' => false,'placeholder'=>'subject Name','class'=>'form-control']); ?>
-		  </div>
-		  <label class="col-sm-2 control-label">Manufacturer</label>
-		  <div class="col-sm-4">
-			<?php echo $this->Form->input('company_manufacture', ['label' => false,'placeholder'=>'Company Manufacturer','class'=>'form-control']); ?>
-		  </div>
-			
-		  
-		  
+			</div>
+			<label class="col-sm-2 control-label">Sender Type</label>
+			<div class="col-sm-4">
+				<?php 
+				$sendor_type=array('Embassy '=>"Embassy ",'Consulate'=>"Consulate");
+				
+				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Sender Type','class'=>'form-control select2me','options'=>$sendor_type]); ?>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Sender Name</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('sender_name', ['label' => false,'placeholder'=>'Sender Name','class'=>'form-control']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Sender Country</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('sender_country', ['label' => false,'placeholder'=>'Sender Country','class'=>'form-control']); ?>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Sender Address</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('sender_address', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Subject</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('subject', ['label' => false,'placeholder'=>'subject Name','class'=>'form-control']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Manufacturer</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('company_manufacture', ['label' => false,'placeholder'=>'Company Manufacturer','class'=>'form-control']); ?>
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Name of Visitor</label>
