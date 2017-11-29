@@ -45,6 +45,13 @@ input[type="radio"]
 				
 				echo $this->Form->input('sender_type', ['label' => false,'placeholder'=>'Select Sender Type','class'=>'form-control select2me','options'=>$sendor_type]); ?>
 			</div>
+			<label class="col-sm-2 control-label">Category Of Bussiness Vissa</label>
+			<div class="col-sm-4">	
+				<?php 
+				$category=array(1=>"Going Offshore",2=>"Inviting Foreign Nationals to India");
+				
+				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me','options'=>$category]); ?>
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Sender Name</label>
@@ -55,15 +62,15 @@ input[type="radio"]
 			<div class="col-sm-4">
 				<?php echo $this->Form->input('sender_country', ['label' => false,'placeholder'=>'Sender Country','class'=>'form-control']); ?>
 			</div>
+			<label class="col-sm-2 control-label">Subject</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('subject', ['label' => false,'placeholder'=>'subject Name','class'=>'form-control']); ?>
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Sender Address</label>
 			<div class="col-sm-4">
 				<?php echo $this->Form->input('sender_address', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
-			</div>
-			<label class="col-sm-2 control-label">Subject</label>
-			<div class="col-sm-4">
-				<?php echo $this->Form->input('subject', ['label' => false,'placeholder'=>'subject Name','class'=>'form-control']); ?>
 			</div>
 			<label class="col-sm-2 control-label">Manufacturer</label>
 			<div class="col-sm-4">
