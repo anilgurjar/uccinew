@@ -45,7 +45,7 @@ input[type="radio"]
 				
 				echo $this->Form->input('sender_type', ['label' => false,'placeholder'=>'Select Sender Type','class'=>'form-control select2me','options'=>$sendor_type]); ?>
 			</div>
-			<label class="col-sm-2 control-label">Category Of Bussiness Vissa</label>
+			<label class="col-sm-2 control-label">Category Bussiness Visa</label>
 			<div class="col-sm-4">	
 				<?php 
 				$category=array(1=>"Going Offshore",2=>"Inviting Foreign Nationals to India");
