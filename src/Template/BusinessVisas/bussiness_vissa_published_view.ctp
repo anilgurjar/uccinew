@@ -68,7 +68,7 @@ use Cake\Filesystem\File;
 						<td colspan="2"><br/>Dear Sir,</td>
 					</tr>
 					<tr>
-						<td colspan="2"><p>The Udaipur Chamber of Commerce & Industry presents its compliments to <b><?= h($businessVisa['sender_type']) ?></b>.<b><?= h($businessVisa['sender_name']) ?></b>.</p></td>
+						<td colspan="2"><p>The Udaipur Chamber of Commerce & Industry presents its compliments to <b><?= h($businessVisa['sender_type']) ?></b>.<b><?= h($businessVisa['sender_name']) ?></b>,<b><?= h($businessVisa['sender_country']) ?></b>.</p></td>
 					</tr>
 					
 					<tr>
