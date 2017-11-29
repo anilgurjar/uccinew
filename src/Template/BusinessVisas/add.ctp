@@ -32,6 +32,10 @@
 				
 				echo $this->Form->input('sender_type', ['label' => false,'placeholder'=>'Select Sender Type','class'=>'form-control select2me','options'=>$sendor_type]); ?>
 			</div>
+			
+		</div>
+		
+		<div class="form-group">
 			<label class="col-sm-2 control-label">Category Of Bussiness Vissa</label>
 			<div class="col-sm-4">	
 				<?php 
@@ -49,7 +53,6 @@
 			<div class="col-sm-4">
 				<?php echo $this->Form->input('sender_country', ['label' => false,'placeholder'=>'Sender Country','class'=>'form-control']); ?>
 			</div>
-			
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Subject</label>
