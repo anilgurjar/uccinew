@@ -1,4 +1,4 @@
- <style>
+<style>
 input[type="radio"]
 {
 	margin-right: 8px;
@@ -8,7 +8,7 @@ input[type="radio"]
 .control-label{
 	text-align:left !important;
 }
- </style>
+</style>
 <div class="col-md-12">
   <!-- Horizontal Form -->
   <div class="box box-primary">
@@ -161,13 +161,13 @@ $(document).ready(function(){
 	
 	$('#edit_button').on('click',function(){
 		$('input').prop('readonly', false);
-		$('select').attr('disable', false);
+		$('select').prop('disabled', false);
 		$('textarea').prop('readonly', false);
 		
 	});
 	
 	$('input').prop('readonly', true);
-	$('select').attr('disable', true);
+	$('select').prop('disabled', true);
 	$('textarea').prop('readonly', true);
 	// validate the comment form when it is submitted
 	// validate signup form on keyup and submit
