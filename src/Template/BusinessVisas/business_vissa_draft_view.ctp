@@ -121,15 +121,6 @@ input[type="radio"]
 				<?php echo $this->Form->input('expiry_date', ['label' => false,'placeholder'=>'Date of Expiry','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy', 'type'=>'text']); ?>
 			</div>
 		</div>
-		<div class="form-group">
-			<label class="col-sm-2 control-label">Category Of Bussiness Vissa</label>
-			<div class="col-sm-4">	
-				<?php 
-				$category=array(1=>"Going Offshore",2=>"Inviting Foreign Nationals to India");
-				
-				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me','options'=>$category]); ?>
-			</div>
-		</div>
 		
 		<?php foreach($business_visa_datas as $business_visa_data){    if(!empty($business_visa_data['verify_remarks'])){ ?>
 		<div class="form-group">
