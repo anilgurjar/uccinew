@@ -43,7 +43,7 @@ input[type="radio"]
 				<?php 
 				$sendor_type=array('Embassy '=>"Embassy ",'Consulate'=>"Consulate");
 				
-				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Sender Type','class'=>'form-control select2me','options'=>$sendor_type]); ?>
+				echo $this->Form->input('sender_type', ['label' => false,'placeholder'=>'Select Sender Type','class'=>'form-control select2me','options'=>$sendor_type]); ?>
 			</div>
 		</div>
 		<div class="form-group">

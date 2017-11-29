@@ -76,12 +76,12 @@ use Cake\Filesystem\File;
 					</tr>
 					<?php if($businessVisa['category_type']==2){  ?>
 					<tr>
-						<td colspan="2"><br/><p>M/s &nbsp;<b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp;have invited<b>&nbsp;<?= h($businessVisa['visitor_name']) ?></b>&nbsp;<b><?= h($businessVisa['sender_address']) ?>&nbsp;</b>to visit their &nbsp;<b><?= h($businessVisa['issue_place']) ?>&nbsp;in&nbsp;<?= h($businessVisa['visit_country']) ?></b>&nbsp;from&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['issue_date']))) ?></b>&nbsp;to&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['expiry_date']))) ?></b>&nbsp;for&nbsp;<b><?= h($businessVisa['visit_reason']) ?></b>
+						<td colspan="2"><br/><p>M/s &nbsp;<b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp;have invited<b>&nbsp;<?= h($businessVisa['visitor_name']) ?></b>&nbsp;<b><?= h($businessVisa['sender_address']) ?>&nbsp;</b>to visit their &nbsp;<b><?= h($businessVisa['issue_place']) ?></b>&nbsp;in&nbsp;<b><?= h($businessVisa['visit_country']) ?></b>&nbsp;from&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['issue_date']))) ?></b>&nbsp;to&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['expiry_date']))) ?></b>
 						.</p></td>
 					</tr>
 					<?php } else{ ?>
 					<tr>
-						<td colspan="2"><br/><p>We hereby request you to issue business visa to<b>&nbsp;<?= h($businessVisa['visitor_name']) ?></b>&nbsp;<b><?= h($businessVisa['visitor_designation']) ?></b>&nbsp;of&nbsp;<b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp;to visit&nbsp;<b><?= h($businessVisa['issue_place']) ?>&nbsp;in&nbsp;<b><?= h($businessVisa['visit_country']) ?></b>&nbsp;from&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['issue_date']))) ?></b>&nbsp;to&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['expiry_date']))) ?></b>&nbsp; for &nbsp;<b><?= h($businessVisa['visit_reason']) ?></b>
+						<td colspan="2"><br/><p>We hereby request you to issue business visa to&nbsp;<b><?= h($businessVisa['visitor_name']) ?></b>&nbsp;<b><?= h($businessVisa['visitor_designation']) ?></b>&nbsp;of&nbsp;<b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp; to visit&nbsp; <b><?= h($businessVisa['issue_place']) ?></b>&nbsp;in&nbsp;<b><?= h($businessVisa['visit_country']) ?></b>&nbsp;from&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['issue_date']))) ?></b>&nbsp;to&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['expiry_date']))) ?></b>
 						.</p></td>
 					</tr>
 					<?php   }  ?>
@@ -114,14 +114,14 @@ use Cake\Filesystem\File;
 					</tr>
 					<?php if($businessVisa['category_type']==2)  {  ?>
 					<tr>
-						<td colspan="2" ><br/><p>We recommend that the above individual can be invited to &nbsp; <b><?= h($businessVisa['issue_place']) ?></b>&nbsp; in &nbsp; <b><?= h($businessVisa['visit_country']) ?></b>&nbsp; from &nbsp; <b><?= h($businessVisa['issue_date']) ?></b>&nbsp; to &nbsp;<b><?= h($businessVisa['expiry_date']) ?></b>&nbsp; on behalf of &nbsp; <b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp; for &nbsp;<b><?= h($businessVisa['visit_reason']) ?></b></p></td>
+						<td colspan="2" ><br/><p>We recommend that the above individual can be invited to &nbsp; <b><?= h($businessVisa['issue_place']) ?></b>&nbsp; in &nbsp; <b><?= h($businessVisa['visit_country']) ?></b>&nbsp; on behalf of &nbsp; <b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp; for &nbsp;<b><?= h($businessVisa['visit_reason']) ?></b></p></td>
 					</tr>
 					<?php }  else{   ?>
 					<tr>
 						<td colspan="2"><br/><p>We wish him all the success, as this visit be beneficial to both the countries.</p></td>
 					</tr>
 					<tr>
-						<td colspan="2"><br/><p>It is requested that business visa for visit to &nbsp;<b><?= h($businessVisa['visitor_name']) ?></b>&nbsp; for &nbsp; <b><?= h($businessVisa['issue_place']) ?>&nbsp; in &nbsp; <?= h($businessVisa['visit_country']) ?></b>&nbsp; from &nbsp;<b><?= h($businessVisa['issue_date']) ?></b>&nbsp; to &nbsp;<b><?= h($businessVisa['expiry_date']) ?></b>&nbsp; for &nbsp;<b><?= h($businessVisa['visit_reason']) ?></b></p></td>
+						<td colspan="2"><br/><p>It is requested that business visa for visit to &nbsp;<b><?= h($businessVisa['visitor_name']) ?></b>&nbsp; for &nbsp; <b><?= h($businessVisa['issue_place']) ?>&nbsp; in &nbsp; <?= h($businessVisa['visit_country']) ?></b>&nbsp; for &nbsp;<b><?= h($businessVisa['visit_reason']) ?></b></p></td>
 					</tr>
 					
 					<?php }   ?>
