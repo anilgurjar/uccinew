@@ -75,7 +75,7 @@ use Cake\Filesystem\File;
 					</tr>
 					<?php if($businessVisa['category_type']==2){  ?>
 					<tr>
-						<td colspan="2"><br/><p>M/s &nbsp;<b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp;have invited<b>&nbsp;<?= h($businessVisa['visitor_name']) ?></b>&nbsp;<b><?= h($businessVisa['sender_address']) ?>&nbsp;</b>to visit their &nbsp;<b><?= h($businessVisa['issue_place']) ?></b>&nbsp;in&nbsp;<b><?= h($businessVisa['visit_country']) ?></b>&nbsp;from&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['issue_date']))) ?></b>&nbsp;to&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['expiry_date']))) ?></b>
+						<td colspan="2"><br/><p>M/s &nbsp;<b><?= h($businessVisa['company']['company_organisation']) ?></b>&nbsp;have invited<b>&nbsp;<?= h($businessVisa['visitor_name']) ?></b>to visit their &nbsp;<b><?= h($businessVisa['issue_place']) ?></b>&nbsp;in&nbsp;<b><?= h($businessVisa['visit_country']) ?></b>&nbsp;from&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['issue_date']))) ?></b>&nbsp;to&nbsp;<b><?= h(date('d-m-Y',strtotime($businessVisa['expiry_date']))) ?></b>
 						.</p></td>
 					</tr>
 					<?php } else{ ?>
