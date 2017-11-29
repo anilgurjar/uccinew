@@ -307,4 +307,6 @@ class CompaniesController extends AppController
 		$this->set(compact('company','companies_data'));
         $this->set('_serialize', ['company','companies_data']);
     }
+	
+	
 }

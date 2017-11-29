@@ -54,6 +54,7 @@ class CompanyHwmInformationsController extends AppController
 			$potential_reuse=$this->request->data['potential_reuse'];
 			$impload_potential_reuse=implode(',',$potential_reuse);
 			$this->request->data['potential_reuse']=$impload_potential_reuse;
+			$this->request->data['status']='published';
 			if(!empty($chemical_composition_sheet['tmp_name']))
 			{
 				$ext = substr(strtolower(strrchr($chemical_composition_sheet['name'], '.')), 1); //get the extension

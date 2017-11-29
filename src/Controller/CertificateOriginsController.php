@@ -273,7 +273,6 @@ class CertificateOriginsController extends AppController
 				
 				$id=$this->request->data['certificate_notapprove_submit'];
 				$CertificateOrigins=$this->CertificateOrigins->get($id);
-				
 				//$this->request->data['id']=$this->request->data['certificate_notapprove_submit'];
 				$this->request->data['approve']=2;
 				$this->request->data['authorised_on']=date('Y-m-d h:i:s');

@@ -42,6 +42,7 @@ class CompanyHwmInformationsTable extends Table
         ]);
 		$this->belongsTo('CompanyWasteInformations');
 		$this->belongsTo('CompanyWastageInformations'); 
+		$this->belongsTo('CertificateOriginAuthorizeds'); 
     }
 
     /**
