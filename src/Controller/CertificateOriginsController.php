@@ -996,7 +996,7 @@ class CertificateOriginsController extends AppController
 		$user_id=$this->Auth->User('id');
 		$company_id=$this->Auth->User('company_id');
 		$certificate_origin_good = $this->CertificateOrigins->get($id, [
-            'contain' => ['CertificateOriginGoods']
+            'contain' => []
         ]);
 		$certificate_origins = $this->CertificateOrigins->find()->where(['CertificateOrigins.id'=>$id])->contain(['Companies','CertificateOriginGoods'])->toArray();
 		foreach($certificate_origins as $certificate_origin){

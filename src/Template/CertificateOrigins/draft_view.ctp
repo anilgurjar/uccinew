@@ -267,11 +267,11 @@ input[type="radio"]
 							</tr>
 						</thead>
 						<tbody>
-							<?php   foreach($certificate_origins as $data){ 
-							$xy=0;
-							$t=0;
+							<?php  $xy=0;
+							$t=0; foreach($certificate_origin_good->certificate_origin_goods as $dataa){ 
 							
-									foreach($data['certificate_origin_goods'] as $dataa)  { $xy++; ?>	
+							
+									 $xy++; ?>	
 							<tr>	
 								<td>
 								<?php
@@ -324,7 +324,7 @@ input[type="radio"]
 							   </td>
 								
 							</tr>
-							<?php $t++; }   } ?>
+							<?php $t++;   } ?>
 						</tbody>
 					</table>
 					</div>
