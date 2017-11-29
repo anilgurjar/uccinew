@@ -49,22 +49,24 @@
 			<div class="col-sm-4">
 				<?php echo $this->Form->input('sender_country', ['label' => false,'placeholder'=>'Sender Country','class'=>'form-control']); ?>
 			</div>
+			
+		</div>
+		<div class="form-group">
 			<label class="col-sm-2 control-label">Subject</label>
 			<div class="col-sm-4">
 				<?php echo $this->Form->input('subject', ['label' => false,'placeholder'=>'subject Name','class'=>'form-control']); ?>
 			</div>
-		</div>
-		<div class="form-group">
 			<label class="col-sm-2 control-label">Sender Address</label>
 			<div class="col-sm-4">
 				<?php echo $this->Form->input('sender_address', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
 			</div>
+			
+		</div>
+		<div class="form-group">
 			<label class="col-sm-2 control-label">Manufacturer</label>
 			<div class="col-sm-4">
 				<?php echo $this->Form->input('company_manufacture', ['label' => false,'placeholder'=>'Company Manufacturer','class'=>'form-control']); ?>
 			</div>
-		</div>
-		<div class="form-group">
 			<label class="col-sm-2 control-label">Name of Visitor</label>
 			<div class="col-sm-4">
 				<?php echo $this->Form->input('visitor_name', ['label' => false,'placeholder'=>'Name of Visitor','class'=>'form-control']); ?>
