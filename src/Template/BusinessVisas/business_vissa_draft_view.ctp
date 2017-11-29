@@ -121,6 +121,17 @@ input[type="radio"]
 				<?php echo $this->Form->input('expiry_date', ['label' => false,'placeholder'=>'Date of Expiry','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy', 'type'=>'text']); ?>
 			</div>
 		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Date of Birth</label>
+			<div class="col-sm-4">	
+				<?php echo $this->Form->input('date_of_birth', ['label' => false,'placeholder'=>'Date of Birth','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy', 'type'=>'text']); ?>
+			</div>
+			<label class="col-sm-2 control-label">Place of Birth</label>
+			<div class="col-sm-4">	
+				<?php 
+				echo $this->Form->input('birth_place', ['label' => false,'placeholder'=>'Birth Place','class'=>'form-control ']); ?>
+			</div>
+		</div>
 		
 		<?php foreach($business_visa_datas as $business_visa_data){    if(!empty($business_visa_data['verify_remarks'])){ ?>
 		<div class="form-group">
