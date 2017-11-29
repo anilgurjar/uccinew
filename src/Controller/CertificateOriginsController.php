@@ -17,7 +17,7 @@ class CertificateOriginsController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['logout', 'index','CooSendEmail','cooApproved']);
+		$this->Auth->allow(['logout', 'index','CooSendEmail','cooApproved','success','failure']);
 		$member_name=$this->Auth->User('member_name');
 		$this->set('member_name',$member_name);
 	}
@@ -27,7 +27,7 @@ class CertificateOriginsController extends AppController
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
-        $this->Auth->allow(['index', 'logout']);
+        $this->Auth->allow(['index', 'logout','success','failure','cooApproved']);
     }
 
 	function CooUpdate($id=Null,$status=Null)

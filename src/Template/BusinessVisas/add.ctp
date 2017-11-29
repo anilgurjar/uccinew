@@ -8,11 +8,33 @@
 	<!-- form start -->
 	<?php echo $this->Form->create($businessVisa, ['type' => 'post','id'=>'bussinesForm']); ?>
 	<div class="box-body">
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Sender Name</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('sender_name', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
+			</div>
+
+		<label class="col-sm-2 control-label">Sender Type</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('sender_type', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
+			</div>
+
+			
+	</div>
+	
 		<div class="form-group">
+		
+			<label class="col-sm-2 control-label">Sender Country</label>
+			<div class="col-sm-4">
+				<?php echo $this->Form->input('sender_type', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
+			</div>
+		
 			<label class="col-sm-2 control-label">Sender Address</label>
 			<div class="col-sm-4">
-		  <?php echo $this->Form->input('sender_address', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
+				<?php echo $this->Form->input('sender_country', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control']); ?>
 			</div>
+			
 		</div>
 		<div class="form-group">
 		  <label class="col-sm-2 control-label">Company/Organisation</label>
