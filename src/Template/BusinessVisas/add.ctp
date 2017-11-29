@@ -32,6 +32,13 @@
 				
 				echo $this->Form->input('sender_type', ['label' => false,'placeholder'=>'Select Sender Type','class'=>'form-control select2me','options'=>$sendor_type]); ?>
 			</div>
+			<label class="col-sm-2 control-label">Category Of Bussiness Vissa</label>
+			<div class="col-sm-4">	
+				<?php 
+				$category=array(1=>"Going Offshore",2=>"Inviting Foreign Nationals to India");
+				
+				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me','options'=>$category]); ?>
+			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Sender Name</label>
@@ -116,13 +123,7 @@
 				echo $this->Form->input('birth_place', ['label' => false,'placeholder'=>'Birth Place','class'=>'form-control ']); ?>
 			</div>
 		
-			<label class="col-sm-2 control-label">Category Of Bussiness Vissa</label>
-			<div class="col-sm-4">	
-				<?php 
-				$category=array(1=>"Going Offshore",2=>"Inviting Foreign Nationals to India");
-				
-				echo $this->Form->input('category_type', ['label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me','options'=>$category]); ?>
-			</div>
+			
 			
 		</div>
 	</div>

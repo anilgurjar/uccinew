@@ -209,7 +209,7 @@ class BusinessVisasController extends AppController
 				
 				$this->request->data['date_current']=date('Y-m-d');
 				$this->request->data['issue_date']=date('Y-m-d',strtotime($this->request->data['issue_date']));
-				$this->request->data['date_of_birth']=date('Y-m-d',strtotime($this->request->data['date_of_birth']));
+				//$this->request->data['date_of_birth']=date('Y-m-d',strtotime($this->request->data['date_of_birth']));
 				$this->request->data['expiry_date']=date('Y-m-d',strtotime($this->request->data['expiry_date']));
             
 				$amount=150;
@@ -236,7 +236,6 @@ class BusinessVisasController extends AppController
 				 
 				$this->request->data['date_current']=date('Y-m-d');
 				$this->request->data['issue_date']=date('Y-m-d',strtotime($this->request->data['issue_date']));
-				//$this->request->data['date_of_birth']=date('Y-m-d',strtotime($this->request->data['date_of_birth']));
 				$this->request->data['expiry_date']=date('Y-m-d',strtotime($this->request->data['expiry_date']));
 				
 				$amount=150;
