@@ -9,12 +9,34 @@
 			<div class="row">
 						
 				<div class="col-md-12 pad">
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label">Department Name</label>
-							<?php echo $this->Form->input('department_name', ['label' => false,'placeholder'=>'Department Name','class'=>'form-control']); ?>
+							<?php echo $this->Form->input('company_organisation', ['label' => false,'placeholder'=>'Department Name','class'=>'form-control']); ?>
 						</div>
 					</div>
+					
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Email</label>
+							<?php echo $this->Form->input('users[0][email]', ['label' => false,'placeholder'=>'Email','class'=>'form-control']); ?>
+						</div>
+					</div>
+					
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Mobile</label>
+							<?php echo $this->Form->input('users[0][mobile]', ['label' => false,'placeholder'=>'Mobile','class'=>'form-control']); ?>
+						</div>
+					</div>
+					
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Address</label>
+							<?php echo $this->Form->input('address', ['label' => false,'placeholder'=>'Address','class'=>'form-control','rows'=>3]); ?>
+						</div>
+					</div>
+									
 				</div>
 			</div>
 		</div>
@@ -37,10 +59,10 @@
             </tr>
         </thead>
         <tbody>
-            <?php $sr_no=0; foreach ($industrialDepartments as $industrialDepartment): ?>
+            <?php  $sr_no=0; foreach ($industrialDepartments as $industrialDepartment): ?>
             <tr>
                 <td><?= $this->Number->format(++$sr_no) ?></td>
-                <td><?= h($industrialDepartment->department_name) ?></td>
+                <td><?= h($industrialDepartment->company_organisation) ?></td>
                 <!--<td class="actions">
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $industrialDepartment->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $industrialDepartment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $industrialDepartment->id)]) ?>
