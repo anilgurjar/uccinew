@@ -62,7 +62,7 @@ class IndustrialDepartmentsController extends AppController
 		$this->viewBuilder()->layout('index_layout');
         $industrialDepartment = $this->IndustrialDepartments->Companies->newEntity();
         if ($this->request->is('post')) {
-			exit;
+			
 			$this->request->data['member_flag']=4;
 			$this->request->data['role_id']=5;
 			$this->request->data['users'][0]['member_name']=$this->request->data['company_organisation'];
