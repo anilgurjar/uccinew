@@ -836,7 +836,7 @@ class CompaniesController extends AppController
 			$email = new Email();
 			$email->transport('SendGrid');
 			$this->request->data['member_flag']=date('Y-m-d',strtotime($this->request->data['year_of_joining']));
-			$this->request->data['member_flag']=2;
+			$this->request->data['member_flag']=3;
 			$this->request->data['role_id']=6;
             $company = $this->Companies->patchEntity($company, $this->request->data);
 			//pr($company);  exit;

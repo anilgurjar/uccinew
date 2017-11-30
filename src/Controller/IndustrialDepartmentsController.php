@@ -60,10 +60,17 @@ class IndustrialDepartmentsController extends AppController
     public function add()
     {
 		$this->viewBuilder()->layout('index_layout');
-        $industrialDepartment = $this->IndustrialDepartments->newEntity();
+        $industrialDepartment = $this->IndustrialDepartments->Companies->newEntity();
         if ($this->request->is('post')) {
-            $industrialDepartment = $this->IndustrialDepartments->patchEntity($industrialDepartment, $this->request->data);
-            if ($this->IndustrialDepartments->save($industrialDepartment)) {
+			
+			$this->request->data['member_flag']=4;
+			$this->request->data['role_id']=5;
+			$this->request->data['users'][0]['member_name']=$this->request->data['company_organisation'];
+			$this->request->data['users'][0]['member_nominee_type']='first';
+			
+            $industrialDepartment = $this->IndustrialDepartments->Companies->patchEntity($industrialDepartment, $this->request->data);
+			
+            if ($this->IndustrialDepartments->Companies->save($industrialDepartment)) {
                 $this->Flash->success(__('The industrial department has been saved.'));
 
                 return $this->redirect(['action' => 'add']);
@@ -73,7 +80,7 @@ class IndustrialDepartmentsController extends AppController
         }
         $this->set(compact('industrialDepartment'));
         $this->set('_serialize', ['industrialDepartment']);
-		$industrialDepartments = $this->paginate($this->IndustrialDepartments);
+		$industrialDepartments = $this->paginate($this->IndustrialDepartments->Companies->find()->where(['role_id'=>5])->contain(['Users']));
 
         $this->set(compact('industrialDepartments'));
         $this->set('_serialize', ['industrialDepartments']);

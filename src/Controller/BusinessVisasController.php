@@ -852,7 +852,8 @@ class BusinessVisasController extends AppController
 					$emailperson_id_new = json_encode($emailperson_id);
 					$emailperson_id_new = base64_encode($emailperson_id_new);
 					
-					$url="http://www.ucciudaipur.com/uccinew/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
+					//$url="http://www.ucciudaipur.com/uccinew/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
+					$url="http://localhost/uccinew/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
 					//$url="http://www.ucciudaipur.com/app/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
@@ -860,7 +861,7 @@ class BusinessVisasController extends AppController
 					$sub="Bussiness Vissa is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					$email_to='anilgurjer371@gmail.com';
+					$email_to='rohitkumarjoshi43@gmail.com';
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -970,7 +971,7 @@ class BusinessVisasController extends AppController
 		
 		if($certificate_origin_count>0){
 			$BusinessVisas = $this->BusinessVisas->newEntity();
-	  
+			
 			$bussiness_vissas = $this->BusinessVisas->find()->where(['BusinessVisas.id'=>$ids,'status'=>'verified'])->contain(['Companies'=>['CompanyMemberTypes']])->toArray();
 			
 			$companys=$bussiness_vissas[0]->company; 
@@ -990,12 +991,11 @@ class BusinessVisasController extends AppController
 		{
 			if(isset($this->request->data['bussiness_vissa_approve_submit']))
 			{ 
-		
-				 
+				
 				$email = new Email();
 				$email->transport('SendGrid');
 											
-				$id=$this->request->data['bussiness_vissa_approve_submit'];
+				 $id=$this->request->data['bussiness_vissa_approve_submit']; 
 				$BusinessVisas=$this->BusinessVisas->get($id,['contain'=>['Companies'=>['Users']]]);
 				$consignee=$BusinessVisas->visitor_name;
 				$this->request->data['status']='approved';
@@ -1018,9 +1018,6 @@ class BusinessVisasController extends AppController
 				 $Users= $this->BusinessVisas->Users->get($user_id);
 				
 				 $regards_member_name=$Users->member_name;
-				
-				
-				
 				
 				
 				if($this->BusinessVisas->save($BusinessVisas))
