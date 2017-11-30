@@ -37,18 +37,34 @@ class IndustrialGrievancesController extends AppController
         ];
 		$random_color=['btn btn-success','btn btn-danger','btn btn-info','btn btn-warning'];
        
-		$IndustrialDepartments = $this->IndustrialGrievances->IndustrialDepartments->find('list');
+		$IndustrialDepartments = $this->IndustrialGrievances->Companies->find('list')->where(['role_id'=>5]);
 				
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
 		
-		 $IndustrialGrievances = $this->IndustrialGrievances->IndustrialDepartments->find()
+		/*  $IndustrialGrievances = $this->IndustrialGrievances->IndustrialDepartments->find()
 			->contain(['IndustrialGrievances'=>function($q){
 				return $q->where(['complete_status IN'=>['inprogress','hold','reopen']])
 						->order(['complete_status'=>'DESC'])
 						->contain(['Users','IndustrialGrievanceFollows'=>function($qfollow){
 							return $qfollow->order(['id'=>'DESC']);
 						}]);
-			}]); 
+			}]);  */
+			
+			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
+			->contain(['IndustrialGrievances'=>function($q){
+				return $q->where(['complete_status IN'=>['inprogress','hold','reopen']])
+						->order(['complete_status'=>'DESC'])
+						->contain(['Users','IndustrialGrievanceFollows'=>function($qfollow){
+							return $qfollow->order(['id'=>'DESC']);
+						}]);
+			}]);
+			
+			/* $IndustrialGrievances = $this->IndustrialGrievances->find()->where(['complete_status IN'=>['inprogress','hold','reopen']])
+						->order(['complete_status'=>'DESC'])
+						->contain(['Users','Companies','IndustrialGrievanceFollows'=>function($qfollow){
+							return $qfollow->order(['id'=>'DESC']);
+						}]);
+			 */
 			
 					
         $this->set(compact('IndustrialGrievances', 'IndustrialDepartments','random_color','industrialGrievance'));
@@ -217,7 +233,7 @@ class IndustrialGrievancesController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             } else {
-				
+				pr($industrialGrievance); exit;
                 $this->Flash->error(__('The industrial grievance could not be saved. Please, try again.'));
             }
         }
@@ -470,7 +486,7 @@ class IndustrialGrievancesController extends AppController
 	public function grievanceReport()
     {
 		$this->viewBuilder()->layout('index_layout');
-		$IndustrialDepartments = $this->IndustrialGrievances->IndustrialDepartments->find()->toArray();
+		$IndustrialDepartments = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])->toArray();
 		$this->set(compact('IndustrialDepartments'));
     }
 	public function grievanceReportAjax()
@@ -503,7 +519,7 @@ class IndustrialGrievancesController extends AppController
             $conditions['created_on <=']=date('Y-m-d 23:59:59',strtotime($to));
         }
 		
-		$IndustrialGrievances = $this->IndustrialGrievances->find()->where($conditions)->order(['complete_status'=>'DESC'])->contain(['Users','IndustrialDepartments','IndustrialGrievanceFollows'=>function($qfollow){
+		$IndustrialGrievances = $this->IndustrialGrievances->find()->where($conditions)->order(['complete_status'=>'DESC'])->contain(['Users','Companies','IndustrialGrievanceFollows'=>function($qfollow){
 			return $qfollow->order(['id'=>'DESC']);
 		}]);
 		

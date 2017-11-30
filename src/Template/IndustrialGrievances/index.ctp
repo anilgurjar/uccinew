@@ -58,7 +58,7 @@
 						{  $i++; 
 							?>
 							<td rowspan="<?php echo sizeof($departments->industrial_grievances); ?>" class="<?php echo $class; ?> font_cl"><?= h($i) ?></td>
-							<td rowspan="<?php echo sizeof($departments->industrial_grievances); ?>" class="<?php echo $class; ?> font_cl"><?= h($departments->department_name) ?></td>
+							<td rowspan="<?php echo sizeof($departments->industrial_grievances); ?>" class="<?php echo $class; ?> font_cl"><?= h($departments->company_organisation) ?></td>
 							<?php
 						}
 						?>

@@ -57,8 +57,12 @@ class IndustrialGrievancesTable extends Table
             'foreignKey' => 'created_by',
             'joinType' => 'INNER'
         ]);
+		$this->belongsTo('Companies', [
+            'foreignKey' => 'industrial_department_id',
+            'joinType' => 'INNER'
+        ]);
 		
-		$this->belongsTo('Companies');
+		//$this->belongsTo('Companies');
 		
         $this->belongsTo('GrievanceIssueRelateds', [
             'foreignKey' => 'grievance_issue_related_id',
@@ -163,7 +167,7 @@ class IndustrialGrievancesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['grievance_category_id'], 'GrievanceCategories'));
-        $rules->add($rules->existsIn(['industrial_department_id'], 'IndustrialDepartments'));
+        $rules->add($rules->existsIn(['industrial_department_id'], 'Companies'));
         $rules->add($rules->existsIn(['grievance_issue_id'], 'GrievanceIssues'));
         $rules->add($rules->existsIn(['grievance_issue_related_id'], 'GrievanceIssueRelateds'));
 

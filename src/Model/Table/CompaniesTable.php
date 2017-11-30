@@ -120,6 +120,10 @@ class CompaniesTable extends Table
 		$this->hasMany('CompanyHwmInformations', [
             'foreignKey' => 'company_id'
         ]);
+		
+		 $this->hasMany('IndustrialGrievances', [
+            'foreignKey' => 'industrial_department_id'
+        ]);
  		
     }
 
