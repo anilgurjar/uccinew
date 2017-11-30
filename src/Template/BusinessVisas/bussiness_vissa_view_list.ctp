@@ -2,21 +2,27 @@
 <div class="col-md-12">
   <!-- Horizontal Form -->
   <div class="box box-primary">
-	<!--<center>
-	<?php //if($role_id==1 or $role_id==4 ){  ?>
+	<center>
+	<?php if($role_id==1 or $role_id==4 ){  ?>
 	<div class="box-header with-border no-print ">
 		<div class="col-sm-2">
-			<?php	 //echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control exporter','name'=>'exporter','type'=>'text','placeholder'=>'Exporter Name']);  ?>
+			<?php	 echo $this->Form->input('visitor_name',['label'=>false,'class'=>'form-control exporter','name'=>'visitor_name','type'=>'text','placeholder'=>'Visitor Name']);  ?>
+		</div>
+		<div class="col-sm-2">
+			<?php 
+				$sendor_type=array('Embassy '=>"Embassy ",'Consulate'=>"Consulate");
+				
+				echo $this->Form->input('sender_type', ['empty'=>'---Select---','label' => false,'placeholder'=>'Select Sender Type','class'=>'form-control select2me sender_type','options'=>$sendor_type]); ?>
 		</div>	
 		<div class="col-sm-2">
-			<?php //echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
+			<?php echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
 		</div>	
 		<div class=" col-sm-3  ">
 			<div class=" input-group input-large  input-daterange date-picker" data-date-format="dd-mm-yyyy">	
-				<?php  //echo $this->Form->input('from', ['label' => false,'class'=>'form-control from ', 'placeholder'=>'Date From']); ?>
+				<?php  echo $this->Form->input('from', ['label' => false,'class'=>'form-control from ', 'placeholder'=>'Date From']); ?>
 				<span class="input-group-addon" style="background-color:e5e5e5 !important;">
 				To </span>
-				<?php   // echo $this->Form->input('to', ['label' => false,'class'=>'form-control to ','format'=>"yyyy/mm/dd",'placeholder'=>'Date To']); ?>
+				<?php    echo $this->Form->input('to', ['label' => false,'class'=>'form-control to ','format'=>"yyyy/mm/dd",'placeholder'=>'Date To']); ?>
 			</div>	
 		</div>
 		<div class="col-sm-2">
@@ -25,8 +31,8 @@
 		
 	</div>
 	
-	 <?php  // }  ?>
-	</center>-->
+	 <?php  }  ?>
+	</center>
 	<div class="box-header with-border no-print">
 		<center>
 		  <h3 class="box-title"><strong>Business Visa Recommendations</strong></h3>
@@ -99,13 +105,14 @@ $(document).ready(function(){
 	
 	$('.go').click(function(){
 		var exporter = $('.exporter').val();
+		var sender_type = $('.sender_type').val();
 		var originno = $('.origin_no').val();
 		var datefrom = $('.from').val();
 		var dateto = $('.to').val();
 		
 		
 			var url="<?php echo $this->Url->build(['controller'=>'CertificateOrigins','action'=>'filterdata']);?>";
-			url=url+'?exporter='+exporter+'&originno='+originno+'&datefrom='+datefrom+'&dateto='+dateto;
+			url=url+'?exporter='+exporter+'&originno='+originno+'&datefrom='+datefrom+'&dateto='+dateto+'&sender_type='+sender_type;
 			
 			$.ajax({ 
 					url:url,

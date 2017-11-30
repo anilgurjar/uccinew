@@ -1218,6 +1218,39 @@ class BusinessVisasController extends AppController
     }
 	
 	
+	public function filterdata(){
+		$exporter=$this->request->query['exporter']; 
+		$originno=$this->request->query['originno'];
+		$datefrom=$this->request->query['datefrom']; 
+		$dateto=$this->request->query['dateto'];
+		$sender_type=$this->request->query['sender_type'];
+		
+		$condition['status']='approved';
+		if(!empty($exporter)){
+			$condition['visitor_name Like']='%'.$exporter.'%';
+		}
+		if(!empty($exporter)){
+			$condition['sender_type']=$sender_type;
+		}
+		 if( !empty($originno)){
+			$condition['origin_no']=$originno;
+		}
+		
+		if(!empty($datefrom) && !empty($dateto)){
+			$datefrom=date('y-m-d', strtotime($datefrom));
+			$dateto=date('y-m-d', strtotime($dateto));
+			$condition['date_current >=']=$datefrom;
+			$condition['date_current <=']=$dateto;
+		}
+		
+		
+		$bussiness_vissas=$this->BusinessVisas->find()->where($condition)->contain(['Companies'])
+				->order(['BusinessVisas.origin_no'=>'DESC']);
+			
+		
+		$this->set(compact('bussiness_vissas'));
+		
+	}
 	
 	
 	
