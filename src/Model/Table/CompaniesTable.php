@@ -42,7 +42,7 @@ class CompaniesTable extends Table
         parent::initialize($config);
 
         $this->table('companies');
-        $this->displayField('id');
+        $this->displayField('company_organisation');
         $this->primaryKey('id');
 
         $this->belongsTo('Roles', [

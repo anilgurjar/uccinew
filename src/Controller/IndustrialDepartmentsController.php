@@ -85,16 +85,14 @@ class IndustrialDepartmentsController extends AppController
 		$this->viewBuilder()->layout('index_layout');
         $Users = $this->IndustrialDepartments->Companies->Users->newEntity();
 		
-		$Companies_data=$this->IndustrialDepartments->Companies->find()->where(['role_id'=>5])->toArray();
-		$company_id=$Companies_data[0]->id; 
 		
 		 if($this->request->is('post')) {
 			 
 			
-			  $Users = $this->IndustrialDepartments->Companies->Users->patchEntity($Users, $this->request->data);
-			 
-			  if ($this->IndustrialDepartments->Companies->Users->save($Users)) {
-                $this->Flash->success(__('The industrial department member has been saved.'));
+			$Users = $this->IndustrialDepartments->Companies->Users->patchEntity($Users, $this->request->data);
+			
+			if ($this->IndustrialDepartments->Companies->Users->save($Users)) {
+			$this->Flash->success(__('The industrial department member has been saved.'));
 
                 return $this->redirect(['action' => 'AddMember']);
             } else {
@@ -105,12 +103,10 @@ class IndustrialDepartmentsController extends AppController
 		
 		 }
 		
-		$Companies_datas=$this->IndustrialDepartments->Companies->find()->where(['role_id'=>5])->contain(['Users'=>['IndustrialDepartments']])->toArray();
+		$Companies_datas=$this->IndustrialDepartments->Companies->find()->where(['role_id'=>5])->contain(['Users'])->toArray();
+		$Companies=$this->IndustrialDepartments->Companies->find('list')->where(['role_id'=>5])->toArray();
 		
-		$IndustrialDepartments = $this->IndustrialDepartments->find('list')->toArray();
-		
-		
-		$this->set(compact('IndustrialDepartments','company_id','Users','Companies_datas'));
+		$this->set(compact('IndustrialDepartments','Companies','Users','Companies_datas'));
         $this->set('_serialize', ['industrialDepartment','Users']);
 	 }
 	

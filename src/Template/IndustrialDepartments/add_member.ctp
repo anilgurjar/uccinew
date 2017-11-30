@@ -12,12 +12,8 @@
 					<div class="col-md-3"> 
 						<div class="form-group">
 							<label class="control-label">Department </label>
-													
-						<?php echo $this->Form->input('industrial_department_id', array('empty'=> '--Select--','label' => false,'options' => $IndustrialDepartments,'hiddenField' => false,'value'=>'','class'=>'form-control select2')); ?>
-						
-						<?php echo $this->Form->input('company_id', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control ','type'=>'hidden','value'=>$company_id]); ?>
-						
-						<label id="industrial-department-id-error" class="error" for="industrial-department-id"></label>
+							<?php    
+							echo $this->Form->input('company_id', ['empty'=>'---Select---','label' => false,'placeholder'=>'Select Company Name','class'=>'form-control select2me','options'=>$Companies]);  ?>
 						</div>
 					</div> 
 				
@@ -25,9 +21,6 @@
 						<div class="form-group">
 							<label class="control-label">Contact Person</label>
 							<?php echo $this->Form->input('member_name', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control']); ?>
-							
-							<?php echo $this->Form->input('member_nominee_type', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>'']); ?>
-							
 						</div>
 					</div>
 					<div class="col-md-3"> 
@@ -70,15 +63,19 @@
             </tr>
         </thead>
         <tbody>
-            <?php $sr_no=0; foreach ($Companies_datas[0]->users as $users_data): ?>
+            <?php $sr_no=0;foreach ($Companies_datas as $users_data):
+			  foreach($users_data['users']   as $user){  ?>
             <tr>
                 <td><?= $this->Number->format(++$sr_no) ?></td>
-                <td><?= h($users_data->industrial_department->department_name) ?></td> <td><?= h($users_data->member_name) ?></td> 
-				<td><?= h($users_data->email) ?></td>
-				<td><?= h($users_data->mobile_no) ?></td>
+                <td><?= h($users_data['company_organisation']) ?></td> 
+				
+				<td><?= h($user['member_name']) ?></td> 
+				<td><?= h($user['email']) ?></td>
+				<td><?= h($user['mobile_no']) ?></td>
+				
               
             </tr>
-            <?php endforeach; ?>
+            <?php  }  endforeach; ?>
         </tbody>
     </table>
    
