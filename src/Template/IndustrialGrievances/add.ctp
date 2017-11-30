@@ -30,13 +30,9 @@ fieldset{
 						<div class="form-group">
 							<label class="control-label">Department Type :</label>
 							<?php
-							$options=array();
-							foreach($IndustrialDepartments as $IndustrialDepartment){ 
-								$options[$IndustrialDepartment->id] = $IndustrialDepartment->department_name;
-							}
-							echo $this->Form->input('industrial_department_id', ['empty'=> '--Select--','data-placeholder'=>'Select Department','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
-							<label id="industrial-department-id-error" class="error" for="industrial-department-id"></label>
-						</div>
+							
+							echo $this->Form->input('industrial_department_id', ['empty'=> '--Select--','data-placeholder'=>'Select Department','label' => false,'class'=>'form-control select2','options'=>$IndustrialDepartments,'style'=>'width:100%;']); ?>
+							</div>
 					</div>
 					
 					<div class="col-md-4">

@@ -221,7 +221,9 @@ class IndustrialGrievancesController extends AppController
                 $this->Flash->error(__('The industrial grievance could not be saved. Please, try again.'));
             }
         }
-        $IndustrialDepartments = $this->IndustrialGrievances->IndustrialDepartments->find()->toArray();
+        $IndustrialDepartments = $this->IndustrialGrievances->Companies->find('list')->where(['role_id'=>5])->toArray();
+		
+		
 		$grievancecategorys = $this->IndustrialGrievances->GrievanceCategories->find('list');
 		$GrievanceIssues = $this->IndustrialGrievances->GrievanceIssues->find('list');
         $this->set(compact('industrialGrievance', 'IndustrialDepartments', 'company_organisation', 'address', 'pincode', 'city','grievancecategorys','GrievanceIssues'));

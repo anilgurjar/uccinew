@@ -57,6 +57,9 @@ class IndustrialGrievancesTable extends Table
             'foreignKey' => 'created_by',
             'joinType' => 'INNER'
         ]);
+		
+		$this->belongsTo('Companies');
+		
         $this->belongsTo('GrievanceIssueRelateds', [
             'foreignKey' => 'grievance_issue_related_id',
             'joinType' => 'INNER'
