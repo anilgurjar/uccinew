@@ -1321,6 +1321,16 @@ class CertificateOriginsController extends AppController
 		
 		$this->set(compact('certificate_origins','role_id'));
 	}
+	
+ 
+ 
+public function coo_pending_approval(){
+	 
+	 
+	 
+ }
+ 
+ 
 	public function certificateOriginViewPublished()
     {
 		$this->viewBuilder()->layout('index_layout');
@@ -1335,14 +1345,6 @@ class CertificateOriginsController extends AppController
 		}		
 		$this->set(compact('certificate_origins'));
 	}
- 
- 
-public function coo_pending_approval(){
-	 
-	 
-	 
- }
- 
  
 	public function certificateOriginPublishedView()
     {

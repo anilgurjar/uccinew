@@ -41,36 +41,231 @@ class IndustrialGrievancesController extends AppController
 				
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
 		
-		/*  $IndustrialGrievances = $this->IndustrialGrievances->IndustrialDepartments->find()
-			->contain(['IndustrialGrievances'=>function($q){
-				return $q->where(['complete_status IN'=>['inprogress','hold','reopen']])
-						->order(['complete_status'=>'DESC'])
-						->contain(['Users','IndustrialGrievanceFollows'=>function($qfollow){
-							return $qfollow->order(['id'=>'DESC']);
-						}]);
-			}]);  */
-			
+		
 			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
 			->contain(['IndustrialGrievances'=>function($q){
 				return $q->where(['complete_status IN'=>['inprogress','hold','reopen']])
 						->order(['complete_status'=>'DESC'])
-						->contain(['Users','IndustrialGrievanceFollows'=>function($qfollow){
+						->contain(['Users'=>['Companies'],'IndustrialGrievanceFollows'=>function($qfollow){
 							return $qfollow->order(['id'=>'DESC']);
 						}]);
 			}]);
 			
-			/* $IndustrialGrievances = $this->IndustrialGrievances->find()->where(['complete_status IN'=>['inprogress','hold','reopen']])
-						->order(['complete_status'=>'DESC'])
-						->contain(['Users','Companies','IndustrialGrievanceFollows'=>function($qfollow){
-							return $qfollow->order(['id'=>'DESC']);
-						}]);
-			 */
+			
 			
 					
         $this->set(compact('IndustrialGrievances', 'IndustrialDepartments','random_color','industrialGrievance'));
         $this->set('_serialize', ['industrialGrievances','industrialGrievance']);
     }
 
+	
+	
+	
+	
+	
+	
+	
+	public function industrialGrievanceViewPublished()
+    {
+		$this->viewBuilder()->layout('index_layout');
+		$company_id=$this->Auth->User('company_id'); 
+		$Companies=$this->IndustrialGrievances->Companies->get($company_id);
+		$role_id=$Companies->role_id;
+		$this->paginate = [
+            'contain' => ['Users']
+        ];
+		$random_color=['btn btn-success','btn btn-danger','btn btn-info','btn btn-warning'];
+       
+		$IndustrialDepartments = $this->IndustrialGrievances->Companies->find('list')->where(['role_id'=>5]);
+				
+		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
+		
+		
+			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
+			->contain(['IndustrialGrievances'=>function($q){
+				return $q->where(['complete_status IN'=>['published']])
+						->order(['complete_status'=>'DESC'])
+						->contain(['Users'=>['Companies'],'IndustrialGrievanceFollows'=>function($qfollow){
+							return $qfollow->order(['id'=>'DESC']);
+						}]);
+			}]);
+			
+			
+			
+					
+        $this->set(compact('IndustrialGrievances', 'IndustrialDepartments','random_color','industrialGrievance'));
+        $this->set('_serialize', ['industrialGrievances','industrialGrievance']);
+	}
+	
+	
+	
+ 
+	public function industrialGrievancePublishedView()
+    {
+		$this->viewBuilder()->layout('index_layout');
+		$id=$this->Auth->User('id');
+		
+		if(isset($this->request->data['view']))
+		{ 
+	
+			
+			$grienance_id=$this->request->data['view'];
+			$industrialGrievance = $this->IndustrialGrievances->get($grienance_id, [
+            'contain' => ['Companies','GrievanceIssues','GrievanceIssueRelateds','GrievanceCategories','IndustrialGrievanceFollows','IndustrialGrievanceStatuses','Users'=>['Companies']]
+			]);
+			$dir = new Folder(WWW_ROOT . 'img/grievance/'.$id);
+			$file_path = str_replace("\\","/",WWW_ROOT).'img/grievance/'.$id;
+
+			$files = $dir->find('.*', true);
+			$this->set('id', $id);
+			$this->set('files', $files);
+			$this->set('file_path', $file_path);
+			$IndustrialDepartments = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])->toArray();
+			$this->set('industrialGrievance', $industrialGrievance);
+			$this->set('IndustrialDepartments', $IndustrialDepartments);
+			$this->set('_serialize', ['industrialGrievance']);
+
+		}
+		if($this->request->is('post')) 
+		{		
+						
+			if(isset($this->request->data['grievance_accept_submit']))
+			{
+				
+				$email = new Email();
+				$email->transport('SendGrid');
+				
+				$id=$this->request->data['grievance_accept_submit'];
+				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
+				$exporter_name=$CertificateOrigins->exporter;
+				
+				$this->request->data['verify_by']=$user_id;
+				$this->request->data['verify_on']=date('Y-m-d h:i:s');
+				$this->request->data['status']='verified';
+				$this->request->data['coo_verify_email']='yes';
+				
+				
+				
+				$query = $this->CertificateOrigins->find();
+ 				//pr($this->request->data); exit;
+				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				/*$email_to=$CertificateOrigins->company->users[0]->email; 
+				$member_name=$CertificateOrigins->company->users[0]->member_name;
+				$Users= $this->CertificateOrigins->Users->get($user_id);
+				$regards_member_name=$Users->member_name;*/
+
+			
+
+				if($this->CertificateOrigins->save($CertificateOrigins))
+				{
+					
+					$certificates_data = base64_encode($id);
+					
+					//$certificates_data = json_encode($certificates_data);
+					
+				
+					$authorise_person_mails=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->contain(['Users']);
+				foreach($authorise_person_mails as $authorise_person_mail){
+					$emailperson_id=$authorise_person_mail['user']->id;
+					$emailperson=$authorise_person_mail['user']->member_name;
+					$emailsend=$authorise_person_mail['user']->email;
+					
+					$emailperson_id = base64_encode($emailperson_id);
+					 // $url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
+					 
+					$url="http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+					
+					//$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+					
+					$sub="Certificate of origin is Varified";
+					$from_name="UCCI";
+					$email_to=trim($emailsend,' ');
+					$email_to='rohitkumarjoshi43@gmail.com';
+					if(!empty($email_to)){		
+						try {
+							$email->from(['ucciudaipur@gmail.com' => $from_name])
+								->to($email_to)
+								->replyTo('uccisec@hotmail.com')
+								->subject($sub)
+								->profile('default')
+								->template('coo_varify')
+								->emailFormat('html')
+								->viewVars(['member_name'=>$emailperson,'url'=>$url,'exporter_name'=>$exporter_name]);
+								$email->send();
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
+
+							} 
+						}
+				}	
+				
+					$this->Flash->success(__('Industrial Grievance has been Accept.'));
+					return $this->redirect(['action' => 'certificate-origin-view-published']);
+				}
+				$this->Flash->error(__('Unable to Accept Industrial Grievance.'));
+			}
+			else if(isset($this->request->data['grievance_notaccept_submit']))
+			{
+				
+				$id=$this->request->data['grievance_notaccept_submit'];
+				$CertificateOrigins=$this->CertificateOrigins->get($id , ['contain'=>['Companies'=>['Users']]]);
+			
+				$remarks=$this->request->data['verify_remarks'];
+				$this->request->data['verify_by']=$user_id;
+				$this->request->data['verify_on']=date('Y-m-d h:i:s');
+				$this->request->data['status']='draft';
+				$this->request->data['authorised_remarks']='';
+				 
+				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
+				$email = new Email();
+				$email->transport('SendGrid');
+			if($this->CertificateOrigins->save($CertificateOrigins))
+				{
+					
+					foreach($CertificateOrigins['company']['users'] as $CertificateOrigin)
+					{
+						$mailsendtomember=$CertificateOrigin['member_name'];
+						$mailsendtoemail=$CertificateOrigin['email'];
+						$sub="Certificate of origin is Not Varified";
+						$from_name="UCCI";
+						$email_to=trim($mailsendtoemail,' ');
+						$email_to="anilgurjer371@gmail.com";
+					if(!empty($email_to)){		
+						try {
+							$email->from(['ucciudaipur@gmail.com' => $from_name])
+								->to($email_to)
+								->replyTo('uccisec@hotmail.com')
+								->subject($sub)
+								->profile('default')
+								->template('coo_not_varify')
+								->emailFormat('html')
+								->viewVars(['member_name'=>$mailsendtomember,'regard_member_name'=>$regard_member_name,'remarks'=>$remarks]);
+								$email->send();
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
+
+							} 
+						}
+					}	
+					$this->Flash->success(__('Industrial Grievance has been not Accept.'));
+					return $this->redirect(['action' => 'certificate-origin-view-published']);
+				}
+				$this->Flash->error(__('Unable to not Accept Industrial Grievance.'));
+			}
+		}
+		
+		$this->set(compact('CertificateOrigins'));
+		 
+    }
+	
+	
+	
+	
+	
+	
+	
     /**
      * View method
      *
@@ -154,21 +349,20 @@ class IndustrialGrievancesController extends AppController
         $industrialGrievance = $this->IndustrialGrievances->newEntity();
         if ($this->request->is('post')) {
 			
-			$grievance_numbers=$this->IndustrialGrievances->find()->select(['grievance_number'])->order(['grievance_number'=>'DESC'])->first();
+			//$grievance_numbers=$this->IndustrialGrievances->find()->select(['grievance_number'])->order(['grievance_number'=>'DESC'])->first();
 		
 			$files=$this->request->data['file']; 
 			$file_name=$files[0]['name'];
 			
 			if(!empty($files[0]['name'])){
-				$this->request->data['document']='true';
+				$this->request->data['file']='true';
 			}else{
-				$this->request->data['document']='false';
+				$this->request->data['file']='false';
 			}
 		
-			$this->request->data['file_name'] = 'file_name';
-			$this->request->data['complete_status'] = 'published';
+			$this->request->data['file_name'] = $file_name;
 			$this->request->data['created_by'] = $user_id;
-			$this->request->data['grievance_number'] = @$grievance_numbers->grievance_number+1;
+			//$this->request->data['grievance_number'] = @$grievance_numbers->grievance_number+1;
 			$industrialGrievance = $this->IndustrialGrievances->patchEntity($industrialGrievance, $this->request->data);
 			
             if ($industrialGrievance_data=$this->IndustrialGrievances->save($industrialGrievance)) {
@@ -227,17 +421,17 @@ class IndustrialGrievancesController extends AppController
 						
 					}
 				}
+				
 				$query = $this->IndustrialGrievances->query();
 				$query->update()
-				->set(['document'=>$coverage_path])
+				->set(['document'=>$coverage_path,'complete_status'=>'published'])
 				->where(['id' => $grievance_id])
 				->execute();
-                $this->Flash->success(__('The industrial grievance has been saved.'));
+                $this->Flash->success(__('Thanking You  for industrial grievance It has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'add']);
             } else {
-				pr($industrialGrievance); exit;
-                $this->Flash->error(__('The industrial grievance could not be saved. Please, try again.'));
+				$this->Flash->error(__('The industrial grievance could not be saved. Please, try again.'));
             }
         }
         $IndustrialDepartments = $this->IndustrialGrievances->Companies->find('list')->where(['role_id'=>5])->toArray();
@@ -310,23 +504,28 @@ class IndustrialGrievancesController extends AppController
     {
 		unlink(WWW_ROOT . '/img/grievance/'.$grievance_id.'/'.$file_name);
 	}
+	
+	
 	public function grievanceFollow()
     {
 		$this->viewBuilder()->layout(null);
 		
+		
 		 $industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
-		 $id=$this->request->data['industrial_grievance_id'];
-			
+	
+		
 		 $industrialGrievance_follow = $this->IndustrialGrievances->get($id, [
             'contain' =>['Companies','Users']
         ]);
 		
-		 $department_name=$industrialGrievance_follow->company->company_organisation; 
-		 $email_to=$industrialGrievance_follow->user->email; 
-		 $member_name=$industrialGrievance_follow->user->member_name;
+		
+		$department_name=$industrialGrievance_follow->company->company_organisation; 
+		$email_to=$industrialGrievance_follow->user->email; 
+		$member_name=$industrialGrievance_follow->user->member_name;
 		$mobile_no=$industrialGrievance_follow->user->mobile_no; 
 		$email = new Email();
 		$email->transport('SendGrid');
+		
 		/* //$mobile_no='9887779123';
 		//pr($industrialGrievance_follow); exit;
 		
@@ -334,10 +533,11 @@ class IndustrialGrievancesController extends AppController
 		$sms1=str_replace(" ", '+', $sms);
 		$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=ucciudr&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
 		 */
-				
+		 
+		 $id=$this->request->data['industrial_grievance_id'];
 			$this->request->data['industrial_grievance_id'] = $id;		
             $industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->patchEntity($industrialGrievance, $this->request->data);
-			
+			pr($industrialGrievance->toArray());   exit;
             if ($industrialGrievance_data=$this->IndustrialGrievances->IndustrialGrievanceFollows->save($industrialGrievance)) {
 				
 			$industrialGrievance_id=$industrialGrievance_data->id;

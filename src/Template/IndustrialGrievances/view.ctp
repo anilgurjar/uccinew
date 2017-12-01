@@ -94,6 +94,15 @@
             <td><?= h(date('d-m-Y', strtotime($industrialGrievance->created_on))) ?></td>
         </tr>
     </table>
+	<div class="col-sm-12">
+		<?php
+		if(!empty($industrialGrievance->document)){
+				echo"<div class='col-sm-4'>";	
+				echo $this->Html->image('/'.$industrialGrievance->document, ['style'=>'width:300px; height:300px;']);
+				echo'</div>'; 
+			}
+		?>
+	</div>
 <!--	 <h3 class="box-title"> <center>Grievance Action </center></h3>
 <div class="row" style="margin-right:0px;margin-left:0px;">
 		

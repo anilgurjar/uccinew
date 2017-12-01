@@ -63,7 +63,7 @@
 						}
 						?>
 						<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->description) ?></td>
-						<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->user->company_organisation) ?></td> 
+						<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->user->company->company_organisation) ?></td> 
 						
 						<?php  if (!empty($industrial_grievance->industrial_grievance_follows)){  ?>
 						<?php
