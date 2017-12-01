@@ -17,7 +17,7 @@ class CertificateOriginsController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['logout', 'index','CooSendEmail','cooApproved','success','failure']);
+		$this->Auth->allow(['logout', 'index','CooSendEmail','cooApproved','success','failure','cooPendingApproval']);
 		$member_name=$this->Auth->User('member_name');
 		$this->set('member_name',$member_name);
 	}
@@ -27,7 +27,7 @@ class CertificateOriginsController extends AppController
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
-        $this->Auth->allow(['index', 'logout','success','failure','cooApproved']);
+        $this->Auth->allow(['index', 'logout','success','failure','cooApproved','cooPendingApproval']);
     }
 
 	function CooUpdate($id=Null,$status=Null)
@@ -1336,13 +1336,66 @@ class CertificateOriginsController extends AppController
 		$this->set(compact('certificate_origins'));
 	}
  
- 
-public function coo_pending_approval(){
+
+	public function cooPendingApproval(){
 	 
-	 
-	 
- }
- 
+		
+		  $certificate_origin_count = $this->CertificateOrigins->find()->where(['payment_status'=>'success','status'=>'verified'])->count(); 
+			  if($certificate_origin_count>0){
+
+					$urls=[];
+					$certificate_origins = $this->CertificateOrigins->find()->where(['payment_status'=>'success','status'=>'verified']);
+					
+					$authorise_person_mails=$this->CertificateOrigins->CertificateOriginAuthorizeds->find()->contain(['Users']);
+					foreach($authorise_person_mails as $authorise_person_mail){
+						$emailperson_id=$authorise_person_mail['user']->id;
+						$emailperson=$authorise_person_mail['user']->member_name;
+						$emailsend=$authorise_person_mail['user']->email;
+
+						$emailperson_id = base64_encode($emailperson_id);
+
+					}
+					foreach($certificate_origins as $certificate_origin){
+						
+						$certificates_data = base64_encode($certificate_origin->id);
+						
+						// $url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
+					 
+						$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+					
+						$urls[]=array("exporter_name"=>$certificate_origin->exporter,"url"=>$url);
+					}
+					
+					
+					$email = new Email();
+					$email->transport('SendGrid');
+
+					$sub="Certificate of origin is Varified";
+					$from_name="UCCI";
+					$email_to=trim($emailsend,' ');
+					$email_to='rohitkumarjoshi43@gmail.com';
+					if(!empty($email_to)){		
+						try {
+							$email->from(['ucciudaipur@gmail.com' => $from_name])
+								->to($email_to)
+								->replyTo('uccisec@hotmail.com')
+								->subject($sub)
+								->profile('default')
+								->template('coo_pending_approval')
+								->emailFormat('html')
+								->viewVars(['member_name'=>$emailperson,'urls'=>$urls]);
+								$email->send();
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
+
+							} 
+						}
+			
+			  }
+			  exit;
+	}
+
  
 	public function certificateOriginPublishedView()
     {
@@ -1545,6 +1598,7 @@ public function coo_pending_approval(){
 				$this->request->data['verify_remarks']=''; 
 				$this->request->data['authorised_remarks']=''; 
 				$this->request->data['coo_verify_email']='no'; 
+				$this->request->data['where_from_approve']='web'; 
 				
 				$coo_verification_code=uniqid(); 
 				$this->request->data['coo_verification_code']=$coo_verification_code; 
@@ -1611,6 +1665,7 @@ public function coo_pending_approval(){
 				$this->request->data['authorised_by']=$user_id;
 				$this->request->data['status']='published';
 				$this->request->data['coo_verify_email']='no'; 
+				$this->request->data['where_from_approve']='web'; 
 				
 				 $CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
 				
