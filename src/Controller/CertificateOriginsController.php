@@ -1359,9 +1359,11 @@ class CertificateOriginsController extends AppController
 						
 						$certificates_data = base64_encode($certificate_origin->id);
 						
-						// $url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
+						 $url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
 					 
-						$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+						//$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+						
+					     $url="http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 					
 						$urls[]=array("exporter_name"=>$certificate_origin->exporter,"url"=>$url);
 					}
