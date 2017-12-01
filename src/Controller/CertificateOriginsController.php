@@ -1626,7 +1626,7 @@ class CertificateOriginsController extends AppController
 					  $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					$email_to="rohitkumarjoshi43@gmail.com";
+					  $email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
