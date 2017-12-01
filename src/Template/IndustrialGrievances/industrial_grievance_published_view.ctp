@@ -13,7 +13,7 @@ use Cake\Filesystem\File;
 	<!-- Horizontal Form -->
 	<div class="box box-primary">
 		<div class="box-body">
-			<?= $this->Form->create($industrialGrievance) ?>
+			<?= $this->Form->create($IndustrialGrievances) ?>
 			<div class="box-header with-border">
 				<!--<div class="print_screen" style="float:right;"> 
 					<div style="float:left;margin-right:6px"><button class="btn btn-block btn-primary " type="button"  style="margin-bottom: 2px;" onclick="window.print();"><b>Print </b></button>  </div>
