@@ -1336,6 +1336,14 @@ class CertificateOriginsController extends AppController
 		$this->set(compact('certificate_origins'));
 	}
  
+ 
+public function coo_pending_approval(){
+	 
+	 
+	 
+ }
+ 
+ 
 	public function certificateOriginPublishedView()
     {
 		$this->viewBuilder()->layout('index_layout');
