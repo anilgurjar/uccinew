@@ -32,7 +32,11 @@ class IndustrialGrievancesController extends AppController
     public function index()
     {
 		$this->viewBuilder()->layout('index_layout');
-        $this->paginate = [
+		$company_id=$this->Auth->User('company_id'); 
+		$Companies=$this->IndustrialGrievances->Companies->get($company_id);
+		$role_id=$Companies->role_id;
+		
+		$this->paginate = [
             'contain' => ['Users']
         ];
 		$random_color=['btn btn-success','btn btn-danger','btn btn-info','btn btn-warning'];
@@ -41,16 +45,23 @@ class IndustrialGrievancesController extends AppController
 				
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
 		
-		
+		if($role_id==1 || $role_id==4){
 			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
-			->contain(['IndustrialGrievances'=>function($q){
-				return $q->where(['complete_status IN'=>['inprogress','hold','reopen']])
+					->contain(['IndustrialGrievances'=>function($q){return $q->where(['complete_status IN'=>['running']])
 						->order(['complete_status'=>'DESC'])
 						->contain(['Users'=>['Companies'],'IndustrialGrievanceFollows'=>function($qfollow){
 							return $qfollow->order(['id'=>'DESC']);
 						}]);
-			}]);
-			
+				}]);
+		}else{
+			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5,'Companies.id'=>$company_id])
+					->contain(['IndustrialGrievances'=>function($q){return $q->where(['complete_status IN'=>['running']])
+						->order(['complete_status'=>'DESC'])
+						->contain(['Users'=>['Companies'],'IndustrialGrievanceFollows'=>function($qfollow){
+							return $qfollow->order(['id'=>'DESC']);
+						}]);
+				}]);
+		}	
 			
 			
 					
