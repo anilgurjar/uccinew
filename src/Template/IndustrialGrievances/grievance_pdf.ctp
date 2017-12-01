@@ -37,7 +37,7 @@ $html='';
 				  
 				<tr>
 					<td scope="row">Department type</td>
-					<td>'.$industrialGrievance->industrial_department->department_name.'</td>
+					<td>'.$industrialGrievance->company->company_organisation.'</td>
 				</tr>
 				 <tr>
 					<td scope="row">Grievance Category</td>

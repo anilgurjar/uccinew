@@ -82,7 +82,7 @@ class IndustrialGrievancesController extends AppController
     {
 		$this->viewBuilder()->layout('index_layout');
         $industrialGrievance = $this->IndustrialGrievances->get($id, [
-            'contain' => ['IndustrialDepartments','GrievanceIssues','GrievanceIssueRelateds','GrievanceCategories','IndustrialGrievanceFollows','IndustrialGrievanceStatuses','Users'=>['Companies']]
+            'contain' => ['Companies','GrievanceIssues','GrievanceIssueRelateds','GrievanceCategories','IndustrialGrievanceFollows','IndustrialGrievanceStatuses','Users'=>['Companies']]
         ]);
 		
 		$dir = new Folder(WWW_ROOT . 'img/grievance/'.$id);
@@ -92,7 +92,7 @@ class IndustrialGrievancesController extends AppController
 		$this->set('id', $id);
 		$this->set('files', $files);
 		$this->set('file_path', $file_path);
-		$IndustrialDepartments = $this->IndustrialGrievances->IndustrialDepartments->find()->toArray();
+		$IndustrialDepartments = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])->toArray();
         $this->set('industrialGrievance', $industrialGrievance);
         $this->set('IndustrialDepartments', $IndustrialDepartments);
         $this->set('_serialize', ['industrialGrievance']);
@@ -101,7 +101,7 @@ class IndustrialGrievancesController extends AppController
 	  public function grievancePdf($id = null)
 		{
 			 $industrialGrievance = $this->IndustrialGrievances->get($id, [
-            'contain' => ['IndustrialDepartments','GrievanceIssues','GrievanceIssueRelateds','GrievanceCategories','IndustrialGrievanceFollows','IndustrialGrievanceStatuses','Users'=>['Companies']]
+            'contain' => ['Companies','GrievanceIssues','GrievanceIssueRelateds','GrievanceCategories','IndustrialGrievanceFollows','IndustrialGrievanceStatuses','Users'=>['Companies']]
         ]);
 		
 		$dir = new Folder(WWW_ROOT . 'img/grievance/'.$id);
@@ -111,7 +111,7 @@ class IndustrialGrievancesController extends AppController
 		$this->set('id', $id);
 		$this->set('files', $files);
 		$this->set('file_path', $file_path);
-		$IndustrialDepartments = $this->IndustrialGrievances->IndustrialDepartments->find()->toArray();
+		$IndustrialDepartments = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])->toArray();
         $this->set('industrialGrievance', $industrialGrievance);
         $this->set('IndustrialDepartments', $IndustrialDepartments);
         $this->set('_serialize', ['industrialGrievance']);
@@ -315,10 +315,10 @@ class IndustrialGrievancesController extends AppController
 		 $id=$this->request->data['industrial_grievance_id'];
 			
 		 $industrialGrievance_follow = $this->IndustrialGrievances->get($id, [
-            'contain' =>['IndustrialDepartments','Users']
+            'contain' =>['Companies','Users']
         ]);
 		
-		 $department_name=$industrialGrievance_follow->industrial_department->department_name; 
+		 $department_name=$industrialGrievance_follow->company->company_organisation; 
 		 $email_to=$industrialGrievance_follow->user->email; 
 		 $member_name=$industrialGrievance_follow->user->member_name;
 		$mobile_no=$industrialGrievance_follow->user->mobile_no; 

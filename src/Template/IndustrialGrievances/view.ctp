@@ -44,7 +44,7 @@
             <th scope="row"><?= __('Department type') ?></th>
             <td>
 			<?php
-				echo $industrialGrievance->industrial_department->department_name; 
+				echo $industrialGrievance->company->company_organisation; 
 				?>
 			</td>
         </tr>
