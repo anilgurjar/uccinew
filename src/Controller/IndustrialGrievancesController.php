@@ -157,13 +157,16 @@ class IndustrialGrievancesController extends AppController
 			$grievance_numbers=$this->IndustrialGrievances->find()->select(['grievance_number'])->order(['grievance_number'=>'DESC'])->first();
 		
 			$files=$this->request->data['file']; 
+			$file_name=$files[0]['name'];
 			
 			if(!empty($files[0]['name'])){
-				$this->request->data['file']='true';
+				$this->request->data['document']='true';
 			}else{
-				$this->request->data['file']='false';
+				$this->request->data['document']='false';
 			}
 		
+			$this->request->data['file_name'] = 'file_name';
+			$this->request->data['complete_status'] = 'published';
 			$this->request->data['created_by'] = $user_id;
 			$this->request->data['grievance_number'] = @$grievance_numbers->grievance_number+1;
 			$industrialGrievance = $this->IndustrialGrievances->patchEntity($industrialGrievance, $this->request->data);
