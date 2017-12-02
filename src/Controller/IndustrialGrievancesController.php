@@ -303,19 +303,19 @@ class IndustrialGrievancesController extends AppController
 		{
 			 $industrialGrievance = $this->IndustrialGrievances->get($id, [
             'contain' => ['Companies','GrievanceIssues','GrievanceIssueRelateds','GrievanceCategories','IndustrialGrievanceFollows','IndustrialGrievanceStatuses','Users'=>['Companies']]
-        ]);
-		
-		$dir = new Folder(WWW_ROOT . 'img/grievance/'.$id);
-		$file_path = str_replace("\\","/",WWW_ROOT).'img/grievance/'.$id;
+			]);
+			
+			$dir = new Folder(WWW_ROOT . 'img/grievance/'.$id);
+			$file_path = str_replace("\\","/",WWW_ROOT).'img/grievance/'.$id;
 
-		$files = $dir->find('.*', true);
-		$this->set('id', $id);
-		$this->set('files', $files);
-		$this->set('file_path', $file_path);
-		$IndustrialDepartments = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])->toArray();
-        $this->set('industrialGrievance', $industrialGrievance);
-        $this->set('IndustrialDepartments', $IndustrialDepartments);
-        $this->set('_serialize', ['industrialGrievance']);
+			$files = $dir->find('.*', true);
+			$this->set('id', $id);
+			$this->set('files', $files);
+			$this->set('file_path', $file_path);
+			$IndustrialDepartments = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])->toArray();
+			$this->set('industrialGrievance', $industrialGrievance);
+			$this->set('IndustrialDepartments', $IndustrialDepartments);
+			$this->set('_serialize', ['industrialGrievance']);
 			
 			
 		}

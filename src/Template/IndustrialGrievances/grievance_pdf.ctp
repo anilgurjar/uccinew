@@ -80,6 +80,7 @@ $html='';
 									<td width="85">Date</td>
 									<td>Departmant</td>
 									<td>UCCI</td>
+									<td>Member</td>
 								</tr>';
 										
 									$i=0;
@@ -91,6 +92,7 @@ $html='';
 											<td>'.h(date("d-m-Y",strtotime($industrial_grievance_follow->follow_date))).'</td>
 											<td>'.h($industrial_grievance_follow->department_content).'</td>
 											<td>'.h($industrial_grievance_follow->ucci_content).'</td>
+											<td>'.h($industrial_grievance_follow->member_content).'</td>
 										</tr>';
 
 									} 
