@@ -169,7 +169,7 @@ class IndustrialGrievancesController extends AppController
 					//$email_to=trim($member_email,'');
 					$email_to='anilgurjer371@gmail.com';
 					//$email_to1=trim($department_email,'');
-					$email_to1='anilgurjer371@gmail.com';
+					$email_to1='anil@phppoets.in';
 					
 					if(!empty($email_to)){		
 						try {
@@ -235,7 +235,7 @@ class IndustrialGrievancesController extends AppController
 					
 						$mailsendtomember=$IndustrialGrievances['user']['member_name'];
 						$mailsendtoemail=$IndustrialGrievances['user']['email'];
-						$sub="Certificate of origin is Not Varified";
+						$sub="Industrial Grievance is Not Accept";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
 						$email_to="anilgurjer371@gmail.com";

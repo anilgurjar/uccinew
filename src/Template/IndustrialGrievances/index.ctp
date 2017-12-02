@@ -414,7 +414,7 @@ $(document).on('click', '.submit', function(e)
 				   url: "<?php echo $this->Url->build(['controller'=>'IndustrialGrievances','action'=>'grievance_follow']); ?>",
 				   data: $("#validationForm"+grievance_id).serialize(), 
 				   success: function(data){
-						alert(data);
+						
 					   $(".cls").click();
 					   $("#validationForm"+grievance_id).trigger("reset");
 					   $(".related_issue").html(''); 
