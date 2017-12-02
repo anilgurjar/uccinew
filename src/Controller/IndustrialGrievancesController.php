@@ -47,7 +47,7 @@ class IndustrialGrievancesController extends AppController
 		
 		if($role_id==1 || $role_id==4){
 			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
-					->contain(['IndustrialGrievances'=>function($q){return $q->where(['complete_status IN'=>['running']])
+					->contain(['IndustrialGrievances'=>function($q){return $q->where(['complete_status IN'=>['running','hold']])
 						->order(['complete_status'=>'DESC'])
 						->contain(['Users'=>['Companies'],'IndustrialGrievanceFollows'=>function($qfollow){
 							return $qfollow->order(['id'=>'DESC']);
@@ -630,7 +630,7 @@ class IndustrialGrievancesController extends AppController
 		 
 		  $query = $this->IndustrialGrievances->query();
 				$query->update()
-				->set(['reopen_reason' => $reopen_reason,'complete_status'=>'reopen'])
+				->set(['reopen_reason' => $reopen_reason,'complete_status'=>'running'])
 				->where(['id' => $industrial_grievance_id])
 				->execute();
 			
@@ -713,7 +713,7 @@ class IndustrialGrievancesController extends AppController
 	
 		
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
-		$conditions['complete_status in']=['running'];
+		$conditions['complete_status in']=['running','hold'];
 		if(!empty($id)){
 			$conditions['industrial_department_id']=$id;
 			
