@@ -671,8 +671,14 @@ class InvoiceAttestationsController extends AppController
 					}
 					else{
 						//return $this->redirect(['action' => 'paymentTest',$data['id']]);
-						return $this->redirect(['action' => 'payment',$data['id']]);
-						
+						//return $this->redirect(['action' => 'payment',$data['id']]);
+						$query = $this->InvoiceAttestations->query();
+							$query->update()
+							->set(['status' => 'published','payment_status'=>'success'])
+							->where(['id' => $data['id']])
+							->execute();
+							return $this->redirect(['action' => 'invoice-attestation-draft-view']);
+					
 					}
 				//}	
 					

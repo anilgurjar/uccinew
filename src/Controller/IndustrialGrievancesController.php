@@ -65,7 +65,7 @@ class IndustrialGrievancesController extends AppController
 			
 			
 					
-        $this->set(compact('IndustrialGrievances', 'IndustrialDepartments','random_color','industrialGrievance'));
+        $this->set(compact('IndustrialGrievances', 'IndustrialDepartments','random_color','role_id','industrialGrievance'));
         $this->set('_serialize', ['industrialGrievances','industrialGrievance']);
     }
 
@@ -515,12 +515,13 @@ class IndustrialGrievancesController extends AppController
 		$this->viewBuilder()->layout(null);
 		
 		
-		 $industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
+		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
+		$id=$this->request->data['industrial_grievance_id'];
 	
-		
-		 $industrialGrievance_follow = $this->IndustrialGrievances->get($id, [
-            'contain' =>['Companies','Users']
+		$industrialGrievance_follow = $this->IndustrialGrievances->get($id, [
+            'contain' =>['Companies','Users','IndustrialGrievanceFollows']
         ]);
+		pr($industrialGrievance_follow);   exit;
 		
 		
 		$department_name=$industrialGrievance_follow->company->company_organisation; 
@@ -710,6 +711,9 @@ class IndustrialGrievancesController extends AppController
 	public function industrialGrievanceAjax($id=null,$from=null,$to=null)
     {
 		$this->viewBuilder()->layout('ajax');
+		$company_id=$this->Auth->User('company_id'); 
+		$Companies=$this->IndustrialGrievances->Companies->get($company_id);
+		$role_id=$Companies->role_id;
 		
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
 		$conditions['complete_status in']=['inprogress','hold','reopen'];
@@ -726,6 +730,7 @@ class IndustrialGrievancesController extends AppController
             $conditions['created_on <=']=date('Y-m-d 23:59:59',strtotime($to));
         }
 		
+
 		$IndustrialGrievances = $this->IndustrialGrievances->find()->where($conditions)->order(['complete_status'=>'DESC'])->contain(['Users','Companies','IndustrialGrievanceFollows'=>function($qfollow){
 			return $qfollow->order(['id'=>'DESC']);
 		}]);
