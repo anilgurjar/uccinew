@@ -154,11 +154,11 @@
 												  </div>
 												  <div class="modal-body">
 													<div class="row">
-					
 														<div class="col-md-12 pad" >
+														<div id='translControl<?php echo $industrial_grievance->id; ?>' class='transl'></div>
 																<?php if($role_id==5 || $role_id==1){   ?>
 																<div class="col-md-12" >
-																	<div id='translControl<?php echo $industrial_grievance->id; ?>' class='transl'></div>
+																	
 																	<div class="form-group">
 																		<label class=" control-label"> Department </label>
 																		<input type="hidden" name="industrial_grievance_id" value="<?php echo $industrial_grievance->id ; ?>">
