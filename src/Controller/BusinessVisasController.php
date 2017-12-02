@@ -714,7 +714,8 @@ class BusinessVisasController extends AppController
 			$attachments='';
 			$attachments[]='business_vissa_payment_receipt.pdf';
 			$sub='Payment Successfully submitted';
-			$email_to='rohitkumarjoshi43@gmail.com';
+			//$email_to='rohitkumarjoshi43@gmail.com';
+				$email_to="acc.uccisec@gmail.com";
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
@@ -861,7 +862,8 @@ class BusinessVisasController extends AppController
 					$sub="Bussiness Vissa is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					$email_to='rohitkumarjoshi43@gmail.com';
+					//$email_to='rohitkumarjoshi43@gmail.com';
+					$email_to="acc.uccisec@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -912,8 +914,9 @@ class BusinessVisasController extends AppController
 						$sub="Bussiness Vissa is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						$email_to="anilgurjer371@gmail.com";
-					if(!empty($email_to)){		
+						//$email_to="anilgurjer371@gmail.com";
+						$email_to="acc.uccisec@gmail.com";
+						if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
 								->to($email_to)
@@ -1026,7 +1029,8 @@ class BusinessVisasController extends AppController
 					  $sub="Your Bussiness Vissa is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 $email_to="rohitkumarjoshi43@gmail.com";
+					// $email_to="rohitkumarjoshi43@gmail.com";
+					 $email_to="acc.uccisec@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -1159,8 +1163,9 @@ class BusinessVisasController extends AppController
 					  $sub="Your Bussiness Vissa is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 $email_to="rohitkumarjoshi43@gmail.com";
-					  if(!empty($email_to)){		
+					 //$email_to="rohitkumarjoshi43@gmail.com";
+						$email_to="acc.uccisec@gmail.com";		
+					 if(!empty($email_to)){		
 								
 						 try {
 							   $email->from(['ucciudaipur@gmail.com' => $from_name])

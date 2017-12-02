@@ -320,7 +320,7 @@ class InvoiceAttestationsController extends AppController
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
 					 // $email_to="anilgurjer371@gmail.com";
-					 // $email_to="acc.uccisec@gmail.com";
+					  $email_to="acc.uccisec@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -1124,7 +1124,7 @@ class InvoiceAttestationsController extends AppController
 			$sub='Payment Successfully submitted';
 			//$email_to='rohitkumarjoshi43@gmail.com';
 			//$email_to='acc.uccisec@gmail.com';
-			
+			$email_to="acc.uccisec@gmail.com";
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
@@ -1279,6 +1279,7 @@ class InvoiceAttestationsController extends AppController
 					$email_to=trim($emailsend,' ');
 					//$email_to='rohitkumarjoshi43@gmail.com';
 					//$email_to='acc.uccisec@gmail.com';
+					$email_to="acc.uccisec@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1328,7 +1329,7 @@ class InvoiceAttestationsController extends AppController
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
 						//$email_to="anilgurjer371@gmail.com";
-						//$email_to="acc.uccisec@gmail.com";
+						$email_to="acc.uccisec@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1549,6 +1550,7 @@ class InvoiceAttestationsController extends AppController
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
 					 //$email_to="rohitkumarjoshi43@gmail.com";
+					 $email_to="acc.uccisec@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
