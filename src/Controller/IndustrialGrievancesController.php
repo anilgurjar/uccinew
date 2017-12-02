@@ -169,7 +169,7 @@ class IndustrialGrievancesController extends AppController
 					//$email_to=trim($member_email,'');
 					$email_to='anilgurjer371@gmail.com';
 					//$email_to1=trim($department_email,'');
-					$email_to1='anil@phppoets.in';
+					$email_to1='anilgurjer371@gmail.com';
 					
 					if(!empty($email_to)){		
 						try {
@@ -710,12 +710,10 @@ class IndustrialGrievancesController extends AppController
 	public function industrialGrievanceAjax($id=null,$from=null,$to=null)
     {
 		$this->viewBuilder()->layout('ajax');
-		$company_id=$this->Auth->User('company_id'); 
-		$Companies=$this->IndustrialGrievances->Companies->get($company_id);
-		$role_id=$Companies->role_id;
+	
 		
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
-		$conditions['complete_status in']=['inprogress','hold','reopen'];
+		$conditions['complete_status in']=['running'];
 		if(!empty($id)){
 			$conditions['industrial_department_id']=$id;
 			
@@ -729,12 +727,41 @@ class IndustrialGrievancesController extends AppController
             $conditions['created_on <=']=date('Y-m-d 23:59:59',strtotime($to));
         }
 		
-
 		$IndustrialGrievances = $this->IndustrialGrievances->find()->where($conditions)->order(['complete_status'=>'DESC'])->contain(['Users','Companies','IndustrialGrievanceFollows'=>function($qfollow){
 			return $qfollow->order(['id'=>'DESC']);
 		}]);
 		
-				
+			
+		$this->set(compact('IndustrialGrievances','industrialGrievance'));
+    }
+	
+	
+	
+	public function industrialGrievanceAjaxPublished($id=null,$from=null,$to=null)
+    {
+		$this->viewBuilder()->layout('ajax');
+	
+		
+		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
+		$conditions['complete_status in']=['published'];
+		if(!empty($id)){
+			$conditions['industrial_department_id']=$id;
+			
+		}
+		
+	    if(!empty($from)){
+            $conditions['created_on >=']=date('Y-m-d 00:00:01',strtotime($from));
+        }
+		
+        if(!empty($to)){
+            $conditions['created_on <=']=date('Y-m-d 23:59:59',strtotime($to));
+        }
+		
+		$IndustrialGrievances = $this->IndustrialGrievances->find()->where($conditions)->order(['complete_status'=>'DESC'])->contain(['Users','Companies','IndustrialGrievanceFollows'=>function($qfollow){
+			return $qfollow->order(['id'=>'DESC']);
+		}]);
+		
+			
 		$this->set(compact('IndustrialGrievances','industrialGrievance'));
     }
 	
