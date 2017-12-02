@@ -521,7 +521,7 @@ class IndustrialGrievancesController extends AppController
 		$industrialGrievance_follow = $this->IndustrialGrievances->get($id, [
             'contain' =>['Companies','Users','IndustrialGrievanceFollows']
         ]);
-		pr($industrialGrievance_follow);   exit;
+		//pr($industrialGrievance_follow);   exit;
 		
 		
 		$department_name=$industrialGrievance_follow->company->company_organisation; 
@@ -539,10 +539,9 @@ class IndustrialGrievancesController extends AppController
 		$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=ucciudr&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
 		 */
 		 
-		 $id=$this->request->data['industrial_grievance_id'];
-			$this->request->data['industrial_grievance_id'] = $id;		
+		 	$this->request->data['industrial_grievance_id'] = $id;		
             $industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->patchEntity($industrialGrievance, $this->request->data);
-			pr($industrialGrievance->toArray());   exit;
+			
             if ($industrialGrievance_data=$this->IndustrialGrievances->IndustrialGrievanceFollows->save($industrialGrievance)) {
 				
 			$industrialGrievance_id=$industrialGrievance_data->id;
@@ -573,7 +572,7 @@ class IndustrialGrievancesController extends AppController
 
 		}   */
 	   
-		exit;
+	
                 $this->Flash->success(__('The industrial grievance follow has been saved.'));
 
                 //return $this->redirect(['action' => 'index']);
