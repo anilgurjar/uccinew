@@ -142,14 +142,14 @@ class CompanyHwmInformationsController extends AppController
  						$emailperson_id = base64_encode($emailperson_id);
 						// $url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
 						 
-						$url="http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+						$url="";//http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 						
 						//$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 						
 						$sub="Hazardous Waste Management Application is Varified";
 						$from_name="UCCI";
 						$email_to=trim($emailsend,' ');
-						//$email_to='rohitkumarjoshi43@gmail.com';
+						$email_to='dasumenaria@gmail.com';
 						if(!empty($email_to)){		
 							try {
 								$email->from(['ucciudaipur@gmail.com' => $from_name])
