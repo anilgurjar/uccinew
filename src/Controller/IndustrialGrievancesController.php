@@ -33,7 +33,7 @@ class IndustrialGrievancesController extends AppController
     {
 		$this->viewBuilder()->layout('index_layout');
 		$company_id=$this->Auth->User('company_id'); 
-		
+		pr($company_id);   
 		$Companies=$this->IndustrialGrievances->Companies->get($company_id);
 		$role_id=$Companies->role_id;
 		
