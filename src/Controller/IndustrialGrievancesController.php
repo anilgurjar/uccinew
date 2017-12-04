@@ -56,7 +56,7 @@ class IndustrialGrievancesController extends AppController
 				}]);
 		}else{
 			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
-					->contain(['IndustrialGrievances'=>function($q){return $q->where(['complete_status IN'=>['running'],'created_by'=>$company_id])
+					->contain(['IndustrialGrievances'=>function($q){return $q->where(['complete_status IN'=>['running']])
 						->order(['complete_status'=>'DESC'])
 						->contain(['Users'=>['Companies'],'IndustrialGrievanceFollows'=>function($qfollow){
 							return $qfollow->order(['id'=>'DESC']);
