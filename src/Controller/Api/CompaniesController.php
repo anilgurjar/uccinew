@@ -856,7 +856,7 @@ class CompaniesController extends AppController
 				$member_name=$this->request->data['member_name'];
 				$sub='Login Credentials';
   				$to=explode('@',$to);
-				$password=uniqid(); 
+				$password=uniqid();				
 				$this->request->data['username']=$to[0];
 				$this->request->data['password']=$password;
 				$Users = $this->Companies->Users->patchEntity($Users, $this->request->data);
