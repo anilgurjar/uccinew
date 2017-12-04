@@ -63,7 +63,7 @@ class IndustrialGrievancesController extends AppController
 				}]);
 		}	
 			
-		pr($IndustrialGrievances);    exit;	
+		pr($IndustrialGrievances->toArray());    exit;	
 					
         $this->set(compact('IndustrialGrievances', 'IndustrialDepartments','random_color','role_id','industrialGrievance'));
         $this->set('_serialize', ['industrialGrievances','industrialGrievance']);
