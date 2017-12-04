@@ -55,7 +55,7 @@ class IndustrialGrievancesController extends AppController
 						}]);
 				}]);
 		}else{
-			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
+			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5,'id'=>$company_id])
 					->contain(['IndustrialGrievances'=>function($q){return $q->where(['complete_status IN'=>['running']])
 						->order(['complete_status'=>'DESC'])
 						->contain(['Users'=>['Companies'],'IndustrialGrievanceFollows'=>function($qfollow){
