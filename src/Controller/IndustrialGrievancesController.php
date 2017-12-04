@@ -178,7 +178,7 @@ class IndustrialGrievancesController extends AppController
 								->replyTo('uccisec@hotmail.com')
 								->subject($sub)
 								->profile('default')
-								->template('Industrial_grievance_accept_for_member')
+								->template('industrial_grievance_accept_for_member')
 								->emailFormat('html')
 								->viewVars(['member_name'=>$member_name]);
 								$email->send();
@@ -196,7 +196,7 @@ class IndustrialGrievancesController extends AppController
 								->replyTo('uccisec@hotmail.com')
 								->subject($sub)
 								->profile('default')
-								->template('Industrial_grievance_accept_for_department')
+								->template('industrial_grievance_accept_for_department')
 								->emailFormat('html')
 								->viewVars(['department_name'=>$department_name]);
 								$email->send();
