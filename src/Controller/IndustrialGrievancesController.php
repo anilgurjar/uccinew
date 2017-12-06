@@ -518,7 +518,7 @@ class IndustrialGrievancesController extends AppController
     {
 		$this->viewBuilder()->layout(null);
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
-		$id=$this->request->data['id'];
+		$id=$this->request->data['industrial_grievance_id'];
 		$industrialGrievance_follow = $this->IndustrialGrievances->get($id, [
             'contain' =>['Companies','Users','IndustrialGrievanceFollows']
         ]);
