@@ -163,7 +163,7 @@
 																	
 																	<div class="form-group">
 																		<label class=" control-label"> Department </label>
-																		<input type="hidden" name="industrial_grievance_id" value="<?php echo $industrial_grievance->id ; ?>">
+																		
 																		<?php echo $this->Form->input('department_content', ['label' => false,'placeholder'=>'Department','class'=>'form-control dep transl2']); ?>
 																	</div>
 																</div>
@@ -183,7 +183,7 @@
 																</div>
 																<?php  }    ?>
 															</div>
-					
+															<input type="hidden" name="industrial_grievance_id" value="<?php echo $industrial_grievance->id ; ?>">
 														</div>
 												  </div>
 												  <div class="modal-footer">
@@ -407,7 +407,17 @@ $(document).on('click', '.submit', function(e)
 		var department=$(this).closest('tr').find('textarea[name=department_content]').val();
 		var ucci=$(this).closest('tr').find('textarea[name=ucci_content]').val();
 		var member=$(this).closest('tr').find('textarea[name=member_content]').val();
-		 
+		
+		if(!ucci){
+			ucci='';	
+		}
+		if(!department){
+			department='';	
+		} 
+		if(!member){
+			member='';	
+		}
+		
 		$(this).closest('tr').find('.department').html(department);
 		$(this).closest('tr').find('.ucci').html(ucci);
 		$(this).closest('tr').find('.member').html(member);

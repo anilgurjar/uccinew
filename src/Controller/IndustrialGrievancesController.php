@@ -344,7 +344,10 @@ class IndustrialGrievancesController extends AppController
     {
 		$this->viewBuilder()->layout('index_layout');
 		$user_id=$this->Auth->User('id');
+		$company_id=$this->Auth->User('company_id'); 
 		
+		$Companies=$this->IndustrialGrievances->Companies->get($company_id);
+		$role_id=$Companies->role_id;
 		
 		$result_users=$this->IndustrialGrievances->Users->get($user_id,['contain'=>'Companies']);
 		$mobile_no=$result_users->mobile_no;
@@ -368,9 +371,22 @@ class IndustrialGrievancesController extends AppController
 			}else{
 				$this->request->data['file']='false';
 			}
-		
+			if($role_id==4 || $role_id==1){
+				$form_company_id=$this->request->data['company_id'];
+				$user_data=$this->IndustrialGrievances->Companies->Users->find()->where(['company_id'=>$form_company_id,'member_nominee_type'=>'first'])->toArray();
+				
+				//$email_to=$result_users->email; 
+				//$member_name=$result_users->member_name;
+				
+				$user_ids=$user_data[0]->id;
+				$this->request->data['created_by'] = $user_ids;
+				$this->request->data['created_by_admin'] = $user_id;
+				
+			}else{
+				$this->request->data['created_by'] = $user_id;
+			}
 			$this->request->data['file_name'] = $file_name;
-			$this->request->data['created_by'] = $user_id;
+			
 			$industrialGrievance = $this->IndustrialGrievances->patchEntity($industrialGrievance, $this->request->data);
 			
             if ($industrialGrievance_data=$this->IndustrialGrievances->save($industrialGrievance)) {
@@ -443,11 +459,13 @@ class IndustrialGrievancesController extends AppController
             }
         }
         $IndustrialDepartments = $this->IndustrialGrievances->Companies->find('list')->where(['role_id'=>5])->toArray();
+		  
+		 $companys = $this->IndustrialGrievances->Companies->find('list')->where(['member_flag'=>1])->toArray();
 		
 		
 		$grievancecategorys = $this->IndustrialGrievances->GrievanceCategories->find('list');
 		$GrievanceIssues = $this->IndustrialGrievances->GrievanceIssues->find('list');
-        $this->set(compact('industrialGrievance', 'IndustrialDepartments', 'company_organisation', 'address', 'pincode', 'city','grievancecategorys','GrievanceIssues'));
+        $this->set(compact('industrialGrievance', 'IndustrialDepartments', 'company_organisation', 'address', 'pincode', 'city','grievancecategorys','GrievanceIssues','companys','role_id'));
         $this->set('_serialize', ['industrialGrievance']);
     }
 
@@ -523,7 +541,6 @@ class IndustrialGrievancesController extends AppController
             'contain' =>['Companies','Users','IndustrialGrievanceFollows']
         ]);
 		
-		
 		$department_name=$industrialGrievance_follow->company->company_organisation; 
 		$email_to=$industrialGrievance_follow->user->email; 
 		$member_name=$industrialGrievance_follow->user->member_name;
@@ -579,7 +596,7 @@ class IndustrialGrievancesController extends AppController
 				
                 $this->Flash->error(__('The industrial grievance follow could not be saved. Please, try again.'));
             }
-       
+       exit;
 		
     }
 	
@@ -709,7 +726,10 @@ class IndustrialGrievancesController extends AppController
 	public function industrialGrievanceAjax($id=null,$from=null,$to=null)
     {
 		$this->viewBuilder()->layout('ajax');
-	
+		$company_id=$this->Auth->User('company_id'); 
+		
+		$Companies=$this->IndustrialGrievances->Companies->get($company_id);
+		$role_id=$Companies->role_id;
 		
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
 		$conditions['complete_status in']=['running','hold'];
@@ -731,7 +751,7 @@ class IndustrialGrievancesController extends AppController
 		}]);
 		
 			
-		$this->set(compact('IndustrialGrievances','industrialGrievance'));
+		$this->set(compact('IndustrialGrievances','industrialGrievance','role_id'));
     }
 	
 	

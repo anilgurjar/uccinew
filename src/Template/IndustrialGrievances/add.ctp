@@ -99,7 +99,16 @@ fieldset{
 				
 				
 				<div class="col-md-12 pad" >
+					<?php if($role_id==4 || $role_id==1){ ?>	
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">Company/Organisation :</label>
+							<?php
 							
+							echo $this->Form->input('company_id', ['empty'=> '--Select--','data-placeholder'=>'Select Company/Organisation','label' => false,'class'=>'form-control select2','options'=>$companys,'style'=>'width:100%;']); ?>
+							</div>
+					</div>
+					<?php } ?>	
 						<div class="col-md-4">
 								<div class="form-group">
 									<label class=" control-label">Grievance Issue/Problem</label>
@@ -112,9 +121,11 @@ fieldset{
 								</div>
 						</div>
 						
-						<div id="related_issue">
+						<div id="related_issue" >
 						
 						</div>
+						
+					
 										
 				</div>	
 				<div class="col-md-12 pad" >

@@ -1,7 +1,7 @@
-<div class="col-md-12">
+<!--<div class="col-md-12">
 
 <?php  echo $this->Form->create($industrialGrievance, ['type' => 'post','id'=>'validationForm','enctype' => 'multipart/form-data']); ?>
-  <!-- Horizontal Form -->
+  <!-- Horizontal Form 
 	<div class="box box-primary">
 		<div class="box-header with-border">
 			<h3 class="box-title">Industrial Grievance Follow</h3>
@@ -42,4 +42,4 @@
 		
 	</div>
 	  <?= $this->Form->end() ?>
-</div>
+</div>-->
