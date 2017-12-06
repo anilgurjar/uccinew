@@ -402,21 +402,9 @@ $(document).on('click', '.submit', function(e)
 		e.preventDefault();
 		var grievance_id=$(this).attr('g_id');
 		$(".related_issue").html('<div align="center"><?php echo $this->Html->Image('/img/wait.gif', ['alt' => 'wait']); ?> Loading</div>');
-		<?php if($role_id==5 || $role_id==1){  ?>
 		var department=$(this).closest('tr').find('textarea[name=department_content]').val();
-		<?php } else {?>
-		var department='No Comment';
-		<?php }?>
-		<?php if($role_id==4 || $role_id==1){  ?>
 		var ucci=$(this).closest('tr').find('textarea[name=ucci_content]').val();
-		<?php } else {?>
-		var ucci='No Comment';
-		<?php }?>
-		<?php if($role_id==2 || $role_id==1){  ?>
 		var member=$(this).closest('tr').find('textarea[name=member_content]').val();
-		<?php } else {?>
-		var member='No Comment';
-		<?php }?>
 		 
 		$(this).closest('tr').find('.department').html(department);
 		$(this).closest('tr').find('.ucci').html(ucci);
