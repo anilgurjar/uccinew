@@ -93,16 +93,18 @@
 										
 										
 											//echo $this->Html->link(' <i class="fa fa-pencil"></i>', ['action' => 'edit', $industrial_grievance->id],['escape' => false]);	
-										
-											echo $this->Html->link(' <i class="fa fa-book"></i>', ['action' => 'view', $industrial_grievance->id],['escape' => false]) ;
+											 echo $this->Html->link(' <i class="fa fa-book"></i>', ['action' => 'view', $industrial_grievance->id],['escape' => false]) ;
+											if($role_id==4 || $role_id==1){ 
 											if($complete_status!="hold"){
 												echo $this->Html->link(' <i class="fa fa-exclamation"></i> ',['action'=>'#'],['data-toggle'=>'modal','data-target'=>'#cancel'.$industrial_grievance->id,'class' => 'orange hold',
 												'escape' => false]);
 											}
+											
 											if($complete_status=="hold"){
 												echo $this->Html->link(' <i class="fa fa-folder-open-o"></i> ',['action'=>'#'],['data-toggle'=>'modal','data-target'=>'#reopen'.$industrial_grievance->id,'class' => 'orange re_open',
 												'escape' => false]);
 											}
+											 }
 											?>
 											<div class="modal fade" id="allfollow<?php echo $industrial_grievance->id ; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 												<div class="modal-dialog modal-lg" role="document">
