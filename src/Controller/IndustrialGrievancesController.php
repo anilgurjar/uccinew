@@ -32,8 +32,9 @@ class IndustrialGrievancesController extends AppController
     public function index()
     {
 		$this->viewBuilder()->layout('index_layout');
+		$user_id=$this->Auth->User('id'); 
 		$company_id=$this->Auth->User('company_id'); 
-		pr($company_id);   
+		
 		$Companies=$this->IndustrialGrievances->Companies->get($company_id);
 		$role_id=$Companies->role_id;
 		
@@ -45,7 +46,11 @@ class IndustrialGrievancesController extends AppController
 		$IndustrialDepartments = $this->IndustrialGrievances->Companies->find('list')->where(['role_id'=>5]);
 				
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
-		
+		if($role_id==5){
+			$condition['industrial_department_id']=$company_id;
+		}if($role_id==2){
+			$condition['created_by']=$user_id;
+		}
 		if($role_id==1 || $role_id==4){
 			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
 					->contain(['IndustrialGrievances'=>function($q){return $q->where(['complete_status IN'=>['running','hold']])
@@ -56,15 +61,13 @@ class IndustrialGrievancesController extends AppController
 				}]);
 		}else{
 			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
-					->contain(['IndustrialGrievances'=>function($q)use($company_id){return $q->where(['complete_status IN'=>['running'],'created_by'=>$company_id])
+					->contain(['IndustrialGrievances'=>function($q)use($condition){return $q->where(['complete_status IN'=>['running'],$condition])
 						->order(['complete_status'=>'DESC'])
 						->contain(['Users'=>['Companies'],'IndustrialGrievanceFollows'=>function($qfollow){
 							return $qfollow->order(['id'=>'DESC']);
 						}]);
 				}]);
 		}	
-			
-		
 					
         $this->set(compact('IndustrialGrievances', 'IndustrialDepartments','random_color','role_id','industrialGrievance'));
         $this->set('_serialize', ['industrialGrievances','industrialGrievance']);
@@ -514,15 +517,11 @@ class IndustrialGrievancesController extends AppController
 	public function grievanceFollow()
     {
 		$this->viewBuilder()->layout(null);
-		
-		
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
-		$id=$this->request->data['industrial_grievance_id'];
-	
+		$id=$this->request->data['id'];
 		$industrialGrievance_follow = $this->IndustrialGrievances->get($id, [
             'contain' =>['Companies','Users','IndustrialGrievanceFollows']
         ]);
-		//pr($industrialGrievance_follow);   exit;
 		
 		
 		$department_name=$industrialGrievance_follow->company->company_organisation; 
@@ -544,7 +543,6 @@ class IndustrialGrievancesController extends AppController
             $industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->patchEntity($industrialGrievance, $this->request->data);
 			
             if ($industrialGrievance_data=$this->IndustrialGrievances->IndustrialGrievanceFollows->save($industrialGrievance)) {
-				
 			$industrialGrievance_id=$industrialGrievance_data->id;
 			
 			$industrialGrievance_follows = $this->IndustrialGrievances->IndustrialGrievanceFollows->get($industrialGrievance_id);

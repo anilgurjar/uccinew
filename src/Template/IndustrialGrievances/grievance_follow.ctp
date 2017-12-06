@@ -13,17 +13,19 @@
 					<div class="col-md-12" >
 						<div class="form-group">
 							<label class=" control-label"> Department </label>
-							
 							<?php echo $this->Form->input('department_content', ['label' => false,'placeholder'=>'Department','class'=>'form-control']); ?>
-							
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
 							<label class=" control-label"> UCCI </label>
-							
-								<?php echo $this->Form->input('ucci_content', ['label' => false,'placeholder'=>'UCCI','class'=>'form-control']); ?>
-							
+							<?php echo $this->Form->input('ucci_content', ['label' => false,'placeholder'=>'UCCI','class'=>'form-control']); ?>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class=" control-label"> Member </label>
+							<?php echo $this->Form->input('member_content', ['label' => false,'placeholder'=>'Member','class'=>'form-control']); ?>
 						</div>
 					</div>
 				</div>

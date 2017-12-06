@@ -274,29 +274,31 @@
 	</div>
 </div>
 
-<!--	<div class="col-md-12 pad" >
-<div class="col-md-12" >
-<table cellpadding="0" cellspacing="0" class="table table-bordered follow_view">
-<thead>
-<tr style="background-color:#3C8DBC; color:#fff">
-<th scope="col"><?= __('Action Taken By Department') ?></th>
-<th scope="col"><?= __('Action Taken By UCCI') ?></th>
-</tr> </thead> <tbody>
-<?php
-foreach($industrial_grievance->industrial_grievance_follows as $industrial_grievance_follow)
-{ ?><tr>
-<td><?= h($industrial_grievance_follow->department_content) ?></td>
-<td><?= h($industrial_grievance_follow->ucci_content) ?></td>
-</tr>
-<?php
+<!---<div class="col-md-12 pad" >
+	<div class="col-md-12" >
+		<table cellpadding="0" cellspacing="0" class="table table-bordered follow_view">
+			<thead>
+				<tr style="background-color:#3C8DBC; color:#fff">
+					<th scope="col"><?= __('Action Taken By Department') ?></th>
+					<th scope="col"><?= __('Action Taken By UCCI') ?></th>
+					<th scope="col"><?= __('Action Taken By Member') ?></th>
+				</tr> 
+			</thead> 
+			<tbody>
+				<?php
+				foreach($industrial_grievance->industrial_grievance_follows as $industrial_grievance_follow)
+				{ ?>
+				<tr>
+					<td><?= h($industrial_grievance_follow->department_content) ?></td>
+					<td><?= h($industrial_grievance_follow->ucci_content) ?></td>
+					<td><?= h($industrial_grievance_follow->member_content) ?></td>
+				</tr>
+				<?php  }  ?>
+			</tbody>
+		</table>
+	</div>
 
-}
-?>
-</tbody>
-</table>
-</div>
-
-</div>-->
+</div>--->
 
 <?php echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js'); ?>
 <?php echo $this->Html->script('/assets/plugins/jquery/jsapi.js'); ?>
@@ -399,26 +401,39 @@ $(document).on('click', '.submit', function(e)
 	{
 		e.preventDefault();
 		var grievance_id=$(this).attr('g_id');
- 
 		$(".related_issue").html('<div align="center"><?php echo $this->Html->Image('/img/wait.gif', ['alt' => 'wait']); ?> Loading</div>');
-		 var department=$(this).closest('tr').find('textarea[name=department_content]').val();
+		<?php if($role_id==5 || $role_id==1){  ?>
+		var department=$(this).closest('tr').find('textarea[name=department_content]').val();
+		<?php } else {?>
+		var department='No Comment';
+		<?php }?>
+		<?php if($role_id==4 || $role_id==1){  ?>
 		var ucci=$(this).closest('tr').find('textarea[name=ucci_content]').val();
+		<?php } else {?>
+		var ucci='No Comment';
+		<?php }?>
+		<?php if($role_id==2 || $role_id==1){  ?>
 		var member=$(this).closest('tr').find('textarea[name=member_content]').val();
+		<?php } else {?>
+		var member='No Comment';
+		<?php }?>
+		 
 		$(this).closest('tr').find('.department').html(department);
 		$(this).closest('tr').find('.ucci').html(ucci);
 		$(this).closest('tr').find('.member').html(member);
 		$(this).closest('tr').find('.follow_view').prepend('<div class="col-md-12" style="border:1px solid #a6a5ad;margin: 4px;padding: 4px;"><div class="modal-header" style="border-bottom:none;"><h4 class="modal-title" id="myModalLabel" style="color:#0c2992"><strong>Date <?php echo date("d-m-Y"); ?> </strong></h4></div><div style="float:left;" class="col-md-4"><h4 class="modal-title" id="myModalLabel" style="color:#0c2992"> <strong>Departmant </strong></h4>'+department+'</div><div class="col-md-4"><h4 class="modal-title" id="myModalLabel" style="color:#0c2992"> <strong>UCCI </strong></h4>'+ucci+'</div><div style="float:right;" class="col-md-4"><h4 class="modal-title" id="myModalLabel" style="color:#0c2992"> <strong>Member </strong></h4>'+member+'</div></div>');
-
+		
 		$.ajax({
-				   type: "POST",
-				   url: "<?php echo $this->Url->build(['controller'=>'IndustrialGrievances','action'=>'grievance_follow']); ?>",
-				   data: $("#validationForm"+grievance_id).serialize(), 
-				   success: function(data){
-						
-					   $(".cls").click();
-					   $("#validationForm"+grievance_id).trigger("reset");
-					   $(".related_issue").html(''); 
-				   }  
+				type: "POST",
+				url: "<?php echo $this->Url->build(['controller'=>'IndustrialGrievances','action'=>'grievance_follow']); ?>",
+				data: $("#validationForm"+grievance_id).serialize(), 
+				
+				success: function(data){
+					
+					$(".cls").click();
+					$("#validationForm"+grievance_id).trigger("reset");
+					$(".related_issue").html(''); 
+					}  
 			   }); 
 	});
 	
