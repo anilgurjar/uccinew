@@ -434,20 +434,19 @@ $(document).on('click', '.submit', function(e)
 		var grievance_id=$(this).attr('g_id');
 		var cl=$(this).closest('tr');
 		$(".related_issue1").html('<div align="center"><?php echo $this->Html->Image('/img/wait.gif', ['alt' => 'wait']); ?> Loading</div>');
-		
-		 $(this).closest('tr').find('.font_cl').css({"color":"white"});
-				$.ajax({
-				   type: "POST",
-				   url: "<?php echo $this->Url->build(['controller'=>'IndustrialGrievances','action'=>'grievance_cancel']); ?>",
-				   data: $("#validationForm1"+grievance_id).serialize(), 
-				   success: function(data){
-					  cl.find('.hold').remove();
-					  $(".cls").click();
-					  $("#validationForm1"+grievance_id).trigger("reset");
-					  cl.css({"background-color":"rgba(255, 0, 0, 0.7)"});
-					  $(".related_issue1").html('');
-				   }  
-			   }); 
+		$(this).closest('tr').find('.font_cl').css({"color":"white"});
+		$.ajax({
+		   type: "POST",
+		   url: "<?php echo $this->Url->build(['controller'=>'IndustrialGrievances','action'=>'grievance_cancel']); ?>",
+		   data: $("#validationForm1"+grievance_id).serialize(), 
+		   success: function(data){
+			  cl.find('.hold').remove();
+			  $(".cls").click();
+			  $("#validationForm1"+grievance_id).trigger("reset");
+			  cl.css({"background-color":"rgba(255, 0, 0, 0.7)"});
+			  $(".related_issue1").html('');
+		   }  
+		}); 
 	});
 	
 	
