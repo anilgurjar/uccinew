@@ -54,7 +54,6 @@ class IndustrialGrievancesController extends AppController
 		if($role_id==1 || $role_id==4){
 			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
 					->contain(['IndustrialGrievances'=>function($q){return $q->where(['complete_status IN'=>['running','hold']])
-						->order(['complete_status'=>'DESC'])
 						->contain(['Users'=>['Companies'],'IndustrialGrievanceFollows'=>function($qfollow){
 							return $qfollow->order(['id'=>'DESC']);
 						}]);
@@ -99,7 +98,6 @@ class IndustrialGrievancesController extends AppController
 			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
 			->contain(['IndustrialGrievances'=>function($q){
 				return $q->where(['complete_status IN'=>['published']])
-						->order(['complete_status'=>'DESC'])
 						->contain(['Users'=>['Companies'],'IndustrialGrievanceFollows'=>function($qfollow){
 							return $qfollow->order(['id'=>'DESC']);
 						}]);
@@ -643,6 +641,25 @@ class IndustrialGrievancesController extends AppController
        exit;
 		
     }
+	
+	public function titlecheck()
+	{
+		$user_id=$this->Auth->User('id');
+		
+			$grievance_titles = $this->IndustrialGrievances->find()->where(['created_by'=>$user_id])->contain(['IndustrialGrievanceFollows']);
+			
+			
+			$this->set(compact('grievance_titles'));
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public function grievanceCancel()
 	{

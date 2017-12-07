@@ -31,10 +31,10 @@
 								<tr style="background-color:#3C8DBC; color:#fff">
 									<th scope="col"><?= __('Sr no.') ?></th>
 									<th scope="col"><?= __('Departmant') ?></th> 
+									<th scope="col"><?= __('Created on') ?></th>
 									<th scope="col"><?= __('Grievance Description') ?></th>
 									<th scope="col"><?= __('Complaint') ?></th>
 									<th scope="col"><?= __('Action Taken By UCCI') ?></th>
-									<th scope="col"><?= __('Created on') ?></th>
 									<th scope="col"><?= __('Pending on') ?></th>
 									<th scope="col" width="80"><?= __('Action') ?></th>
 									
@@ -55,10 +55,13 @@
 									{  $i++; 
 										?>
 										<td rowspan="<?php echo sizeof($departments->industrial_grievances); ?>" class="<?php echo $class; ?> font_cl"><?= h($i) ?></td>
+										
+									
 										<td rowspan="<?php echo sizeof($departments->industrial_grievances); ?>" class="<?php echo $class; ?> font_cl"><?= h($departments->company_organisation) ?></td>
 										<?php
 									}
 									?>
+									<td class="<?php echo $class; ?> font_cl"><?= h(date('d-m-Y', strtotime($industrial_grievance->created_on))) ?></td>
 									<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->description) ?></td>
 									<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->user->company->company_organisation) ?></td> 
 									
@@ -78,7 +81,6 @@
 										echo '<td class="ucci"></td>';
 									}
 									?>
-									<td class="<?php echo $class; ?> font_cl"><?= h(date('d-m-Y', strtotime($industrial_grievance->created_on))) ?></td>
 									<td class="<?php echo $class; ?> font_cl"><?php echo $industrial_grievance->grievance_age .' '. $industrial_grievance->grievance_period?></td>
 									
 										<td class="actions">

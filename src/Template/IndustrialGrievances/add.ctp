@@ -78,13 +78,12 @@ fieldset{
 						</div>
 					</div>
 					
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="form-group">
 						<label class="control-label">Have you lodge same grievance earlier with chamber</label><br/>
 						
 						<?php
 						$options=array();
-						
 							$options['Yes'] = 'Yes';
 							$options['No'] = 'No';
 						
@@ -92,7 +91,8 @@ fieldset{
 							
 						</div>
 					</div>
-					
+					<div id="title_check" >
+					</div>
 					
 						
 				</div>
@@ -127,6 +127,15 @@ fieldset{
 						
 					
 										
+				</div>
+				<div class="col-md-12 pad" >
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">Title Of Grievance :</label>
+							<?php
+							echo $this->Form->input('title', ['placeholder'=>'Title Of Grievance maximum length 30','label' => false,'class'=>'form-control ','type'=>'text','style'=>'width:100%;','maxlength'=>30]); ?>
+							</div>
+					</div>	
 				</div>	
 				<div class="col-md-12 pad" >
 					<div class="col-md-12" >
@@ -194,6 +203,36 @@ fieldset{
 <script>
 
 $(document).ready(function() { 
+
+
+
+	
+	$("input[type='radio']").click(function(){
+		myfunc();
+    });
+ 
+ 
+	function myfunc()
+	{   
+		var radioValue = $("input[name='lodge_same_grievance']:checked").val();
+		if(radioValue == 'Yes'){
+			$("#title_check").html('<div align=""><?php echo $this->Html->Image('/img/wait.gif', ['alt' => 'wait']); ?> Loading</div>');
+			var url="<?php echo $this->Url->build(['controller'=>'IndustrialGrievances','action'=>'titlecheck']); ?>";
+			$.ajax({
+				url: url,
+				success: function(data){
+					alert(data);
+					$("#title_check").html(data);
+				}  
+			});
+		}
+	}
+
+	
+	
+	
+	
+	
 	
 	$("#validationForm").validate({ 
 		rules: {
@@ -227,6 +266,7 @@ $(document).ready(function() {
 <script>
 
 $(document).ready(function() { 
+
  
  $(document).on('change','.issue',function() {
 		var id=$(this).val();
@@ -259,6 +299,12 @@ $(document).ready(function() {
 
     <script type="text/javascript">
 
+
+ 
+	
+	
+	
+	
 	$(document).on('click', '#translControl', function(e){
 		var c = $('.inputapi-transliterate-button').attr('aria-pressed');
 		if(c=="true"){

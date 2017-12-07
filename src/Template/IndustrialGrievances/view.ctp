@@ -36,7 +36,7 @@
 				<td><?= h($industrialGrievance->location) ?><br/><?= h($industrialGrievance->contact_details) ?></td>
 			</tr>
 			<tr>
-				<th scope="row"><?= __('Department type') ?></th>
+				<th scope="row"><?= __('Department ') ?></th>
 				<td>
 				<?php
 					echo $industrialGrievance->company->company_organisation; 
@@ -54,6 +54,10 @@
 			<tr>
 				<th scope="row"><?= __('Grievance issues related') ?></th>
 				<td><?= h($industrialGrievance->grievance_issue_related->name) ?></td>
+			</tr>
+			<tr>
+				<th scope="row"><?= __('Title') ?></th>
+				<td><?= $this->Text->autoParagraph(h($industrialGrievance->title)); ?></td>
 			</tr>
 			<tr>
 				<th scope="row"><?= __('Description') ?></th>
