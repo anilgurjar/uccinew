@@ -71,89 +71,95 @@
 							}
 							?>
 							<div class="modal fade" id="allfollow<?php echo $industrial_grievance->id ; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-								  <div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
-									  <div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="myModalLabel">Industrial Grievance Follow</h4>
-									  </div>
-									  <div class="modal-body" style="overflow-y: auto;height: 400px;">
-										<div class="row">
-		
-												<div class="col-md-12 pad follow_view">
-													<?php 	foreach($industrial_grievance->industrial_grievance_follows as $industrial_grievance_follow)
-															{  $date=$industrial_grievance_follow->follow_date; ?>
-																<div class="col-md-12" style="border:1px solid #a6a5ad;margin: 4px;padding: 4px;">
-																	<div class="modal-header" style="border-bottom:none;">
-																						
-																		<h4 class="modal-title" id="myModalLabel" style="color:#0c2992"><strong> Date <?php echo date("d-m-Y",strtotime($date)); ?> </strong></h4>
-																	</div>
-																	<div style="float:left;" class="col-md-6">
-																	<h4 class="modal-title" id="myModalLabel" style="color:#0c2992"> <strong>Departmant </strong></h4>
-																	<?= h($industrial_grievance_follow->department_content) ?>
-																	</div>
-																	<div style="float:right;" class="col-md-6">
-																	<h4 class="modal-title" id="myModalLabel" style="color:#0c2992"> <strong>UCCI </strong></h4>
-																	<?= h($industrial_grievance_follow->ucci_content) ?>
+												<div class="modal-dialog modal-lg" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+															<h4 class="modal-title" id="myModalLabel">Industrial Grievance Follow </h4>
+														</div>
+														<div class="modal-body" style="overflow-y: auto;height: 400px;">
+															<div class="row">
+																<div class="col-md-12 pad follow_view">
+																	<?php	foreach($industrial_grievance->industrial_grievance_follows as $industrial_grievance_follow)
+																		{ $date=$industrial_grievance_follow->follow_date; ?>
+																		<div class="col-md-12" style="border:1px solid #a6a5ad;margin: 4px;padding: 4px;">
+																			<div class="modal-header" style="border-bottom:none;">
+																								
+																				<h4 class="modal-title" id="myModalLabel" style="color:#0c2992"><strong> Date <?php echo date("d-m-Y",strtotime($date)); ?> </strong></h4>
+																			</div>
+																			<div style="float:left;" class="col-md-4">
+																				<h4 class="modal-title" id="myModalLabel" style="color:#0c2992"> <strong>Departmant </strong></h4>
+																				<?= h($industrial_grievance_follow->department_content) ?>
+																			</div>
+																			<div style="float:center;" class="col-md-4">
+																				<h4 class="modal-title" id="myModalLabel" style="color:#0c2992"> <strong>UCCI </strong></h4>
+																				<?= h($industrial_grievance_follow->ucci_content) ?>
+																			</div>
+																			<div style="float:right;" class="col-md-4">
+																				<h4 class="modal-title" id="myModalLabel" style="color:#0c2992"> <strong>Member </strong></h4>
+																				<?= h($industrial_grievance_follow->member_content) ?>
+																			</div>
+																		</div>
+																	<?php } ?>
+																</div>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
+														</div>
+													</div>
+												</div>
+											</div>
+								<?php  echo $this->Form->create($industrialGrievance, ['type' => 'post','id'=>'validationForm'.$industrial_grievance->id,'enctype' => 'multipart/form-data']); ?>					
+											<div class="modal fade" id="follw<?php echo $industrial_grievance->id ; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+											  <div class="modal-dialog" role="document">
+												<div class="modal-content">
+												  <div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													<h4 class="modal-title" id="myModalLabel">Industrial Grievance Follow</h4>
+												  </div>
+												  <div class="modal-body">
+													<div class="row">
+														<div class="col-md-12 pad" >
+														<div id='translControl<?php echo $industrial_grievance->id; ?>' class='transl'></div>
+																<?php if($role_id==5 || $role_id==1){   ?>
+																<div class="col-md-12" >
+																	
+																	<div class="form-group">
+																		<label class=" control-label"> Department </label>
+																		
+																		<?php echo $this->Form->input('department_content', ['label' => false,'placeholder'=>'Department','class'=>'form-control dep transl2']); ?>
 																	</div>
 																</div>
-																
-															
-													 <?php } ?>
-												</div>
-														
-											</div>
-									  </div>
-									  <div class="modal-footer">
-										<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
-											
-									  </div>
-									</div>
-								  </div>
-								</div>
-								<?php  echo $this->Form->create($industrialGrievance, ['type' => 'post','id'=>'validationForm'.$industrial_grievance->id,'enctype' => 'multipart/form-data']); ?>					
-								<div class="modal fade" id="follw<?php echo $industrial_grievance->id ; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-								  <div class="modal-dialog" role="document">
-									<div class="modal-content">
-									  <div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title" id="myModalLabel">Industrial Grievance Follow</h4>
-									  </div>
-									  <div class="modal-body">
-										<div class="row">
-		
-											<div class="col-md-12 pad" >
-													<div class="col-md-12" >
-													<div id='translControl<?php echo $industrial_grievance->id; ?>' class='transl'></div>
-														<div class="form-group">
-															<label class=" control-label"> Department </label>
-	<input type="hidden" name="industrial_grievance_id" value="<?php echo $industrial_grievance->id ; ?>">
-															<?php echo $this->Form->input('department_content', ['label' => false,'placeholder'=>'Department','class'=>'form-control dep transl2']); ?>
-															
+																<?php  }   if($role_id==4 || $role_id==1){  ?>
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<label class=" control-label"> UCCI </label>
+																		<?php echo $this->Form->input('ucci_content', ['label' => false,'placeholder'=>'UCCI','class'=>'form-control transl2']); ?>
+																	</div>
+																</div>
+																<?php  }   if($role_id==2 || $role_id==1){  ?>
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<label class=" control-label"> Member </label>
+																		<?php echo $this->Form->input('member_content', ['label' => false,'placeholder'=>'Member','class'=>'form-control transl2']); ?>
+																	</div>
+																</div>
+																<?php  }    ?>
+															</div>
+															<input type="hidden" name="industrial_grievance_id" value="<?php echo $industrial_grievance->id ; ?>">
 														</div>
-													</div>
-													<div class="col-md-12">
-														<div class="form-group">
-															<label class=" control-label"> UCCI </label>
-															
-																<?php echo $this->Form->input('ucci_content', ['label' => false,'placeholder'=>'UCCI','class'=>'form-control transl2']); ?>
-															
-														</div>
-													</div>
+												  </div>
+												  <div class="modal-footer">
+												  <div class="related_issue"></div>
+													<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
+														<?= $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']).__(' Submit') ,['class'=>'btn btn-success submit','type'=>'Submit','g_id'=>$industrial_grievance->id]);
+														?>
+												  </div>
 												</div>
-		
+											  </div>
 											</div>
-									  </div>
-									  <div class="modal-footer">
-									   <div class="related_issue"></div>
-										<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
-											<?= $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']).__(' Submit') ,['class'=>'btn btn-success submit','type'=>'Submit','g_id'=>$industrial_grievance->id]);
-											?>
-									  </div>
-									</div>
-								  </div>
-								</div>
-							 <?= $this->Form->end() ?>	
+										 <?= $this->Form->end() ?>	
 
 
 <?php  echo $this->Form->create($industrialGrievance, ['type' => 'post','id'=>'validationForm1'.$industrial_grievance->id,'enctype' => 'multipart/form-data']); ?>					
