@@ -535,13 +535,21 @@ class IndustrialGrievancesController extends AppController
 	public function grievanceFollow()
     {
 		$this->viewBuilder()->layout(null);
+		
+		$company_id=$this->Auth->User('company_id'); 
+		$Companies=$this->IndustrialGrievances->Companies->get($company_id);
+		$role_id=$Companies->role_id;
+		
+		
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
 		$id=$this->request->data['industrial_grievance_id'];
 		$industrialGrievance_follow = $this->IndustrialGrievances->get($id, [
-            'contain' =>['Companies','Users','IndustrialGrievanceFollows']
+            'contain' =>['Companies'=>['Users'],'Users','IndustrialGrievanceFollows']
         ]);
 		
 		$department_name=$industrialGrievance_follow->company->company_organisation; 
+		$department_member_name=$industrialGrievance_follow->company->users[0]->member_name; 
+		$department_email=$industrialGrievance_follow->company->users[0]->email; 
 		$email_to=$industrialGrievance_follow->user->email; 
 		$member_name=$industrialGrievance_follow->user->member_name;
 		$mobile_no=$industrialGrievance_follow->user->mobile_no; 
@@ -565,29 +573,60 @@ class IndustrialGrievancesController extends AppController
 			$industrialGrievance_follows = $this->IndustrialGrievances->IndustrialGrievanceFollows->get($industrialGrievance_id);
 			$department_content=$industrialGrievance_follows->department_content;
 			$ucci_content=$industrialGrievance_follows->ucci_content;
+			if($role_id==1 || $role_id==4)  { 
 			
-			/* $email_to="rohitkumarjoshi43@gmail.com";
-			$from_name="UCCI";
-			$subject="Industrial Grievance Follow";
-			  try {
-				$email->from(['ucciudaipur@gmail.com' => $from_name])
-					->to($email_to)
-					->replyTo('uccisec@hotmail.com')
-					->subject($subject)
-					->profile('default')
-					->template('industrial_grievance_follow')
-					->emailFormat('html')
-					->viewVars(['department_content'=>$department_content,'ucci_content'=>$ucci_content,'member_name'=>$member_name,'department_name'=>$department_name]);
-					
-					$email->send();
-				
-				
-		} catch (Exception $e) {
-			
-			echo 'Exception : ',  $e->getMessage(), "\n";
+				/* 
+				// member email 
+						$email_to="rohitkumarjoshi43@gmail.com";
+						$from_name="UCCI";
+						$subject="Industrial Grievance Follow";
+						  try {
+							$email->from(['ucciudaipur@gmail.com' => $from_name])
+								->to($email_to)
+								->replyTo('uccisec@hotmail.com')
+								->subject($subject)
+								->profile('default')
+								->template('industrial_grievance_follow')
+								->emailFormat('html')
+								->viewVars(['department_content'=>$department_content,'ucci_content'=>$ucci_content,'member_name'=>$member_name,'department_name'=>$department_name]);
+								
+								$email->send();
+							
+							
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
 
-		}   */
-	   
+							} 
+							
+			/// department email
+			
+						$email_to="rohitkumarjoshi43@gmail.com";
+						$from_name="UCCI";
+						$subject="Industrial Grievance Follow";
+						  try {
+							$email->from(['ucciudaipur@gmail.com' => $from_name])
+								->to($email_to)
+								->replyTo('uccisec@hotmail.com')
+								->subject($subject)
+								->profile('default')
+								->template('industrial_grievance_follow')
+								->emailFormat('html')
+								->viewVars(['department_content'=>$department_content,'ucci_content'=>$ucci_content,'member_name'=>$member_name,'department_name'=>$department_name]);
+								
+								$email->send();
+							
+							
+							} catch (Exception $e) {
+								
+								echo 'Exception : ',  $e->getMessage(), "\n";
+
+							}
+
+
+
+					*/
+				}
 	
                 $this->Flash->success(__('The industrial grievance follow has been saved.'));
 

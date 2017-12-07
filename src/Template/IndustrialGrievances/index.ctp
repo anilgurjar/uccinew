@@ -301,7 +301,7 @@
 	</div>
 
 </div>--->
-
+<div id="hello"> </div>
 <?php echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js'); ?>
 <?php echo $this->Html->script('/assets/plugins/jquery/jsapi.js'); ?>
 <script>
@@ -429,7 +429,7 @@ $(document).on('click', '.submit', function(e)
 			data: $("#validationForm"+grievance_id).serialize(), 
 			
 			success: function(data){
-				
+				$("#hello").html(data);
 				$(".cls").click();
 				$("#validationForm"+grievance_id).trigger("reset");
 				$(".related_issue").html(''); 
