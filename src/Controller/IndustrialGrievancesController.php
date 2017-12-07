@@ -375,8 +375,8 @@ class IndustrialGrievancesController extends AppController
 				$form_company_id=$this->request->data['company_id'];
 				$user_data=$this->IndustrialGrievances->Companies->Users->find()->where(['company_id'=>$form_company_id,'member_nominee_type'=>'first'])->toArray();
 				
-				//$email_to=$result_users->email; 
-				//$member_name=$result_users->member_name;
+				$email_to=$user_data[0]->email; 
+				$member_name=$user_data[0]->member_name;
 				
 				$user_ids=$user_data[0]->id;
 				$this->request->data['created_by'] = $user_ids;
