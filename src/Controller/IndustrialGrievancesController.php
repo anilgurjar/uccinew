@@ -535,6 +535,7 @@ class IndustrialGrievancesController extends AppController
 	public function grievanceFollow()
     {
 		$this->viewBuilder()->layout(null);
+		$user_id=$this->Auth->User('id');
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
 		$id=$this->request->data['industrial_grievance_id'];
 		$industrialGrievance_follow = $this->IndustrialGrievances->get($id, [
@@ -557,6 +558,7 @@ class IndustrialGrievancesController extends AppController
 		 */
 		 
 		 	$this->request->data['industrial_grievance_id'] = $id;		
+		 	$this->request->data['user_id'] = $user_id;		
             $industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->patchEntity($industrialGrievance, $this->request->data);
 			
             if ($industrialGrievance_data=$this->IndustrialGrievances->IndustrialGrievanceFollows->save($industrialGrievance)) {
