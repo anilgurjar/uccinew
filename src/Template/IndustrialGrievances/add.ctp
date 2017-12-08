@@ -80,7 +80,7 @@ fieldset{
 					
 					<div class="col-md-4">
 						<div class="form-group">
-						<label class="control-label">Have you lodge same grievance earlier with chamber</label><br/>
+						<label class="control-label">Have you lodged same grievance earlier with chamber</label><br/>
 						
 						<?php
 						$options=array();
