@@ -18,6 +18,18 @@
 					
 					<div class="col-md-3">
 						<div class="form-group">
+							<label class="control-label">Member Name</label>
+							<?php echo $this->Form->input('users[0][member_name]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control']); ?>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label class="control-label">Member Designation</label>
+							<?php echo $this->Form->input('users[0][member_designation]', ['label' => false,'placeholder'=>'Member Designation','class'=>'form-control']); ?>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
 							<label class="control-label">Email</label>
 							<?php echo $this->Form->input('users[0][email]', ['label' => false,'placeholder'=>'Email','class'=>'form-control']); ?>
 						</div>
@@ -32,8 +44,8 @@
 					
 					<div class="col-md-3">
 						<div class="form-group">
-							<label class="control-label">Address</label>
-							<?php echo $this->Form->input('address', ['label' => false,'placeholder'=>'Address','class'=>'form-control','rows'=>3]); ?>
+							<label class="control-label">Department Address</label>
+							<?php echo $this->Form->input('address', ['label' => false,'placeholder'=>'Department Address','class'=>'form-control','rows'=>3]); ?>
 						</div>
 					</div>
 									

@@ -65,7 +65,6 @@ class IndustrialDepartmentsController extends AppController
 			
 			$this->request->data['member_flag']=4;
 			$this->request->data['role_id']=5;
-			$this->request->data['users'][0]['member_name']='';
 			$this->request->data['users'][0]['member_nominee_type']='first';
 			
             $industrialDepartment = $this->IndustrialDepartments->Companies->patchEntity($industrialDepartment, $this->request->data);
