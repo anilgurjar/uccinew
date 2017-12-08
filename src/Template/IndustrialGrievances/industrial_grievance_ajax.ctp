@@ -10,6 +10,7 @@
 					<tr style="background-color:#3C8DBC; color:#fff">
 						<th scope="col"><?= __('Sr no.') ?></th>
 						<th scope="col"><?= __('Departmant') ?></th> 
+						<th scope="col"><?= __('Title') ?></th> 
 						<th scope="col"><?= __('Grievance Description') ?></th>
 						<th scope="col"><?= __('Complaint') ?></th>
 						<!--<th scope="col"><?= __('Action Taken By Department') ?></th>-->
@@ -27,8 +28,10 @@
 						
 							<td class="<?php echo $class; ?> font_cl"><?= h($i) ?></td>
 							<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->company->company_organisation) ?></td>
+						<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->title) ?></td>
 						<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->description) ?></td>
 						<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->user->company_organisation) ?></td> 
+						 
 						<?php  if (!empty($industrial_grievance->industrial_grievance_follows)){  ?>
 						<?php
 						foreach($industrial_grievance->industrial_grievance_follows as $industrial_grievance_follow)

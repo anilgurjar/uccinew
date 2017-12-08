@@ -287,7 +287,6 @@ class IndustrialGrievancesController extends AppController
         $industrialGrievance = $this->IndustrialGrievances->get($id, [
             'contain' => ['Companies','GrievanceIssues','GrievanceIssueRelateds','GrievanceCategories','IndustrialGrievanceFollows','IndustrialGrievanceStatuses','Users'=>['Companies']]
         ]);
-		
 		$dir = new Folder(WWW_ROOT . 'img/grievance/'.$id);
 		$file_path = str_replace("\\","/",WWW_ROOT).'img/grievance/'.$id;
 
@@ -395,10 +394,7 @@ class IndustrialGrievancesController extends AppController
 						
 				
 					if(!empty($mobile_no)){
-						
-						
-						
-						$sms="We sincerely thank you for contacting our grievance cell. We will investigate the grievance by gathering pertinent information against your grievance no ".$grievance_number;
+						$sms="We sincerely thank you for contacting our grievance cell. We will investigate the grievance by gathering pertinent information against your grievance";
 						
 						
 						$sms1=str_replace(" ", '+', $sms);
@@ -784,7 +780,7 @@ class IndustrialGrievancesController extends AppController
 		$this->set(compact('IndustrialGrievances'));
     }
 	
-	public function industrialGrievanceAjax($id=null,$from=null,$to=null)
+	public function industrialGrievanceAjax($id=null,$from=null,$to=null,$category_type=null,$title=null)
     {
 		$this->viewBuilder()->layout('ajax');
 		$company_id=$this->Auth->User('company_id'); 
@@ -793,10 +789,25 @@ class IndustrialGrievancesController extends AppController
 		$role_id=$Companies->role_id;
 		
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
-		$conditions['complete_status in']=['running','hold'];
 		if(!empty($id)){
 			$conditions['industrial_department_id']=$id;
 			
+		}
+		if(!empty($title)){
+			$conditions['title']=$title;
+			
+		}
+		
+		if(!empty($category_type)){
+			if($category_type=='Close'){
+				$conditions['complete_status in']=['hold'];
+			}else
+			{
+				$conditions['complete_status in']=['running'];
+			}
+		}else{
+			$conditions['complete_status in']=['running','hold'];
+		
 		}
 		
 	    if(!empty($from)){
@@ -806,7 +817,6 @@ class IndustrialGrievancesController extends AppController
         if(!empty($to)){
             $conditions['created_on <=']=date('Y-m-d 23:59:59',strtotime($to));
         }
-		
 		$IndustrialGrievances = $this->IndustrialGrievances->find()->where($conditions)->order(['complete_status'=>'DESC'])->contain(['Users','Companies','IndustrialGrievanceFollows'=>function($qfollow){
 			return $qfollow->order(['id'=>'DESC']);
 		}]);
@@ -817,7 +827,7 @@ class IndustrialGrievancesController extends AppController
 	
 	
 	
-	public function industrialGrievanceAjaxPublished($id=null,$from=null,$to=null)
+	public function industrialGrievanceAjaxPublished($id=null,$from=null,$to=null,$title=null)
     {
 		$this->viewBuilder()->layout('ajax');
 	
@@ -828,6 +838,13 @@ class IndustrialGrievancesController extends AppController
 			$conditions['industrial_department_id']=$id;
 			
 		}
+		
+		if(!empty($title)){
+			$conditions['title']=$title;
+			
+		}
+		
+	
 		
 	    if(!empty($from)){
             $conditions['created_on >=']=date('Y-m-d 00:00:01',strtotime($from));

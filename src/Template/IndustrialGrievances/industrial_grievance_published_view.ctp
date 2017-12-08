@@ -60,6 +60,10 @@ use Cake\Filesystem\File;
 					<td><?= h($industrialGrievance->grievance_issue_related->name) ?></td>
 				</tr>
 				<tr>
+					<th scope="row"><?= __('Title') ?></th>
+					<td><?= $this->Text->autoParagraph(h($industrialGrievance->title)); ?></td>
+				</tr>
+				<tr>
 					<th scope="row"><?= __('Description') ?></th>
 					<td><?= $this->Text->autoParagraph(h($industrialGrievance->description)); ?></td>
 				</tr>

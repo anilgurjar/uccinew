@@ -1,24 +1,45 @@
+<style>
+@media print { 
+.print_screen { display: none !important; } 
+}
+</style>
 <div class="col-md-12">
 	<div class="box box-primary">
 		<div class="box-header with-border">
+			<div class="print_screen" style="float:right;"> 
+				<div style="float:left;margin-right:6px"><button class="btn btn-block btn-primary " type="button"  style="margin-bottom: 2px;" onclick="window.print();"><b>Print </b></button>  </div>
+				
+			</div>
 			<h3 class="box-title">Grievance Report</h3>
 		</div>
 		<div class="box-body" style="display: block;">
 			<div class="row">
 				<?php  if($role_id==1 || $role_id==4)  {  ?>
-				<div class="col-md-3 pad">
+				<div class="col-md-2 pad">
 					<?php
 					echo $this->Form->input('industrial_department_id', ['empty'=> '--Select Departmant--','label' => false,'class'=>'form-control select2','name'=>'department','options'=>$IndustrialDepartments,'style'=>'width:100%;']); ?>
 				</div>
-				<div class="col-md-3 pad">
+				<div class="col-md-2 pad">
 					<?php
 					echo $this->Form->input('from', ['placeholder'=>'From','label' => false,'class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy','name'=>'from','style'=>'width:100%;']); ?>
 				</div>
-				<div class="col-md-3 pad">
+				<div class="col-md-2 pad">
 					<?php
 					echo $this->Form->input('to', ['placeholder'=>'To','label' => false,'class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy','name'=>'to','style'=>'width:100%;']); ?>
 				</div>
-				<div class="col-md-3 pad">
+				<div class="col-md-2 pad">
+					<?php
+					echo $this->Form->input('title', ['placeholder'=>'Title','label' => false,'class'=>'form-control title','type'=>'text','name'=>'title','style'=>'width:100%;']); ?>
+				</div>
+				<div class="col-md-2 pad">
+					<?php
+						$options=array();
+							$options['Close'] = 'Close';
+							$options['running'] = 'running';
+						
+						echo $this->Form->input('category_type',['empty'=>'----select----','label' =>false,'options'=>$options,'class'=>'form-control select2me']); ?>
+				</div>
+				<div class="col-md-1 pad">
 					<?= $this->Form->button(__('Go') ,['class'=>'btn btn-primary btn-sm go','type'=>'button','name'=>'go','style'=>'margin-bottom: 2px;']) ?>
 				</div>
 				<?php    }  ?>
@@ -32,6 +53,7 @@
 									<th scope="col"><?= __('Sr no.') ?></th>
 									<th scope="col"><?= __('Departmant') ?></th> 
 									<th scope="col"><?= __('Created on') ?></th>
+									<th scope="col"><?= __('Title') ?></th>
 									<th scope="col"><?= __('Grievance Description') ?></th>
 									<th scope="col"><?= __('Complaint') ?></th>
 									<th scope="col"><?= __('Action Taken By UCCI') ?></th>
@@ -62,6 +84,7 @@
 									}
 									?>
 									<td class="<?php echo $class; ?> font_cl"><?= h(date('d-m-Y', strtotime($industrial_grievance->created_on))) ?></td>
+									<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->title) ?></td>
 									<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->description) ?></td>
 									<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->user->company->company_organisation) ?></td> 
 									
@@ -303,6 +326,19 @@
 	</div>
 
 </div>--->
+<div class="modal fade" id="terms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Industrial Grievance Follow </h4>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default cls" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 <div id="hello"> </div>
 <?php echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js'); ?>
 <?php echo $this->Html->script('/assets/plugins/jquery/jsapi.js'); ?>
@@ -361,12 +397,20 @@ $(document).on('click', '.transl', function(e){
 
 $(document).ready(function() { 
 
+alert();
+		terms();
+		public function terms(){
+			
+		}
+
 	$('.go').on( 'click',function() { 	
 
 	$("#loading").html('<div align="center"><?php echo $this->Html->Image('/img/wait.gif', ['alt' => 'wait']); ?> Loading</div>');
 		 var from=$('input[name="from"]').val();
 		var to=$('input[name="to"]').val();
 		var id=$('select[name="department"]').val();
+		var title=$('input[name="title"]').val();
+		var category_type=$('select[name="category_type"]').val();
 		
 		if(from==""){
 			from=0;
@@ -379,11 +423,18 @@ $(document).ready(function() {
 			
 			id=0;
 		}
+		if(title==""){
+			
+			title='';
+		}
+		if(category_type==""){
+			
+			category_type=0;
+		}
 		
 		
 		var url="<?php echo $this->Url->build(['controller'=>'IndustrialGrievances','action'=>'industrial_grievance_ajax']); ?>";
-		url=url+'/'+id+'/'+from+'/'+to;
-		
+		url=url+'/'+id+'/'+from+'/'+to+'/'+category_type+'/'+title;
 		$.ajax({
 			url:url,
 			success:function(data) {
@@ -399,7 +450,7 @@ $(document).ready(function() {
 	
 	
 });
-
+   
 
 $(document).on('click', '.submit', function(e)
 	{

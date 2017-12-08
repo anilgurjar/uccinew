@@ -1,24 +1,37 @@
-
+<style>
+@media print { 
+.print_screen { display: none !important; } 
+}
+</style>
 <div class="col-md-12">
   <!-- Horizontal Form -->
   <div class="box box-primary">
 	<div class="box-header with-border">
+		<div class="print_screen" style="float:right;"> 
+			<div style="float:left;margin-right:6px"><button class="btn btn-block btn-primary " type="button"  style="margin-bottom: 2px;" onclick="window.print();"><b>Print </b></button>  </div>
+			
+		</div>
 		<h3 class="box-title">Grievance Published Report</h3>
 	</div>
 	<div class="box-header with-border no-print">
-		<div class="col-md-3 pad">
+		<div class="col-md-2 pad">
 			<?php
 			echo $this->Form->input('industrial_department_id', ['empty'=> '--Select Departmant--','label' => false,'class'=>'form-control select2','name'=>'department','options'=>$IndustrialDepartments,'style'=>'width:100%;']); ?>
 		</div>
-		<div class="col-md-3 pad">
+		<div class="col-md-2 pad">
 			<?php
 			echo $this->Form->input('from', ['placeholder'=>'From','label' => false,'class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy','name'=>'from','style'=>'width:100%;']); ?>
 		</div>
-		<div class="col-md-3 pad">
+		<div class="col-md-2 pad">
 			<?php
 			echo $this->Form->input('to', ['placeholder'=>'To','label' => false,'class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy','name'=>'to','style'=>'width:100%;']); ?>
 		</div>
-		<div class="col-md-3 pad">
+		<div class="col-md-2 pad">
+			<?php
+			echo $this->Form->input('title', ['placeholder'=>'Title','label' => false,'class'=>'form-control title','type'=>'text','name'=>'title','style'=>'width:100%;']); ?>
+		</div>
+		
+		<div class="col-md-1 pad">
 			<?= $this->Form->button(__('Go') ,['class'=>'btn btn-primary btn-sm go','type'=>'button','name'=>'go','style'=>'margin-bottom: 2px;']) ?>
 		</div>
 	</div>
@@ -119,6 +132,7 @@ $(document).ready(function() {
 		 var from=$('input[name="from"]').val();
 		var to=$('input[name="to"]').val();
 		var id=$('select[name="department"]').val();
+		var title=$('input[name="title"]').val();
 		
 		if(from==""){
 			from=0;
@@ -134,7 +148,7 @@ $(document).ready(function() {
 		
 		
 		var url="<?php echo $this->Url->build(['controller'=>'IndustrialGrievances','action'=>'industrial_grievance_ajax_published']); ?>";
-		url=url+'/'+id+'/'+from+'/'+to;
+		url=url+'/'+id+'/'+from+'/'+to+'/'+title;
 		
 		$.ajax({
 			url:url,
