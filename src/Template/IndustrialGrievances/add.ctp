@@ -221,7 +221,6 @@ $(document).ready(function() {
 			$.ajax({
 				url: url,
 				success: function(data){
-					alert(data);
 					$("#title_check").html(data);
 				}  
 			});
