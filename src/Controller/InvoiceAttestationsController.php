@@ -134,6 +134,7 @@ class InvoiceAttestationsController extends AppController
 						$pdf->SetFont('Arial','I',8);
 						$pdf->Cell(0,10,$pdf->Image('img/coo_signature/coo_authorized_1.png',15,250,20));$pdf->Cell(0,10,$pdf->Image('img/coo_invoice_attestation/seal.png',25,238,25));
 						$pdf->SetTextColor(255,0,0);
+						$pdf->SetFont('Arial','I',10);
 						$pdf->Text(20,268,'ATTESTED');
 				/* 		funct//ion Footer()
 					{
