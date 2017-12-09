@@ -311,6 +311,10 @@ function calculate2()
 			
 			$(".main1 tbody tr").each(function(){
 				var total_amount =parseFloat($(this).find("td input.total").val());
+				if(isNaN(total_amount)){
+					total_amount=0;
+				}
+				alert(total_amount);
 				grand_total+=total_amount;
 			});
 			
