@@ -16,9 +16,9 @@
 						<!--<th scope="col"><?= __('Action Taken By Department') ?></th>-->
 						<th scope="col"><?= __('Action Taken By UCCI') ?></th>
 						<th scope="col"><?= __('Created on') ?></th>
-						<th scope="col"><?= __('Pending on') ?></th>
+						<th scope="col" ><?= __('Pending on') ?></th>
 						
-						<th scope="col" width="80"><?= __('Action') ?></th>
+						<th scope="col" width="80" class="print_screen"><?= __('Action') ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -50,7 +50,7 @@
 						?>
 						<td class="<?php echo $class; ?> font_cl"><?= h(date('d-m-Y', strtotime($industrial_grievance->created_on))) ?></td>
 						<td class="<?php echo $class; ?> font_cl"><?php echo $industrial_grievance->grievance_age .' '. $industrial_grievance->grievance_period?></td>
-						<td class="actions">
+						<td class="actions  print_screen">
 											
 							<?php
 							echo $this->Html->link(' <i class="fa fa-list"></i> ',['action'=>'#'],['data-toggle'=>'modal','data-target'=>'#allfollow'.$industrial_grievance->id,'class' => 'orange',
