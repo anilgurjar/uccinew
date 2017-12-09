@@ -8,7 +8,7 @@ $options->set('defaultFont', 'MoolBoran');
 $dompdf = new Dompdf($options);
 
 
-$html='';
+$html='<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 			$html.='<link href="https://fonts.googleapis.com/css?family=Noto+Sans&subset=devanagari" rel="stylesheet">
 <style>
   * { font-family: Noto Sans, sans-serif; }
