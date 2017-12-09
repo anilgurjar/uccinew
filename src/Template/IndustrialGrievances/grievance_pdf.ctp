@@ -13,7 +13,7 @@ $html='';
 <style>
   * { font-family: Noto Sans, sans-serif; }
 </style>
-<h3 style="text-align:center">Grievance </h3>
+<h3 style="text-align:center">Grievance  Detail</h3>
 				
 <table >
 			
