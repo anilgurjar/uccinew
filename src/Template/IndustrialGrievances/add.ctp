@@ -250,6 +250,9 @@ $(document).ready(function() {
 				}  
 			});
 		}
+		else{
+			$("#title_check").hide();
+		}
 	}
 
 	

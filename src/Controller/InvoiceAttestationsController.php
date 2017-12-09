@@ -131,7 +131,10 @@ class InvoiceAttestationsController extends AppController
 							//$pdf->useTemplate($pageId,0,0);
 							//$pdf->useImportedPage($pageId);
 							//$pdf->Image('img/coo_signature/coo_authorized_1.png',150,200,20);
-						
+						$pdf->SetFont('Arial','I',8);
+						$pdf->Cell(0,10,$pdf->Image('img/coo_signature/coo_authorized_1.png',15,250,20));$pdf->Cell(0,10,$pdf->Image('img/coo_invoice_attestation/seal.png',25,238,25));
+						$pdf->SetTextColor(255,0,0);
+						$pdf->Text(20,268,'ATTESTED');
 				/* 		funct//ion Footer()
 					{
 						// Position at 1.5 cm from bottom
@@ -319,8 +322,8 @@ class InvoiceAttestationsController extends AppController
 					  $sub="Your Invoice Attestation is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 // $email_to="anilgurjer371@gmail.com";
-					  $email_to="acc.uccisec@gmail.com";
+					  $email_to="anilgurjer371@gmail.com";
+					  //$email_to="acc.uccisec@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -1277,9 +1280,9 @@ class InvoiceAttestationsController extends AppController
 					$sub="Invoice Attestation is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					//$email_to='rohitkumarjoshi43@gmail.com';
+					$email_to='rohitkumarjoshi43@gmail.com';
 					//$email_to='acc.uccisec@gmail.com';
-					$email_to="acc.uccisec@gmail.com";
+					//$email_to="acc.uccisec@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1328,8 +1331,8 @@ class InvoiceAttestationsController extends AppController
 						$sub="Certificate of origin is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						//$email_to="anilgurjer371@gmail.com";
-						$email_to="acc.uccisec@gmail.com";
+						$email_to="anilgurjer371@gmail.com";
+						//$email_to="acc.uccisec@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1549,8 +1552,8 @@ class InvoiceAttestationsController extends AppController
 					  $sub="Your Invoice Attestation is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 //$email_to="rohitkumarjoshi43@gmail.com";
-					 $email_to="acc.uccisec@gmail.com";
+					 $email_to="rohitkumarjoshi43@gmail.com";
+					// $email_to="acc.uccisec@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
