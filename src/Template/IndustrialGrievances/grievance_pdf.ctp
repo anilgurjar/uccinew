@@ -136,9 +136,9 @@ $html='<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 				$html.='</table>
 					</div>
 				</div>';
-				echo $html;
-					/* $dompdf->loadHtml($html);
+				
+					$dompdf->loadHtml($html);
 					$dompdf->setPaper('A4', 'portrait');
 					$dompdf->render();
 					$dompdf->stream($name,array('Attachment'=>0));
-					exit(0); */
+					exit(0);
