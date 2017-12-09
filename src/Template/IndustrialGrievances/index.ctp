@@ -15,32 +15,34 @@
 		<div class="box-body" style="display: block;">
 			<div class="row">
 				<?php  if($role_id==1 || $role_id==4)  {  ?>
-				<div class="col-md-2 pad">
-					<?php
-					echo $this->Form->input('industrial_department_id', ['empty'=> '--Select Departmant--','label' => false,'class'=>'form-control select2','name'=>'department','options'=>$IndustrialDepartments,'style'=>'width:100%;']); ?>
-				</div>
-				<div class="col-md-2 pad">
-					<?php
-					echo $this->Form->input('from', ['placeholder'=>'From','label' => false,'class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy','name'=>'from','style'=>'width:100%;']); ?>
-				</div>
-				<div class="col-md-2 pad">
-					<?php
-					echo $this->Form->input('to', ['placeholder'=>'To','label' => false,'class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy','name'=>'to','style'=>'width:100%;']); ?>
-				</div>
-				<div class="col-md-2 pad">
-					<?php
-					echo $this->Form->input('title', ['placeholder'=>'Title','label' => false,'class'=>'form-control title','type'=>'text','name'=>'title','style'=>'width:100%;']); ?>
-				</div>
-				<div class="col-md-2 pad">
-					<?php
-						$options=array();
-							$options['Close'] = 'Close';
-							$options['running'] = 'running';
-						
-						echo $this->Form->input('category_type',['empty'=>'----select----','label' =>false,'options'=>$options,'class'=>'form-control select2me']); ?>
-				</div>
-				<div class="col-md-1 pad">
-					<?= $this->Form->button(__('Go') ,['class'=>'btn btn-primary btn-sm go','type'=>'button','name'=>'go','style'=>'margin-bottom: 2px;']) ?>
+				<div class="print_screen">
+					<div class="col-md-2 pad">
+						<?php
+						echo $this->Form->input('industrial_department_id', ['empty'=> '--Select Departmant--','label' => false,'class'=>'form-control select2','name'=>'department','options'=>$IndustrialDepartments,'style'=>'width:100%;']); ?>
+					</div>
+					<div class="col-md-2 pad">
+						<?php
+						echo $this->Form->input('from', ['placeholder'=>'From','label' => false,'class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy','name'=>'from','style'=>'width:100%;']); ?>
+					</div>
+					<div class="col-md-2 pad">
+						<?php
+						echo $this->Form->input('to', ['placeholder'=>'To','label' => false,'class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy','name'=>'to','style'=>'width:100%;']); ?>
+					</div>
+					<div class="col-md-2 pad">
+						<?php
+						echo $this->Form->input('title', ['placeholder'=>'Title','label' => false,'class'=>'form-control title','type'=>'text','name'=>'title','style'=>'width:100%;']); ?>
+					</div>
+					<div class="col-md-2 pad">
+						<?php
+							$options=array();
+								$options['Close'] = 'Close';
+								$options['running'] = 'running';
+							
+							echo $this->Form->input('category_type',['empty'=>'----select----','label' =>false,'options'=>$options,'class'=>'form-control select2me']); ?>
+					</div>
+					<div class="col-md-1 pad">
+						<?= $this->Form->button(__('Go') ,['class'=>'btn btn-primary btn-sm go','type'=>'button','name'=>'go','style'=>'margin-bottom: 2px;']) ?>
+					</div>
 				</div>
 				<?php    }  ?>
 				<div id="loading" class="col-md-12"></div>
@@ -58,7 +60,7 @@
 									<th scope="col"><?= __('Complaint') ?></th>
 									<th scope="col"><?= __('Action Taken By UCCI') ?></th>
 									<th scope="col"><?= __('Pending on') ?></th>
-									<th scope="col" width="80"><?= __('Action') ?></th>
+									<th scope="col" width="80" class="print_screen"><?= __('Action') ?></th>
 									
 								</tr>
 							</thead>
@@ -106,7 +108,7 @@
 									?>
 									<td class="<?php echo $class; ?> font_cl"><?php echo $industrial_grievance->grievance_age .' '. $industrial_grievance->grievance_period?></td>
 									
-										<td class="actions">
+										<td class="actions  print_screen">
 														
 											<?php
 											echo $this->Html->link(' <i class="fa fa-list"></i> ',['action'=>'#'],['data-toggle'=>'modal','data-target'=>'#allfollow'.$industrial_grievance->id,'class' => 'orange',

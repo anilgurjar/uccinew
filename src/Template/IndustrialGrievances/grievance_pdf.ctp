@@ -13,7 +13,11 @@ $html='';
 <style>
   * { font-family: Noto Sans, sans-serif; }
 </style>
+<h4 >Grievance </h4>
+				
 <table >
+			
+					
 				<tr>
 					<td width="40%">Grievance Number</td>
 					<td>'.str_pad($industrialGrievance->grievance_number, 4, "0", STR_PAD_LEFT).'</td>
@@ -51,6 +55,10 @@ $html='';
 				<tr>
 					<td scope="row">Grievance issues related</td>
 					<td>'.h($industrialGrievance->grievance_issue_related->name).'</td>
+				</tr>
+				<tr>
+					<td scope="row">Title</td>
+					<td>'.h($industrialGrievance->title).'</td>
 				</tr>
 				<tr>
 					<td scope="row">Description</td>
