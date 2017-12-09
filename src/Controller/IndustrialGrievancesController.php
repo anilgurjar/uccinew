@@ -302,6 +302,7 @@ class IndustrialGrievancesController extends AppController
 
 	  public function grievancePdf($id = null)
 		{
+			
 			 $industrialGrievance = $this->IndustrialGrievances->get($id, [
             'contain' => ['Companies','GrievanceIssues','GrievanceIssueRelateds','GrievanceCategories','IndustrialGrievanceFollows','IndustrialGrievanceStatuses','Users'=>['Companies']]
 			]);
