@@ -112,7 +112,7 @@ class InvoiceAttestationsController extends AppController
 				$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice_attestation/'.$invoice_attestaions.'/'.$invoiceattestations['file_name'];
 				
 				$current_date=$invoiceattestations->date_current;
-				$approved_by=$invoiceattestations->approved_by;
+				echo $approved_by=$invoiceattestations->approved_by;
 				
 				$CertificateOriginAuthorizeds=$this->InvoiceAttestations->CertificateOriginAuthorizeds->find()->where(['user_id'=>$approved_by])->contain(['Users'])->toArray();
 				pr($CertificateOriginAuthorizeds); exit;
