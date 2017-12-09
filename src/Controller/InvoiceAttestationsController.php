@@ -106,16 +106,35 @@ class InvoiceAttestationsController extends AppController
 		if(isset($this->request->data['view']))
 		{ 
 		
-			$invoice_attestaions=$this->request->data['view'];
-			$invoiceattestations=$this->InvoiceAttestations->get($invoice_attestaions);
+			 $invoice_attestaions=$this->request->data['view']; 
+			 $invoiceattestations=$this->InvoiceAttestations->get($invoice_attestaions);
 			
 				$file_path = str_replace("\\","/",WWW_ROOT).'img/coo_invoice_attestation/'.$invoice_attestaions.'/'.$invoiceattestations['file_name'];
+				
+				$current_date=$invoiceattestations->date_current;
+				$approved_by=$invoiceattestations->approved_by;
+				
+				$CertificateOriginAuthorizeds=$this->InvoiceAttestations->CertificateOriginAuthorizeds->find()->where(['user_id'=>$approved_by])->contain(['Users'])->toArray();
+				
+				$signature=$CertificateOriginAuthorizeds[0]->signature;
+				
+				$current_date = date('d.m.Y',strtotime($current_date));
 
-				
-				
-				
+				if(date('m',strtotime($current_date)) < 4)
+				{
+					$from_year=(date('Y',strtotime($current_date))-1);
+					$to_year=date('y',strtotime($current_date));
+				}
+				else
+				{
+					$from_year=date('Y',strtotime($current_date));
+					$to_year=(date('y',strtotime($current_date))+1);
+				}
 			
-					// initiate FPDI
+				
+				$origin_no=$invoiceattestations->origin_no;
+				$ucci_invoice_number="UCCI/INV/".$from_year."-".$to_year."/".$origin_no."";
+				// initiate FPDI
 					$pdf = new Fpdi();
 					// add a page
 					//$pdf->AddPage();
@@ -132,10 +151,12 @@ class InvoiceAttestationsController extends AppController
 							//$pdf->useImportedPage($pageId);
 							//$pdf->Image('img/coo_signature/coo_authorized_1.png',150,200,20);
 						$pdf->SetFont('Arial','I',8);
-						$pdf->Cell(0,10,$pdf->Image('img/coo_signature/coo_authorized_1.png',15,250,20));$pdf->Cell(0,10,$pdf->Image('img/coo_invoice_attestation/seal.png',25,238,25));
+						$pdf->Cell(0,10,$pdf->Image($signature,15,250,20));
+						$pdf->Cell(0,10,$pdf->Image('img/coo_invoice_attestation/seal.png',25,238,25));
 						$pdf->SetTextColor(255,0,0);
 						$pdf->SetFont('Arial','I',10);
-						$pdf->Text(20,268,'ATTESTED');
+						$pdf->Text(18,268,'ATTESTED');
+						$pdf->Text(12,272,$ucci_invoice_number);
 				
 							//$pdf->Image('img/coo_signature/2.png',150,200,20);
 						
