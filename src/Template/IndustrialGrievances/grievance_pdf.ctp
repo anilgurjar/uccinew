@@ -136,9 +136,9 @@ $html='';
 				$html.='</table>
 					</div>
 				</div>';
-				
-					$dompdf->loadHtml($html);
+				echo $html;
+					/* $dompdf->loadHtml($html);
 					$dompdf->setPaper('A4', 'portrait');
 					$dompdf->render();
 					$dompdf->stream($name,array('Attachment'=>0));
-					exit(0);
+					exit(0); */
