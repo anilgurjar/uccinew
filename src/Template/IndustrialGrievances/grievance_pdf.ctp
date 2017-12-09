@@ -13,7 +13,7 @@ $html='';
 <style>
   * { font-family: Noto Sans, sans-serif; }
 </style>
-<h4 >Grievance </h4>
+<h3 style="text-align:center">Grievance </h3>
 				
 <table >
 			
@@ -69,7 +69,7 @@ $html='';
 					<td>'.$industrialGrievance->grievance_age.' '. $industrialGrievance->grievance_period.'</td>
 				</tr>
 				<tr>
-					<td scope="row">Have you lodge same grievance earlier with chamber </td>
+					<td scope="row">Have you lodged same grievance earlier with chamber </td>
 					<td>'.$industrialGrievance->lodge_same_grievance.'</td>
 				</tr>
 				<tr>
