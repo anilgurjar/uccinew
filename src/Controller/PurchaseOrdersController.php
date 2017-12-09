@@ -205,8 +205,8 @@ public function initialize()
 	$grand_total_amount = $total_amount + $total_tax;
 	
 	echo '<tr class="Tax">
-	<td colspan="3" align="right">Basic Amount</td>
-	<td><input type="hidden" name="basic_amount" value="'.number_format($total_basic_amount,2, '.', '').'">'.number_format($total_basic_amount,2, '.', '').'</td>
+	<td colspan="4" align="right">Basic Amount</td>
+	<td><input type="hidden" name="basic_amount" class="grandvalue"  value="'.number_format($total_basic_amount,2, '.', '').'">'.number_format($total_basic_amount,2, '.', '').'</td>
 	</tr>';
 	$sr=0;
 	foreach(@$tax as $tax_data1=>$tax_key11)
@@ -225,23 +225,23 @@ public function initialize()
 				}
 			}
 			echo '<tr class="Tax">
-			<td colspan="3" align="right"><input type="hidden" name="tax_amounts['.$sr.'][tax_id]" value="'.$tax_data1.'"><input type="hidden" name="tax_amounts['.$sr.'][tax_percentage]" value="'.number_format($tax_key1, 2, '.', '').'">'.$tax_data.' @ '.number_format($tax_key1, 2, '.', '').'%</td><td><input type="hidden" name="tax_amounts['.$sr.'][amount]" value="'.number_format($tax_amounts_add, 2, '.', '').'">'.number_format($tax_amounts_add, 2, '.', '').'</td></tr>';
+			<td colspan="4" align="right"><input type="hidden" name="tax_amounts['.$sr.'][tax_id]" value="'.$tax_data1.'"><input type="hidden" name="tax_amounts['.$sr.'][tax_percentage]" value="'.number_format($tax_key1, 2, '.', '').'">'.$tax_data.' @ '.number_format($tax_key1, 2, '.', '').'%</td><td><input type="hidden" name="tax_amounts['.$sr.'][amount]" value="'.number_format($tax_amounts_add, 2, '.', '').'">'.number_format($tax_amounts_add, 2, '.', '').'</td></tr>';
 			
 		}
 		$sr++;
 	}
 	echo '<tr class="Tax">
-	<td colspan="3" align="right">Total Tax</td>
+	<td colspan="4" align="right">Total Tax</td>
 	<td><input type="hidden" name="taxamount" value="'.number_format($total_tax, 2, '.', '').'">'.number_format($total_tax, 2, '.', '').'</td>
 	</tr>
 		<tr>
-		<td colspan="3" align="right">Total Amount</td>
+		<td colspan="4" align="right">Total Amount</td>
 		<td id="grand_total">'.number_format($grand_total_amount, 2, '.', '').'</td>
 	</tr>
 	
 	<tr>
-		<td colspan="3" align="right"><strong>Grant Total</strong></td>
-		<td id="grand_total"><input type="hidden" name="amount" value="'.number_format($grand_total_amount, 2, '.', '').'"><strong>'.number_format($grand_total_amount, 2, '.', '').'</strong></td>
+		<td colspan="4" align="right"><strong>Grant Total</strong></td>
+		<td id="grand_total"><input type="hidden"  name="amount" value="'.number_format($grand_total_amount, 2, '.', '').'"><strong>'.number_format($grand_total_amount, 2, '.', '').'</strong></td>
 	</tr>';
 	exit;
   }

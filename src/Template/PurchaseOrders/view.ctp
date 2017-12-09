@@ -99,7 +99,7 @@ text-align:center;
 		
 		</td>
 	
-		<td align="center" colspan="3" style="border-left:none;">
+		<td align="center" colspan="4" style="border-left:none;">
 	'.$html1.'
 		'.$text_type.' '.$type_number.'<br/>
 		 PAN No. '.$pan_no.'
@@ -116,7 +116,7 @@ Date & Time <br/> '.date('d-m-Y', strtotime($purchaseOrder->date)).' & '.$purcha
 	</tr>
 	
 	<tr>
-		<td align="" colspan="3">
+		<td align="" colspan="4">
 		Supplier Name: '.$purchaseOrder->supplier->name.'<br/>
 		company Name: '.$purchaseOrder->supplier->company.'<br/>
 		Address: '.$purchaseOrder->supplier->address.'<br/>
@@ -140,6 +140,7 @@ Date & Time <br/> '.date('d-m-Y', strtotime($purchaseOrder->date)).' & '.$purcha
 		<th colspan="2">Items</th>
 		<th width="10%">Qty</th>
 		<th width="15%">Rate</th>
+		<th width="15%">Discount</th>
 		<th width="15%">Amount</th>
 		
 	</tr>';
@@ -153,6 +154,7 @@ Date & Time <br/> '.date('d-m-Y', strtotime($purchaseOrder->date)).' & '.$purcha
 		<td colspan="2" style="text-align:center">'.$this->Text->autoParagraph($purchase_order_row->item_name).'</td>
 		<td style="text-align:center">'.$purchase_order_row->quty.'</td>
 		<td style="text-align:center">'.$purchase_order_row->rate.'</td>
+		<td style="text-align:center">'.$purchase_order_row->discount.'</td>
 		<td align="center">'.$purchase_order_row->amount.'</td>
 				
 		</tr>';
@@ -160,28 +162,36 @@ Date & Time <br/> '.date('d-m-Y', strtotime($purchaseOrder->date)).' & '.$purcha
 	}
 	
 		$html.='<tr>
-		<td colspan="5" align="right">Total</td>
+		<td colspan="6" align="right">Total</td>
 		<td align="center"><strong>'.number_format($total, 2, '.', '').' </strong></td>
 		</tr>';
 		
 		$html.='<tr class="Tax">
 			
-			<td colspan="5" align="right">Total Tax</td>
+			<td colspan="6" align="right">Total Tax</td>
 			<td align="center"><strong>'.$purchaseOrder->taxamount.' </strong></td>
-		</tr>
-		<tr>
-		<td colspan="5" align="right"> Grand Total</td>
-		<td align="center"><strong>'.$purchaseOrder->amount.' </strong></td>
+		</tr>';
+		if(empty($purchaseOrder->amount)){
+			$grand_total=$total;
+		$html.='<tr>
+		<td colspan="6" align="right">Total</td>
+		<td align="center"><strong>'.number_format($grand_total, 2, '.', '').' </strong></td>
+		</tr>';
+		}else{
+			$grand_total=$purchaseOrder->amount;
+		$html.='<tr>
+		<td colspan="6" align="right"> Grand Total</td>
+		<td align="center"><strong>'.number_format($grand_total, 2, '.', '').' </strong></td>
 	</tr>';	
-		
+		}	
 	
 	$html.='<tr>
 		
-		<td colspan="6"><strong>Rupees (in words) :  '.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($purchaseOrder->amount)])).' </strong></td>
+		<td colspan="7"><strong>Rupees (in words) :  '.ucwords($this->requestAction(['controller'=>'Users', 'action'=>'convert_number_to_words'],['pass'=>array($grand_total)])).' </strong></td>
 	</tr>';	
 	
 	$html.='<tr>
-		<td colspan="6" align="right"> 
+		<td colspan="7" align="right"> 
 					<strong style="font-size:15px;">For: Udaipur Chamber of Commerce & Industry </strong>
 					<br/> <br/>
 					<p style="width:100%; text-align:right; font-size: 15px;padding-right:8px;">

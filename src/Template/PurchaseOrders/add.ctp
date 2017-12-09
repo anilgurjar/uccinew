@@ -197,6 +197,7 @@ padding-left: 0px;
 					<th width="40%" >Item</th>
 					<th >Quantity</th>
 					<th>Rate</th>
+					<th>Discount</th>
 					<th >Total</th>
 					<th ></th>
 				</tr>
@@ -223,6 +224,9 @@ padding-left: 0px;
 				<?php echo $this->Form->input('purchase_order_rows[0][rate]', ['label' => false,'placeholder'=>'Rate','class'=>'form-control amount calculate','id'=>'purchase_order_rows-0-rate','autocomplete'=>'off']); ?>
 			</td>
 			<td>
+				<?php echo $this->Form->input('purchase_order_rows[0][discount]', ['label' => false,'placeholder'=>'Discount %','class'=>'form-control calculate discount','autocomplete'=>'off']); ?>
+			</td>
+			<td>
 				<?php echo $this->Form->input('purchase_order_rows[0][amount]', ['label' => false,'placeholder'=>'Total','class'=>'form-control total','readonly']); ?>
 			</td>
 			<td>
@@ -236,11 +240,11 @@ padding-left: 0px;
 		<tfoot id="tax_view">
 			
 			<tr>
-			<td colspan="3" align="right">Total</td>
+			<td colspan="4" align="right">Total</td>
 			<td id="grand_total"> <input type="hidden" name="amount"  class="totalvalue" value="0"><strong>0</strong></td>
 			</tr>
 			<tr>
-			<td colspan="3" align="right">Grant Total</td>
+			<td colspan="4" align="right">Grant Total</td>
 			<td id="grand_total"> <input type="hidden" name="total_amount" value="0"><strong>0</strong></td>
 			</tr>
 			
@@ -282,6 +286,9 @@ padding-left: 0px;
 			</td>
 			<td>
 				<?php echo $this->Form->input('purchase_order_rows[0][rate]', ['label' => false,'placeholder'=>'Rate','class'=>'form-control amount calculate calculatetax','id'=>'genaral_receipt_purposes-0-amount','autocomplete'=>'off']); ?>
+			</td>
+			<td>
+				<?php echo $this->Form->input('purchase_order_rows[0][discount]', ['label' => false,'placeholder'=>'Discount %','class'=>'form-control calculate discount  calculatetax','autocomplete'=>'off']); ?>
 			</td>
 			<td>
 				<?php echo $this->Form->input('purchase_order_rows[0][amount]', ['label' => false,'placeholder'=>'Total','class'=>'form-control total','readonly']); ?>
@@ -367,7 +374,11 @@ $(document).ready(function(){
 		if(qty==''){ qty=0;  }
 		var amt=$(this).closest('tr').find('td input.amount').val();
 		if(amt==''){ amt=0;  }
-		var total = qty*amt;
+		var totalvalue = qty*amt;
+		var discount=$(this).closest('tr').find('td input.discount').val();
+		if(discount==''){ discount=0;  }
+		var discount1=totalvalue*discount/100;
+		var total=totalvalue-discount1;
 		total =parseFloat(total).toFixed(2);
 		$(this).closest('tr').find('td input.total').val(total);
 		calculate2();
@@ -400,6 +411,10 @@ $(document).ready(function(){
 			
 			$(this).find("td input.amount").attr({name:'purchase_order_rows['+i+'][rate]',id:'purchase_order_rows-'+i+'-rate'}).rules("add", {
 					required: true,
+					number: true
+				});
+			$(this).find("td input.discount").attr({name:'purchase_order_rows['+i+'][discount]',id:'purchase_order_rows-'+i+'-discount'}).rules("add", {
+					required: false,
 					number: true
 				});
 			
@@ -436,6 +451,10 @@ $(document).ready(function(){
 			
 			$(this).find("td input.amount").attr({name:'purchase_order_rows['+i+'][rate]',id:'purchase_order_rows-'+i+'-rate'}).rules("add", {
 					required: true,
+					number: true
+				});
+			$(this).find("td input.discount").attr({name:'purchase_order_rows['+i+'][discount]',id:'purchase_order_rows-'+i+'-discount'}).rules("add", {
+					required: false,
 					number: true
 				});
 			

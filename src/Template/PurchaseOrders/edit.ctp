@@ -167,6 +167,7 @@ padding-left: 0px;
 					
 					<th >Quantity</th>
 					<th >Rate</th>
+					<th >Discount</th>
 					<th >Total</th>
 					<th ></th>
 				</tr>
@@ -198,6 +199,9 @@ padding-left: 0px;
 				<?php echo $this->Form->input('purchase_order_rows[0][rate]', ['label' => false,'placeholder'=>'Rate','class'=>'form-control amount calculate','id'=>'purchase_order_rows-0-rate','autocomplete'=>'off','value'=>$purchase_order_row->rate]); ?>
 			</td>
 			<td>
+				<?php echo $this->Form->input('purchase_order_rows[0][discount]', ['label' => false,'placeholder'=>'Discount %','class'=>'form-control calculate discount','id'=>'purchase_order_rows-0-discount','autocomplete'=>'off','value'=>$purchase_order_row->discount]); ?>
+			</td>
+			<td>
 				<?php echo $this->Form->input('purchase_order_rows[0][amount]', ['label' => false,'placeholder'=>'Total','class'=>'form-control total','readonly','value'=>$purchase_order_row->amount]); ?>
 			</td>
 			<td>
@@ -212,7 +216,7 @@ padding-left: 0px;
 		<tfoot id="tax_view">
 			
 			<tr>
-			<td colspan="3" align="right">Grant Total</td>
+			<td colspan="4" align="right">Grant Total</td>
 			<td id="grand_total"> <input type="hidden" name="amount" value="0"><strong>0</strong></td>
 			</tr>
 			
@@ -256,6 +260,9 @@ padding-left: 0px;
 				<?php echo $this->Form->input('purchase_order_rows[0][rate]', ['label' => false,'placeholder'=>'Rate','class'=>'form-control amount calculate','id'=>'genaral_receipt_purposes-0-amount','autocomplete'=>'off']); ?>
 			</td>
 			<td>
+				<?php echo $this->Form->input('purchase_order_rows[0][discount]', ['label' => false,'placeholder'=>'Discount %','class'=>'form-control calculate discount  calculatetax','autocomplete'=>'off']); ?>
+			</td>
+			<td>
 				<?php echo $this->Form->input('purchase_order_rows[0][amount]', ['label' => false,'placeholder'=>'Total','class'=>'form-control total','readonly']); ?>
 			</td>
 			<td>
@@ -285,6 +292,7 @@ $(document).ready(function(){
 			$(this).find("td input.quantity").attr({name:'purchase_order_rows['+i+'][quty]',id:'purchase_order_rows-'+i+'-quty'});
 			
 			$(this).find("td input.amount").attr({name:'purchase_order_rows['+i+'][rate]',id:'purchase_order_rows-'+i+'-rate'});
+			$(this).find("td input.discount").attr({name:'purchase_order_rows['+i+'][discount]',id:'purchase_order_rows-'+i+'-discount'});
 			$(this).find("td input.total").attr({name:'purchase_order_rows['+i+'][amount]',id:'purchase_order_rows-'+i+'-amount'});
 		i++;
 			
@@ -298,18 +306,19 @@ function calculate2()
 		var purpose_array=new Array();
 			
 			var state_id =$(".state").find('option:selected').attr('state');
-			
+
 			var grand_total=0;
+			
 			$(".main1 tbody tr").each(function(){
 				var total_amount =parseFloat($(this).find("td input.total").val());
 				grand_total+=total_amount;
 			});
 			
 			
-			grand_total=grand_total.toFixed(2)
+			var grand_total1=grand_total.toFixed(2)
 			
 			var m_data = new FormData();
-				m_data.append('total_amount',grand_total);
+				m_data.append('total_amount',grand_total1);
 				m_data.append('state_id',state_id);
 				
 				
@@ -325,6 +334,7 @@ function calculate2()
 					}
 		  });
 	}
+	
 	
 
 	
@@ -353,12 +363,18 @@ function calculate2()
 	$(document).on("keyup",".calculate,.tds_value",function()
 	{ 
 		var qty=$(this).closest('tr').find('td input.quantity').val();
+		if(qty==''){ qty=0;  }
 		var amt=$(this).closest('tr').find('td input.amount').val();
-		var total = qty*amt;
+		if(amt==''){ amt=0;  }
+		var totalvalue = qty*amt;
+		var discount=$(this).closest('tr').find('td input.discount').val();
+		if(discount==''){ discount=0;  }
+		var discount1=totalvalue*discount/100;
+		var total=totalvalue-discount1;
 		total =parseFloat(total).toFixed(2);
 		$(this).closest('tr').find('td input.total').val(total);
-		calculate();
 		calculate2();
+		calculate();
 	});
 	
 	function add_row()
@@ -366,6 +382,7 @@ function calculate2()
 		var new_line=$("#sample tbody").html();
 		$("#main tbody.main").append(new_line);
 		calculate2();
+		calculate();
 		//$('#main tbody tr:last select.purpose_id').select2();
 	}
 	
@@ -390,6 +407,10 @@ function calculate2()
 					required: true,
 					number: true
 				});
+			$(this).find("td input.discount").attr({name:'purchase_order_rows['+i+'][discount]',id:'purchase_order_rows-'+i+'-discount'}).rules("add", {
+					required: false,
+					number: true
+				});
 			
 			$(this).find("td input.total").attr({name:'purchase_order_rows['+i+'][amount]',id:'purchase_order_rows-'+i+'-amount'});
 		i++;
@@ -403,7 +424,8 @@ function calculate2()
 				});
 			});
 	
-		
+		calculate2();
+		calculate();
 	});
 	$(document).on("click",".remove_row",function(){ 
 		$(this).closest("tr").remove();
@@ -424,6 +446,10 @@ function calculate2()
 			
 			$(this).find("td input.amount").attr({name:'purchase_order_rows['+i+'][rate]',id:'purchase_order_rows-'+i+'-rate'}).rules("add", {
 					required: true,
+					number: true
+				});
+			$(this).find("td input.discount").attr({name:'purchase_order_rows['+i+'][discount]',id:'purchase_order_rows-'+i+'-discount'}).rules("add", {
+					required: false,
 					number: true
 				});
 			
