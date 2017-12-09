@@ -319,8 +319,8 @@ class InvoiceAttestationsController extends AppController
 					  $sub="Your Invoice Attestation is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 // $email_to="anilgurjer371@gmail.com";
-					  $email_to="acc.uccisec@gmail.com";
+					  $email_to="anilgurjer371@gmail.com";
+					  //$email_to="acc.uccisec@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -1277,9 +1277,9 @@ class InvoiceAttestationsController extends AppController
 					$sub="Invoice Attestation is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					//$email_to='rohitkumarjoshi43@gmail.com';
+					$email_to='rohitkumarjoshi43@gmail.com';
 					//$email_to='acc.uccisec@gmail.com';
-					$email_to="acc.uccisec@gmail.com";
+					//$email_to="acc.uccisec@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1328,8 +1328,8 @@ class InvoiceAttestationsController extends AppController
 						$sub="Certificate of origin is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						//$email_to="anilgurjer371@gmail.com";
-						$email_to="acc.uccisec@gmail.com";
+						$email_to="anilgurjer371@gmail.com";
+						//$email_to="acc.uccisec@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1549,8 +1549,8 @@ class InvoiceAttestationsController extends AppController
 					  $sub="Your Invoice Attestation is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 //$email_to="rohitkumarjoshi43@gmail.com";
-					 $email_to="acc.uccisec@gmail.com";
+					 $email_to="rohitkumarjoshi43@gmail.com";
+					// $email_to="acc.uccisec@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
