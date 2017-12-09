@@ -115,7 +115,7 @@ class InvoiceAttestationsController extends AppController
 				$approved_by=$invoiceattestations->approved_by;
 				
 				$CertificateOriginAuthorizeds=$this->InvoiceAttestations->CertificateOriginAuthorizeds->find()->where(['user_id'=>$approved_by])->contain(['Users'])->toArray();
-				
+				pr($CertificateOriginAuthorizeds); exit;
 				$signature=$CertificateOriginAuthorizeds[0]->signature;
 				
 				$current_date = date('d.m.Y',strtotime($current_date));
