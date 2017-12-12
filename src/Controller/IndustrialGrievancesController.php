@@ -564,7 +564,7 @@ class IndustrialGrievancesController extends AppController
 		
 		$sms="hello testing for grivenese";
 		$sms1=str_replace(" ", '+', $sms);
-		$sms_send=file_get_contents('http://103.39.134.40/Account/Login/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
+		$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
 		 */
 		 
 		 	$this->request->data['industrial_grievance_id'] = $id;		

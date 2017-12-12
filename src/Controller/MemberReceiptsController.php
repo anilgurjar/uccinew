@@ -611,8 +611,10 @@ public function MemberReceiptAjaxType(){
 		$this->set('master_bank' , $this->MemberReceipts->MasterBanks->find()->toArray());
 		$this->set('receipt',$receipt);
 		$conditions['MemberReceipts.receipt_flag']=1;
+		
 		if(isset($this->request->data['invoice_receipt_send']))
 		{
+			
 			$mail=$this->request->data['mail'];
 			
 			foreach($mail as $receipt_id)
@@ -697,95 +699,10 @@ public function MemberReceiptAjaxType(){
 				$this->set(compact('general_receipt'));
 			}	
 		}
-		else if(isset($this->request->query['invoice_receipt_report']))
-		{
-			$mail_Send=$this->request->query['send_unsend'];
-			$purpose_id=$this->request->query['purpose_id'];
-			$bank_id=$this->request->query['bank_id'];
-			$member_id=$this->request->query['member_id'];
-			$amount_type=$this->request->query['amount_type'];
-			
-			if(!empty($this->request->query['from']) && !empty($this->request->query['to'])){
-				$from=date('Y-m-d', strtotime($this->request->query['from']));
-				$to=date('Y-m-d', strtotime($this->request->query['to']));
-			}else{
-				if(date('m') < 4){
-					$from=(date('Y')-1).'-04-1';
-					$to=date('Y').'-03-31';
-				}else{
-					$from=date('Y').'-04-01';
-					$to=(date('Y')+1).'-03-31';
-				}
-			}
-			if($mail_Send!=3){
-				$conditions['MemberReceipts.mail_Send']=$mail_Send;
-			}
-			$conditions['MemberReceipts.date_current >=']=$from;
-			$conditions['MemberReceipts.date_current <=']=$to;
-			
-			
-			if(!empty($purpose_id) && $this->request->query['receipt_type']=='Invoice'){
-				$conditions['memberReceipts.purpose_id']=$purpose_id;
-			}
-			if(!empty($amount_type)){
-				$conditions['MemberReceipts.amount_type']=$amount_type;
-			}
-			if(!empty($bank_id)){
-				$conditions['MemberReceipts.bank_id']=$bank_id;
-			}
-			if(!empty($member_id)){
-				$conditions['MemberReceipts.company_id']=$member_id;
-			}
-			if($this->request->query['receipt_type']=='Invoice')
-			{
-				$conditions['MemberReceipts.receipt_type']='member_receipt';
-				/* $member_receipt = $this->paginate($this->MemberReceipts->find()->where($conditions)->order(['MemberReceipts.date_current DESC'])->contain(['MemberFees'=>function($q){
-					return $q->select(['invoice_no']);
-				},'Users'=>function($q1){
-					return $q1->select(['company_organisation']);
-				}]));
-				 */
-				
-				$member_receipt = $this->paginate($this->MemberReceipts->find()
-				->where($conditions)
-				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])
-				->order(['MemberReceipts.date_current DESC']));
-				
-				$this->set(compact('member_receipt'));
-			}
-			else
-			{
-				$conditions['MemberReceipts.receipt_type']='general_receipt';
-				/* $general_receipt = $this->paginate($this->MemberReceipts->find()->where($conditions)->order(['MemberReceipts.date_current DESC'])->contain(['Users'=>function($q1){
-					return $q1->select(['company_organisation']);
-				}]));
-				 */
-				
-				/* $general_receipt = $this->paginate($this->MemberReceipts->find()
-				->where($conditions)
-				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees'],'GeneralReceiptPurposes'=>function($q) use($purpose_id){   
-			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
-			}])
-				->order(['MemberReceipts.date_current DESC'])); */
-				//pr($general_receipt);   exit;
-				
-				
-				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
-				$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
-				->rightJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
-			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
-			})
-				->group(['GeneralReceiptPurposes.member_receipt_id'])
-				->having(['total_rows >'=>0])
-				->autoFields(true);
-
-				
-				$this->set(compact('general_receipt'));
-			}
-			
-		}
+		
 		else
 		{
+			
 			if(date('m') < 4){
 				$from=(date('Y')-1).'-04-1';
 				$to=date('Y').'-03-31';
@@ -1159,10 +1076,6 @@ public function MemberReceiptAjaxType(){
 
 		if(!empty($member_receipt) || !empty($general_receipt))
 		{ 
-				
-
-		
-			
 			$sr_no=0;
 			$_header=['S.No.', 'Date','Origin No', 'Reciept No.', 'Company', 'Mode Of Payment', 'Amount','Status', 'Send Mail/SMS'];
 			$grand_total=0;
@@ -1209,6 +1122,97 @@ public function MemberReceiptAjaxType(){
 			$this->set(compact('_header', 'contain', '_serialize'));	
 
 		}	
-		}		
+		}
+
+
+
+	public function filterdata(){
+			$mail_Send=$this->request->query['send_unsend'];
+			$purpose_id=$this->request->query['purpose_id'];
+			$bank_id=$this->request->query['bank_id'];
+			$member_id=$this->request->query['member_id'];
+			$amount_type=$this->request->query['amount_type'];
+			
+			if(!empty($this->request->query['from']) && !empty($this->request->query['to'])){
+				$from=date('Y-m-d', strtotime($this->request->query['from']));
+				$to=date('Y-m-d', strtotime($this->request->query['to']));
+			}else{
+				if(date('m') < 4){
+					$from=(date('Y')-1).'-04-1';
+					$to=date('Y').'-03-31';
+				}else{
+					$from=date('Y').'-04-01';
+					$to=(date('Y')+1).'-03-31';
+				}
+			}
+			if($mail_Send!=3){
+				$conditions['MemberReceipts.mail_Send']=$mail_Send;
+			}
+			$conditions['MemberReceipts.date_current >=']=$from;
+			$conditions['MemberReceipts.date_current <=']=$to;
+			
+			
+			if(!empty($purpose_id) && $this->request->query['receipt_type']=='Invoice'){
+				$conditions['memberReceipts.purpose_id']=$purpose_id;
+			}
+			if(!empty($amount_type)){
+				$conditions['MemberReceipts.amount_type']=$amount_type;
+			}
+			if(!empty($bank_id)){
+				$conditions['MemberReceipts.bank_id']=$bank_id;
+			}
+			if(!empty($member_id)){
+				$conditions['MemberReceipts.company_id']=$member_id;
+			}
+			
+			if($this->request->query['receipt_type']=='Invoice')
+			{
+				$conditions['MemberReceipts.receipt_type']='member_receipt';
+				/* $member_receipt = $this->paginate($this->MemberReceipts->find()->where($conditions)->order(['MemberReceipts.date_current DESC'])->contain(['MemberFees'=>function($q){
+					return $q->select(['invoice_no']);
+				},'Users'=>function($q1){
+					return $q1->select(['company_organisation']);
+				}]));
+				 */
+				
+				$member_receipt = $this->paginate($this->MemberReceipts->find()
+				->where($conditions)
+				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])
+				->order(['MemberReceipts.date_current DESC']));
+				
+				$this->set(compact('member_receipt'));
+			}
+			else
+			{
+				$conditions['MemberReceipts.receipt_type']='general_receipt';
+				/* $general_receipt = $this->paginate($this->MemberReceipts->find()->where($conditions)->order(['MemberReceipts.date_current DESC'])->contain(['Users'=>function($q1){
+					return $q1->select(['company_organisation']);
+				}]));
+				 */
+				
+				/* $general_receipt = $this->paginate($this->MemberReceipts->find()
+				->where($conditions)
+				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees'],'GeneralReceiptPurposes'=>function($q) use($purpose_id){   
+			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
+			}])
+				->order(['MemberReceipts.date_current DESC'])); */
+				//pr($general_receipt);   exit;
+				
+				
+				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
+				$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
+				->rightJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
+			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
+			})
+				->group(['GeneralReceiptPurposes.member_receipt_id'])
+				->having(['total_rows >'=>0])
+				->autoFields(true);
+
+				
+				$this->set(compact('general_receipt'));
+			}
+			
+	}
+			
 }
 ?>

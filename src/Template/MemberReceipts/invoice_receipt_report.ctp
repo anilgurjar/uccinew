@@ -26,8 +26,7 @@
 	</div>
 	 <div class="box-body">
 	 <?php echo $this->Form->create($receipt, ['type' => 'get']); ?>
-	  <form method="get">
-		<div class="col-sm-12 no-print">
+	  <div class="col-sm-12 no-print">
 			<div class="form-group col-sm-3">
 			  <label class="">Company/Organisation</label>
 			  	<?php 
@@ -112,7 +111,7 @@
 		</div>
 		<div class="no-print">
 		<center>
-			<?php echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-file-text']) . ' Report',['class'=>'btn btn-info btn-flat go','type'=>'submit','value'=>'invoice_receipt_report','name'=>'invoice_receipt_report']); ?>
+			<?php echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-file-text']) . ' Report',['class'=>'btn btn-info btn-flat go','type'=>'button','value'=>'invoice_receipt_report','name'=>'invoice_receipt_report']); ?>
 			
 			<?php  
 				echo $this->Html->link('<i class="fa fa-download"></i> Export',
@@ -123,7 +122,6 @@
 			?>
 		</center>
 		</div>
-	</form>
 	<?php
 	if(!empty($member_receipt)){
 		$member_receipt = $member_receipt->toArray();
@@ -170,7 +168,7 @@
 					<!--<th style="text-align:center">Delete</th>-->
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="show_div">
 			<?php
 			$sr_no=0;
 			$grand_total=0;
@@ -347,7 +345,18 @@ $(document).ready(function(){
 		var dateto = $('.dateto').val();
 		
 		$('#excl').attr("href","MemberRecieptsViewListExcel?company_id="+company_id+"&payment_mode="+payment_mode+"&sendtype="+sendtype+"&reciept_type="+reciept_type+"&purpose_id="+purpose_id+"&bank_id="+bank_id+"&datefrom="+datefrom+"&dateto="+dateto);
+		var url="<?php echo $this->Url->build(['controller'=>'MemberReceipts','action'=>'filterdata']);?>";
 		
+		url=url+'?member_id='+company_id+'&amount_type='+payment_mode+'&send_unsend='+sendtype+'&reciept_type='+reciept_type+'&purpose_id='+purpose_id+'&bank_id='+bank_id+'&from='+datefrom+'&to='+dateto;
+		
+		$.ajax({ 
+				url:url,
+				type:"GET",
+			}).done(function(response){
+				alert(response);
+				$('.show_div').html(response);
+				
+			});
 	});	
 });
 </script>
