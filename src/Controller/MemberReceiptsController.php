@@ -6,6 +6,9 @@ use Cake\Event\Event;
 use Cake\Network\Email\Email;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
+
 
 class MemberReceiptsController extends AppController
 {
@@ -1063,6 +1066,149 @@ public function MemberReceiptAjaxType(){
 		$MasterCompanies=$this->MemberReceipts->MasterCompanies->find();
 		$this->set('MasterCompanies',$MasterCompanies);
 		$this->set('master_member_receipt',$master_member_receipt);	
-	}	
+	}
+
+
+
+
+
+	public function MemberRecieptsViewListExcel() 
+	{
+		
+		$company_id=$this->Auth->User('company_id'); 
+		$Companies=$this->MemberReceipts->Companies->get($company_id);
+		$role_id=$Companies->role_id;
+		@$member_id=$this->request->query['company_id']; 
+		@$amount_type=$this->request->query['payment_mode']; 
+		@$mail_Send=$this->request->query['sendtype']; 
+		@$reciept_type=$this->request->query['reciept_type']; 
+		@$purpose_id=$this->request->query['purpose_id']; 
+		@$bank_id=$this->request->query['bank_id']; 
+		if(!empty($this->request->query['from']) && !empty($this->request->query['to'])){
+			$from=date('Y-m-d', strtotime($this->request->query['datefrom']));
+			$to=date('Y-m-d', strtotime($this->request->query['dateto']));
+		}else{
+			if(date('m') < 4){
+				$from=(date('Y')-1).'-04-1';
+				$to=date('Y').'-03-31';
+			}else{
+				$from=date('Y').'-04-01';
+				$to=(date('Y')+1).'-03-31';
+			}
+		}
+			if($mail_Send!=3){
+				$conditions['MemberReceipts.mail_Send']=$mail_Send;
+			}
+			$conditions['MemberReceipts.date_current >=']=$from;
+			$conditions['MemberReceipts.date_current <=']=$to;
+			
+			
+			if(!empty($purpose_id) && $reciept_type=='Invoice'){
+				$conditions['memberReceipts.purpose_id']=$purpose_id;
+			}
+			if(!empty($amount_type)){
+				$conditions['MemberReceipts.amount_type']=$amount_type;
+			}
+			if(!empty($bank_id)){
+				$conditions['MemberReceipts.bank_id']=$bank_id;
+			}
+			if(!empty($member_id)){
+				$conditions['MemberReceipts.company_id']=$member_id;
+			}
+			if(!empty($reciept_type))
+			{
+				if($reciept_type=='Invoice')
+				{
+					$conditions['MemberReceipts.reciept_type']='member_receipt';
+					$member_receipt = $this->paginate($this->MemberReceipts->find()
+					->where($conditions)
+					->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])
+					->order(['MemberReceipts.date_current DESC']));
+					
+					$this->set(compact('member_receipt'));
+				}
+				else
+				{
+					$conditions['MemberReceipts.reciept_type']='general_receipt';
+					$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
+					$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
+					->rightJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
+				return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
+				})
+					->group(['GeneralReceiptPurposes.member_receipt_id'])
+					->having(['total_rows >'=>0])
+					->autoFields(true);
+
+					
+					$this->set(compact('general_receipt'));
+				}
+			}else{
+				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['GeneralReceiptPurposes','Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
+					
+				
+			}
+			
+			
+		if(!empty($member_receipt)){
+		$member_receipt = $member_receipt->toArray();
+		}if(!empty($general_receipt)){
+			
+			$general_receipt = $general_receipt->toArray();
+		}
+
+
+		if(!empty($member_receipt) || !empty($general_receipt))
+		{ 
+				
+
+		
+			
+			$sr_no=0;
+			$_header=['S.No.', 'Date','Origin No', 'Reciept No.', 'Company', 'Mode Of Payment', 'Amount','Status', 'Send Mail/SMS'];
+			$grand_total=0;
+			if(!empty($member_receipt)){
+				foreach($member_receipt as $data){
+					$member_fee_member_receipts=$data->member_fee_member_receipts;
+					foreach($member_fee_member_receipts as $member_fee_member_receipt){
+						$status=$data->mail_send;
+						if($status==0){
+								$send_type='Unsend'; 
+							}elseif($status==1){ 
+								$send_type='Pending'; 
+							}else{ $send_type='Sent'; 
+							}
+						$total=0;
+						$contain[]=[ ++$sr_no,$data->date_current,$member_fee_member_receipt->member_fee->invoice_no,$data->receipt_no, $data->company->company_organisation,$data->amount_type,$total=$data->amount,$send_type];
+					} 
+				}
+			}
+			if(!empty($general_receipt)){
+				foreach($general_receipt as $general_data)
+				{
+					
+					$status=$general_data->mail_send;
+					if($status==0){
+							$send_type='Unsend'; 
+						}elseif($status==1){ 
+							$send_type='Pending'; 
+						}else{ $send_type='Sent'; 
+						}
+						$total=0;
+						
+					
+					$contain[]=[ ++$sr_no,$general_data->date_current,$general_data->receipt_no, $general_data->company->company_organisation,$general_data->amount_type,$total=$general_data->amount,$send_type ];
+					$grand_total+=$total;
+				}
+			}
+			
+			
+			$_serialize = 'contain';
+			
+			$this->response->download('Member Reciepts View List.csv');
+			$this->viewBuilder()->className('CsvView.Csv');
+			$this->set(compact('_header', 'contain', '_serialize'));	
+
+		}	
+		}		
 }
 ?>

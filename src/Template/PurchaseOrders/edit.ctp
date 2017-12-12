@@ -314,7 +314,6 @@ function calculate2()
 				if(isNaN(total_amount)){
 					total_amount=0;
 				}
-				alert(total_amount);
 				grand_total+=total_amount;
 			});
 			

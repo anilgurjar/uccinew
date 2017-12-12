@@ -109,18 +109,39 @@ class CertificateOriginsController extends AppController
 	{
 		
 		$company_id=$this->Auth->User('company_id'); 
-		
 		$Companies=$this->CertificateOrigins->Companies->get($company_id);
-		
 		$role_id=$Companies->role_id;
 		$CertificateOrigins = $this->CertificateOrigins->newEntity();
+		@$exporter=$this->request->query['exporter']; 
+		@$originno=$this->request->query['originno'];
+		@$datefrom=$this->request->query['datefrom']; 
+		@$dateto=$this->request->query['dateto'];
 		
-		 if($role_id==1 or $role_id==4 ){
-			 $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved'])->order(['CertificateOrigins.origin_no'=>'DESC']);
-		   }else{
-			  $certificate_origins = $this->CertificateOrigins->find()->where(['status'=>'approved','company_id'=>$company_id])->order(['CertificateOrigins.origin_no'=>'DESC']); 
-		   }  
-       $this->set(compact('certificate_origins','role_id'));
+		$condition['status']='approved';
+		if(!empty($exporter)){
+			$condition['exporter Like']='%'.$exporter.'%';
+		}
+		 if( !empty($originno)){
+			$condition['origin_no']=$originno;
+		}
+		
+		if(!empty($datefrom) && !empty($dateto)){
+			$datefrom=date('y-m-d', strtotime($datefrom));
+			$dateto=date('y-m-d', strtotime($dateto));
+			$condition['date_current >=']=$datefrom;
+			$condition['date_current <=']=$dateto;
+		}
+		
+		if($role_id==1 or $role_id==4 ){
+			$Users=$this->CertificateOrigins->find()->where($condition)
+				->order(['CertificateOrigins.origin_no'=>'DESC']);
+		}else{
+			$condition['company_id']=$company_id;
+			$Users=$this->CertificateOrigins->find()->where($condition)
+				->order(['CertificateOrigins.origin_no'=>'DESC']);
+		}	
+		
+       $this->set(compact('Users','role_id'));
 	
 		
 			
@@ -128,7 +149,7 @@ class CertificateOriginsController extends AppController
 			
 		$sr_no=0;
 		$_header=['S.No.', 'Exporter', 'Origin No', 'Date', 'Consignee', 'Invoice No.', 'Invoice Date','Manufacturer', 'Despatched by'];
-		foreach($certificate_origins as $certificate_origin) 
+		foreach($Users as $certificate_origin) 
 		{	
 			if($certificate_origin->despatched_by==0){ 
 			$despatched_by='Sea'; 
@@ -147,13 +168,6 @@ class CertificateOriginsController extends AppController
    		$this->response->download('Coo View List.csv');
 		$this->viewBuilder()->className('CsvView.Csv');
 		$this->set(compact('_header', 'contain', '_serialize'));
-	
-	
-	
-	
-	
-	
-	
 	}
 	
 	

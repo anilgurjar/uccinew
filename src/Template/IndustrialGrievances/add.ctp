@@ -209,10 +209,31 @@ fieldset{
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Industrial Grievance Terms & Conditions</h4>
-      </div>
+        <h4 style="">Grievance Submission & Tracking System</h4>
+	</div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+       
+        <h4 style="color:blue;">Terms & Conditions</h4>
+		<h5 style=""><b>1.</b> UCCI is an apex body of trade and industry in South Rajasthan. Representations submitted by it's member organizations to UCCI are forwarded to relevant departments as a part fulfillment of its duty towards the trade and industry community as a whole.
+		<br/><br/>
+		<b>2.</b> UCCI is purely acting as a third party in the matters and holds no personal interest in the resolution of the grievances. 
+		<br/><br/>
+		<b>3.</b> This Grievance Submission and Tracking System is a part of the Grievance Redressal Camps that are organized by UCCI every month to facilitate resolution of issues of the industry through direct interaction with various Government Departments.
+		<br/><br/>
+		<b>4.</b> UCCI will try to actively followup on the grievances, however, it shall be the responsibility of the affected member organization(s) to track and update their matters from time to time.
+		<br/><br/>
+		<b>5.</b> In no way, UCCI shall stand liable for any loss of business/property/person arising due any proceedings of the Grievance Redressal Camps or any of the causes resulting from the resolution or non-resolution of grievances submitted on this system.
+		<br/><br/>
+		<b>6.</b> Representatives from Government Departments are expected to honour the timelines for resolving the grievances. However, it will be up to them to apprise the affected party of the status of the grievance.
+		<br/><br/>
+		<b>7.</b> UCCI may filter/refine/edit the grievances submitted to the system before forwarding them to the concerned department.
+		<br/><br/>
+		<b>8.</b> UCCI does not endorse the remarks, comments, suppositions and suggestions expressed in the grievance descriptions or the resolution status submitted either by any of its member organizations or Government representatives through this system.
+		<br/><br/>
+		<b>9.</b> The code of conduct for using this system will include (but not be limited to) basic decency, use of parliamentary language and spam-free behavior. Any submission or communication involving profane, discriminatory, racial, political or otherwise considered irrelevant and unofficial language will be deemed unfit for processing and UCCI is free to remove such communication from the system. 
+		<br/><br/>
+		<b>10.</b> UCCI does not legally represent the issues put up by the members, nor does it claim to solicit on their behalf. In any matter of dispute/conflict UCCI President's decision shall be final.
+		</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -35,7 +35,7 @@
 						foreach($master_member as $master_member_data){
 							$options[$master_member_data->id] = $master_member_data->company_organisation;
 						}
-                        echo $this->Form->input('member_id', ['empty'=> '--Select--','data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
+                        echo $this->Form->input('member_id', ['empty'=> '--Select--','data-placeholder'=>'Select a Company/Organisation','label' => false,'class'=>'form-control select2 company_id','options'=>$options,'style'=>'width:100%;']); ?>
 			</div>
 			<!--<div class="form-group col-sm-3">
 			  <label class="">Financial Year</label>
@@ -55,7 +55,7 @@
 						$options['NEFT/RTGS'] = 'NEFT/RTGS';
 						$options['Payumoney'] = 'Payumoney';
 						
-                        echo $this->Form->input('amount_type', ['empty'=> 'Select a Year','data-placeholder'=>'Select a Mode of Payment','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
+                        echo $this->Form->input('amount_type', ['empty'=> 'Select a Year','data-placeholder'=>'Select a Mode of Payment','label' => false,'class'=>'form-control select2 payment_mode','options'=>$options,'style'=>'width:100%;']); ?>
 			</div>
 			<div class="form-group col-sm-3">
 			  <label class="">Send/Unsend</label>
@@ -64,7 +64,7 @@
 							$options[2] = 'Send';
 							$options[0] = 'Unsend';
 							$options[3] = 'All';
-                        echo $this->Form->input('send_unsend', ['empty'=> '--Select--','data-placeholder'=>'Select...','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;','value'=>0]); ?>
+                        echo $this->Form->input('send_unsend', ['empty'=> '--Select--','data-placeholder'=>'Select...','label' => false,'class'=>'form-control select2  sendtype','options'=>$options,'style'=>'width:100%;','value'=>0]); ?>
 			</div>
 			<div class="form-group col-sm-3">
 				<label>&nbsp;</label>
@@ -74,7 +74,7 @@
 							
 							$options['Invoice'] = 'Invoice';
 							$options['Receipt'] = 'Receipt';
-					echo $this->Form->input('receipt_type', array('templates' => ['radioWrapper' => '<div class="radio inline radio-div">{{label}}</div>'],'type' => 'radio','label' => false,'options' => $options,'hiddenField' => false,'value'=>'Invoice')); ?>
+					echo $this->Form->input('receipt_type', array('templates' => ['radioWrapper' => '<div class="radio inline radio-div  reciept_type">{{label}}</div>'],'type' => 'radio','label' => false,'options' => $options,'hiddenField' => false,'value'=>'Invoice')); ?>
 				</div>
 			</div>
 		</div>
@@ -86,7 +86,7 @@
 						foreach($master_purpose as $master_purpose_data){
 							$options[] = 
 						['text' =>$master_purpose_data->purpose_name,'value' => $master_purpose_data->id]; }
- echo $this->Form->input('purpose_id', ['empty'=> '--Select--','data-placeholder'=>'Select a Purpose','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']);  ?>
+ echo $this->Form->input('purpose_id', ['empty'=> '--Select--','data-placeholder'=>'Select a Purpose','label' => false,'class'=>'form-control select2 purpose_id','options'=>$options,'style'=>'width:100%;']);  ?>
 			</div>
 			<div class="form-group col-sm-3">
 			  <label>Our Bank</label>
@@ -95,15 +95,15 @@
 						foreach($master_bank as $master_bank_data){
 							$options[$master_bank_data->id] = $master_bank_data->bank_name;
 						}
-                        echo $this->Form->input('bank_id', ['empty'=> '--Select--','data-placeholder'=>'Select a Bank','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
+                        echo $this->Form->input('bank_id', ['empty'=> '--Select--','data-placeholder'=>'Select a Bank','label' => false,'class'=>'form-control select2 bank_id','options'=>$options,'style'=>'width:100%;']); ?>
 			</div>
 			<div class="form-group col-sm-3">
 				<label>Date range:</label>
 					<div class="input-group input-large date-picker input-daterange" data-date-format="dd-mm-yyyy">
-						<?php echo $this->Form->input('from', ['label' => false,'class'=>'form-control']); ?>
+						<?php echo $this->Form->input('from', ['label' => false,'class'=>'form-control datefrom']); ?>
 						<span class="input-group-addon" style="background-color:e5e5e5 !important;">
 						To </span>
-						<?php echo $this->Form->input('to', ['label' => false,'class'=>'form-control']); ?>
+						<?php echo $this->Form->input('to', ['label' => false,'class'=>'form-control dateto']); ?>
 					</div>
 					<span class="help-block">
 					Select date range </span>
@@ -112,9 +112,15 @@
 		</div>
 		<div class="no-print">
 		<center>
-			<?php echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-file-text']) . ' Report',['class'=>'btn btn-info btn-flat','type'=>'submit','value'=>'invoice_receipt_report','name'=>'invoice_receipt_report']); ?>
+			<?php echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-file-text']) . ' Report',['class'=>'btn btn-info btn-flat go','type'=>'submit','value'=>'invoice_receipt_report','name'=>'invoice_receipt_report']); ?>
 			
-			
+			<?php  
+				echo $this->Html->link('<i class="fa fa-download"></i> Export',
+					['controller' => 'MemberReceipts', 'action' => 'MemberRecieptsViewListExcel'],
+					['class' => 'btn btn-primary btn-sm btn-flat pull-right','id'=>'excl','style'=>'margin-right:30px',
+					'escape' => false]
+				); 
+			?>
 		</center>
 		</div>
 	</form>
@@ -328,5 +334,20 @@ $(document).ready(function(){
 				$('.mail_check').prop('checked',false);
 			}
 		});
+		
+		
+		$('.go').click(function(){
+		var company_id = $('.company_id').val();
+		var payment_mode = $('.payment_mode').val();
+		var sendtype = $('.sendtype').val();
+		var reciept_type = $('.reciept_type').val();
+		var purpose_id = $('.purpose_id').val();
+		var bank_id = $('.bank_id').val();
+		var datefrom = $('.datefrom').val();
+		var dateto = $('.dateto').val();
+		
+		$('#excl').attr("href","MemberRecieptsViewListExcel?company_id="+company_id+"&payment_mode="+payment_mode+"&sendtype="+sendtype+"&reciept_type="+reciept_type+"&purpose_id="+purpose_id+"&bank_id="+bank_id+"&datefrom="+datefrom+"&dateto="+dateto);
+		
+	});	
 });
 </script>

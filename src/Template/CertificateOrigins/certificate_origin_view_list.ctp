@@ -36,12 +36,14 @@
 	<!-- /.box-header -->
 	<!-- form start -->
 	<?php  
-		echo $this->Html->link('<i class="fa fa-download"></i> Export',
+	echo $this->Html->link('<i class="fa fa-download"></i> Export',
 			['controller' => 'CertificateOrigins', 'action' => 'CertificateOriginViewListexcel'],
-			['class' => 'btn btn-primary btn-sm btn-flat pull-right','style'=>'margin-right:30px',
+			['class' => 'btn btn-primary btn-sm btn-flat pull-right','id'=>'excl','style'=>'margin-right:30px',
 				'escape' => false]
-		);
+		); 
+		
 		?>
+		<!--<a id="excl" class="btn btn-primary" style="text-align:right"  href="CertificateOriginViewListexcel?exporter=&originno=&datefrom=&dateto=">Export</a>-->
 	<div class="box-body">
 	 <?= $this->Form->create() ?>
 	  <div class="col-sm-12 no-print">
@@ -71,11 +73,6 @@
 
 					
 					<?php endforeach; ?>
-					
-				
-						
-					
-				 	
 					</tbody>
 				</table>
 				</div>
@@ -99,21 +96,18 @@ $(document).ready(function(){
 		var datefrom = $('.from').val();
 		var dateto = $('.to').val();
 		
+		$('#excl').attr("href","CertificateOriginViewListexcel?exporter="+exporter+"&originno="+originno+"&datefrom="+datefrom+"&dateto="+dateto);
+		var url="<?php echo $this->Url->build(['controller'=>'CertificateOrigins','action'=>'filterdata']);?>";
+		url=url+'?exporter='+exporter+'&originno='+originno+'&datefrom='+datefrom+'&dateto='+dateto;
 		
-			var url="<?php echo $this->Url->build(['controller'=>'CertificateOrigins','action'=>'filterdata']);?>";
-			url=url+'?exporter='+exporter+'&originno='+originno+'&datefrom='+datefrom+'&dateto='+dateto;
-			
-			$.ajax({ 
-					url:url,
-					type:"GET",
-				}).done(function(response){
-					
-					$('.show_div').html(response);
-					
-				});
+		$.ajax({ 
+				url:url,
+				type:"GET",
+			}).done(function(response){
 				
-		
-	
+				$('.show_div').html(response);
+				
+			});
 	});	
 		
 	
