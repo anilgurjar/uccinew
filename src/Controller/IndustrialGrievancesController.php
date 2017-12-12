@@ -393,13 +393,13 @@ class IndustrialGrievancesController extends AppController
 				 $grievance_number=$industrialGrievance_data->grievance_number;
 					$grievance_number=str_pad($grievance_number, 4, "0", STR_PAD_LEFT);
 						
-					$mobile_no='';
+					$mobile_no='9887779123';
 					if(!empty($mobile_no)){
 						$sms="We sincerely thank you for contacting our grievance cell. We will investigate the grievance by gathering pertinent information against your grievance";
 						
 						
 						$sms1=str_replace(" ", '+', $sms);
-						//$sms_send=file_get_contents('http://103.39.134.40/account/login/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
+						$sms_send=file_get_contents('http://103.39.134.40/account/login/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
 					}
 					$email_to='anilgurjer371@gmail.com';
 					if(!empty($email_to)){
