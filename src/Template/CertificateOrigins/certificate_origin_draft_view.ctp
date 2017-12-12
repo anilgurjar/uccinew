@@ -44,7 +44,7 @@
 						
 						if($role_id==1 || $role_id==4){	
 						echo"<td>";
-							//echo $this->Form->button( __('Move') ,['class'=>'btn btn-danger btn-sm','type'=>'button','data-toggle'=>'modal','data-target'=>'#notverify'.$certificate_origin->id.'','value'=>$certificate_origin->id]);
+							echo $this->Form->button( __('Move') ,['class'=>'btn btn-danger btn-sm','type'=>'button','data-toggle'=>'modal','data-target'=>'#notverify'.$certificate_origin->id.'','value'=>$certificate_origin->id]);
 							
 						?>  
 						
@@ -66,7 +66,7 @@
 														<?php echo $this->Form->textarea('ucci_content', ['label' => false,'placeholder'=>'Reason','class'=>'form-control ', 'name'=>'reason_move'.$certificate_origin->id.'']); ?>
 												</div>
 											</div>
-										</div>
+									</div>
 
 									</div>
 							  </div>

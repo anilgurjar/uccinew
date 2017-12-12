@@ -1308,7 +1308,7 @@ class CertificateOriginsController extends AppController
 			if(isset($this->request->data['certificate_move_submit']))
 			{
 				
-				 $coo_id=$this->request->data['certificate_move_submit'];
+				$coo_id=$this->request->data['certificate_move_submit']; 
 				$CertificateOrigins = $this->CertificateOrigins->get($coo_id);
 		
 				$this->request->data['id']=$this->request->data['certificate_move_submit'];
@@ -1317,10 +1317,11 @@ class CertificateOriginsController extends AppController
 				$this->request->data['payment_status']='success';
 				$this->request->data['status']='published';
 				
+				
 				$CertificateOrigins = $this->CertificateOrigins->patchEntity($CertificateOrigins, $this->request->data);
 				
 				$this->CertificateOrigins->save($CertificateOrigins);
-				
+				return $this->redirect(['action' => 'general-receipt','controller'=>'member-receipts']);
 			}
 		
 		}	
