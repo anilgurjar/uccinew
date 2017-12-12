@@ -394,12 +394,16 @@ class IndustrialGrievancesController extends AppController
 					$grievance_number=str_pad($grievance_number, 4, "0", STR_PAD_LEFT);
 						
 					$mobile_no='9887779123';
+					
 					if(!empty($mobile_no)){
 						$sms="We sincerely thank you for contacting our grievance cell. We will investigate the grievance by gathering pertinent information against your grievance";
 						
 						
 						$sms1=str_replace(" ", '+', $sms);
-						$sms_send=file_get_contents('http://103.39.134.40/account/login/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
+						
+						$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=UCCIUD&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
+						pr($sms_send);   exit;
+						
 					}
 					$email_to='anilgurjer371@gmail.com';
 					if(!empty($email_to)){
@@ -560,7 +564,7 @@ class IndustrialGrievancesController extends AppController
 		
 		$sms="hello testing for grivenese";
 		$sms1=str_replace(" ", '+', $sms);
-		$sms_send=file_get_contents('http://103.39.134.40/account/login/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
+		$sms_send=file_get_contents('http://103.39.134.40/Account/Login/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
 		 */
 		 
 		 	$this->request->data['industrial_grievance_id'] = $id;		
