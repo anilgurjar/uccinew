@@ -73,7 +73,7 @@
 							
 							$options['Invoice'] = 'Invoice';
 							$options['Receipt'] = 'Receipt';
-					echo $this->Form->input('receipt_type', array('templates' => ['radioWrapper' => '<div class="radio inline radio-div  reciept_type">{{label}}</div>'],'type' => 'radio','label' => false,'options' => $options,'hiddenField' => false,'value'=>'Invoice')); ?>
+					echo $this->Form->input('receipt_type', array('templates' => ['radioWrapper' => '<div class="radio inline radio-div  reciept_type">{{label}}</div>'],'id'=>'reciept_type','type' => 'radio','label' => false,'options' => $options,'hiddenField' => false,'value'=>'Invoice')); ?>
 				</div>
 			</div>
 		</div>
@@ -141,7 +141,7 @@
 	<div class="col-sm-12" id="fee_data">
 	<div class="col-sm-12">
 	<form method="post">
-	<div class="table-responsive no-padding">
+	<div class="table-responsive no-padding show_div">
 
 		<table class="table table-borderd" style="width: 100%;border: #00c0ef; border-spacing: 0;border-collapse: collapse;" >
 			<thead>
@@ -168,7 +168,7 @@
 					<!--<th style="text-align:center">Delete</th>-->
 				</tr>
 			</thead>
-			<tbody class="show_div">
+			<tbody >
 			<?php
 			$sr_no=0;
 			$grand_total=0;
@@ -333,12 +333,23 @@ $(document).ready(function(){
 			}
 		});
 		
+		var company_id = $('.company_id').val();
+		var payment_mode = $('.payment_mode').val();
+		var sendtype = $('.sendtype').val();
+		var reciept_type = $('input[name="receipt_type"]:checked').val();
+		var purpose_id = $('.purpose_id').val();
+		var bank_id = $('.bank_id').val();
+		var datefrom = $('.datefrom').val();
+		var dateto = $('.dateto').val();
+		
+		$('#excl').attr("href","MemberRecieptsViewListExcel?company_id="+company_id+"&payment_mode="+payment_mode+"&sendtype="+sendtype+"&reciept_type="+reciept_type+"&purpose_id="+purpose_id+"&bank_id="+bank_id+"&datefrom="+datefrom+"&dateto="+dateto);
+		
 		
 		$('.go').click(function(){
 		var company_id = $('.company_id').val();
 		var payment_mode = $('.payment_mode').val();
 		var sendtype = $('.sendtype').val();
-		var reciept_type = $('.reciept_type').val();
+		var reciept_type = $('input[name="receipt_type"]:checked').val();
 		var purpose_id = $('.purpose_id').val();
 		var bank_id = $('.bank_id').val();
 		var datefrom = $('.datefrom').val();
@@ -353,7 +364,7 @@ $(document).ready(function(){
 				url:url,
 				type:"GET",
 			}).done(function(response){
-				alert(response);
+				
 				$('.show_div').html(response);
 				
 			});

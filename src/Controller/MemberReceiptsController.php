@@ -1013,6 +1013,7 @@ public function MemberReceiptAjaxType(){
 				$to=(date('Y')+1).'-03-31';
 			}
 		}
+		
 			if($mail_Send!=3){
 				$conditions['MemberReceipts.mail_Send']=$mail_Send;
 			}
@@ -1032,38 +1033,38 @@ public function MemberReceiptAjaxType(){
 			if(!empty($member_id)){
 				$conditions['MemberReceipts.company_id']=$member_id;
 			}
-			if(!empty($reciept_type))
+			if($reciept_type=='Invoice')
 			{
-				if($reciept_type=='Invoice')
-				{
-					$conditions['MemberReceipts.reciept_type']='member_receipt';
-					$member_receipt = $this->paginate($this->MemberReceipts->find()
-					->where($conditions)
-					->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])
-					->order(['MemberReceipts.date_current DESC']));
-					
-					$this->set(compact('member_receipt'));
-				}
-				else
-				{
-					$conditions['MemberReceipts.reciept_type']='general_receipt';
-					$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
-					$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
-					->rightJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
+				$conditions['MemberReceipts.receipt_type']='member_receipt';
+				
+				$member_receipt = $this->paginate($this->MemberReceipts->find()
+				->where($conditions)
+				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])
+				->order(['MemberReceipts.date_current DESC']));
+				
+				$this->set(compact('member_receipt'));
+			}
+			else
+			{
+				$conditions['MemberReceipts.receipt_type']='general_receipt';
+				
+				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])->toArray();
+				if(!empty($general_receipt)){
+				$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
+				->rightJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
 				return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
 				})
-					->group(['GeneralReceiptPurposes.member_receipt_id'])
-					->having(['total_rows >'=>0])
-					->autoFields(true);
-
-					
-					$this->set(compact('general_receipt'));
+				->group(['GeneralReceiptPurposes.member_receipt_id'])
+				->having(['total_rows >'=>0])
+				->autoFields(true);
 				}
-			}else{
-				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['GeneralReceiptPurposes','Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
-					
 				
+				$this->set(compact('general_receipt'));
 			}
+			
+			
+			
+			
 			
 			
 		if(!empty($member_receipt)){
@@ -1132,7 +1133,7 @@ public function MemberReceiptAjaxType(){
 			$bank_id=$this->request->query['bank_id'];
 			$member_id=$this->request->query['member_id'];
 			$amount_type=$this->request->query['amount_type'];
-			
+			$receipt_type=$this->request->query['reciept_type'];
 			if(!empty($this->request->query['from']) && !empty($this->request->query['to'])){
 				$from=date('Y-m-d', strtotime($this->request->query['from']));
 				$to=date('Y-m-d', strtotime($this->request->query['to']));
@@ -1152,7 +1153,7 @@ public function MemberReceiptAjaxType(){
 			$conditions['MemberReceipts.date_current <=']=$to;
 			
 			
-			if(!empty($purpose_id) && $this->request->query['receipt_type']=='Invoice'){
+			if(!empty($purpose_id) && $receipt_type=='Invoice'){
 				$conditions['memberReceipts.purpose_id']=$purpose_id;
 			}
 			if(!empty($amount_type)){
@@ -1164,17 +1165,11 @@ public function MemberReceiptAjaxType(){
 			if(!empty($member_id)){
 				$conditions['MemberReceipts.company_id']=$member_id;
 			}
-			
-			if($this->request->query['receipt_type']=='Invoice')
+			//pr($conditions);    exit;
+			if($receipt_type=='Invoice')
 			{
 				$conditions['MemberReceipts.receipt_type']='member_receipt';
-				/* $member_receipt = $this->paginate($this->MemberReceipts->find()->where($conditions)->order(['MemberReceipts.date_current DESC'])->contain(['MemberFees'=>function($q){
-					return $q->select(['invoice_no']);
-				},'Users'=>function($q1){
-					return $q1->select(['company_organisation']);
-				}]));
-				 */
-				
+			
 				$member_receipt = $this->paginate($this->MemberReceipts->find()
 				->where($conditions)
 				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])
@@ -1185,21 +1180,8 @@ public function MemberReceiptAjaxType(){
 			else
 			{
 				$conditions['MemberReceipts.receipt_type']='general_receipt';
-				/* $general_receipt = $this->paginate($this->MemberReceipts->find()->where($conditions)->order(['MemberReceipts.date_current DESC'])->contain(['Users'=>function($q1){
-					return $q1->select(['company_organisation']);
-				}]));
-				 */
-				
-				/* $general_receipt = $this->paginate($this->MemberReceipts->find()
-				->where($conditions)
-				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees'],'GeneralReceiptPurposes'=>function($q) use($purpose_id){   
-			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
-			}])
-				->order(['MemberReceipts.date_current DESC'])); */
-				//pr($general_receipt);   exit;
-				
-				
-				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
+			$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])->toArray();
+			if(!empty($general_receipt)){
 				$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
 				->rightJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
 			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
@@ -1208,7 +1190,7 @@ public function MemberReceiptAjaxType(){
 				->having(['total_rows >'=>0])
 				->autoFields(true);
 
-				
+			}	
 				$this->set(compact('general_receipt'));
 			}
 			

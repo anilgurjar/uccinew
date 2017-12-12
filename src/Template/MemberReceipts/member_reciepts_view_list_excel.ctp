@@ -30,9 +30,7 @@ if(!empty($member_receipt) || !empty($general_receipt))
 					<th>Mode of Payment</th>
 					<th>Amount</th>
 					<th>Status</th>
-					<th><center>Send Mail/SMS</center><center>
-				<?php echo $this->Form->checkbox('accc', ['hiddenField' => false,'class'=>'mail_check_all']);  ?>	
-				</center></th>
+				
 					
 				</tr>
 			</thead>
@@ -42,30 +40,26 @@ if(!empty($member_receipt) || !empty($general_receipt))
 			$grand_total=0;
 			if(!empty($member_receipt)){
 				//pr($member_receipt);
-			foreach($member_receipt as $data){
-				$member_fee_member_receipts=$data->member_fee_member_receipts;
-				foreach($member_fee_member_receipts as $member_fee_member_receipt){
-				$status=$data->mail_send;
-					$total=0;
-					$sr_no++;
-					?>
-					<tr>
-					<td><?php echo $sr_no; ?></td>
-					<td><?php echo date('d-m-Y', strtotime($data->date_current)); ?></td>
-					<td><?php echo sprintf("%04d", $member_fee_member_receipt->member_fee->invoice_no); ?></td>
-					<td><?php echo sprintf("%04d", $data->receipt_no); ?></td>
-					<td><?php echo $data->company->company_organisation; ?></td>
-					<td><?php echo $data->amount_type; ?></td>
-					<td><?php echo $total=$data->amount; ?></td>
-					<td width="100px"> <?php if($status==0){echo" <strong style='color:#dd4b39;'> Unsend </strong>"; }elseif($status==1){ echo"<strong style='color:#f39c12;'>Pending </strong>"; }else{ echo"<strong style='color:#00a65a;'>Sent </strong>"; } ?> </td>
-					
-					</tr>
-					<?php
-					$grand_total+=$total;
-				
-				
-			} 
-			}
+				foreach($member_receipt as $data){
+					$member_fee_member_receipts=$data->member_fee_member_receipts;
+					foreach($member_fee_member_receipts as $member_fee_member_receipt){
+					$status=$data->mail_send;
+						$total=0;
+						$sr_no++;
+						?>
+						<tr>
+							<td><?php echo $sr_no; ?></td>
+							<td><?php echo date('d-m-Y', strtotime($data->date_current)); ?></td>
+							<td><?php echo sprintf("%04d", $member_fee_member_receipt->member_fee->invoice_no); ?></td>
+							<td><?php echo sprintf("%04d", $data->receipt_no); ?></td>
+							<td><?php echo $data->company->company_organisation; ?></td>
+							<td><?php echo $data->amount_type; ?></td>
+							<td><?php echo $total=$data->amount; ?></td>
+						</tr>
+						<?php
+						$grand_total+=$total;
+					} 
+				}
 			}
 			
 			if(!empty($general_receipt)){
