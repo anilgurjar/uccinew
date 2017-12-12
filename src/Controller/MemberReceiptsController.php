@@ -1048,10 +1048,10 @@ public function MemberReceiptAjaxType(){
 			{
 				$conditions['MemberReceipts.receipt_type']='general_receipt';
 				
-				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])->toArray();
+				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
 				if(!empty($general_receipt)){
 				$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
-				->rightJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
+				->innerJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
 				return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
 				})
 				->group(['GeneralReceiptPurposes.member_receipt_id'])
@@ -1068,17 +1068,17 @@ public function MemberReceiptAjaxType(){
 			
 			
 		if(!empty($member_receipt)){
-		$member_receipt = $member_receipt->toArray();
+		$member_receipt = $member_receipt;
 		}if(!empty($general_receipt)){
 			
-			$general_receipt = $general_receipt->toArray();
+			$general_receipt = $general_receipt;
 		}
 
 
 		if(!empty($member_receipt) || !empty($general_receipt))
 		{ 
 			$sr_no=0;
-			$_header=['S.No.', 'Date','Origin No', 'Reciept No.', 'Company', 'Mode Of Payment', 'Amount','Status', 'Send Mail/SMS'];
+			$_header=['S.No.', 'Date','Origin No', 'Reciept No.', 'Company', 'Mode Of Payment', 'Amount','Status'];
 			$grand_total=0;
 			if(!empty($member_receipt)){
 				foreach($member_receipt as $data){
@@ -1180,10 +1180,11 @@ public function MemberReceiptAjaxType(){
 			else
 			{
 				$conditions['MemberReceipts.receipt_type']='general_receipt';
-			$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])->toArray();
+					$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
+		
 			if(!empty($general_receipt)){
 				$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
-				->rightJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
+				->innerJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
 			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
 			})
 				->group(['GeneralReceiptPurposes.member_receipt_id'])

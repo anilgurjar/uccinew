@@ -78,7 +78,7 @@ if(!empty($member_receipt) || !empty($general_receipt))
 					<td><?php echo $general_data->company->company_organisation; ?></td>
 					<td><?php echo $general_data->amount_type; ?></td>
 					<td><?php echo $total=$general_data->amount; ?></td>
-					<td width="100px"> <?php if($status==0){echo" <strong style='color:#dd4b39;'> Unsend </strong>"; }elseif($status==1){ echo"<strong style='color:#f39c12;'>Pending </strong>"; }else{ echo"<strong style='color:#00a65a;'>Sent </strong>"; } ?> </td>
+					
 					
 					</tr>
 					<?php

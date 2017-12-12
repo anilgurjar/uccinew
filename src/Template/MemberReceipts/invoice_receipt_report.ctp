@@ -354,7 +354,10 @@ $(document).ready(function(){
 		var bank_id = $('.bank_id').val();
 		var datefrom = $('.datefrom').val();
 		var dateto = $('.dateto').val();
-		
+		alert(sendtype);
+		alert(reciept_type);
+		alert(purpose_id);
+		alert(bank_id);
 		$('#excl').attr("href","MemberRecieptsViewListExcel?company_id="+company_id+"&payment_mode="+payment_mode+"&sendtype="+sendtype+"&reciept_type="+reciept_type+"&purpose_id="+purpose_id+"&bank_id="+bank_id+"&datefrom="+datefrom+"&dateto="+dateto);
 		var url="<?php echo $this->Url->build(['controller'=>'MemberReceipts','action'=>'filterdata']);?>";
 		
