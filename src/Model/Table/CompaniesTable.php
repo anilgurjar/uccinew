@@ -64,6 +64,7 @@ class CompaniesTable extends Table
  		]);
 
 		$this->belongsTo('MasterTaxations');
+		$this->belongsTo('memberDesignations');
 		$this->belongsTo('MasterMembershipFees');
 		$this->belongsTo('MasterFinancialYears');
 		$this->belongsTo('MasterCompanies');

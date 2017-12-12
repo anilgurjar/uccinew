@@ -101,7 +101,17 @@ class CompaniesController extends AppController
 	  
 	 }
 	
+	public function addMember(){
+		
+		$this->viewBuilder()->layout('index_layout');
+        $Users = $this->Companies->Users->newEntity();
+		
+		$member_designations=$this->Companies->memberDesignations->find('list');
+		
 	
+		$this->set(compact('member_designations','Companies','Users','Companies_datas'));
+        $this->set('_serialize', ['member_designations','Users']);
+	}
 	
     /**
      * View method
