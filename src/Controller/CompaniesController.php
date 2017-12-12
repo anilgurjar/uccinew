@@ -105,12 +105,43 @@ class CompaniesController extends AppController
 		
 		$this->viewBuilder()->layout('index_layout');
         $Users = $this->Companies->Users->newEntity();
-		
+		$company_id=$this->Auth->User('company_id');
 		$member_designations=$this->Companies->memberDesignations->find('list');
-		
+		 if($this->request->is('post')) {
+			 
+			 $this->request->data['company_id']=$company_id; 
+			 $this->request->data['add_member']='yes';
+			
+			$counts=$this->Companies->Users->find()->where(['add_member'=>'yes','company_id'=>$company_id])->count();
+			if($counts<5){
+				$Users = $this->Companies->Users->patchEntity($Users, $this->request->data);
+
+				if ($this->Companies->Users->save($Users)) {
+				$this->Flash->success(__('The member has been saved.'));
+
+					return $this->redirect(['action' => 'AddMember']);
+				} else {
+					$this->Flash->error(__('The member could not be saved. Please, try again.'));
+					
+				}
+			}else{
+				$this->Flash->error(__('You have already generated 5 Members. '));
+
+			}
+		 }
+		$result_Users=$this->Companies->Users->find()->where(['add_member'=>'yes','company_id'=>$company_id]);
+		$this->set(compact('member_designations','result_Users','Users'));
+        $this->set('_serialize', ['member_designations','Users','result_Users']);
+	}
 	
-		$this->set(compact('member_designations','Companies','Users','Companies_datas'));
-        $this->set('_serialize', ['member_designations','Users']);
+	public function addMemberDelete($id=null){
+		
+		$Users=$this->Companies->Users->get($id);
+		
+		$this->Companies->Users->delete($Users);
+		
+		return $this->redirect(['action' => 'AddMember']);
+		exit;
 	}
 	
     /**

@@ -13,26 +13,27 @@
 						<div class="form-group">
 							<label class="control-label">Designation </label>
 							<?php    
-							echo $this->Form->input('company_id', ['empty'=>'---Select---','label' => false,'placeholder'=>'Select Company Name','class'=>'form-control select2me','options'=>$member_designations]);  ?>
+							echo $this->Form->input('member_designation', ['empty'=>'---Select---','label' => false,'placeholder'=>'Select Designation','class'=>'form-control select2','options'=>$member_designations,'required']);  ?>
+							<label id="member-designation-error" class="error" for="member-designation"></label>
 						</div>
 					</div> 
 				
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label">Contact Person</label>
-							<?php echo $this->Form->input('member_name', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control']); ?>
+							<?php echo $this->Form->input('member_name', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control','required']); ?>
 						</div>
 					</div>
 					<div class="col-md-3"> 
 						<div class="form-group">
 							<label class="control-label">Email </label>
-							<?php echo $this->Form->input('email', ['label' => false,'placeholder'=>'Company E-mail','class'=>'form-control ']); ?>
+							<?php echo $this->Form->input('email', ['label' => false,'placeholder'=>'E-mail','class'=>'form-control ','required']); ?>
 						</div>
 					</div> 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label">Mobile No.</label>
-							<?php echo $this->Form->input('mobile_no', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control']); ?>
+							<?php echo $this->Form->input('mobile_no', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control','required']); ?>
 						</div>
 					</div>
 				</div>
@@ -51,33 +52,57 @@
 	<br/>
 	
 	
-	<!--<table cellpadding="0" cellspacing="0" class="table">
+	<table cellpadding="0" cellspacing="0" class="table">
         <thead>
             <tr>
                 <th scope="col">Sr. No.</th>
-                <th scope="col"><?= $this->Paginator->sort('Department_name') ?></th>
-				 <th scope="col"><?= $this->Paginator->sort('Contact Person') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('Contact Person') ?></th>
+				 <th scope="col"> <?= $this->Paginator->sort('Designation') ?></th>
 				  <th scope="col"><?= $this->Paginator->sort('Email') ?></th>
 				   <th scope="col"><?= $this->Paginator->sort('Mobile') ?></th>
                
             </tr>
         </thead>
         <tbody>
-            <?php $sr_no=0;foreach ($Companies_datas as $users_data):
-			  foreach($users_data['users']   as $user){  ?>
+            <?php $sr_no=0;foreach ($result_Users as $users_data):
+			 ?>
             <tr>
                 <td><?= $this->Number->format(++$sr_no) ?></td>
-                <td><?= h($users_data['company_organisation']) ?></td> 
+                <td><?= h($users_data->member_name) ?></td> 
+				<td><?= h($users_data->member_designation) ?></td> 
+				<td><?= h($users_data->email) ?></td> 
 				
-				<td><?= h($user['member_name']) ?></td> 
-				<td><?= h($user['email']) ?></td>
-				<td><?= h($user['mobile_no']) ?></td>
-				
-              
+				<td><?= h($users_data->mobile_no) ?></td> 
+				<td>	
+					<?php
+						echo $this->Form->button( __('delete') ,['class'=>'btn btn-danger btn-sm','type'=>'button','data-toggle'=>'modal','data-target'=>'#notverify'.$users_data->id.'','value'=>$users_data->id]);
+
+					?>
+					<div class="modal fade" id="notverify<?php echo $users_data->id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel" style="text-align:left">Do you want to delete member ?</h4>
+							  </div>
+							  <div class="modal-body">
+								
+							  </div>
+							  <div class="modal-footer">
+							  <div class="related_issue"></div>
+								<button type="button" class="btn btn-default cls" data-dismiss="modal">NO</button>
+								<?php
+									echo $this->Html->link('Yes', array('controller' => 'Companies', 'action' => 'add_member_delete',$users_data->id),['class' => 'btn  btn-primary btn-flat pull-right hide_print', 'style'=>'margin-right:5px;','escape'=>false]); ?>
+							 
+							  </div>
+							</div>
+						  </div>
+						</div>
+				</td>		
             </tr>
-            <?php  }  endforeach; ?>
+            <?php   endforeach; ?>
         </tbody>
-    </table>-->
+    </table>
    
 	</div>
 	
@@ -120,7 +145,7 @@ $(document).ready(function() {
               remote: "This E-mail is already exist."
             },
 			member_name: {
-				required: "Please enter a username."
+				required: "Please enter member name"
 			},
 			member_type_id: {
 					required: "Please select a member type."
