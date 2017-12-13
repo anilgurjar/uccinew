@@ -561,9 +561,7 @@ class IndustrialGrievancesController extends AppController
 		$email = new Email();
 		$email->transport('SendGrid');
 		
-		/* //$department_mobile_no='9887779123';
-		//pr($industrialGrievance_follow); exit;
-		/// department sms 
+		
 		$sms="";
 		$sms1=str_replace(" ", '+', $sms);
 		$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$department_mobile_no.'&text='.$sms1.'&route=7');
@@ -575,8 +573,7 @@ class IndustrialGrievancesController extends AppController
 		
 						
 		
-		 */
-		 
+		
 		 	$this->request->data['industrial_grievance_id'] = $id;		
 		 	$this->request->data['user_id'] = $user_id;		
             $industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->patchEntity($industrialGrievance, $this->request->data);
@@ -705,7 +702,7 @@ class IndustrialGrievancesController extends AppController
 			$email=$industrialGrievance->user->email;
 			$mobile_no=$industrialGrievance->user->mobile_no;
 			$member_name=$industrialGrievance->user->member_name;
-			$mobile_no="9887779123";
+			//$mobile_no="9887779123";
 					
 					if(!empty($mobile_no)){
 						$sms="Your grievance no ".$grievance_number." has been disposed by UCCI on ".date("d-m-Y").". In case any query please call UCCI secretariat staff at 0294-2492214.";
