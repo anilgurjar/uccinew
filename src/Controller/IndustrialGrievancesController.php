@@ -687,15 +687,49 @@ class IndustrialGrievancesController extends AppController
 			
 			// email code 
 			
-		/* 	$industrialGrievance = $this->IndustrialGrievances->get($industrial_grievance_id, [
+		$industrialGrievance = $this->IndustrialGrievances->get($industrial_grievance_id, [
 			'contain' => ['Users']
 			]);
-		
 			
+			$grievance_number=$industrialGrievance->grievance_number;
 			$email=$industrialGrievance->user->email;
+			$mobile_no=$industrialGrievance->user->mobile_no;
 			$member_name=$industrialGrievance->user->member_name;
-			
-			 */
+			$mobile_no="9887779123";
+					
+					if(!empty($mobile_no)){
+						$sms="Your grievance no ".$grievance_number." has been disposed by UCCI on ".date("d-m-Y").". In case any query please call UCCI secretariat staff at 0294-2492214.";
+						
+						
+						$sms1=str_replace(" ", '+', $sms);
+						
+						$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=UCCIUD&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
+						
+						
+					}
+					/*$email_to='anilgurjer371@gmail.com';
+					if(!empty($email_to)){
+						$from_name="UCCI";
+						$subject="Grievance Enquiry Acknowledgement";
+						$email = new Email();
+						$email->transport('SendGrid');
+						try {
+								$email->from(['ucciudaipur@gmail.com' => $from_name])
+								->to($email_to)
+								->replyTo('uccisec@hotmail.com')
+								->subject($subject)
+								->profile('default')
+								->template('grievance_add')
+								->emailFormat('html')
+								->viewVars(['grievance_number'=>$grievance_number,'member_name'=>$member_name]);
+								$email->send();	
+								
+						} catch (Exception $e) {
+							echo 'Exception : ',  $e->getMessage(), "\n";
+
+						}
+					
+					}*/
 
 		exit;
 	}
