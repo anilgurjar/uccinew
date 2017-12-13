@@ -34,9 +34,34 @@ class CompaniesController extends AppController
     {
         $user_id=$this->Auth->User('id');
 		$this->viewBuilder()->layout('index_layout');
-        $companies = $this->Companies->find()->contain(['Users']);		
+       /*  $companies = $this->Companies->find()->contain(['Users']);		
         $this->set(compact('companies'));
-        $this->set('_serialize', ['companies']);
+        $this->set('_serialize', ['companies']); */
+		
+		
+		 $companies = $this->Companies->find()->where(['nationality LIKE'=>'%Indian%'])->contain(['Users'])->toArray();	
+		foreach($companies as $company){
+			
+			$company_id=$company->id;
+			$member_name=$company->users[0]->member_name;
+			$email=$company->users[0]->email;
+			$exporter_email=$company->users[0]->exporter_email;
+			$mobile_no=$company->users[0]->mobile_no;
+			if(!empty($exporter_email)){
+				
+				
+				$Users=$this->Companies->Users->newEntity();
+			
+			
+		  exit;	
+				
+				
+			}
+			
+			
+		}
+		pr($companies); exit;
+		
     }
 
 	public function NonMemberRegistration()
