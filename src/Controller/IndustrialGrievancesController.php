@@ -561,13 +561,12 @@ class IndustrialGrievancesController extends AppController
 		$email = new Email();
 		$email->transport('SendGrid');
 		
-		$department_mobile_no='9887779123';
 		$sms=" Grievance follow up taken by UCCI, Udaipur on ".date("d-m-Y")." against grievance registered by UCCI member. Kindly resolve the issue at priorty before next Grievance camp.Regards:- UCCI ,  Udaipur ";
 		$sms1=str_replace(" ", '+', $sms);
 		$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$department_mobile_no.'&text='.$sms1.'&route=7');
 		
 		// member sms
-		$sms="Your Department Related Grievance has been update by UCCI on ".date("d-m-Y").". In this girevance new update are ";
+		$sms="Grievance follow up taken by UCCI, Udaipur on ".date("d-m-Y")." against grievance registered by you.please check and update the follow .Regards:- UCCI ,  Udaipur ";
 		$sms2=str_replace(" ", '+', $sms);
 		//$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms2.'&route=7');
 		
@@ -702,7 +701,7 @@ class IndustrialGrievancesController extends AppController
 			$email=$industrialGrievance->user->email;
 			$mobile_no=$industrialGrievance->user->mobile_no;
 			$member_name=$industrialGrievance->user->member_name;
-			//$mobile_no="9887779123";
+			//$mobile_no="9462952929";
 					
 					if(!empty($mobile_no)){
 						$sms="Your grievance no ".$grievance_number." has been disposed by UCCI on ".date("d-m-Y").". In case any query please call UCCI secretariat staff at 0294-2492214.";
