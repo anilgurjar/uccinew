@@ -87,7 +87,7 @@
 									?>
 									<td class="<?php echo $class; ?> font_cl"><?= h(date('d-m-Y', strtotime($industrial_grievance->created_on))) ?></td>
 									<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->title) ?></td>
-									<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->description) ?></td>
+									<td class="<?php echo $class; ?> font_cl"><?= $this->Text->autoParagraph($industrial_grievance->description) ?></td>
 									<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->user->company->company_organisation) ?></td> 
 									
 									<?php  if (!empty($industrial_grievance->industrial_grievance_follows)){  ?>
