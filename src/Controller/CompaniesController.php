@@ -43,24 +43,25 @@ class CompaniesController extends AppController
 		foreach($companies as $company){
 			
 			$company_id=$company->id;
-			$member_name=$company->users[0]->member_name;
-			$email=$company->users[0]->email;
-			$exporter_email=$company->users[0]->exporter_email;
-			$mobile_no=$company->users[0]->mobile_no;
+			$member_name=@$company->users[0]->member_name;
+			$email=@$company->users[0]->email; 
+			$exporter_email=@$company->users[0]->exporter_email;
+			$mobile_no=@$company->users[0]->mobile_no;
 			if(!empty($exporter_email)){
 				
-				
 				$Users=$this->Companies->Users->newEntity();
-			
-			
-		  exit;	
-				
+				$Users->company_id=$company_id;
+				$Users->member_name=$member_name;
+				$Users->email=$exporter_email;
+				$Users->mobile_no=$mobile_no;
+				$Users->company_member_designation='Exporter';
+				$data_save=$this->Companies->Users->save($Users);
 				
 			}
 			
-			
 		}
-		pr($companies); exit;
+		exit;
+			
 		
     }
 
