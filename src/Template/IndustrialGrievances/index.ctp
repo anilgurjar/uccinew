@@ -468,6 +468,7 @@ $(document).on('click', '.submit', function(e)
 			data: $("#validationForm"+grievance_id).serialize(), 
 			
 			success: function(data){
+				
 				$("#hello").html(data);
 				$(".cls").click();
 				$("#validationForm"+grievance_id).trigger("reset");
@@ -489,7 +490,7 @@ $(document).on('click', '.submit', function(e)
 		   url: "<?php echo $this->Url->build(['controller'=>'IndustrialGrievances','action'=>'grievance_cancel']); ?>",
 		   data: $("#validationForm1"+grievance_id).serialize(), 
 		   success: function(data){
-			   alert(data);
+			   
 			  cl.find('.hold').remove();
 			  $(".cls").click();
 			  $("#validationForm1"+grievance_id).trigger("reset");

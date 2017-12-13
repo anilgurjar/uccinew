@@ -550,7 +550,7 @@ class IndustrialGrievancesController extends AppController
 		$industrialGrievance_follow = $this->IndustrialGrievances->get($id, [
             'contain' =>['Companies'=>['Users'],'Users','IndustrialGrievanceFollows']
         ]);
-		
+		pr($industrialGrievance_follow);   exit;
 		$grievance_number=$industrialGrievance_follow->grievance_number; 
 		$department_name=$industrialGrievance_follow->company->company_organisation; 
 		$department_member_name=$industrialGrievance_follow->company->users[0]->member_name; 
@@ -562,15 +562,15 @@ class IndustrialGrievancesController extends AppController
 		$email = new Email();
 		$email->transport('SendGrid');
 		
-		
-		$sms=" grievance no ".$grievance_number." has been disposed by UCCI on ".date("d-m-Y").". In case any query please call UCCI secretariat staff at 0294-2492214.";
+		$department_mobile_no='9887779123';
+		$sms=" Grievance followup by UCCI, Udaipur taken on ".date("d-m-Y")." against grievance registered for UCCI member. Kindly resolve the issue at priorty before next Grievance  ";
 		$sms1=str_replace(" ", '+', $sms);
 		$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$department_mobile_no.'&text='.$sms1.'&route=7');
 		
 		// member sms
-		$sms="Your grievance no ".$grievance_number." has been disposed by UCCI on ".date("d-m-Y").". In case any query please call UCCI secretariat staff at 0294-2492214.";
+		$sms="Your Department Related Grievance has been update by UCCI on ".date("d-m-Y").". In this girevance new update are ";
 		$sms2=str_replace(" ", '+', $sms);
-		$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms2.'&route=7');
+		//$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms2.'&route=7');
 		
 						
 		
