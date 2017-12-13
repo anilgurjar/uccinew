@@ -13,7 +13,7 @@
 						<div class="form-group">
 							<label class="control-label">Designation </label>
 							<?php    
-							echo $this->Form->input('member_designation', ['empty'=>'---Select---','label' => false,'placeholder'=>'Select Designation','class'=>'form-control select2','options'=>$member_designations,'required']);  ?>
+							echo $this->Form->input('company_member_designation', ['empty'=>'---Select---','label' => false,'placeholder'=>'Select Designation','class'=>'form-control select2','options'=>$member_designations,'required']);  ?>
 							<label id="member-designation-error" class="error" for="member-designation"></label>
 						</div>
 					</div> 
@@ -69,7 +69,7 @@
             <tr>
                 <td><?= $this->Number->format(++$sr_no) ?></td>
                 <td><?= h($users_data->member_name) ?></td> 
-				<td><?= h($users_data->member_designation) ?></td> 
+				<td><?= h($users_data->company_member_designation) ?></td> 
 				<td><?= h($users_data->email) ?></td> 
 				
 				<td><?= h($users_data->mobile_no) ?></td> 
