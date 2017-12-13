@@ -563,7 +563,7 @@ class IndustrialGrievancesController extends AppController
 		$email->transport('SendGrid');
 		
 		$department_mobile_no='9887779123';
-		$sms=" Grievance followup by UCCI, Udaipur taken on ".date("d-m-Y")." against grievance registered for UCCI member. Kindly resolve the issue at priorty before next Grievance  ";
+		$sms=" Grievance follow up taken by UCCI, Udaipur on ".date("d-m-Y")." against grievance registered by UCCI member. Kindly resolve the issue at priorty before next Grievance.Regards:- UCCI ,  Udaipur ";
 		$sms1=str_replace(" ", '+', $sms);
 		$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$department_mobile_no.'&text='.$sms1.'&route=7');
 		
