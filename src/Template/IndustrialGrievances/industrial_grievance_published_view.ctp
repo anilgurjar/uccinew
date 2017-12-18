@@ -69,7 +69,7 @@ use Cake\Filesystem\File;
 				</tr>
 				<tr>
 					<th scope="row"><?= __('How long you are facing this problem ? ') ?></th>
-					<td><?php echo $industrialGrievance->grievance_age.' '. $industrialGrievance->grievance_period; ?></td>
+					<td><?php echo  $industrialGrievance->grievance_period; ?></td>
 				</tr>
 				<tr>
 					<th scope="row"><?= __('Have you lodge same grievance earlier with chamber ') ?></th>

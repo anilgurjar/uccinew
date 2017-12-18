@@ -427,7 +427,7 @@ class CompaniesController extends AppController
 		
 			$query = $this->Companies->query();
 			$query->update()
-			->set(['payment_status' => $status,'transaction_id'=>$txnid])
+			->set(['payment_status' => $status,'transaction_id'=>$txnid,'member_flag'=>1])
 			->where(['id' => $company_id])
 			->execute();
 

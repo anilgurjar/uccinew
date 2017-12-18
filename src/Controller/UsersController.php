@@ -2849,6 +2849,7 @@ function convert_number_to_words($no) {
 		$user_id=$this->Auth->User('id');
 		$conditions=array("sub_menu" => $sub_menu);
 		$fetch_submenu = $this->Users->Modules->find()->where($conditions)->toArray();
+		
 		$this->response->body($fetch_submenu);
 		return $this->response;
 	}

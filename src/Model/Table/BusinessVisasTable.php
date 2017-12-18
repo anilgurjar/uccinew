@@ -33,11 +33,15 @@ class BusinessVisasTable extends Table
         parent::initialize($config);
 
         $this->table('business_visas');
-        $this->displayField('id');
+        $this->displayField('name');
         $this->primaryKey('id');
 
         $this->belongsTo('Companies', [
             'foreignKey' => 'company_id',
+            'joinType' => 'INNER'
+        ]);
+		$this->belongsTo('master_visa_sendor', [
+            'foreignKey' => 'sendor_id',
             'joinType' => 'INNER'
         ]);
 		

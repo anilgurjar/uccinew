@@ -67,7 +67,7 @@ $html='<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
 				</tr>
 				<tr>
 					<td scope="row">How long you are facing this problem ? </td>
-					<td>'.$industrialGrievance->grievance_age.' '. $industrialGrievance->grievance_period.'</td>
+					<td>'. $industrialGrievance->grievance_period.'</td>
 				</tr>
 				<tr>
 					<td scope="row">Have you lodged same grievance earlier with chamber </td>

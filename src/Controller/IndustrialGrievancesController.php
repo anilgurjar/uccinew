@@ -479,14 +479,20 @@ class IndustrialGrievancesController extends AppController
     public function edit($id = null)
     {
 		$this->viewBuilder()->layout('index_layout');
-		$company_organisation=$this->Auth->User('company_organisation');
-		$address=$this->Auth->User('address');
 		$user_id=$this->Auth->User('id');
+		$company_id=$this->Auth->User('company_id'); 
+		
+		$Companies=$this->IndustrialGrievances->Companies->get($company_id);
+		$role_id=$Companies->role_id;$company_organisation=$this->Auth->User('company_organisation');
+		$address=$this->Auth->User('address');
 		$city=$this->Auth->User('city');
 		$pincode=$this->Auth->User('pincode');
         $industrialGrievance = $this->IndustrialGrievances->get($id, [
-            'contain' => []
+            'contain' => ['IndustrialGrievanceFollows','IndustrialGrievanceStatuses','Companies','Users','GrievanceCategories','GrievanceIssues']
         ]);
+		$industrialGrievance_title = $this->IndustrialGrievances->get($industrialGrievance->old_grievance_id);
+		
+		$old_Image=$industrialGrievance['document'];
         if ($this->request->is(['patch', 'post', 'put'])) {
 			$files=$this->request->data['file']; 
 					
@@ -495,24 +501,39 @@ class IndustrialGrievancesController extends AppController
 			}else{
 				$this->request->data['file']='false';
 			}
-			//$this->request->data['industrial_department_id'] = implode(",",$this->request->data['industrial_department_id']);
-			$this->request->data['repair_maintenance'] = implode(",",$this->request->data['repair_maintenance']);
-			$this->request->data['construction'] = implode(",",$this->request->data['construction']);
-			$this->request->data['clearance_matter'] = implode(",",$this->request->data['clearance_matter']);
-			$this->request->data['issue_regarding'] = implode(",",$this->request->data['issue_regarding']);
-			$this->request->data['user_id'] = $user_id;
+			
+				
+				$this->request->data['edited_by'] = $user_ids;
+				$this->request->data['edited_on'] = date('Y-m-d');
+				
+			
+			
 			$this->request->data['grievance_pending'] = date('Y-m-d', strtotime($this->request->data['grievance_pending']));
             $industrialGrievance = $this->IndustrialGrievances->patchEntity($industrialGrievance, $this->request->data);
             if ($industrialGrievance_data=$this->IndustrialGrievances->save($industrialGrievance)) {
-				
+				$coverage_path='';
 				$grievance_id=$industrialGrievance_data->id; 
 				
-				$dir = new Folder(WWW_ROOT . 'img/grievance/'.$grievance_id, true, 0755);
-				$file_path = str_replace("\\","/",WWW_ROOT).'img/grievance/'.$grievance_id;
-				foreach($files as $file){
-					move_uploaded_file($file['tmp_name'], $file_path.'/' . $file['name']);
-				
+				if(!empty($files[0]['name'])){
+					$ext = substr(strtolower(strrchr($files[0]['name'], '.')), 1); //get the 
+					$setNewFileName = uniqid();
+					$dir = new Folder(WWW_ROOT . 'img/grievance/'.$grievance_id, true, 0755);
+					$file_path = str_replace("\\","/",WWW_ROOT).'img/grievance/'.$grievance_id;
+					$coverage_path='img/grievance/'.$grievance_id.'/'.$setNewFileName.'.'.$ext;
+					
+					foreach($files as $file){
+						move_uploaded_file($file['tmp_name'], $file_path.'/' . $setNewFileName.'.'.$ext);
+						
+					}
+				}else{
+					$coverage_path=$old_Image;
 				}
+				
+				$query = $this->IndustrialGrievances->query();
+				$query->update()
+				->set(['document'=>$coverage_path,'complete_status'=>'published'])
+				->where(['id' => $grievance_id])
+				->execute();
                 $this->Flash->success(__('The industrial grievance has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -520,10 +541,14 @@ class IndustrialGrievancesController extends AppController
                 $this->Flash->error(__('The industrial grievance could not be saved. Please, try again.'));
             }
         }
-
-		$IndustrialDepartments = $this->IndustrialGrievances->IndustrialDepartments->find()->toArray();
-       
-        $this->set(compact('industrialGrievance', 'IndustrialDepartments', 'company_organisation', 'address', 'pincode', 'city'));
+		$IndustrialDepartments = $this->IndustrialGrievances->Companies->find('list')->where(['role_id'=>5])->toArray();
+		  
+		 $companys = $this->IndustrialGrievances->Companies->find('list')->where(['member_flag'=>1])->toArray();
+		
+		
+		$grievancecategorys = $this->IndustrialGrievances->GrievanceCategories->find('list');
+		$GrievanceIssues = $this->IndustrialGrievances->GrievanceIssues->find('list');
+        $this->set(compact('industrialGrievance', 'IndustrialDepartments', 'company_organisation', 'address', 'pincode', 'city','grievancecategorys','GrievanceIssues','companys','role_id','industrialGrievance_title'));
         $this->set('_serialize', ['industrialGrievance']);
     }
 	public function deleteGrievanceFile($grievance_id = null, $file_name = null)
@@ -561,13 +586,12 @@ class IndustrialGrievancesController extends AppController
 		$email = new Email();
 		$email->transport('SendGrid');
 		
-		$department_mobile_no='9887779123';
 		$sms=" Grievance follow up taken by UCCI, Udaipur on ".date("d-m-Y")." against grievance registered by UCCI member. Kindly resolve the issue at priorty before next Grievance camp.Regards:- UCCI ,  Udaipur ";
 		$sms1=str_replace(" ", '+', $sms);
 		$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$department_mobile_no.'&text='.$sms1.'&route=7');
 		
 		// member sms
-		$sms="Your Department Related Grievance has been update by UCCI on ".date("d-m-Y").". In this girevance new update are ";
+		$sms="Grievance follow up taken by UCCI, Udaipur on ".date("d-m-Y")." against grievance registered by you.please check and update the follow .Regards:- UCCI ,  Udaipur ";
 		$sms2=str_replace(" ", '+', $sms);
 		//$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms2.'&route=7');
 		
@@ -702,7 +726,7 @@ class IndustrialGrievancesController extends AppController
 			$email=$industrialGrievance->user->email;
 			$mobile_no=$industrialGrievance->user->mobile_no;
 			$member_name=$industrialGrievance->user->member_name;
-			//$mobile_no="9887779123";
+			//$mobile_no="9462952929";
 					
 					if(!empty($mobile_no)){
 						$sms="Your grievance no ".$grievance_number." has been disposed by UCCI on ".date("d-m-Y").". In case any query please call UCCI secretariat staff at 0294-2492214.";
