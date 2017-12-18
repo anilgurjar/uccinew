@@ -241,11 +241,11 @@ border-left: none   !important;
 					</tr>
 					<tr>
 						<th scope="row" style="text-align:left;" class="bordernone">1. Name</th>
-						<td colspan="2" class="bordernone">'.   $visitor_name .'</td>
+						<td colspan="2" class="bordernone"><b>'.   $visitor_name .'</b></td>
 					</tr>
 					<tr>
-						<th scope="row" style="text-align:left;" class="bordernone">2. Passport No</th>
-						<td colspan="2" class="bordernone">'.   $passport_no .'</td>
+						<th scope="row" style="text-align:left;" class="bordernone"><br/>2. Passport No</th>
+						<td colspan="2" class="bordernone"><br/><b>'.   $passport_no .'</b></td>
 					</tr>
 					<tr>
 						<th scope="row" style="text-align:left;" class="bordernone"><br/>3. Date of Issue</th>
@@ -287,38 +287,22 @@ border-left: none   !important;
 					</tr>
 					
 				</table>';
-			
-	
-	
-	
-	
 	$html_content.='</td></tr>
 		<tr>
-			
-			
 			<td style="" colspan="3">
 			For : Udaipur Chamber of Commerce & Industry
 			<br/>
 			<br/>
 			
 			<br/>';
-			
-			
-			
-		
 			if(!empty($CertificateOriginAuthorizeds[0]->signature)){
 				
 				$html_content.='<img src="'.ROOT . DS  . 'webroot' . DS  .''.$CertificateOriginAuthorizeds[0]->signature.'" width="90px" height="90px" style="" alt="">';
 				
 				}
-				
 			$html_content.='<br/>';
-							
 					$html_content.='<p>'.$CertificateOriginAuthorizeds[0]->user->member_name.' <br/>President UCCI</p>';
-					 
-					
-							
-						$html_content.='
+					$html_content.='
 			</td>
 		</tr>';
 			
@@ -339,11 +323,7 @@ border-left: none   !important;
 		
 	
 		</tr>';*/
-		
-		
 		$html_content.='</table>';
-		
-
 $path='bussiness_vissa_pdf/'.$bs_verification_code.'.pdf';
 $dompdf->loadHtml($html_content);
 $dompdf->setPaper('A4', 'portrait');
