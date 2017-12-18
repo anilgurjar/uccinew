@@ -19,7 +19,8 @@ $company_pincode=$data['company']['pincode'];
 $origin_no=$data['origin_no'];
 $sender_address=$data['sender_address'];
 $sender_name=$data['sender_name'];
-$sender_ciuntry=$data['sender_ciuntry'];
+$sender_type=$data['sender_type'];
+$sender_country=$data['sender_country'];
 $company_manufacture=$data['company_manufacture'];
 $subject=$data['subject'];
 $visitor_name=$data['visitor_name'];
@@ -34,6 +35,8 @@ $issue_date=$data['issue_date'];
 $issue_place=$data['issue_place'];
 $expiry_date=$data['expiry_date'];
 $date_current=$data['date_current'];
+$date_of_birth=$data['date_of_birth'];
+$birth_place=$data['birth_place'];
 }
 
 
@@ -206,7 +209,10 @@ border-left: none   !important;
 	$html_content.='<tr ><td colspan="3">';
 		$html_content.='<table >
 					 <tr >
-						<td colspan="3" class="bordernone"><br/><b>'.   $sender_address . '</b></td>
+						<td colspan="3" class="bordernone"><br/><b>'.   $sender_name . '-'. $sender_country. '</b></td>
+					</tr>
+					 <tr >
+						<td colspan="3" class="bordernone"><br/><b>'.  $this->Text->autoParagraph($sender_address) . '</b></td>
 					</tr>
 					 <tr>
 						<td colspan="3" class="bordernone"><br/>Sub:<b>'. $subject  .'</b></td>
@@ -215,37 +221,65 @@ border-left: none   !important;
 						<td colspan="3" class="bordernone"><br/>Dear Sir,</td>
 					</tr>
 					<tr>
-						<td colspan="3" class="bordernone"><br/><p>This is to inform you that M/s <b>'.$company_name  .','.$company_address.','. $company_city.' - '.  $company_pincode.'</b> is our member. The company is manufacturer of <b>'. $company_manufacture .'</b></p></td>
+						<td colspan="3" class="bordernone"><br/><p>The Udaipur Chamber of Commerce & Industry presents  its   compliments   to <b>' . $sender_type  .'.'. $sender_name .' in '. $sender_country .'</b>. </p></td>
 					</tr>
 					<tr>
-						<td colspan="3" class="bordernone"><p>We hereby request you to issue Business Visa to <b> '. $visitor_name  .','. $visitor_designation .'</b> of <b>'.  $company_name  .'</b> to visit <b>'. $visit_country  .'</b> during the month of <b>'.  $visit_month  .'</b> for <b>'.  $visit_reason  .'</b>. </p></td>
-					</tr>
+						<td colspan="3" class="bordernone"><br/><p> This is to inform you that M/s <b>'. $company_name  .'</b> is a company having its office <b>'. $company_address .'</b> , <b>'. $company_city .' </b>- <b>'.  $company_pincode .'</b>';
+						if($membertype==1){ 
+						$html_content.='and is also a member of Udaipur Chamber of Commerce & Industry.</p></td>
+					</tr>';
+					}else{
+					$html_content.='
+					<tr>
+						<td colspan="3" class="bordernone"><p> We hereby request you to issue business visa to <b> '. $visitor_name  .' , '. $visitor_designation  .'</b> of <b>'. $company_name .'</b> to visit <b>'. $issue_place .'</b> in <b>'.  $visit_country  .'</b> from <b>'. $issue_date  .'</b> to <b>'.  $expiry_date  .'</b>. </p></td>
+					</tr>';
+					}
+					$html_content.='
+					
 					<tr>
 						<td colspan="3" class="bordernone"><p>The particulars of his passport are given below: </p></td>
 					</tr>
 					<tr>
-						<th scope="row" style="text-align:center;" class="bordernone">1. Passport No</th>
+						<th scope="row" style="text-align:left;" class="bordernone">1. Name</th>
+						<td colspan="2" class="bordernone">'.   $visitor_name .'</td>
+					</tr>
+					<tr>
+						<th scope="row" style="text-align:left;" class="bordernone">2. Passport No</th>
 						<td colspan="2" class="bordernone">'.   $passport_no .'</td>
 					</tr>
 					<tr>
-						<th scope="row" style="text-align:center;" class="bordernone"><br/>2. Date of Issue</th>
+						<th scope="row" style="text-align:left;" class="bordernone"><br/>3. Date of Issue</th>
 						<td colspan="2" class="bordernone"><br/><b>'.    $issue_date   .'</b></td>
 					</tr>
 					<tr>
-						<th scope="row" style="text-align:center;" class="bordernone"><br/>3. Place of Issue</th>
+						<th scope="row" style="text-align:left;" class="bordernone"><br/>4. Place of Issue</th>
 						<td colspan="2" class="bordernone"><br/><b>'.  $issue_place  .'</b></td>
 					</tr>
 					<tr>
-						<th scope="row" style="text-align:center;" class="bordernone"><br/>4. Date of Expiry</th>
+						<th scope="row" style="text-align:left;" class="bordernone"><br/>5. Date of Expiry</th>
 						<td colspan="2" class="bordernone"><br/><b>'.   $expiry_date  .'</b></td>
 					</tr>
 					<tr>
-						<td colspan="3" class="bordernone"><br/><p>We wish him all the success, as this visit be beneficial to both the countries.</p></td>
+						<th scope="row" style="text-align:left;" class="bordernone"><br/>6. Date of Birth</th>
+						<td colspan="2" class="bordernone"><br/><b>'.   $date_of_birth  .'</b></td>
 					</tr>
 					<tr>
-						<td colspan="3" class="bordernone"><p>It is requested that Multiple Business Visa to visit <b>'.   $visit_country  .'</b> may kindly be issued.</p></td>
+						<th scope="row" style="text-align:left;" class="bordernone"><br/>7. Place of Birth</th>
+						<td colspan="2" class="bordernone"><br/><b>'.   $birth_place  .'</b></td>
+					</tr>';
+					if($businessVisa['category_type']==2)  {
+					$html_content.='<tr>
+						<td colspan="3" class="bordernone"><br/><p>We recommend that the above individual can be invited to <b>'. $visitor_name. '</b> for  <b>'. $issue_place . '</b> in  <b>'. $visit_country .'</b> on behalf of  <b>'. $company_name . '</b> for  <b>'. $visit_reason . '</b></p></td>
+					</tr>';
+					}  else{
+					$html_content.='<tr>
+						<td colspan="3" class="bordernone"><p>We wish him all the success, as this visit be beneficial to both the countries.</p></td>
 					</tr>
 					<tr>
+						<td colspan="3" class="bordernone"><p> It is requested that business visa for visit to  <b>'.   $visitor_name  .'</b> for <b>' . $issue_place .'</b> in <b>' . $visit_country .'</b> for <b>' . $visit_reason . '</b>.</p></td>
+					</tr>';
+					}
+					$html_content.='<tr>
 						<td colspan="3" class="bordernone"><p>Thanking you in anticipation,</p></td>
 					</tr>
 					<tr>
