@@ -867,7 +867,7 @@ class BusinessVisasController extends AppController
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
 					//$email_to='rohitkumarjoshi43@gmail.com';
-					$email_to="acc.uccisec@gmail.com";
+					$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1034,7 +1034,7 @@ class BusinessVisasController extends AppController
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
 					// $email_to="rohitkumarjoshi43@gmail.com";
-					 $email_to="acc.uccisec@gmail.com";
+					 $email_to="anilgurjer371@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {

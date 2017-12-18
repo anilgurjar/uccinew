@@ -44,10 +44,22 @@ use Cake\Filesystem\File;
 			<?= $this->Form->create($BusinessVisas) ?>
 			<?php
 			foreach($bussiness_vissas as $businessVisa)
-			{ ?>
+			{ 
+				$date_current=$businessVisa['date_current'];
+				if(date('m',strtotime($date_current)) < 4)
+				{
+					$from_year=(date('Y',strtotime($date_current))-1);
+					$to_year=date('y',strtotime($date_current));
+				}
+				else
+				{
+					$from_year=date('Y',strtotime($date_current));
+					$to_year=(date('y',strtotime($date_current))+1);
+				}
+			?>
 				<table class="vertical-table" style="width:100%;">
 					 <tr>
-						<td style="width:30%;">UCCI/VISA-<?= h($businessVisa['origin_no'])?>/R-9457/2016-17</td>
+						<td style="width:30%;">UCCI/VISA-<?= h($businessVisa['origin_no'])?>/R-9457/<?= h($from_year)?>-<?= h($to_year)?></td>
 						<td style="text-align:right;"><b><?= h(date('jS F, Y',strtotime($businessVisa['date_current']))) ?></b></td>
 						<td  align='right'>
 							<?php if(!empty($businessVisa['authorised_remarks'])){ ?>	
