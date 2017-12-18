@@ -38,7 +38,7 @@ class CompaniesController extends AppController
         $this->set(compact('companies'));
         $this->set('_serialize', ['companies']); */
 		
-		
+		/* 
 		 $companies = $this->Companies->find()->where(['nationality LIKE'=>'%Indian%'])->contain(['Users'])->toArray();	
 		foreach($companies as $company){
 			
@@ -60,7 +60,8 @@ class CompaniesController extends AppController
 			}
 			
 		}
-		exit;
+		
+		exit; */
 			
 		
     }

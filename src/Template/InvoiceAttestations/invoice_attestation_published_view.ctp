@@ -29,6 +29,7 @@ use Cake\Filesystem\File;
 	margin: 0px;padding: 0px !important;
 }
 </style>
+<?php //echo $this->Html->script('/disable-right-click.js');  ?>
 <div class="col-md-12" id="certificate_form">
   <!-- Horizontal Form -->
   <div class="box box-primary">
@@ -135,7 +136,7 @@ use Cake\Filesystem\File;
 							
 								echo"<div class='col-sm-4'>";
 									
-		echo '<iframe src="'.$this->Url->build('/img/coo_invoice_attestation/'.$InvoiceAttestation->id.'/'.$InvoiceAttestation->file_name).'" title="your_title" align="top" height="300" width="100%" frameborder="0" scrolling="auto" target="Message"></iframe>';
+		echo '<iframe src="'.$this->Url->build('/img/coo_invoice_attestation/'.$InvoiceAttestation->id.'/'.$InvoiceAttestation->file_name).'" title="your_title" align="top" height="300" width="100%" frameborder="0" scrolling="auto" target="Message" id="iframe"></iframe>';
 									
 								echo'</div>'; 
 							
@@ -239,7 +240,14 @@ use Cake\Filesystem\File;
 			}
 			echo $this->Form->end(); 
 			?>
+			
     </div>
 	</div>
 </div>
- 
+<?php echo $this->Html->script('/assets/plugins/jQuery/jquery-2.2.3.min.js');  ?>
+<script>
+$(document).ready(function(){
+
+	
+});
+</script>

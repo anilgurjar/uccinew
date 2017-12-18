@@ -12,7 +12,7 @@
                 <tbody>
 		<?php $i=1; foreach($fetch_menu as $data){ $check=""; if(in_array($data->id, $user_right)) { $check="checked"; } ?>
                <tr>
-               <td><?php echo $data->name;  ?></td>
+               <td><?php if(!empty($data->main_menu)){ echo $data->main_menu.' / '; } if(!empty($data->sub_menu)){ echo $data->sub_menu.' / '; } echo $data->name;  ?></td>
                <td style="text-align:center">
 			   
 			   <?php echo $this->Form->checkbox('module_id[]', ['hiddenField' => false,'class'=>'check','value'=>$data->id,'checked'=>$check]);  ?>

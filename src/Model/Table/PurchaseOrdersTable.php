@@ -54,6 +54,13 @@ class PurchaseOrdersTable extends Table
 			'dependent'=>true,
 			'casecadeCallbacks'=>true
         ]);
+		$this->hasMany('PurchaseOrderTaxs', [
+            'foreignKey' => 'purchase_order_id',
+			'saveStrategy'=>'replace',
+			'dependent'=>true,
+			'casecadeCallbacks'=>true
+        ]);
+		
 		 $this->belongsTo('MasterCompanies');
 		 $this->belongsTo('MasterTaxations');
 		 $this->belongsTo('MasterTaxationRates');

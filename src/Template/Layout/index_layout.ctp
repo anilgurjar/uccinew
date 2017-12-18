@@ -165,17 +165,15 @@ margin-top: 5px !important;
 						foreach($fetch_menu_submenu as $data_value)
 						{
 							if(!empty($data_value['sub_menu']))
-							{
-								$fetch_submenu = $this->requestAction(['controller'=>'Users', 'action'=>'submenu'],['pass'=>array($data['sub_menu'])]);	
+							{ 
+								$fetch_submenu = $this->requestAction(['controller'=>'Users', 'action'=>'submenu'],['pass'=>array($data_value['sub_menu'])]);	
+								
 								if(!in_array($data_value['sub_menu'], $main_menu_arr))
 								{
-								$main_menu_arr[]=$data_value['sub_menu'];
+									$main_menu_arr[]=$data_value['sub_menu'];
 										$main_menu_arr_my[]=$data_value['sub_menu'];
-										$sub_id=0;
 										foreach($fetch_submenu as $data_value1)
 										{
-											$sub_id[]=$data_value1['page_name_url'];
-											
 											if($data_value1['page_name_url'] == $page_name)
 											{
 												$class_active='active';
@@ -216,7 +214,7 @@ margin-top: 5px !important;
 										</ul>
 									</li>
 							<?php
-						 }}}}else
+						 }}} }else
 							{
 										if((in_array($data_value['id'], $user_right)) && (!in_array($data_value['name'], $main_menu_arr)))
 										{

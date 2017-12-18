@@ -73,7 +73,7 @@
 								{ $class="";
 									$complete_status=$industrial_grievance->complete_status;
 									?>
-									<tr <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:rgba(255, 0, 0, 0.7); " <?php } ?>>
+									<tr <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:green; " <?php } ?>>
 									<?php
 									if($k==1)
 									{  $i++; 
@@ -494,7 +494,7 @@ $(document).on('click', '.submit', function(e)
 			  cl.find('.hold').remove();
 			  $(".cls").click();
 			  $("#validationForm1"+grievance_id).trigger("reset");
-			  cl.css({"background-color":"rgba(255, 0, 0, 0.7)"});
+			  cl.css({"background-color":"green"});
 			  $(".related_issue1").html('');
 		   }  
 		}); 

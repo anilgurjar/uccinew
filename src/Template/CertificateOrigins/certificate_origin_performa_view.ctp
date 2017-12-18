@@ -22,7 +22,11 @@ $despatched_by = $data->despatched_by;
 $show_amount = $data->show_amount;
 $origin_no = $data->origin_no;
 $certificate_origin = $data->certificate_origin_goods;
-$current_date = $data->date_current;
+  $current_date = $data->date_current; 
+  $cur=date("Y-m-d",strtotime($data->date_current));
+
+$approve_on = $data->approve_on; 
+$approve_on= date("Y-m-d",strtotime($approve_on));
 $currency_name = $data->currency;
 $coo_verification_code = $data->coo_verification_code;
 $total_before_discount = $data->total_before_discount;
@@ -43,6 +47,14 @@ $currency_unit = $data->currency_unit;
  $current_new_date=strtotime($current_new_date);
 
 
+ $old_date_seal="2017-12-18";
+ $old_date_seal=strtotime($old_date_seal);
+ 
+// $current_new_date_seal=date('Y-m-d');
+ $current_new_date_seal=strtotime($cur);
+
+ 
+ 
 $invoice_date = date('d-m-Y',strtotime($invoice_date));
 $current_date = date('d.m.Y',strtotime($current_date));
 
@@ -492,11 +504,13 @@ text-align:center;
 			<br/>';
 			
 			
-			
 			if(!empty($CertificateOriginAuthorizeds[0]->signature)){
 				
 				$html_content.='<img src="'.ROOT . DS  . 'webroot' . DS  .''.$CertificateOriginAuthorizeds[0]->signature.'" width="90px" height="90px" style="" alt="">';
 				
+					if($old_date_seal<=$current_new_date_seal){
+						$html_content.='<img src="'.ROOT . DS  . 'webroot' . DS  .'img/coo_signature/seal.png" width="90px" height="90px" style="float:left;margin-left:50px;" alt="">';
+					}
 				}
 				
 			$html_content.='<br/>';
@@ -545,13 +559,13 @@ Forging this document is a legally punishable offense.
  }else{
 	$path='co_pdf/'.$origin_no.'.pdf';
  } 
-    	
-		
+  //echo $html_content;  	
+	
 $dompdf->loadHtml($html_content);
 $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
 file_put_contents($path, $dompdf->output());		
 	
-$dompdf->stream($name,array('Attachment'=>0));
+$dompdf->stream($name,array('Attachment'=>0)); 
 exit(0);
 	

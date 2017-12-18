@@ -100,8 +100,9 @@ public function initialize()
 		$user_id=$this->Auth->User('id');
 		$this->viewBuilder()->layout('index_layout');
         $purchaseOrder = $this->PurchaseOrders->get($id, [
-            'contain' => ['Suppliers', 'PurchaseOrderRows','Suppliers'=>['MasterStates']]
+            'contain' => ['Suppliers', 'PurchaseOrderRows','PurchaseOrderTaxs'=>['MasterTaxations'],'Suppliers'=>['MasterStates']]
         ]);
+		//pr($purchaseOrder);exit;
 		$MasterCompanies=$this->PurchaseOrders->MasterCompanies->find();
 	
 	
@@ -225,7 +226,7 @@ public function initialize()
 				}
 			}
 			echo '<tr class="Tax">
-			<td colspan="4" align="right"><input type="hidden" name="tax_amounts['.$sr.'][tax_id]" value="'.$tax_data1.'"><input type="hidden" name="tax_amounts['.$sr.'][tax_percentage]" value="'.number_format($tax_key1, 2, '.', '').'">'.$tax_data.' @ '.number_format($tax_key1, 2, '.', '').'%</td><td><input type="hidden" name="tax_amounts['.$sr.'][amount]" value="'.number_format($tax_amounts_add, 2, '.', '').'">'.number_format($tax_amounts_add, 2, '.', '').'</td></tr>';
+			<td colspan="4" align="right"><input type="hidden" name="purchase_order_taxs['.$sr.'][tax_id]" value="'.$tax_data1.'"><input type="hidden" name="purchase_order_taxs['.$sr.'][tax_percentage]" value="'.number_format($tax_key1, 2, '.', '').'">'.$tax_data.' @ '.number_format($tax_key1, 2, '.', '').'%</td><td><input type="hidden" name="purchase_order_taxs['.$sr.'][amount]" value="'.number_format($tax_amounts_add, 2, '.', '').'">'.number_format($tax_amounts_add, 2, '.', '').'</td></tr>';
 			
 		}
 		$sr++;

@@ -102,13 +102,13 @@ class NoticesController extends AppController
 			}
 			else
 			{
-				$Users=$this->Notices->Users->find()
+				$Users=$this->Notices->Users->find()->where(['member_nominee_type IN'=>['first','second']])
 					->matching('Companies.CompanyMemberTypes',function($q){
 						return $q->where(['master_member_type_id IN'=>$this->request->data['member_type_id']]);
 					})
 					->group(['Users.email'])->toArray();
 				
-				//pr($Users); exit;
+				
 				$alternate='no';
 				
 					/* $Users=$this->Notices->Users->find()->where(['member_nominee_type'=>'first'])
@@ -123,9 +123,11 @@ class NoticesController extends AppController
 				//pr($Users_alternates); exit; */
 				foreach($Users as $user)
 				{ 
-					$this->request->data['notice_mails'][$i]['user_id']=$user->id;
-					$this->request->data['notice_mails'][$i]['alternate']=$alternate;
-					$i++;
+					if(!empty($user->email)){
+						$this->request->data['notice_mails'][$i]['user_id']=$user->id;
+						$this->request->data['notice_mails'][$i]['alternate']=$alternate;
+						$i++;
+					}	
 				}
 				
 			/* 	foreach($Users_alternates as $Users_alternate)

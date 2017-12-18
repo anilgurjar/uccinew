@@ -342,11 +342,10 @@ $(document).ready(function(){
 				dataType:'text',
 				success:function(data){
 					 $('#tax_view').html(data); 
+					 
 					}
 		  });
 	}
-	
-	
 	
 
 	function calculate()

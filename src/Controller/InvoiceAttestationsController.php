@@ -470,11 +470,11 @@ class InvoiceAttestationsController extends AppController
 		
 		if($this->request->is('post')) 
 		{
-				//echo "hello";		
+					
 			if(isset($this->request->data['invoice_attestation_move_submit']))
 			{
 				
-				 $coo_id=$this->request->data['invoice_attestation_move_submit'];
+				$coo_id=$this->request->data['invoice_attestation_move_submit'];
 				$InvoiceAttestations = $this->InvoiceAttestations->get($coo_id);
 		
 				$this->request->data['id']=$this->request->data['invoice_attestation_move_submit'];

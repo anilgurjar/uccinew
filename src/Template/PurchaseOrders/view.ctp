@@ -166,6 +166,13 @@ Date & Time <br/> '.date('d-m-Y', strtotime($purchaseOrder->date)).' & '.$purcha
 		<td align="center"><strong>'.number_format($total, 2, '.', '').' </strong></td>
 		</tr>';
 		
+		foreach($purchaseOrder->purchase_order_taxs as $purchase_order_tax){
+			$html.='<tr>
+					<td colspan="6" align="right">'.$purchase_order_tax->master_taxation->tax_name.' @ '.$purchase_order_tax->tax_percentage.' %</td>
+					<td align="center"><strong>'.number_format($purchase_order_tax->amount, 2, '.', '').' </strong></td>
+					</tr>';
+		
+		}
 		$html.='<tr class="Tax">
 			
 			<td colspan="6" align="right">Total Tax</td>

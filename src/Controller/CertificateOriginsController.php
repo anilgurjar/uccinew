@@ -220,7 +220,10 @@ class CertificateOriginsController extends AppController
 				$email->transport('SendGrid');
 				
 				$id=$this->request->data['certificate_approve_submit'];
-				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
+				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users'=>function($q){ 
+					return $q->where(['Users.company_member_designation'=>'Exporter']); 
+				}]]]);
+				
 				$consignee=$CertificateOrigins->consignee;
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
@@ -317,14 +320,14 @@ class CertificateOriginsController extends AppController
 		$Users=$this->CertificateOrigins->Users->get($user_id);
 		//$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['CertificateOriginGoods']]);
 		
-			//$sul='http://localhost/ucci/certificate-origins/success';
-			//$furl='http://localhost/ucci/certificate-origins/failure';
+			$sul='http://localhost/uccinew/certificate-origins/success';
+			$furl='http://localhost/uccinew/certificate-origins/failure';
 			
 			//$sul='http://ucciudaipur.com/app/certificate-origins/success';
 			//$furl='http://ucciudaipur.com/app/certificate-origins/failure';
 			
-			$sul='http://ucciudaipur.com/uccinew/certificate-origins/success';
-			$furl='http://ucciudaipur.com/uccinew/certificate-origins/failure';
+			//$sul='http://ucciudaipur.com/uccinew/certificate-origins/success';
+			//$furl='http://ucciudaipur.com/uccinew/certificate-origins/failure';
 			
 			
 			$CertificateOrigins = $this->CertificateOrigins->find()
@@ -425,15 +428,16 @@ class CertificateOriginsController extends AppController
 		 
 		 
 		 $CertificateOrigins=$this->CertificateOrigins->get($udf1);
-		 
-		 
+		
 		 $company_id_coo=$CertificateOrigins->company_id; 
 		 $coo_email=$CertificateOrigins->coo_email;
 		 $payment_amount=$CertificateOrigins->payment_amount;
 		 $payment_tax_amount=$CertificateOrigins->payment_tax_amount;
 	if($coo_email=='yes'){
 		 
-		  $Companies_data=$this->CertificateOrigins->Companies->get($company_id_coo,['contain'=>'Users']);
+		  $Companies_data=$this->CertificateOrigins->Companies->get($company_id_coo,['contain'=>['Users'=>function($q){ 
+					return $q->where(['Users.company_member_designation'=>'Exporter']); 
+				}]]);
 		
 		 $member_name=$Companies_data->users[0]->member_name;
 		 $email_to=$Companies_data->users[0]->email;
@@ -735,6 +739,8 @@ class CertificateOriginsController extends AppController
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
+						
+						if(!empty($email_to)){
 						 try {
 							   $email->from(['ucciudaipur@gmail.com' => $from_name])
 										->to($email_to)
@@ -755,7 +761,7 @@ class CertificateOriginsController extends AppController
 								echo 'Exception : ',  $e->getMessage(), "\n";
 
 							} 
-							
+						}	
 			$query = $this->CertificateOrigins->query();
 			$query->update()
 			->set(['coo_email'=>'no'])
@@ -1339,13 +1345,6 @@ class CertificateOriginsController extends AppController
 	
  
  
-public function coo_pending_approval(){
-	 
-	 
-	 
- }
- 
- 
 	public function certificateOriginViewPublished()
     {
 		$this->viewBuilder()->layout('index_layout');
@@ -1525,7 +1524,9 @@ public function certificateOriginPublishedView()
 			{
 				
 				$id=$this->request->data['certificate_notapprove_submit'];
-				$CertificateOrigins=$this->CertificateOrigins->get($id , ['contain'=>['Companies'=>['Users']]]);
+				$CertificateOrigins=$this->CertificateOrigins->get($id , ['contain'=>['Companies'=>['Users'=>function($q){ 
+					return $q->where(['Users.company_member_designation'=>'Exporter']); 
+				}]]]);
 			
 				$remarks=$this->request->data['verify_remarks'];
 				$this->request->data['verify_by']=$user_id;
@@ -1616,7 +1617,9 @@ public function certificateOriginPublishedView()
 				$email->transport('SendGrid');
 				
 				$id=$this->request->data['certificate_approve_submit'];
-				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users']]]);
+				$CertificateOrigins=$this->CertificateOrigins->get($id,['contain'=>['Companies'=>['Users'=>function($q){ 
+					return $q->where(['Users.company_member_designation'=>'Exporter']); 
+				}]]]);
 				$consignee=$CertificateOrigins->consignee;
 				$this->request->data['status']='approved';
 				//$this->request->data['approve']=1;
