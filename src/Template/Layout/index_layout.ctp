@@ -74,210 +74,204 @@ margin-top: 5px !important;
 </head>
 
 <body class="hold-transition skin-blue fixed sidebar-mini">
-<?php $this->Form->templates([
-				'inputContainer' => '{{content}}'
-			]); 
-		?>
-<div id="wrapper">
-<header class="main-header no-print" >
-   <a href="/ucci/Users/index" class="logo" style="background-color:#DA0845">
-   <span class="logo-lg">
-   <?=  $this->Html->image('/images/project_logo/UCCI LOGO.png', ['style'=>'width:21%;margin-top: -2%;']) ?></span></a>
-    <nav class="navbar navbar-static-top"  id="grad1">
-    <a href="#" class="hidden-lg hidden-md hidden-sm sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-               <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span><?php echo $member_name; ?></span>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-              <?php echo $this->Html->link('Log out',['controller' => 'Users', 'action' => 'logout', '_full' => true,'class'=>'btn btn-default btn-flat']); ?>
-               </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <aside class="main-sidebar no-print">
-  <section class="sidebar" >
-    
-	  
-		<ul class="sidebar-menu">
-			<?php
-			 $class_selected='';
-			$user_right1="";
-			$user_right1 = $this->requestAction(['controller'=>'Users', 'action'=>'UserRights'],['pass'=>array()]);
-			
-			$user_right=explode(',', $user_right1);
-			
-			$fetch_menu = $this->requestAction(['controller'=>'Users', 'action'=>'menu'],['pass'=>array()]);
-		    $main_menu_arr[]='';
-			$page_name=$this->request->params['action'];
-             foreach($fetch_menu as $data)
-			 {
-				if(in_array($data->id, $user_right))
-				{
-					if(empty($data->main_menu) && empty($data->sub_menu))
-					{
-						if($page_name==$data['page_name_url'])
-						{
-							$class_selected='selected';
-						}
-							
-						?>
-						<li class="<?php if($page_name==$data['page_name_url']){ echo 'active'; } ?>">
-						<?php echo $this->Html->link('<i class="'.$data['icon_class_name'].'"></i>&nbsp;&nbsp;<span class="title">'.$data['name'].'</span><span class="'.$class_selected.'"></span>',array('controller' => $data['controller'], 'action' => $data['page_name_url'], '_full' => true),['escape'=>false]); ?>
-						
+		<?php $this->Form->templates(['inputContainer' => '{{content}}']); ?>
+	<div id="wrapper">
+		<header class="main-header no-print" >
+			<a href="/ucci/Users/index" class="logo" style="background-color:#DA0845">
+			<span class="logo-lg">
+			<?=  $this->Html->image('/images/project_logo/UCCI LOGO.png', ['style'=>'width:21%;margin-top: -2%;']) ?></span></a>
+			<nav class="navbar navbar-static-top"  id="grad1">
+				<a href="#" class="hidden-lg hidden-md hidden-sm sidebar-toggle" data-toggle="offcanvas" role="button">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				</a>
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+						<li class="dropdown user user-menu">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<span><?php echo $member_name; ?></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<?php echo $this->Html->link('Log out',['controller' => 'Users', 'action' => 'logout', '_full' => true,'class'=>'btn btn-default btn-flat']); ?>
+								</li>
+							</ul>
 						</li>
-				<?php $class_selected=''; }else{
-					if(!in_array($data['main_menu'], $main_menu_arr)){
-						$main_menu_arr[]=$data['main_menu'];
-						$fetch_menu_submenu = $this->requestAction(['controller'=>'Users', 'action'=>'MenuSubmenu'],['pass'=>array($data['main_menu'])]);		
-							foreach($fetch_menu_submenu as $data_value1)
-							{ 	
-								if($data_value1['page_name_url'] == $page_name)
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<aside class="main-sidebar no-print">
+			<section class="sidebar" >
+				<ul class="sidebar-menu">
+					<?php
+					$class_selected='';
+					$user_right1="";
+					$user_right1 = $this->requestAction(['controller'=>'Users', 'action'=>'UserRights'],['pass'=>array()]);
+					$user_right=explode(',', $user_right1);
+					$fetch_menu = $this->requestAction(['controller'=>'Users', 'action'=>'menu'],['pass'=>array()]);
+					$main_menu_arr[]='';
+					$page_name=$this->request->params['action'];
+					foreach($fetch_menu as $data)
+					{
+						if(in_array($data->id, $user_right))
+						{
+							if(empty($data->main_menu) && empty($data->sub_menu))
+							{
+								if($page_name==$data['page_name_url'])
 								{
-									$class_active='active';
-									$arrow_open='open';
 									$class_selected='selected';
 								}
-							}
-						?>
-						<li class="treeview<?php  echo @$class_active; ?> ">
-								<?php echo $this->Html->link('<i class="'.$data['main_menu_icon'].'"></i>&nbsp;&nbsp;<span class="title">'.$data['main_menu'].'</span><span class="'.$class_selected.'"></span><span class="pull-right-container">
-								  <i class="fa fa-angle-left pull-right"></i>
-								</span>',array('action' => '#'),['escape'=>false]); ?>
+									
+								?>
+								<li class="<?php if($page_name==$data['page_name_url']){ echo 'active'; } ?>">
+								<?php echo $this->Html->link('<i class="'.$data['icon_class_name'].'"></i>&nbsp;&nbsp;<span class="title">'.$data['name'].'</span><span class="'.$class_selected.'"></span>',array('controller' => $data['controller'], 'action' => $data['page_name_url'], '_full' => true),['escape'=>false]); ?>
 								
-								<ul class="treeview-menu">
-								<?php
-								$class_active='';
-								$arrow_open='';
-								$class_selected='';
-						
-						foreach($fetch_menu_submenu as $data_value)
-						{
-							if(!empty($data_value['sub_menu']))
-							{
-								$fetch_submenu = $this->requestAction(['controller'=>'Users', 'action'=>'submenu'],['pass'=>array($data['sub_menu'])]);	
-								if(!in_array($data_value['sub_menu'], $main_menu_arr))
-								{
-								$main_menu_arr[]=$data_value['sub_menu'];
-										$main_menu_arr_my[]=$data_value['sub_menu'];
-										$sub_id=0;
-										foreach($fetch_submenu as $data_value1)
+								</li>
+						<?php $class_selected=''; }else{
+							if(!in_array($data['main_menu'], $main_menu_arr)){
+								$main_menu_arr[]=$data['main_menu'];
+								$fetch_menu_submenu = $this->requestAction(['controller'=>'Users', 'action'=>'MenuSubmenu'],['pass'=>array($data['main_menu'])]);		
+									foreach($fetch_menu_submenu as $data_value1)
+									{ 	
+										if($data_value1['page_name_url'] == $page_name)
 										{
-											$sub_id[]=$data_value1['page_name_url'];
-											
-											if($data_value1['page_name_url'] == $page_name)
-											{
-												$class_active='active';
-												$arrow_open='open';
-												$class_selected='selected';
-											}
-											 
+											$class_active='active';
+											$arrow_open='open';
+											$class_selected='selected';
 										}
-										$x=0;
-								foreach($fetch_submenu as $data_submenu)
-								{$x++;
-										if(in_array($data_submenu['id'], $user_right) && $x==1)
-										{  
-										?>
-										<li class="treeview <?php  echo @$class_active; ?>">
-										<?php echo $this->Html->link('<i class="'.$data_value['sub_menu_icon'].'"></i><span class="title">'.$data_value['sub_menu'].'</span><span class="'.$class_selected.'"></span><span class="pull-right-container">
+									}
+								?>
+								<li class="treeview<?php  echo @$class_active; ?> ">
+										<?php echo $this->Html->link('<i class="'.$data['main_menu_icon'].'"></i>&nbsp;&nbsp;<span class="title">'.$data['main_menu'].'</span><span class="'.$class_selected.'"></span><span class="pull-right-container">
 										  <i class="fa fa-angle-left pull-right"></i>
 										</span>',array('action' => '#'),['escape'=>false]); ?>
-										<ul  class="treeview-menu">
+										
+										<ul class="treeview-menu">
 										<?php
-										foreach($fetch_submenu as $data_submenu)
-										{
-											if((in_array($data_submenu['id'], $user_right))&& (!in_array($data_submenu['name'], $main_menu_arr)))
-											{
-												$main_menu_arr[]=$data_submenu['name'];
-											 ?>
-											<li class="<?php if($page_name==$data_submenu['page_name_url']){ echo ' active'; } ?>">
-											<?php echo $this->Html->link('<i class="'.$data_submenu['icon_class_name'].'"></i><span class="title">'.$data_submenu['name'].'</span>',array('controller' => $data_submenu['controller'], 'action' => $data_submenu['page_name_url'], '_full' => true),['escape'=>false]); ?>
-												
-											</li>
-											<?php
-											}
-										}
 										$class_active='';
 										$arrow_open='';
 										$class_selected='';
-										?>
-										</ul>
-									</li>
-							<?php
-						 }}}}else
-							{
-										if((in_array($data_value['id'], $user_right)) && (!in_array($data_value['name'], $main_menu_arr)))
+								
+								foreach($fetch_menu_submenu as $data_value)
+								{
+									if(!empty($data_value['sub_menu']))
+									{
+										$fetch_submenu = $this->requestAction(['controller'=>'Users', 'action'=>'submenu'],['pass'=>array($data['sub_menu'])]);	
+										if(!in_array($data_value['sub_menu'], $main_menu_arr))
 										{
-											$main_menu_arr[]=$data_value['name'];
-										 ?>
-												<li class="<?php if($page_name==$data_value['page_name_url']){ echo ' active'; } ?>">
-												<?php echo $this->Html->link('<i class="'.$data_value['icon_class_name'].'"></i><span class="title">'.$data_value['name'].'</span>',array('controller' => $data_value['controller'], 'action' => $data_value['page_name_url'], '_full' => true),['escape'=>false]); ?>
-												</li>
+										$main_menu_arr[]=$data_value['sub_menu'];
+												$main_menu_arr_my[]=$data_value['sub_menu'];
+												$sub_id=0;
+												foreach($fetch_submenu as $data_value1)
+												{   
+													$sub_id[]=$data_value1['page_name_url'];
+													
+													if($data_value1['page_name_url'] == $page_name)
+													{
+														$class_active='active';
+														$arrow_open='open';
+														$class_selected='selected';
+													}
+													 
+												}
+												$x=0;
+										foreach($fetch_submenu as $data_submenu)
+										{$x++;
+												if(in_array($data_submenu['id'], $user_right) && $x==1)
+												{  
+												?>
+												<li class="treeview <?php  echo @$class_active; ?>">
+												<?php echo $this->Html->link('<i class="'.$data_value['sub_menu_icon'].'"></i><span class="title">'.$data_value['sub_menu'].'</span><span class="'.$class_selected.'"></span><span class="pull-right-container">
+												  <i class="fa fa-angle-left pull-right"></i>
+												</span>',array('action' => '#'),['escape'=>false]); ?>
+												<ul  class="treeview-menu">
 												<?php
-						}}} ?>
-				</ul>	
-							</li>
-							<?php
-							$class_active='';
-							$arrow_open='';
-							$class_selected='';
-		}}}}	?>	
-		</ul>
-		</section>
-	
+												foreach($fetch_submenu as $data_submenu)
+												{		
+													if((in_array($data_submenu['id'], $user_right))&& (!in_array($data_submenu['name'], $main_menu_arr)))
+													{
+														$main_menu_arr[]=$data_submenu['name'];
+													 ?>
+													<li class="<?php if($page_name==$data_submenu['page_name_url']){ echo ' active'; } ?>">
+													<?php echo $this->Html->link('<i class="'.$data_submenu['icon_class_name'].'"></i><span class="title">'.$data_submenu['name'].'</span>',array('controller' => $data_submenu['controller'], 'action' => $data_submenu['page_name_url'], '_full' => true),['escape'=>false]); ?>
+														
+													</li>
+													<?php
+													}
+												}
+												$class_active='';
+												$arrow_open='';
+												$class_selected='';
+												?>
+												</ul>
+											</li>
+									<?php
+								 }}}}else
+									{
+								if((in_array($data_value['id'], $user_right)) && (!in_array($data_value['name'], $main_menu_arr)))
+								{
+									$main_menu_arr[]=$data_value['name'];
+								 ?>
+										<li class="<?php if($page_name==$data_value['page_name_url']){ echo ' active'; } ?>">
+										<?php echo $this->Html->link('<i class="'.$data_value['icon_class_name'].'"></i><span class="title">'.$data_value['name'].'</span>',array('controller' => $data_value['controller'], 'action' => $data_value['page_name_url'], '_full' => true),['escape'=>false]); ?>
+										</li>
+										<?php
+								}}} ?>
+						</ul>	
+						</li>
+						<?php
+						$class_active='';
+						$arrow_open='';
+						$class_selected='';
+					}}}}	?>	
+				</ul>
+
+			</section>
+
 		</aside>
 
-  
-<div class="content-wrapper">
-	 <section class="content">
-		<div class="row">
-		<?= $this->Flash->render() ?>
+	  
+		<div class="content-wrapper">
+			 <section class="content">
+				<div class="row">
+				<?= $this->Flash->render() ?>
 
-			<?php echo $this->fetch('content'); ?>
+					<?php echo $this->fetch('content'); ?>
+				</div>
+			 </section>
 		</div>
-	 </section>
-</div>
-</div>
-<footer class="main-footer hide_print">
-    2016 &copy; <a href="http://www.phppoets.com" target="_blank"> PHP POETS IT SOLUTION PRIVATE LTD.</a> All Rights Reserved.
-</footer>
+	</div>
+	<footer class="main-footer hide_print">
+		2016 &copy; <a href="http://www.phppoets.com" target="_blank"> PHP POETS IT SOLUTION PRIVATE LTD.</a> All Rights Reserved.
+	</footer>
 
 
-<?php echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js'); ?>
-<?php echo $this->Html->script('/assets/bootstrap/js/bootstrap.min.js'); ?>
+	<?php echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js'); ?>
+	<?php echo $this->Html->script('/assets/bootstrap/js/bootstrap.min.js'); ?>
 
-<?php echo $this->Html->script('/assets/plugins/jquery-validation/lib/jquery.js'); ?>
-<?php echo $this->Html->script('/assets/plugins/jquery-validation/dist/jquery.validate.js'); ?>
+	<?php echo $this->Html->script('/assets/plugins/jquery-validation/lib/jquery.js'); ?>
+	<?php echo $this->Html->script('/assets/plugins/jquery-validation/dist/jquery.validate.js'); ?>
 
-<?php echo $this->Html->script('/assets/plugins/slimScroll/jquery.slimscroll.min.js'); ?>
-<?php echo $this->Html->script('/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js'); ?>
-<?php echo $this->Html->script('/assets/plugins/bootstrap-daterangepicker/daterangepicker.js'); ?>
-<?php echo $this->Html->script('/assets/plugins/timepicker/bootstrap-timepicker.min.js'); ?>
- 
-<?php echo $this->Html->script('/assets/plugins/select2/select2.full.min.js'); ?>
-<?php echo $this->Html->script('/assets/plugins/bootstrap-editable/js/bootstrap-editable.min.js'); ?>
-<?php echo $this->Html->script('/assets/plugins/iCheck/icheck.min.js'); ?>
+	<?php echo $this->Html->script('/assets/plugins/slimScroll/jquery.slimscroll.min.js'); ?>
+	<?php echo $this->Html->script('/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js'); ?>
+	<?php echo $this->Html->script('/assets/plugins/bootstrap-daterangepicker/daterangepicker.js'); ?>
+	<?php echo $this->Html->script('/assets/plugins/timepicker/bootstrap-timepicker.min.js'); ?>
+	 
+	<?php echo $this->Html->script('/assets/plugins/select2/select2.full.min.js'); ?>
+	<?php echo $this->Html->script('/assets/plugins/bootstrap-editable/js/bootstrap-editable.min.js'); ?>
+	<?php echo $this->Html->script('/assets/plugins/iCheck/icheck.min.js'); ?>
 
 
-<?php echo $this->Html->script('/assets/plugins/fastclick/fastclick.js'); ?>
-<?php echo $this->Html->script('/assets/dist/js/app.min.js'); ?>
-<?php echo $this->Html->script('/assets/dist/js/demo.js'); ?>
-<?php //echo $this->Html->script('/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); ?>
-<?php echo $this->Html->script('/assets/plugins/WYSIWYG/editor.js'); ?>
-<script>
- 
+	<?php echo $this->Html->script('/assets/plugins/fastclick/fastclick.js'); ?>
+	<?php echo $this->Html->script('/assets/dist/js/app.min.js'); ?>
+	<?php echo $this->Html->script('/assets/dist/js/demo.js'); ?>
+	<?php //echo $this->Html->script('/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); ?>
+	<?php echo $this->Html->script('/assets/plugins/WYSIWYG/editor.js'); ?>
+	<script>
+	 
 $('.select2').select2();
 $('.date-picker').datepicker({
       autoclose: true

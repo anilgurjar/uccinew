@@ -138,7 +138,9 @@ class BusinessVisasController extends AppController
             }
         }
         $members = $this->BusinessVisas->Companies->find()->where(['id'=>$company_id]);
-		$this->set(compact('businessVisa', 'members'));
+        $mastersendors = $this->BusinessVisas->master_visa_sendor->find();
+		
+		$this->set(compact('businessVisa', 'members','mastersendors'));
         $this->set('_serialize', ['businessVisa']);
     }
 
@@ -290,8 +292,10 @@ class BusinessVisasController extends AppController
         $this->set('business_visas', $business_visas);
 		$Users=$this->BusinessVisas->Companies->find()->select(['company_organisation'])->where(['id'=>$company_id])->toArray();
 		$members = $this->BusinessVisas->Companies->find()->where(['id'=>$company_id]);
+		$mastersendors = $this->BusinessVisas->master_visa_sendor->find();
+		
 		$this->set('company_organisation' , $Users[0]->company_organisation);
-		$this->set(compact('business_visa_datas','members'));
+		$this->set(compact('business_visa_datas','members','mastersendors'));
 	}
 	
 	

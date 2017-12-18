@@ -93,7 +93,7 @@ input[type="radio"]
 				 
 				</div>
 				<div class="form-group">
-				  <label class="col-sm-4 control-label">Final Destination</label>
+				  <label class="col-sm-4 control-label">Shipment</label>
 				   <div class="col-sm-8">
 				 <?php
 				 echo $this->Form->textarea('final_destination',['label'=>false,'class'=>'form-control','name'=>'final_destination','style'=>'resize:none;','rows'=>'2']);
@@ -116,7 +116,7 @@ input[type="radio"]
 					<label class="col-sm-4 control-label">Invoice Attachment</label>
 					<table id="file_table" style="line-height:2.5">
 						<tr>
-							<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?></td>
+							<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?><h6>Upload pdf files only<h6></td>
 							<!--<td><?php //$this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']) . __(' Add More'), ['class'=>'btn btn-block btn-primary btn-sm add_more','type'=>'button']) ?></td>-->
 							<td></td>
 						</tr>

@@ -106,7 +106,7 @@
 										echo '<td class="ucci"></td>';
 									}
 									?>
-									<td class="<?php echo $class; ?> font_cl"><?php echo $industrial_grievance->grievance_age .' '. $industrial_grievance->grievance_period?></td>
+									<td class="<?php echo $class; ?> font_cl"><?php echo $industrial_grievance->grievance_period?></td>
 									
 										<td class="actions  print_screen">
 														

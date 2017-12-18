@@ -40,7 +40,7 @@ fieldset{
 							<label class="control-label">Grievance Category :</label>
 							<?php
 							
-							echo $this->Form->input('grievance_category_id', ['empty'=> '--Select--','data-placeholder'=>'Select Category','label' => false,'class'=>'form-control select2','options'=>$grievancecategorys,'style'=>'width:100%;']); ?>
+							echo $this->Form->input('grievance_category_id', ['data-placeholder'=>'Select Category','label' => false,'class'=>'form-control select2','options'=>$grievancecategorys,'style'=>'width:100%;']); ?>
 							<label id="grievance-category-id-error" class="error" for="grievance-category-id"></label>
 						</div>
 					</div>
@@ -63,20 +63,22 @@ fieldset{
 							<?php
 								$options=array();
 								
-								$options['Day'] = 'Day';
-								$options['Month'] = 'Month';
-								$options['Year'] = 'Year';
+								$options['Week'] = 'Last Week';
+								$options['OneWeek'] = 'Greater One  Week';
+								$options['ThreeWeek'] = 'Greater Three Week';
+								$options['FiveWeek'] = 'Greater Five Week';
+								$options['MoreWeek'] = 'More Then Eight Week';
 								
 								echo $this->Form->input('grievance_period', ['empty'=> '--Select--','data-placeholder'=>'Select...','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
 							
 						</div>
 					</div>
-					<div class="col-md-2">
+					<!--<div class="col-md-2">
 						<div class="form-group">
 							<label class="control-label">Grievance Age:</label>
-							<?php echo $this->Form->input('grievance_age', ['label' => false,'placeholder'=>'Grievance Age','class'=>'form-control ','type'=>'text']); ?>
+							<?php //echo $this->Form->input('grievance_age', ['label' => false,'placeholder'=>'Grievance Age','class'=>'form-control ','type'=>'text']); ?>
 						</div>
-					</div>
+					</div>-->
 					
 					<div class="col-md-4">
 						<div class="form-group">
@@ -144,7 +146,9 @@ fieldset{
 						<div class="form-group">
 							<label class=" control-label">Grievance Description:</label>
 							
-							<?php echo $this->Form->input('description', ['label' => false,'placeholder'=>'Grievance Description','class'=>'form-control','id'=>'transl2']); ?>
+							<?php 
+							
+							echo $this->Form->input('description', ['label' => false,'placeholder'=>'Grievance Description','class'=>'form-control','id'=>'transl2']); ?>
 							
 						</div>
 						<div class=""> <strong> <span> <i class="fa fa-warning text-yellow"></i> Note: </span> Please insert space key after formation of every new word in order to convert the Language mode from English to Hindi </strong> </div>

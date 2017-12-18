@@ -96,13 +96,14 @@
 								}
 								?>
 								<td class="<?php echo $class; ?> font_cl"><?= h(date('d-m-Y', strtotime($industrial_grievance->created_on))) ?></td>
-								<td class="<?php echo $class; ?> font_cl"><?php echo $industrial_grievance->grievance_age .' '. $industrial_grievance->grievance_period?></td>
+								<td class="<?php echo $class; ?> font_cl"><?php echo $industrial_grievance->grievance_period?></td>
 								
-								<td class="actions  print_screen">
+								<td class="actions  print_screen" style="width:150px">
 									<?php
-									//echo $this->Html->link(' <i class="fa fa-book"></i>', ['action' => 'industrial_grievance_published_view', $industrial_grievance->id],['escape' => false]) ;
-									?>
-									<?= $this->Form->button(__('View') . $this->Html->tag('i', '', ['class'=>'fa fa-book']),['class'=>'btn btn-info btn-sm','formaction'=>'industrial_grievance_published_view','formtarget'=>'_blank','value'=>$industrial_grievance->id,'type'=>'Submit','name'=>'view']);   ?>
+									echo $this->Html->link(' <i class="fa fa-book"></i>Edit', ['action' => 'edit', $industrial_grievance->id],['escape' => false,'class'=>'btn  btn-success btn-sm']).' ' ;
+									
+									echo $this->Form->button(__($this->Html->tag('i', '', ['class'=>'fa fa-book']).'View')  ,['class'=>'btn btn-info btn-sm','formaction'=>'industrial_grievance_published_view','formtarget'=>'_blank','value'=>$industrial_grievance->id,'type'=>'Submit','name'=>'view']);   ?>
+									
 								</td>
 								</tr>
 								<?php

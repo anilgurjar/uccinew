@@ -68,12 +68,14 @@ class IndustrialGrievancesTable extends Table
             'foreignKey' => 'grievance_issue_related_id',
             'joinType' => 'INNER'
         ]);
+		
         $this->hasMany('IndustrialGrievanceFollows', [
             'foreignKey' => 'industrial_grievance_id'
         ]);
         $this->hasMany('IndustrialGrievanceStatuses', [
             'foreignKey' => 'industrial_grievance_id'
         ]);
+		
     }
 
     /**
