@@ -226,7 +226,7 @@ border-left: none   !important;
 					<tr>
 						<td colspan="3" class="bordernone"><br/><p> This is to inform you that M/s <b>'. $company_name  .'</b> is a company having its office <b>'. $company_address .'</b> , <b>'. $company_city .' </b>- <b>'.  $company_pincode .'</b>';
 						if($membertype==1){ 
-						$html_content.='and is also a member of Udaipur Chamber of Commerce & Industry.</p></td>
+						$html_content.=' and is also a member of Udaipur Chamber of Commerce & Industry.</p></td>
 					</tr>';
 					}else{
 					$html_content.='
