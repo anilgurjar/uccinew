@@ -497,7 +497,7 @@ class BusinessVisasController extends AppController
 
 				$MasterCompanies=$this->BusinessVisas->MemberReceipts->MasterCompanies->find();
 				//pr($master_member_receipt);
-	foreach($master_member_receipt as $data){			
+				foreach($master_member_receipt as $data){			
 					$receipt_no = $data->receipt_no; 
 					$amount_type = $data->amount_type;
 					$cheque_no = $data->cheque_no;
@@ -718,8 +718,7 @@ class BusinessVisasController extends AppController
 			$attachments='';
 			$attachments[]='business_vissa_payment_receipt.pdf';
 			$sub='Payment Successfully submitted';
-			//$email_to='rohitkumarjoshi43@gmail.com';
-				$email_to="acc.uccisec@gmail.com";
+			$email_to="anilgurjer371@gmail.com";
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
@@ -866,7 +865,6 @@ class BusinessVisasController extends AppController
 					$sub="Bussiness Vissa is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					//$email_to='rohitkumarjoshi43@gmail.com';
 					$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
@@ -918,8 +916,7 @@ class BusinessVisasController extends AppController
 						$sub="Bussiness Vissa is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						//$email_to="anilgurjer371@gmail.com";
-						$email_to="acc.uccisec@gmail.com";
+						$email_to="anilgurjer371@gmail.com";
 						if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1033,8 +1030,7 @@ class BusinessVisasController extends AppController
 					  $sub="Your Bussiness Vissa is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					// $email_to="rohitkumarjoshi43@gmail.com";
-					 $email_to="anilgurjer371@gmail.com";
+					$email_to="anilgurjer371@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -1167,8 +1163,7 @@ class BusinessVisasController extends AppController
 					  $sub="Your Bussiness Vissa is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 //$email_to="rohitkumarjoshi43@gmail.com";
-						$email_to="acc.uccisec@gmail.com";		
+					$email_to="anilgurjer371@gmail.com";		
 					 if(!empty($email_to)){		
 								
 						 try {
