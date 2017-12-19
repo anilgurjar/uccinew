@@ -272,7 +272,7 @@ class BusinessVisasController extends AppController
 					}
 					else{
 						//return $this->redirect(['action' => 'paymentTest',$data->id]);
-						//return $this->redirect(['action' => 'payment',$data->id]);
+						return $this->redirect(['action' => 'payment',$data->id]);
 						
 						$query = $this->BusinessVisas->query();
 							$query->update()
@@ -370,41 +370,7 @@ class BusinessVisasController extends AppController
 		->execute();
 		 $this->set(compact('status','amount','id','txnid','sul'));	
 		
-	// mail should secretary 
 	
-		//$companies= $this->BusinessVisas->Companies->find()->where(['id'=>$udf1]);
-		/*  $email = new Email();
-		 $email->transport('SendGrid');
-		$sub='Secretary';
-		$sendmails= $this->BusinessVisas->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>4])->contain(['Users']);
-		foreach($sendmails as $sendmail){
-			  
-			foreach($sendmail->users as $sendmai){
-				$mailsend=$sendmai['email'];
-				$name=$sendmai['member_name'];
-				$from_name='UCCI';
-				  try {
-					  $email->from(['ucciudaipur@gmail.com' => $from_name])
-					  ->to($mailsend)
-					  ->replyTo('uccisec@hotmail.com')
-					  ->subject($sub)
-					  ->profile('default')
-					  ->template('coo_secretary_email')
-					  ->emailFormat('html')
-					  ->viewVars(['member_name'=>$name]);
-					  
-						$email->send();
-					 
-					 
-					 
-				   } catch (Exception $e) {
-					
-					echo 'Exception : ',  $e->getMessage(), "\n";
-
-				   }
-				
-			}
-		} */
 		 
 		 
 		 
@@ -718,7 +684,6 @@ class BusinessVisasController extends AppController
 			$attachments='';
 			$attachments[]='business_vissa_payment_receipt.pdf';
 			$sub='Payment Successfully submitted';
-			$email_to="anilgurjer371@gmail.com";
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
@@ -857,15 +822,14 @@ class BusinessVisasController extends AppController
 					$emailperson_id_new = base64_encode($emailperson_id_new);
 					
 					//$url="http://www.ucciudaipur.com/uccinew/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
-					$url="http://localhost/uccinew/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
+					//$url="http://localhost/uccinew/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
-					//$url="http://www.ucciudaipur.com/app/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
+					$url="http://www.ucciudaipur.com/app/business-visas/bussiness_vissa_approved/".$certificates_data."/".$emailperson_id_new.""; 
 					
 				
 					$sub="Bussiness Vissa is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -916,7 +880,6 @@ class BusinessVisasController extends AppController
 						$sub="Bussiness Vissa is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						$email_to="anilgurjer371@gmail.com";
 						if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1030,7 +993,6 @@ class BusinessVisasController extends AppController
 					  $sub="Your Bussiness Vissa is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					$email_to="anilgurjer371@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -1163,7 +1125,6 @@ class BusinessVisasController extends AppController
 					  $sub="Your Bussiness Vissa is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					$email_to="anilgurjer371@gmail.com";		
 					 if(!empty($email_to)){		
 								
 						 try {

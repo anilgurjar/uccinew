@@ -168,11 +168,6 @@ class IndustrialGrievancesController extends AppController
 					$department_email=$Industrial_Grievances['company']['users'][0]->email;
 					$sub="Industrial Grievance is Accept";
 					$from_name="UCCI";
-					//$email_to=trim($member_email,'');
-					$email_to='anilgurjer371@gmail.com';
-					//$email_to1=trim($department_email,'');
-					$email_to1='anilgurjer371@gmail.com';
-					
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -240,7 +235,6 @@ class IndustrialGrievancesController extends AppController
 						$sub="Industrial Grievance is Not Accept";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -393,7 +387,6 @@ class IndustrialGrievancesController extends AppController
 				 $grievance_number=$industrialGrievance_data->grievance_number;
 					$grievance_number=str_pad($grievance_number, 4, "0", STR_PAD_LEFT);
 						
-					$mobile_no='9462952929';
 					
 					if(!empty($mobile_no)){
 						$sms="We sincerely thank you for contacting our grievance cell. We will investigate the grievance by gathering pertinent information against your grievance";
@@ -406,7 +399,6 @@ class IndustrialGrievancesController extends AppController
 						
 						
 					}
-					$email_to='anilgurjer371@gmail.com';
 					if(!empty($email_to)){
 						$from_name="UCCI";
 						$subject="Grievance Enquiry Acknowledgement";
@@ -593,7 +585,7 @@ class IndustrialGrievancesController extends AppController
 		// member sms
 		$sms="Grievance follow up taken by UCCI, Udaipur on ".date("d-m-Y")." against grievance registered by you.please check and update the follow .Regards:- UCCI ,  Udaipur ";
 		$sms2=str_replace(" ", '+', $sms);
-		//$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms2.'&route=7');
+		$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=ucciud&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms2.'&route=7');
 		
 						
 		
