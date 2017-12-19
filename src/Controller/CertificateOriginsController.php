@@ -256,7 +256,6 @@ class CertificateOriginsController extends AppController
 					  $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					 $email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
@@ -735,7 +734,6 @@ class CertificateOriginsController extends AppController
 			$attachments='';
 			$attachments[]='coo_payment_receipt.pdf';
 			$sub='Payment Successfully submitted';
-			$email_to='rohitkumarjoshi43@gmail.com';
 				$from_name='UCCI';
 						$email = new Email();
 						$email->transport('SendGrid');
@@ -1188,8 +1186,8 @@ class CertificateOriginsController extends AppController
 						return $this->redirect(['action' => 'certificate-origin-draft-view']);
 					}
 					else{
-						return $this->redirect(['action' => 'paymentTest',$data->id]);
-						//return $this->redirect(['action' => 'payment',$data->id]);
+						//return $this->redirect(['action' => 'paymentTest',$data->id]);
+						return $this->redirect(['action' => 'payment',$data->id]);
 					}
 				}	
 					
@@ -1383,11 +1381,11 @@ class CertificateOriginsController extends AppController
 						
 						$certificates_data = base64_encode($certificate_origin->id);
 						
-						 $url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
+						 //$url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
 					 
-						//$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+						$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 						
-					     $url="http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+					     //$url="http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 					
 						$urls[]=array("exporter_name"=>$certificate_origin->exporter,"url"=>$url);
 					}
@@ -1399,7 +1397,6 @@ class CertificateOriginsController extends AppController
 					$sub="Certificate of origin is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					$email_to='rohitkumarjoshi43@gmail.com';
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1488,14 +1485,13 @@ public function certificateOriginPublishedView()
 					$emailperson_id = base64_encode($emailperson_id);
 					 // $url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
 					 
-					$url="http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+					//$url="http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 					
-					//$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+					$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 					
 					$sub="Certificate of origin is Varified";
 					$from_name="UCCI";
 					$email_to=trim($emailsend,' ');
-					$email_to='rohitkumarjoshi43@gmail.com';
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1547,7 +1543,6 @@ public function certificateOriginPublishedView()
 						$sub="Certificate of origin is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						$email_to="anilgurjer371@gmail.com";
 					if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -1654,7 +1649,6 @@ public function certificateOriginPublishedView()
 					  $sub="Your certificate of origin is approved";
 					  $from_name="UCCI";
 					  $email_to=trim($email_to,' ');
-					  $email_to="rohitkumarjoshi43@gmail.com";
 					  if(!empty($email_to)){		
 								
 						 try {
