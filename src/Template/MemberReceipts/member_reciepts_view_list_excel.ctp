@@ -27,8 +27,10 @@ if(!empty($member_receipt) || !empty($general_receipt))
 					?>
 					<th>Receipt No.</th>
 					<th>Company</th>
+					<th>Reciept Type</th>
 					<th>Mode of Payment</th>
 					<th>Amount</th>
+					<th>Narration</th>
 					<th>Status</th>
 				
 					
@@ -53,8 +55,10 @@ if(!empty($member_receipt) || !empty($general_receipt))
 							<td><?php echo sprintf("%04d", $member_fee_member_receipt->member_fee->invoice_no); ?></td>
 							<td><?php echo sprintf("%04d", $data->receipt_no); ?></td>
 							<td><?php echo $data->company->company_organisation; ?></td>
+							<td><?php echo $data->receipt_type; ?></td>
 							<td><?php echo $data->amount_type; ?></td>
 							<td><?php echo $total=$data->amount; ?></td>
+							<td><?php echo $total=$data->narration; ?></td>
 						</tr>
 						<?php
 						$grand_total+=$total;
@@ -76,8 +80,10 @@ if(!empty($member_receipt) || !empty($general_receipt))
 					<td><?php echo date('d-m-Y', strtotime($general_data->date_current)); ?></td>
 					<td><?php echo sprintf("%04d", $general_data->receipt_no); ?></td>
 					<td><?php echo $general_data->company->company_organisation; ?></td>
+					<td><?php echo $general_data->receipt_type; ?></td>
 					<td><?php echo $general_data->amount_type; ?></td>
 					<td><?php echo $total=$general_data->amount; ?></td>
+					<td><?php echo $total=$general_data->narration; ?></td>
 					
 					
 					</tr>

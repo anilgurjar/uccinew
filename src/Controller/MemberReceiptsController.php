@@ -1066,18 +1066,16 @@ public function MemberReceiptAjaxType(){
 			
 			
 			
-		if(!empty($member_receipt)){
-		$member_receipt = $member_receipt;
-		}if(!empty($general_receipt)){
-			
-			$general_receipt = $general_receipt;
-		}
-
-
+		
 		if(!empty($member_receipt) || !empty($general_receipt))
 		{ 
+			if(!empty($member_receipt))
+			{
+				$_header=['S.No.','Date','Invoice No','Reciept No.','Company','Reciept Type','Mode Of Payment','Total Amount','Narration','Status'];
+			}else{
+				$_header=['S.No.','Date','Reciept No.','Company','Reciept Type','Mode Of Payment','Total Amount','Narration','Status'];
+			}	
 			$sr_no=0;
-			$_header=['S.No.', 'Date','Origin No', 'Reciept No.', 'Company', 'Mode Of Payment', 'Amount','Status'];
 			$grand_total=0;
 			if(!empty($member_receipt)){
 				foreach($member_receipt as $data){
@@ -1092,7 +1090,7 @@ public function MemberReceiptAjaxType(){
 							}
 							
 						$total=0;
-						$contain[]=[ ++$sr_no,date('d-m-Y', strtotime($data->date_current)),$member_fee_member_receipt->member_fee->invoice_no,$data->receipt_no, $data->company->company_organisation,$data->amount_type,$total=$data->amount,$send_type];
+						$contain[]=[ ++$sr_no,date('d-m-Y', strtotime($data->date_current)),$member_fee_member_receipt->member_fee->invoice_no,$data->receipt_no,$data->company->company_organisation,$data->receipt_type,$data->amount_type,$total=$data->amount,$data->narration,$send_type];
 					} 
 				}
 			}
@@ -1110,7 +1108,7 @@ public function MemberReceiptAjaxType(){
 						$total=0;
 						
 					
-					$contain[]=[ ++$sr_no,date('d-m-Y', strtotime($general_data->date_current)),$general_data->receipt_no, $general_data->company->company_organisation,$general_data->amount_type,$total=$general_data->amount,$send_type ];
+					$contain[]=[ ++$sr_no,date('d-m-Y', strtotime($general_data->date_current)),$general_data->receipt_no,$general_data->company->company_organisation,$general_data->receipt_type,$general_data->amount_type,$total=$general_data->amount,$general_data->narration,$send_type ];
 					$grand_total+=$total;
 				}
 			}

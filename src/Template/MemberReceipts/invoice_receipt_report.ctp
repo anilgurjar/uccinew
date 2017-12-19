@@ -332,7 +332,6 @@ $(document).ready(function(){
 				$('.mail_check').prop('checked',false);
 			}
 		});
-		
 		var company_id = $('.company_id').val();
 		var payment_mode = $('.payment_mode').val();
 		var sendtype = $('.sendtype').val();
