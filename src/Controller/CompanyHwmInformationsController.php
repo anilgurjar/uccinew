@@ -140,7 +140,7 @@ class CompanyHwmInformationsController extends AppController
 						$emailperson=$authorise_person_mail['user']->member_name;
 						$emailsend=$authorise_person_mail['user']->email;
  						$emailperson_id = base64_encode($emailperson_id);
-						// $url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
+						$url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
 						 
 						$url="";//http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 						
@@ -149,7 +149,7 @@ class CompanyHwmInformationsController extends AppController
 						$sub="Hazardous Waste Management Application is Varified";
 						$from_name="UCCI";
 						$email_to=trim($emailsend,' ');
-						$email_to='dasumenaria@gmail.com';
+						$email_to='anilgurjer371@gmail.com';
 						if(!empty($email_to)){		
 							try {
 								$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -197,7 +197,7 @@ class CompanyHwmInformationsController extends AppController
 						$sub="Hazardous Waste Management Application is Not Varified";
 						$from_name="UCCI";
 						$email_to=trim($mailsendtoemail,' ');
-						 
+						$email_to='anilgurjer371@gmail.com'; 
 						if(!empty($email_to)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
@@ -265,7 +265,7 @@ class CompanyHwmInformationsController extends AppController
 					$sub="Your Hazardous Waste Management Application is approved";
 					$from_name="UCCI";
 					$email_to=trim($email_to,' ');
-					
+					$email_to='anilgurjer371@gmail.com';
 					if(!empty($email_to)){		
 								
 						 try {

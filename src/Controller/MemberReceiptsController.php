@@ -1038,7 +1038,7 @@ public function MemberReceiptAjaxType(){
 				
 				$member_receipt = $this->paginate($this->MemberReceipts->find()
 				->where($conditions)
-				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])
+				->contain(['Companies','MasterPurposes','MemberFeeMemberReceipts'=>['MemberFees']])
 				->order(['MemberReceipts.date_current DESC']));
 				
 				$this->set(compact('member_receipt'));
@@ -1048,10 +1048,12 @@ public function MemberReceiptAjaxType(){
 				$conditions['MemberReceipts.receipt_type']='general_receipt';
 				
 				$general_receipt = $this->MemberReceipts->find()->where($conditions)->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']]);
+				
 				if(!empty($general_receipt and !empty($purpose_id))){
+					
 				$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
 				->innerJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
-				return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
+				return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id])->contain(['MasterPurposes']);
 				})
 				->group(['GeneralReceiptPurposes.member_receipt_id'])
 				->having(['total_rows >'=>0])
@@ -1059,6 +1061,7 @@ public function MemberReceiptAjaxType(){
 				}
 				
 				$this->set(compact('general_receipt'));
+				
 			}
 			
 			
@@ -1069,11 +1072,12 @@ public function MemberReceiptAjaxType(){
 		
 		if(!empty($member_receipt) || !empty($general_receipt))
 		{ 
+		
 			if(!empty($member_receipt))
 			{
-				$_header=['S.No.','Date','Invoice No','Reciept No.','Company','Reciept Type','Mode Of Payment','Total Amount','Narration','Status'];
+				$_header=['S.No.','Date','Invoice No','Reciept No.','Purpose ','Company','Reciept Type','Mode Of Payment','Total Amount','Narration','Status'];
 			}else{
-				$_header=['S.No.','Date','Reciept No.','Company','Reciept Type','Mode Of Payment','Total Amount','Narration','Status'];
+				$_header=['S.No.','Date','Reciept No.','Purpose ','Company','Reciept Type','Mode Of Payment','Total Amount','Narration','Status'];
 			}	
 			$sr_no=0;
 			$grand_total=0;
@@ -1081,6 +1085,7 @@ public function MemberReceiptAjaxType(){
 				foreach($member_receipt as $data){
 					$member_fee_member_receipts=$data->member_fee_member_receipts;
 					foreach($member_fee_member_receipts as $member_fee_member_receipt){
+						
 						$status=$data->mail_send;
 						if($status==0){
 								$send_type='Unsend'; 
@@ -1090,14 +1095,15 @@ public function MemberReceiptAjaxType(){
 							}
 							
 						$total=0;
-						$contain[]=[ ++$sr_no,date('d-m-Y', strtotime($data->date_current)),$member_fee_member_receipt->member_fee->invoice_no,$data->receipt_no,$data->company->company_organisation,$data->receipt_type,$data->amount_type,$total=$data->amount,$data->narration,$send_type];
+						$contain[]=[ ++$sr_no,date('d-m-Y', strtotime($data->date_current)),$member_fee_member_receipt->member_fee->invoice_no,$data->receipt_no,$data['master_purpose']['purpose_name'],$data->company->company_organisation,$data->receipt_type,$data->amount_type,$total=$data->amount,$data->narration,$send_type];
 					} 
 				}
 			}
 			if(!empty($general_receipt)){
+				
 				foreach($general_receipt as $general_data)
 				{
-					
+					foreach($general_data->general_receipt_purposes as $general_receipt_purpose){
 					$status=$general_data->mail_send;
 					if($status==0){
 							$send_type='Unsend'; 
@@ -1108,9 +1114,11 @@ public function MemberReceiptAjaxType(){
 						$total=0;
 						
 					
-					$contain[]=[ ++$sr_no,date('d-m-Y', strtotime($general_data->date_current)),$general_data->receipt_no,$general_data->company->company_organisation,$general_data->receipt_type,$general_data->amount_type,$total=$general_data->amount,$general_data->narration,$send_type ];
+					$contain[]=[ ++$sr_no,date('d-m-Y', strtotime($general_data->date_current)),$general_data->receipt_no,$general_receipt_purpose['master_purpose']['purpose_name'],$general_data->company->company_organisation,$general_data->receipt_type,$general_data->amount_type,$total=$general_data->amount,$general_data->narration,$send_type ];
 					$grand_total+=$total;
+					}
 				}
+				
 			}
 			
 			
@@ -1170,9 +1178,8 @@ public function MemberReceiptAjaxType(){
 			
 				$member_receipt = $this->paginate($this->MemberReceipts->find()
 				->where($conditions)
-				->contain(['Companies','MemberFeeMemberReceipts'=>['MemberFees']])
+				->contain(['Companies','MasterPurposes','MemberFeeMemberReceipts'=>['MemberFees']])
 				->order(['MemberReceipts.date_current DESC']));
-				
 				$this->set(compact('member_receipt'));
 			}
 			else
@@ -1184,14 +1191,14 @@ public function MemberReceiptAjaxType(){
 			if(!empty($general_receipt and !empty($purpose_id))){
 				$general_receipt->select(['total_rows' => $general_receipt->func()->count('GeneralReceiptPurposes.member_receipt_id')])
 				->innerJoinWith('GeneralReceiptPurposes', function($q) use($purpose_id){   
-			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id]);
+			return $q->where(['GeneralReceiptPurposes.purpose_id'=>$purpose_id])->contain(['MasterPurposes']);
 			})
 				->group(['GeneralReceiptPurposes.member_receipt_id'])
 				->having(['total_rows >'=>0])
 				->autoFields(true);
 
-			}	
-						
+			}
+			
 				$this->set(compact('general_receipt'));
 			}
 			
