@@ -140,9 +140,9 @@ class CompanyHwmInformationsController extends AppController
 						$emailperson=$authorise_person_mail['user']->member_name;
 						$emailsend=$authorise_person_mail['user']->email;
  						$emailperson_id = base64_encode($emailperson_id);
-						$url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
+						//$url="http://localhost/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id."";
 						 
-						$url="";//http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
+						//$url="http://www.ucciudaipur.com/uccinew/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 						
 						//$url="http://www.ucciudaipur.com/app/certificate-origins/coo_approved/".$certificates_data."/".$emailperson_id.""; 
 						
