@@ -73,7 +73,8 @@
 								{ $class="";
 									$complete_status=$industrial_grievance->complete_status;
 									?>
-									<tr <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:green; " <?php } ?>>
+									<tr >
+									
 									<?php
 									if($k==1)
 									{  $i++; 
@@ -85,17 +86,17 @@
 										<?php
 									}
 									?>
-									<td class="<?php echo $class; ?> font_cl"><?= h(date('d-m-Y', strtotime($industrial_grievance->created_on))) ?></td>
-									<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->title) ?></td>
-									<td class="<?php echo $class; ?> font_cl"><?= $this->Text->autoParagraph($industrial_grievance->description) ?></td>
-									<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->user->company->company_organisation) ?></td> 
+									<td   <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:green; " <?php } ?>><?= h(date('d-m-Y', strtotime($industrial_grievance->created_on))) ?></td>
+									<td <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:green; " <?php } ?>><?= h($industrial_grievance->title) ?></td>
+									<td <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:green; " <?php } ?>><?= $this->Text->autoParagraph($industrial_grievance->description) ?></td>
+									<td <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:green; " <?php } ?>><?= h($industrial_grievance->user->company->company_organisation) ?></td> 
 									
 									<?php  if (!empty($industrial_grievance->industrial_grievance_follows)){  ?>
 									<?php
 									foreach($industrial_grievance->industrial_grievance_follows as $industrial_grievance_follow)
 									{ ?>
 									<!--<td class="<?php echo $class; ?> font_cl department"><?= h($industrial_grievance_follow->department_content) ?></td>-->
-									<td class="<?php echo $class; ?> font_cl ucci"><?= h($industrial_grievance_follow->ucci_content) ?></td>
+									<td <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:green; " <?php } ?>><?= h($industrial_grievance_follow->ucci_content) ?></td>
 									
 									<?php
 									goto a;
@@ -106,7 +107,7 @@
 										echo '<td class="ucci"></td>';
 									}
 									?>
-									<td class="<?php echo $class; ?> font_cl"><?php echo $industrial_grievance->grievance_period?></td>
+									<td <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:green; " <?php } ?>><?php echo $industrial_grievance->grievance_period?></td>
 									
 										<td class="actions  print_screen">
 														
