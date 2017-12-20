@@ -274,11 +274,7 @@ class BusinessVisasController extends AppController
 						//return $this->redirect(['action' => 'paymentTest',$data->id]);
 						return $this->redirect(['action' => 'payment',$data->id]);
 						
-						$query = $this->BusinessVisas->query();
-							$query->update()
-							->set(['status' => 'published','payment_status'=>'success'])
-							->where(['id' => $data->id])
-							->execute();
+						
 							return $this->redirect(['action' => 'draft-view']);
 					}
 					
