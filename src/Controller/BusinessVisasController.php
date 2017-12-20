@@ -275,7 +275,7 @@ class BusinessVisasController extends AppController
 						return $this->redirect(['action' => 'payment',$data->id]);
 						
 						
-							return $this->redirect(['action' => 'draft-view']);
+							
 					}
 					
 					
