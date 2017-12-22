@@ -240,13 +240,13 @@ padding-left: 0px;
 		<tfoot id="tax_view">
 			
 			<tr>
-			<td colspan="4" align="right">Total</td>
+			<td colspan="4" align="right">Grant Total</td>
 			<td id="grand_total"> <input type="hidden" name="amount"  class="totalvalue" value="0"><strong>0</strong></td>
 			</tr>
-			<tr>
+			<!--<tr>
 			<td colspan="4" align="right">Grant Total</td>
 			<td id="grand_total"> <input type="hidden" name="total_amount" value="0"><strong>0</strong></td>
-			</tr>
+			</tr>-->
 			
 		</tfoot>			
 			</table>
@@ -327,13 +327,14 @@ $(document).ready(function(){
 			
 			
 			var grand_total1=grand_total.toFixed(2)
-			
-			var m_data = new FormData();
+			 $('#grand_total').find('input').val(grand_total1);
+				$('#grand_total').find('strong').html(grand_total1);
+			/*var m_data = new FormData();
 				m_data.append('total_amount',grand_total1);
 				m_data.append('state_id',state_id);
 				
 				
-			$.ajax({
+			 $.ajax({
 			url:"<?php echo $this->Url->build(['controller'=>'PurchaseOrders','action'=>'CalculateTaxPurchaseOrders']); ?>",
 				data: m_data,
 				processData: false,
@@ -344,7 +345,7 @@ $(document).ready(function(){
 					 $('#tax_view').html(data); 
 					 
 					}
-		  });
+		  }); */
 	}
 	
 

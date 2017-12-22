@@ -136,7 +136,7 @@ public function initialize()
 			$this->request->data['date']=date('Y-m-d',strtotime($this->request->data['date']));
 			
             $purchaseOrder = $this->PurchaseOrders->patchEntity($purchaseOrder, $this->request->data);
-			
+			//pr($purchaseOrder); exit;
             if ($this->PurchaseOrders->save($purchaseOrder)) {
                 $this->Flash->success(__('The purchase order has been saved.'));
 
