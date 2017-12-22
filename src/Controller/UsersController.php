@@ -1374,7 +1374,7 @@ class UsersController extends AppController
 		if(!empty($id)){
 			$company_id=$id;
 		}
-		$company_id=$this->Auth->User('company_id');
+		//$company_id=$this->Auth->User('company_id');
 		$this->viewBuilder()->layout('index_layout');
 		$UserProfiles = $this->Users->Companies->UserProfiles->find()->where(['company_id'=>$company_id,'flag'=>0])->contain(['MasterGrades','MasterCategories','MasterClassifications','MasterTurnOvers'])->toArray();
 		$Companies=$this->Users->Companies->get($company_id);
