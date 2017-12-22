@@ -603,10 +603,11 @@ var x=$(this).val();
 						data: $('#form_non_member').serialize(), 
 						success:function(data){ 
 						
-						 $('#myModal').removeClass( "in" );
-							$('#myModal').hide(); 
-							$('.modal-backdrop').remove();
-							$('select[name="member_id"]').append(data);
+						 //$('#myModal').removeClass( "in" );
+							//$('#myModal').hide(); 
+							//$('.modal-backdrop').remove();
+							//$('select[name="member_id"]').append(data);
+							window.location.href = "general_receipt";
 						}
 				});
 		}  
