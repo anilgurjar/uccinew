@@ -8,7 +8,23 @@ padding-left: 0px;
 	margin-bottom: 0px;
 }
 
+fieldset {
+ padding: 10px;
+ border: 1px solid #bfb7b7f7;
+ margin: 12px;
+}
+legend{
+margin-left: 20px;	
+//color:#144277; 
+color:#144277c9; 
+font-size: 14px;
+margin-bottom: 0px;
+}
+
+
 </style>
+
+
 <div class="col-md-12">
 <?php echo $this->Form->create($master_user, ['type' => 'file','id'=>'registratiomForm']); ?>
 		<div class="box box-primary">
@@ -17,8 +33,15 @@ padding-left: 0px;
 			</div>
 			<div class="box-body" style="display: block;">
 			<div class="row">
-			<div class="col-md-12 pad">
 			
+		<fieldset border="1" >
+			<legend><b>COMPANY INFORMATION </b></legend>
+				
+			
+			
+			
+			<div class="col-md-12 pad">
+				
 			      <div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Company/Organisation</label>
@@ -46,7 +69,7 @@ padding-left: 0px;
 							<?php echo $this->Form->input('year_of_joining', ['label' => false,'placeholder'=>'Date of Joining','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy','data-date-end-date'=>'+0d', 'type'=>'text']); ?>
 						</div>
 					</div>
-				<div class="col-md-6">
+				<div class="col-md-8">
 					<div class="form-group">
 						<label class="control-label">Member Type</label><br/>
 						
@@ -62,14 +85,16 @@ padding-left: 0px;
 						</div>
 				</div>
 				
-				<div class="col-md-2">
+				
+			</div>
+			<div class="col-md-12 pad">
+			
+				<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Gst Number </label>
 							<?php echo $this->Form->input('gst_number', ['label' => false,'placeholder'=>'GST NUMBER','class'=>'form-control ','type'=>'text']); ?>
 						</div>
 				</div>
-			</div>
-			<div class="col-md-12 pad">
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Grade</label>
@@ -95,6 +120,10 @@ padding-left: 0px;
 							<label id="category-error" class="error" for="category"></label>
 						</div>
 					</div>
+					
+			</div>
+			<div class="col-md-12 pad">
+			
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Classification</label>
@@ -107,8 +136,6 @@ padding-left: 0px;
 							<label id="classification-error" class="error" for="classification"></label>
 						</div>
 					</div>
-			</div>
-			<div class="col-md-12 pad">
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Member Turn Over</label>
@@ -126,104 +153,158 @@ padding-left: 0px;
 							<?php echo $this->Form->input('office_telephone', ['label' => false,'placeholder'=>'Office-Telephone','class'=>'form-control']); ?>
 						</div>
 					</div>
+					
+			</div>
+			
+			
+			<div class="col-md-12 pad">
+			
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Residential-Telephone</label>
 							<?php echo $this->Form->input('residential_telephone', ['label' => false,'placeholder'=>'Residential-Telephone','class'=>'form-control']); ?>
 						</div>
 					</div>
-			</div>
-			<div class="col-md-12 pad">
-					<div class="col-md-4">
+					
+					<div class="col-md-8">
 						<div class="form-group">
 							<label class="control-label">Address</label>
 							<?php echo $this->Form->input('address', ['label' => false,'placeholder'=>'Company Address','class'=>'form-control','type'=>'textarea','style'=>'resize:none;','rows'=>'2']); ?>
 						</div>
 					</div>
+					
+			</div>
+			
+			<div class="col-md-12 pad">
 					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">City</label>
-							<?php echo $this->Form->input('city', ['label' => false,'placeholder'=>'City Name','class'=>'form-control']); ?>
-						</div>
-					</div>
+								<div class="form-group">
+									<label class="control-label">City</label>
+									<?php echo $this->Form->input('city', ['label' => false,'placeholder'=>'City Name','class'=>'form-control']); ?>
+								</div>
+							</div>
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">State</label>
-							<?php echo $this->Form->input('master_state_id', ['label' => false,'options'=>$state,'placeholder'=>'State  Name','class'=>'form-control']); ?>
+							<?php echo $this->Form->input('master_state_id', ['label' => false,'options'=>$state,'placeholder'=>'State  Name','class'=>'form-control select2','value'=>20]); ?>
 						</div>
 					</div>
-			</div>
-			<div class="col-md-12 pad">
+					
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Pincode</label>
 							<?php echo $this->Form->input('pincode', ['label' => false,'placeholder'=>'pincode','class'=>'form-control','type'=>'text']); ?>
 						</div>
 					</div>
+			
+			</div>
+			
+		</fieldset>	
+			
+		<fieldset>	
+			<legend><b>FIRST NOMINEE </b></legend>
+			
+			<div class="col-md-12 pad">
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">Upload Photograph</label><br/>
+							<?= $this->Form->file('member_image') ?>
+							</div>
+					</div>
+					
+					
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Name</label>
 							<?php echo $this->Form->input('users[0][member_name]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control']); ?>
 							
-							<?php echo $this->Form->input('users[0][member_nominee_type]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>'first']); ?>
+							<?php echo $this->Form->input('users[0][member_nominee_type]', ['label' => false,'placeholder'=>'Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>'first']); ?>
 							
 						</div>
 					</div>
-					<div class="col-md-4"> 
+					<div class="col-md-4">
+						<div class="form-group">
+								<label class="control-label">Designation</label>
+								<?php echo $this->Form->input('users[0][member_designation]', ['label' => false,'placeholder'=>'Designation','class'=>'form-control first']); ?>
+						</div>
+					</div>
+					
+			</div>
+				
+				<div class="col-md-12 pad">
+				
+					<div class="col-sm-offset-4 col-sm-4">
 						<div class="form-group">
 							<label class="control-label">E-mail</label>
-							<?php echo $this->Form->input('users[0][email]', ['label' => false,'placeholder'=>'Company E-mail','class'=>'form-control first']); ?>
+							<?php echo $this->Form->input('users[0][email]', ['label' => false,'placeholder'=>'E-mail','class'=>'form-control first']); ?>
+						</div>
+							
+					</div>
+					<div class="col-md-4"> 
+						<div class="form-group">
+								<label class="control-label">Mobile No.</label>
+								<?php echo $this->Form->input('users[0][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control first']); ?>
 						</div>
 					</div> 
 				</div>
-				<div class="col-md-12 pad">
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Mobile No.</label>
-							<?php echo $this->Form->input('users[0][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control first']); ?>
-						</div>
-					</div>
-					<div class="col-md-4"> 
-						<div class="form-group">
-							<label class="control-label">Alternate Nominee</label>
-							<?php echo $this->Form->input('users[1][member_name]', ['label' => false,'placeholder'=>'Alternate Nominee','class'=>'form-control second']); ?>
-							
-							<?php echo $this->Form->input('users[1][member_nominee_type]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_second','type'=>'hidden','value'=>'']); ?>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Alternate E-mail</label>
-							<?php echo $this->Form->input('users[1][email]', ['label' => false,'placeholder'=>'Company E-mail','class'=>'form-control second']); ?>
-						</div>
-					</div>
-			</div>
-			<div class="col-md-12 pad">
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Alternate Mobile No.</label>
-							<?php echo $this->Form->input('users[1][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control second']); ?>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Member Image</label><br/>
-							<?= $this->Form->file('member_image') ?>
+				
+				
+			</fieldset>	
+
+			<fieldset>	
+			  <legend><b>SECOND NOMINEE </b></legend>
+
+			
+					<div class="col-md-12 pad">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="control-label">Upload Photograph</label><br/>
+									<?= $this->Form->file('alternate_image',['class'=>'second']) ?>
+								</div>
 							</div>
+							<div class="col-md-4"> 
+								<div class="form-group">
+									<label class="control-label">Name</label>
+									<?php echo $this->Form->input('users[1][member_name]', ['label' => false,'placeholder'=>'Name','class'=>'form-control second']); ?>
+									
+									<?php echo $this->Form->input('users[1][member_nominee_type]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_second','type'=>'hidden','value'=>'']); ?>
+								</div>
+							</div>
+							
+							<div class="col-md-4">
+								<div class="form-group">
+										<label class="control-label">Designation</label>
+										<?php echo $this->Form->input('users[1][member_designation]', ['label' => false,'placeholder'=>'Designation','class'=>'form-control first']); ?>
+								</div>
+							</div>
+							
+							
+							
 					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Alternate Member Image</label><br/>
-							<?= $this->Form->file('alternate_image',['class'=>'second']) ?>
-						</div>
+					<div class="col-md-12 pad">
+					
+							<div class="col-sm-offset-4 col-sm-4">
+								<div class="form-group">
+									<label class="control-label">E-mail</label>
+									<?php echo $this->Form->input('users[1][email]', ['label' => false,'placeholder'=>'E-mail','class'=>'form-control second']); ?>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="control-label">Mobile No.</label>
+									<?php echo $this->Form->input('users[1][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control second']); ?>
+								</div>
+							</div>
+							
+							
 					</div>
-				</div>
+			</fieldset>		
 			</div>
 			</div>
 			<div class="box-footer">
 				<center>
 				
-				<?= $this->Form->button(__('Submit') . $this->Html->tag('i', '', ['class'=>'fa fa-plus']),['class'=>'btn btn-success','type'=>'Submit','id'=>'submit_member','name'=>'registration_submit']);
+				<?= $this->Form->button( $this->Html->tag('i', '', ['class'=>'fa fa-plus']). __(' Save') ,['class'=>'btn btn btn-info btn-flat','type'=>'Submit','id'=>'submit_member','name'=>'registration_submit']);
 					   ?>
 				</center>
 			</div>

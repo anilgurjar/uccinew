@@ -68,7 +68,7 @@ $master_member = $master_member->toArray();
 		<div class="no-print">
 		<center>
 			<?php echo $this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-file-text'])  .  ' Report' 
-			,['class'=>'btn btn-info','type'=>'submit','style'=>'margin-right:5px;','name'=>'member_report',
+			,['class'=>'btn  btn-info btn-sm btn-flat','type'=>'submit','style'=>'margin-right:5px;width: 114px;','name'=>'member_report',
 			'value'=>'member_report']); ?>
 		</center>
 		</div>
@@ -78,16 +78,16 @@ $master_member = $master_member->toArray();
 	<?php  
 					echo $this->Html->link('<i class="fa fa-download"></i> Export',
 						['controller' => 'Users', 'action' => 'MemberExport'],
-						['class' => 'btn btn-primary btn-sm btn-flat pull-right',
-							'escape' => false]
+						['class' => 'btn  btn-info btn-sm btn-flat pull-right',
+							'escape' => false,'style'=>'margin-bottom: 4px;']
 					);
 					?>
-		<table class="table table-borderd" style="width: 100%;border: #00c0ef; border-spacing: 0;border-collapse: collapse;" >
-			<thead>
+		<table class="table table-bordered table-striped dataTable" style="width: 100%;border: #00c0ef; border-spacing: 0;border-collapse: collapse;" >
+			<thead style="background-color:#eee">
 				 <tr>
 					<th>S.No.</th>
 					<th>Company/Organisation</th>
-					<th>Turn Over</th>
+					<!--<th>Turn Over</th>
 					<th>Date of Joining</th>
 					<!--<th>Member Type</th>-->
 					<th>E-mail</th>
@@ -106,7 +106,7 @@ $master_member = $master_member->toArray();
  				<tr>
 					<td><?php echo ++$sr_no; ?></td>
 					<td><?php echo $data->company_organisation; ?></td>
-					<td><?php echo $data->master_turn_over->component; ?></td>
+					<!--<td><?php echo @$data->master_turn_over->component; ?></td>
 					<td><?php echo date('d-m-Y',strtotime($data->year_of_joining)); ?></td>
 					<!--<td><?php //echo $data->master_member_type->member_type; ?></td>-->
 					<td><?php echo $user->email; ?></td>
@@ -114,14 +114,14 @@ $master_member = $master_member->toArray();
 					<td><center>
 					<?php  echo $this->Html->link('<i class="fa fa-book"></i> View', 
 					array('controller' => 'Users', 'action' => 'member_view_detail',$data->id),
-					['class' => 'btn btn-info btn-sm','escape'=>false]); ?>
+					['class' => 'btn btn-block btn-info btn-sm btn-flat','escape'=>false]); ?>
 					</td>
 					<td>
 					<?php
 					echo $this->Html->link(
 						'Delete',
 						['controller' => 'Users', 'action' => 'deleteUser', $data->id],
-						['class' => 'btn btn-danger btn-sm btn-flat',
+						['class' => 'btn btn-block btn-danger btn-sm btn-flat',
 							'escape' => false,
 							'confirm' => 'Are you sure you wish to delete this member?']
 					);

@@ -1042,7 +1042,7 @@ class UsersController extends AppController
 					->where(['id' => $id1])
 					->execute();
 			}
-
+			
 		        $this->Flash->success(__('The member has been saved.')); 
                 return $this->redirect(['action' => 'member_registration']);
             }

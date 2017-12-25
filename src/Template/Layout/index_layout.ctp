@@ -31,6 +31,7 @@
     ['type' => 'icon']
 );
 ?>
+
 <style>
 #grad1 {
     height: 50px;
@@ -40,6 +41,20 @@
     background: -moz-linear-gradient(right,  #DA0845, #DB7E14); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to right,  #DA0845 , #DB7E14); /* Standard syntax (must be last) */
 }
+
+.box.box-primary {
+    border-top-color: #66cad5 !important;
+}
+
+sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a {
+    color: #fff;
+    background: #66cad5e3;
+    border-left-color: #DA3E2E;
+}
+
+
+
+
 </style>
 <style>
 body{
