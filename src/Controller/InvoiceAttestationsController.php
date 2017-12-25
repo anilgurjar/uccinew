@@ -201,10 +201,30 @@ class InvoiceAttestationsController extends AppController
 		$role_id=$Companies->role_id;
 		$InvoiceAttestations = $this->InvoiceAttestations->newEntity();
 		
+		@$exporter=$this->request->query['exporter']; 
+		@$originno=$this->request->query['originno'];
+		@$datefrom=$this->request->query['datefrom']; 
+		@$dateto=$this->request->query['dateto'];
+		$condition['status']='approved';
+		if(!empty($exporter)){
+			$condition['exporter Like']='%'.$exporter.'%';
+		}
+		 if( !empty($originno)){
+			$condition['origin_no']=$originno;
+		}
+		
+		if(!empty($datefrom) && !empty($dateto)){
+			$datefrom=date('y-m-d', strtotime($datefrom));
+			$dateto=date('y-m-d', strtotime($dateto));
+			$condition['date_current >=']=$datefrom;
+			$condition['date_current <=']=$dateto;
+		}
+		
+		
 		 if($role_id==1 or $role_id==4 ){
-			 $invoice_attestation = $this->InvoiceAttestations->find()->where(['status'=>'approved'])->order(['InvoiceAttestations.origin_no'=>'DESC']);
+			 $invoice_attestation = $this->InvoiceAttestations->find()->where($condition)->order(['InvoiceAttestations.origin_no'=>'DESC']);
 		   }else{
-			  $invoice_attestation = $this->InvoiceAttestations->find()->where(['status'=>'approved','company_id'=>$company_id])->order(['InvoiceAttestations.origin_no'=>'DESC']); 
+			  $invoice_attestation = $this->InvoiceAttestations->find()->where($condition)->order(['InvoiceAttestations.origin_no'=>'DESC']); 
 		   }  
 		  
        $this->set(compact('invoice_attestation','role_id'));
@@ -214,7 +234,7 @@ class InvoiceAttestationsController extends AppController
 			
 			
 		$sr_no=0;
-		$_header=['S.No.', 'Exporter', 'Origin No', 'Date', 'Consignee', 'Invoice No.', 'Invoice Date','Manufacturer', 'Despatched by'];
+		$_header=['S.No.', 'Exporter', 'Attestation No', 'Date', 'Consignee', 'Invoice No.', 'Invoice Date','Manufacturer', 'Despatched by'];
 		foreach($invoice_attestation as $invoice_attestation) 
 		{	
 			if($invoice_attestation['despatched_by']==0){ 

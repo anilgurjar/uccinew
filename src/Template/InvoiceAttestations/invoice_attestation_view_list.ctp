@@ -9,7 +9,7 @@
 			<?php	 echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control exporter','name'=>'exporter','type'=>'text','placeholder'=>'Exporter Name']);  ?>
 		</div>	
 		<div class="col-sm-2">
-			<?php echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Origin No']);  ?>
+			<?php echo $this->Form->input('origin_no',['label'=>false,'class'=>'form-control origin_no','name'=>'origin_no','type'=>'text','placeholder'=>'Attestation No']);  ?>
 		</div>	
 		<div class=" col-sm-3  ">
 			<div class=" input-group input-large  input-daterange date-picker" data-date-format="dd-mm-yyyy">	
@@ -36,11 +36,11 @@
 	<!-- /.box-header -->
 	<!-- form start -->
 	<?php  
-		/* echo $this->Html->link('<i class="fa fa-download"></i> Export',
+		echo $this->Html->link('<i class="fa fa-download"></i> Export',
 			['controller' => 'InvoiceAttestations', 'action' => 'InvoiceAttestationViewListexcel'],
-			['class' => 'btn btn-primary btn-sm btn-flat pull-right','style'=>'margin-right:30px',
+			['class' => 'btn btn-primary btn-sm btn-flat pull-right','id'=>'excl','style'=>'margin-right:30px',
 				'escape' => false]
-		); */
+		);
 		?>
 	<div class="box-body">
 	 <?= $this->Form->create() ?>
@@ -49,7 +49,7 @@
 				<table class="table table-bordered" id="parant_table" style="width:100%;">
 					<thead>
 						<tr>
-							<th>Sr.No.</th><th>Exporter</th><th>Origin No</th><th>Date</th><th>Consignee</th><th>Invoice No.</th><th>Invoice Date</th><th>Manufacturer</th><th>Despatched by</th><th>View</th>
+							<th>Sr.No.</th><th>Exporter</th><th>Attestation No</th><th>Date</th><th>Consignee</th><th>Invoice No.</th><th>Invoice Date</th><th>Manufacturer</th><th>Despatched by</th><th>View</th>
 						</tr>
 					</thead>
 					<tbody class="show_div">
@@ -89,6 +89,7 @@
 echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js');
 
 ?>
+
 <script>
 $(document).ready(function(){ 
 //alert();
@@ -99,7 +100,7 @@ $(document).ready(function(){
 		var datefrom = $('.from').val();
 		var dateto = $('.to').val();
 		
-		if(exporter !=''  || originno!='' || datefrom!='' || dateto!=''){
+	$('#excl').attr("href","InvoiceAttestationViewListexcel?exporter="+exporter+"&originno="+originno+"&datefrom="+datefrom+"&dateto="+dateto);
 			var url="<?php echo $this->Url->build(['controller'=>'InvoiceAttestations','action'=>'filterdata']);?>";
 			url=url+'?exporter='+exporter+'&originno='+originno+'&datefrom='+datefrom+'&dateto='+dateto;
 			
@@ -112,7 +113,7 @@ $(document).ready(function(){
 					
 				});
 				
-		}
+		
 	
 	});	
 		
