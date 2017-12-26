@@ -209,7 +209,7 @@ margin-bottom: 0px;
 								 }
 									else{ 
 									
-										$html_img= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'100px']); 
+										$html_img= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'80px']); 
 									}
 									echo $html_img;
 									//pr($users);
@@ -286,7 +286,7 @@ margin-bottom: 0px;
 							   }
 								else{ 
 								
-									$html_img1= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'100px']); 
+									$html_img1= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'80px']); 
 								}
 								echo $html_img1; 
 								?>
