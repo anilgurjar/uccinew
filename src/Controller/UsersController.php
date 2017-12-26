@@ -1308,7 +1308,8 @@ class UsersController extends AppController
 			$this->set('fetch_master_grade' , $this->Users->MasterGrades->find()->toArray());
 			$this->set('fetch_master_category' , $this->Users->MasterCategories->find()->toArray());
 			$this->set('fetch_master_classification' , $this->Users->MasterClassifications->find()->toArray());
-		
+		$state=$this->Users->MasterStates->find('list');
+		$this->set(compact('state'));
 		$this->set('update',$Companies);
 	}
 	
