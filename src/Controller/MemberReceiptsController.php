@@ -1000,7 +1000,7 @@ public function MemberReceiptAjaxType(){
 		@$reciept_type=$this->request->query['reciept_type']; 
 		@$purpose_id=$this->request->query['purpose_id']; 
 		@$bank_id=$this->request->query['bank_id']; 
-		if(!empty($this->request->query['from']) && !empty($this->request->query['to'])){
+		if(!empty($this->request->query['datefrom']) && !empty($this->request->query['dateto'])){
 			$from=date('Y-m-d', strtotime($this->request->query['datefrom']));
 			$to=date('Y-m-d', strtotime($this->request->query['dateto']));
 		}else{
