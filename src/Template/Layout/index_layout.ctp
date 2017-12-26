@@ -54,15 +54,18 @@ sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a {
 }
 
 
+body{
+	font-family: 'Montserrat';
 
+}
 
 </style>
 <style>
 
-body{
+<!--body{
 font-family: 'LatoHairline';
 font-size:14px;
-}
+}-->
 .self-table > tbody > tr > td, .self-table > tr > td
 {
 border-top:none !important;

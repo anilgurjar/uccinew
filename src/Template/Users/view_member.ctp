@@ -32,14 +32,6 @@ label{
 }
 
 
-@font-face{
-	font-family: 'Montserrat';
-	src:url('/assets/Montserrat/Montserrat-Bold.ttf') format('ttf');
-}
-body{
-	font-family: 'Montserrat';
-
-}
 
 
 </style>
