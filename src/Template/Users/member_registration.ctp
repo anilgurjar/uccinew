@@ -204,12 +204,11 @@ margin-bottom: 0px;
 			<legend><b>FIRST NOMINEE </b></legend>
 			
 			<div class="col-md-12 pad">
-					
 					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Upload Photograph</label><br/>
-							<?= $this->Form->file('member_image') ?>
-							</div>
+								<div class="form-group">
+									
+									<?= $html_img= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'80px']) ?>
+								</div>
 					</div>
 					
 					
@@ -232,8 +231,15 @@ margin-bottom: 0px;
 			</div>
 				
 				<div class="col-md-12 pad">
-				
-					<div class="col-sm-offset-4 col-sm-4">
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">Upload Photograph</label><br/>
+							<?= $this->Form->file('member_image') ?>
+							</div>
+					</div>
+					
+					<div class=" col-sm-4">
 						<div class="form-group">
 							<label class="control-label">E-mail</label>
 							<?php echo $this->Form->input('users[0][email]', ['label' => false,'placeholder'=>'E-mail','class'=>'form-control first']); ?>
@@ -258,8 +264,8 @@ margin-bottom: 0px;
 					<div class="col-md-12 pad">
 							<div class="col-md-4">
 								<div class="form-group">
-									<label class="control-label">Upload Photograph</label><br/>
-									<?= $this->Form->file('alternate_image',['class'=>'second']) ?>
+									
+									<?= $html_img= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'80px']) ?>
 								</div>
 							</div>
 							<div class="col-md-4"> 
@@ -282,8 +288,13 @@ margin-bottom: 0px;
 							
 					</div>
 					<div class="col-md-12 pad">
-					
-							<div class="col-sm-offset-4 col-sm-4">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="control-label">Upload Photograph</label><br/>
+									<?= $this->Form->file('alternate_image',['class'=>'second']) ?>
+								</div>
+							</div>
+							<div class="col-sm-4">
 								<div class="form-group">
 									<label class="control-label">E-mail</label>
 									<?php echo $this->Form->input('users[1][email]', ['label' => false,'placeholder'=>'E-mail','class'=>'form-control second']); ?>

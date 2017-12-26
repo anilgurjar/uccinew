@@ -8,6 +8,20 @@ padding-left: 0px;
 	margin-bottom: 0px;
 }
 
+fieldset {
+ padding: 10px;
+ border: 1px solid #bfb7b7f7;
+ margin: 12px;
+}
+legend{
+margin-left: 20px;	
+//color:#144277; 
+color:#144277c9; 
+font-size: 14px;
+margin-bottom: 0px;
+}
+
+
 </style>
 
 <div class="col-md-12">
@@ -23,27 +37,32 @@ padding-left: 0px;
 			</div>
 			<div class="box-body" style="display: block;">
 			<div class="row">
-			<div class="col-md-12 pad">
 			
-			      <div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Company/Organisation</label>
-							<?php echo $this->Form->input('company_organisation', ['label' => false,'placeholder'=>'Company/Organisation','class'=>'form-control','value'=>$update->company_organisation]); ?>
+		<fieldset border="1" >
+			<legend><b>COMPANY INFORMATION </b></legend>
+				
+				
+				<div class="col-md-12 pad">
+				
+					  <div class="col-md-4">
+							<div class="form-group">
+								<label class="control-label">Company/Organisation</label>
+								<?php echo $this->Form->input('company_organisation', ['label' => false,'placeholder'=>'Company/Organisation','class'=>'form-control','value'=>$update->company_organisation]); ?>
+							</div>
 						</div>
-					</div>
-			       
-				   <div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">End Products / Items Dealing in</label>
-							<?php echo $this->Form->input('end_products_item_dealing_in', ['label' => false,'placeholder'=>'End Products / Items Dealing in','class'=>'form-control','value'=>$update->end_products_item_dealing_in]); ?>
+					   
+					   <div class="col-md-4">
+							<div class="form-group">
+								<label class="control-label">End Products / Items Dealing in</label>
+								<?php echo $this->Form->input('end_products_item_dealing_in', ['label' => false,'placeholder'=>'End Products / Items Dealing in','class'=>'form-control','value'=>$update->end_products_item_dealing_in]); ?>
+							</div>
 						</div>
-					</div>
-			      <!-- <div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">PAN No.</label>
-							<?php echo $this->Form->input('pan_no', ['label' => false,'placeholder'=>'PAN No.','class'=>'form-control','value'=>$data->pan_no]); ?>
-						</div>
-					</div>-->
+					  <div class="col-md-4">
+							<div class="form-group">
+								<label class="control-label">PAN No.</label>
+								<?php echo $this->Form->input('pan_no', ['label' => false,'placeholder'=>'PAN No.','class'=>'form-control','value'=>@$data->pan_no]); ?>
+							</div>
+					 </div>
 				</div>
 			<div class="col-md-12 pad">
 				<div class="col-md-4">
@@ -52,7 +71,7 @@ padding-left: 0px;
 							<?php echo $this->Form->input('year_of_joining', ['label' => false,'placeholder'=>'Date of Joining','class'=>'form-control date-picker','data-date-format'=>'dd-mm-yyyy','data-date-end-date'=>'+0d', 'type'=>'text','value'=>date('d-m-Y',strtotime($update->year_of_joining))]); ?>
 						</div>
 					</div>
-				<div class="col-md-6">
+				<div class="col-md-8">
 					<div class="form-group">
 						<label class="control-label">Member Type</label><br/>
 						
@@ -68,15 +87,17 @@ padding-left: 0px;
 							<label id="company_member_types[master_member_type_id][]-error" class="error" for="company_member_types[master_member_type_id][]"></label>
 						</div>
 				</div>
-				<div class="col-md-2">
+				
+				
+			</div>
+			<div class="col-md-12 pad">
+			
+					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Gst Number </label>
 							<?php echo $this->Form->input('gst_number', ['label' => false,'placeholder'=>'GST NUMBER','class'=>'form-control ','type'=>'text','value'=>$update->gst_number]); ?>
 						</div>
-				</div>
-				
-			</div>
-			<div class="col-md-12 pad">
+					</div>
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Grade</label>
@@ -102,6 +123,10 @@ padding-left: 0px;
 							<label id="category-error" class="error" for="category"></label>
 						</div>
 					</div>
+					
+			</div>
+			<div class="col-md-12 pad">
+			
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Classification</label>
@@ -114,8 +139,6 @@ padding-left: 0px;
 							<label id="classification-error" class="error" for="classification"></label>
 						</div>
 					</div>
-			</div>
-			<div class="col-md-12 pad">
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Member Turn Over</label>
@@ -133,34 +156,70 @@ padding-left: 0px;
 							<?php echo $this->Form->input('office_telephone', ['label' => false,'placeholder'=>'Office-Telephone','class'=>'form-control','value'=>$update->office_telephone]); ?>
 						</div>
 					</div>
+					
+			</div>
+			<div class="col-md-12 pad">
+				
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Residential-Telephone</label>
 							<?php echo $this->Form->input('residential_telephone', ['label' => false,'placeholder'=>'Residential-Telephone','class'=>'form-control','value'=>$update->residential_telephone]); ?>
 						</div>
 					</div>
-			</div>
-			<div class="col-md-12 pad">
-					<div class="col-md-4">
+					
+					<div class="col-md-8">
 						<div class="form-group">
 							<label class="control-label">Address</label>
 							<?php echo $this->Form->input('address', ['label' => false,'placeholder'=>'Company Address','class'=>'form-control','type'=>'textarea','style'=>'resize:none;','rows'=>'2','value'=>$update->address]); ?>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">City</label>
-							<?php echo $this->Form->input('city', ['label' => false,'placeholder'=>'City Name','class'=>'form-control','value'=>$update->city]); ?>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Pincode</label>
-							<?php echo $this->Form->input('pincode', ['label' => false,'placeholder'=>'pincode','class'=>'form-control','value'=>$update->pincode,'type'=>'text']); ?>
-						</div>
-					</div>
+					
 			</div>
 			<div class="col-md-12 pad">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="control-label">City</label>
+						<?php echo $this->Form->input('city', ['label' => false,'placeholder'=>'City Name','class'=>'form-control','value'=>$update->city]); ?>
+					</div>
+				</div>
+				<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">State</label>
+							<?php echo $this->Form->input('master_state_id', ['label' => false,'options'=>$state,'placeholder'=>'State  Name','class'=>'form-control select2','value'=>$update->master_state_id]); ?>
+						</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="control-label">Pincode</label>
+						<?php echo $this->Form->input('pincode', ['label' => false,'placeholder'=>'pincode','class'=>'form-control','value'=>$update->pincode,'type'=>'text']); ?>
+					</div>
+				</div>
+			</div>
+		</fieldset>		
+		
+		<fieldset>	
+			<legend><b>FIRST NOMINEE </b></legend>
+			<div class="col-md-12 pad">
+					<div class="col-md-4">
+						<div class="form-group"> 
+							<?php 
+							  if (file_exists(WWW_ROOT . ''.$users[0]->image.'')){ 
+									$html_img= $this->Html->image('/'.$users[0]->image.'',['width'=>'100px','height'=>'100px']); 
+								 }
+									else{ 
+									
+										$html_img= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'100px']); 
+									}
+									echo $html_img;
+									//pr($users);
+									?>
+
+						</div>
+					</div>
+					
+					
+					
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Name</label>
@@ -171,6 +230,30 @@ padding-left: 0px;
 					<?php echo $this->Form->input('users[0][id]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>$users[0]->id]); ?>
 						</div>
 					</div>
+					
+					
+					<div class="col-md-4">
+						<div class="form-group">
+								<label class="control-label">Designation</label>
+								<?php echo $this->Form->input('users[0][member_designation]', ['label' => false,'placeholder'=>'Designation','class'=>'form-control first']); ?>
+						</div>
+					</div>
+			
+					
+				</div>
+				
+				<div class="col-md-12 pad">
+					
+					<div class="col-md-4">
+						<div class="form-group"> 
+						
+
+							<label class="control-label">Upload Photograph </label><br/> 
+							<?= $this->Form->file('member_image') ?>
+							
+						</div>
+					</div>
+						
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">E-mail</label>
@@ -183,71 +266,81 @@ padding-left: 0px;
 							<?php echo $this->Form->input('users[0][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control','value'=>$users[0]->mobile_no]); ?>
 						</div>
 					</div>
+				
 				</div>
+				
+				
+			</fieldset>		
+			
+			<fieldset>	
+			  <legend><b>SECOND NOMINEE </b></legend>
+
 				<div class="col-md-12 pad">
+				
 					<div class="col-md-4">
 						<div class="form-group">
-							<label class="control-label">Alternate Nominee</label>
+						<?php
+
+						   if(file_exists(WWW_ROOT . ''.$users[1]->image.'')){ 
+								$html_img1= $this->Html->image('/'.$users[1]->image.'',['width'=>'100px','height'=>'100px']); 
+							   }
+								else{ 
+								
+									$html_img1= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'100px']); 
+								}
+								echo $html_img1; 
+								?>
+							
+							
+						</div>
+					</div>
+				
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">Name</label>
 							<?php echo $this->Form->input('users[1][member_name]', ['label' => false,'placeholder'=>'Alternate Nominee','class'=>'form-control second','value'=>$users[1]->member_name]); ?>
 
 							<?php echo $this->Form->input('users[1][member_nominee_type]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_second','type'=>'hidden','value'=>$users[1]->member_nominee_type]); ?>
 						<?php echo $this->Form->input('users[1][id]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>$users[1]->id]); ?>
 						</div>
 					</div>
+					
 					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Alternate E-mail</label>
-							<?php echo $this->Form->input('users[1][email]', ['label' => false,'placeholder'=>'Company E-mail','class'=>'form-control second','value'=>$users[1]->email]); ?>
-						</div>
+								<div class="form-group">
+										<label class="control-label">Designation</label>
+										<?php echo $this->Form->input('users[1][member_designation]', ['label' => false,'placeholder'=>'Designation','class'=>'form-control first']); ?>
+								</div>
 					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label">Alternate Mobile No.</label>
-							<?php echo $this->Form->input('users[1][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control second','value'=>$users[1]->mobile_no]); ?>
-						</div>
-					</div>
+							
+					
+					
+					
 				</div>
 				<div class="col-md-12 pad">
-					<div class="col-md-4">
-						<div class="form-group"> 
-						<?php 
-						  if (file_exists(WWW_ROOT . ''.$users[0]->image.'')){ 
-								$html_img= $this->Html->image('/'.$users[0]->image.'',['width'=>'30px','height'=>'30px']); 
-							 }
-								else{ 
-								
-									$html_img= $this->Html->image('/img/tab2.png',['width'=>'30px','height'=>'30px']); 
-								}
-								//pr($users);
-								?>
-
-
-
-							<label class="control-label">Member Image <?php echo $html_img; ?></label><br/> 
-							<?= $this->Form->file('member_image') ?>
-							
-							</div>
-					</div>
+					
 					<div class="col-md-4">
 						<div class="form-group">
-						<?php
-
-						   if(file_exists(WWW_ROOT . ''.$users[1]->image.'')){ 
-								$html_img1= $this->Html->image('/'.$users[1]->image.'',['width'=>'30px','height'=>'30px']); 
-							   }
-								else{ 
-								
-									$html_img1= $this->Html->image('/img/tab2.png',['width'=>'30px','height'=>'30px']); 
-								}
-								
-								?>
-		
-							<label class="control-label">Alternate Member Image  <?php echo $html_img1; ?></label><br/>
+						
+							<label class="control-label">Upload Photograph  </label><br/>
 							<?= $this->Form->file('alternate_image') ?>
 							
 							
 						</div>
 					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">E-mail</label>
+							<?php echo $this->Form->input('users[1][email]', ['label' => false,'placeholder'=>'Company E-mail','class'=>'form-control second','value'=>$users[1]->email]); ?>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">Mobile No.</label>
+							<?php echo $this->Form->input('users[1][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control second','value'=>$users[1]->mobile_no]); ?>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 			</div>
