@@ -803,9 +803,9 @@ class UsersController extends AppController
 		$user_id=$this->Auth->User('id');
 		$company_id=$this->Auth->User('company_id');
         $this->viewBuilder()->layout('index_layout');
-		$Companies = $this->Users->Companies->get($auto_id,['contain'=>['Users','CompanyMemberTypes'=>(['MasterMemberTypes']),'MasterGrades','MasterTurnOvers','MasterCategories','MasterClassifications','MasterStates']]);
+		$update = $this->Users->Companies->get($auto_id,['contain'=>['Users','CompanyMemberTypes'=>(['MasterMemberTypes']),'MasterGrades','MasterTurnOvers','MasterCategories','MasterClassifications','MasterStates']]);
 		//pr($Companies);  exit;
-		$this->set('update',$Companies);
+		$this->set(compact('update','auto_id'));
     }
 
 
