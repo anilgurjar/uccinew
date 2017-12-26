@@ -58,6 +58,10 @@ class CompaniesTable extends Table
 		$this->belongsTo('MasterCategories', [
             'foreignKey' => 'category',
          ]);
+		 
+		 $this->belongsTo('MasterStates', [
+            'foreignKey' => 'master_state_id',
+         ]);
 
 		$this->belongsTo('MasterGrades', [
 			'foreignKey' => 'grade',

@@ -113,8 +113,11 @@ $master_member = $master_member->toArray();
 					<td><?php echo $user->mobile_no; ?></td>
 					<td><center>
 					<?php  echo $this->Html->link('<i class="fa fa-book"></i> View', 
-					array('controller' => 'Users', 'action' => 'member_view_detail',$data->id),
+					array('controller' => 'Users', 'action' => 'viewMember',$data->id),
 					['class' => 'btn btn-block btn-info btn-sm btn-flat','escape'=>false]); ?>
+					<?php // echo $this->Html->link('<i class="fa fa-book"></i> View', 
+					//array('controller' => 'Users', 'action' => 'member_view_detail',$data->id),
+					//['class' => 'btn btn-block btn-info btn-sm btn-flat','escape'=>false]); ?>
 					</td>
 					<td>
 					<?php

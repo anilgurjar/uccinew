@@ -794,6 +794,43 @@ class UsersController extends AppController
 		
 		$this->set(compact('master_member','role_id','due','coo_count','receipt'));
 	}
+	
+	
+	// view for member start
+
+	public function viewMember($auto_id=null)
+    {
+		$user_id=$this->Auth->User('id');
+		$company_id=$this->Auth->User('company_id');
+        $this->viewBuilder()->layout('index_layout');
+		$Companies = $this->Users->Companies->get($auto_id,['contain'=>['Users','CompanyMemberTypes'=>(['MasterMemberTypes']),'MasterGrades','MasterTurnOvers','MasterCategories','MasterClassifications','MasterStates']]);
+		//pr($Companies);  exit;
+		$this->set('update',$Companies);
+    }
+
+
+
+
+
+	// view for member end
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public function add()
     {
 		$this->Auth->User('id');
