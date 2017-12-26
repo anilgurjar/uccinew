@@ -204,8 +204,8 @@ margin-bottom: 0px;
 					<div class="col-md-4">
 						<div class="form-group"> 
 							<?php 
-							  if (file_exists(WWW_ROOT . ''.$users[0]->image.'')){ 
-									$html_img= $this->Html->image('/'.$users[0]->image.'',['width'=>'100px','height'=>'100px']); 
+							  if (file_exists(WWW_ROOT . ''.@$users[0]->image.'')){ 
+									$html_img= $this->Html->image('/'.@$users[0]->image.'',['width'=>'100px','height'=>'100px']); 
 								 }
 									else{ 
 									
@@ -223,11 +223,11 @@ margin-bottom: 0px;
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Name</label>
-							<?php echo $this->Form->input('users[0][member_name]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control','value'=>$users[0]->member_name]); ?>
+							<?php echo $this->Form->input('users[0][member_name]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control','value'=>@$users[0]->member_name]); ?>
 
-							<?php echo $this->Form->input('users[0][member_nominee_type]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>$users[0]->member_nominee_type]); ?>
+							<?php echo $this->Form->input('users[0][member_nominee_type]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>@$users[0]->member_nominee_type]); ?>
 
-					<?php echo $this->Form->input('users[0][id]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>$users[0]->id]); ?>
+					<?php echo $this->Form->input('users[0][id]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>@$users[0]->id]); ?>
 						</div>
 					</div>
 					
@@ -257,13 +257,13 @@ margin-bottom: 0px;
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">E-mail</label>
-							<?php echo $this->Form->input('users[0][email]', ['label' => false,'placeholder'=>'Company E-mail','class'=>'form-control','value'=>$users[0]->email]); ?>
+							<?php echo $this->Form->input('users[0][email]', ['label' => false,'placeholder'=>'Company E-mail','class'=>'form-control','value'=>@$users[0]->email]); ?>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Mobile No.</label>
-							<?php echo $this->Form->input('users[0][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control','value'=>$users[0]->mobile_no]); ?>
+							<?php echo $this->Form->input('users[0][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control','value'=>@$users[0]->mobile_no]); ?>
 						</div>
 					</div>
 				
@@ -281,14 +281,14 @@ margin-bottom: 0px;
 						<div class="form-group">
 						<?php
 
-						   if(file_exists(WWW_ROOT . ''.$users[1]->image.'')){ 
-								$html_img1= $this->Html->image('/'.$users[1]->image.'',['width'=>'100px','height'=>'100px']); 
+						   if(file_exists(WWW_ROOT . ''.@$users[1]->image.'')){ 
+								$html_img1= $this->Html->image('/'.@$users[1]->image.'',['width'=>'100px','height'=>'100px']); 
 							   }
 								else{ 
-								
-									$html_img1= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'80px']); 
-								}
-								echo $html_img1; 
+									
+										$html_img= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'80px']); 
+									}
+									echo $html_img;
 								?>
 							
 							
@@ -298,10 +298,10 @@ margin-bottom: 0px;
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Name</label>
-							<?php echo $this->Form->input('users[1][member_name]', ['label' => false,'placeholder'=>'Alternate Nominee','class'=>'form-control second','value'=>$users[1]->member_name]); ?>
+							<?php echo $this->Form->input('users[1][member_name]', ['label' => false,'placeholder'=>'Alternate Nominee','class'=>'form-control second','value'=>@$users[1]->member_name]); ?>
 
-							<?php echo $this->Form->input('users[1][member_nominee_type]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_second','type'=>'hidden','value'=>$users[1]->member_nominee_type]); ?>
-						<?php echo $this->Form->input('users[1][id]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>$users[1]->id]); ?>
+							<?php echo $this->Form->input('users[1][member_nominee_type]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_second','type'=>'hidden','value'=>@$users[1]->member_nominee_type]); ?>
+						<?php echo $this->Form->input('users[1][id]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control nominee_first','type'=>'hidden','value'=>@$users[1]->id]); ?>
 						</div>
 					</div>
 					
@@ -331,13 +331,13 @@ margin-bottom: 0px;
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">E-mail</label>
-							<?php echo $this->Form->input('users[1][email]', ['label' => false,'placeholder'=>'Company E-mail','class'=>'form-control second','value'=>$users[1]->email]); ?>
+							<?php echo $this->Form->input('users[1][email]', ['label' => false,'placeholder'=>'Company E-mail','class'=>'form-control second','value'=>@$users[1]->email]); ?>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label">Mobile No.</label>
-							<?php echo $this->Form->input('users[1][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control second','value'=>$users[1]->mobile_no]); ?>
+							<?php echo $this->Form->input('users[1][mobile_no]', ['label' => false,'placeholder'=>'Mobile Number','class'=>'form-control second','value'=>@$users[1]->mobile_no]); ?>
 						</div>
 					</div>
 					
