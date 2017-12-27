@@ -23,15 +23,39 @@ input[type="radio"]
 	<div class="box-body">
 		<?= $this->Form->create($invoiceAttestation,['method'=>'post','class'=>'form-horizontal','id'=>'certificate_form','enctype' => 'multipart/form-data','onsubmit' => 'return file_submit();'])?> 
 		<div class="col-sm-12 no-print">
-			<div class="col-sm-6">
-				<div class="form-group">
-					<label class="col-sm-4 control-label">Exporter</label>
-					<div class="col-sm-8">
-						<?php
-						 echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control valid','name'=>'exporter','type'=>'text','value'=>$company_organisation,'style'=>'border:none; border-bottom: 1px dotted #ccc; background-color: #FFF;','readonly'=>'readonly']);
-						 ?>
+			<div class="col-sm-12">
+				<div class="col-sm-6"> 
+					<div class="form-group">
+						
+						<div class="col-sm-8">
+							 <?php
+							 $options['Invoice Attestation']='Invoice upload';
+							 $options['Documents Attestation']='General Documents upload';
+							
+						   
+							echo $this->Form->input('invoice_type', array('type' => 'radio','label' => false,'options' => $options,'value'=>'Invoice Attestation','hiddenField' => false)); 
+							 unset($options);
+							 ?>
+						 <br/>
+						
+						 </div>
+											
 					</div>
 				</div>
+				<div class="col-sm-6"> 
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Exporter</label>
+						<div class="col-sm-8">
+							<?php
+							 echo $this->Form->input('exporter',['label'=>false,'class'=>'form-control valid','name'=>'exporter','type'=>'text','value'=>$company_organisation,'style'=>'border:none; border-bottom: 1px dotted #ccc; background-color: #FFF;','readonly'=>'readonly']);
+							 ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+			<div class="col-sm-6 invoice_types">
+				
 				<div class="form-group">
 					<label class="col-sm-4 control-label">Consignee</label>
 					<div class="col-sm-8">
@@ -82,7 +106,7 @@ input[type="radio"]
 				</div>
 			</div>
 			
-			<div class="col-sm-6">
+			<div class="col-sm-6 invoice_types">
 				<div class="form-group">
 				  <label class="col-sm-4 control-label">Port of Loading</label>
 				   <div class="col-sm-8">
@@ -113,7 +137,7 @@ input[type="radio"]
 			</div>
 			<div class="col-sm-6">
 				<div class="form-group">
-					<label class="col-sm-4 control-label">Invoice Attachment</label>
+					<label class="col-sm-4 control-label attachment">Invoice Attachment</label>
 					<table id="file_table" style="line-height:2.5">
 						<tr>
 							<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?><h6>Upload pdf files only<h6></td>
@@ -125,7 +149,7 @@ input[type="radio"]
 			</div>	
 			<div class="col-sm-10 ">
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Other Information</label>
+					<label class="col-sm-3 control-label other">Other Information</label>
 					<div class="col-sm-5">
 					<?php
 						 echo $this->Form->textarea('other_info',['label'=>false,'class'=>'form-control','type'=>'text']);
@@ -163,6 +187,20 @@ echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js');
 
 ?>
 <script>
+
+$(document).on('click','input[name="invoice_type"]',function() {
+	var type=$(this).val();
+		if(type=="Invoice Attestation"){
+			 $(".invoice_types").show(); 
+			 $(".attachment").html('Invoice Attachment');
+			 $(".other").html('Other Information');
+		}else{
+			 $(".invoice_types").hide();		
+			 $(".attachment").html('Document Attachment');
+			 $(".other").html('Mention Documents Name');
+		}
+});
+
 
 function file_submit(){
 	

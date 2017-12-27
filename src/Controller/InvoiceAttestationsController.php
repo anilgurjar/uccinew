@@ -546,8 +546,9 @@ class InvoiceAttestationsController extends AppController
 			
 			if(isset($this->request->data['invoice_attestation_draft']))
 			{
-				
+				if(!empty($this->request->data['invoice_date'])){
 				$this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
+				}
 				$this->request->data['date_current']=date('Y-m-d');
 				$this->request->data['company_id']=$company_id;
 				$files=$this->request->data['file']; 
@@ -591,8 +592,10 @@ class InvoiceAttestationsController extends AppController
 			}
 			else if(isset($this->request->data['invoice_attestation_publish']))
 			{ 
-				 
-				$this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
+				 if(!empty($this->request->data['invoice_date'])){
+					$this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
+				}
+			
 				$this->request->data['date_current']=date('Y-m-d');
 				$this->request->data['company_id']=$company_id;
 				$files=$this->request->data['file'];
@@ -691,7 +694,7 @@ class InvoiceAttestationsController extends AppController
 					}
 					else{
 						//return $this->redirect(['action' => 'paymentTest',$data['id']]);
-						return $this->redirect(['action' => 'payment',$data['id']]);
+						//return $this->redirect(['action' => 'payment',$data['id']]);
 						$query = $this->InvoiceAttestations->query();
 							$query->update()
 							->set(['status' => 'published','payment_status'=>'success'])
@@ -1394,7 +1397,9 @@ class InvoiceAttestationsController extends AppController
 		
         $invoiceAttestation = $this->InvoiceAttestations->newEntity();
         if ($this->request->is('post')) {
-            $this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
+			if(!empty($this->request->data['invoice_date'])){
+				$this->request->data['invoice_date']=date('Y-m-d',strtotime($this->request->data['invoice_date']));
+			}
 			$this->request->data['date_current']=date('Y-m-d');
 			$this->request->data['company_id']=$company_id;
 			
@@ -1431,6 +1436,7 @@ class InvoiceAttestationsController extends AppController
 				return $this->redirect(['action' => 'attestationDraftView',$last_insert_id]);
 				exit;
 			} else {
+				
                 $this->Flash->error(__('The invoice attestation could not be saved. Please, try again.'));
             }
         }
