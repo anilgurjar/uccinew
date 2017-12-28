@@ -55,6 +55,8 @@ use Cake\Filesystem\File;
 							<?= $invoice_attestation->exporter ?>
 						  </div>
 						</div>
+						<?php 
+						if($invoice_attestation->invoice_type=="Invoice Attestation"){ ?>	
 						<div class="col-sm-12 value_padding">
 						  <label class="col-sm-4">Consignee</label>
 						  <div class="col-sm-8">
@@ -82,6 +84,14 @@ use Cake\Filesystem\File;
 							<?php if($invoice_attestation->despatched_by==0){ echo 'Sea'; }else if($invoice_attestation->despatched_by==1){ echo 'Air'; } else{ echo "Road"; } ?>
 						  </div>
 						</div>
+						<?php } ?>
+						
+						<div class="col-sm-12 value_padding">
+							<label class="col-sm-4">Type</label>
+							<div class="col-sm-8">
+								<?= $invoice_attestation->invoice_type ?>
+							</div>
+						</div>
 						<div class="col-sm-12 value_padding">
 							<label class="col-sm-4">Other Info</label>
 							<div class="col-sm-8">
@@ -95,6 +105,8 @@ use Cake\Filesystem\File;
 							</div>
 						</div>
 					</div>
+					<?php 
+					if($invoice_attestation->invoice_type=="Invoice Attestation"){ ?>
 					<div class="col-sm-6 value_padding">
 						<div class="col-sm-12 value_padding">
 						  <label class="col-sm-4">Port of Loading</label>
@@ -115,6 +127,7 @@ use Cake\Filesystem\File;
 						  </div>
 						</div>
 					</div>
+				<?php } ?>	
 				</div>
 				
 				

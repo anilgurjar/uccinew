@@ -19,6 +19,17 @@
 				<?php    echo $this->Form->input('to', ['label' => false,'class'=>'form-control to ','format'=>"yyyy/mm/dd",'placeholder'=>'Date To']); ?>
 			</div>	
 		</div>
+		
+		
+		<div class="col-sm-2">
+		
+			<?php 
+				$options=[];
+				$options['']='- Select Type --';
+				$options['Invoice Attestation']='Invoice Attestation';
+				$options['Documents Attestation']='Documents Attestation';
+			echo $this->Form->input('invoice_type',['label'=>false,'class'=>'form-control invoice_type select2','options'=>$options,'placeholder'=>'Type']);  ?>
+		</div>	
 		<div class="col-sm-2">
 			<input type="button"  class="go  btn btn-info btn-sm" value="GO">
 		</div>
@@ -49,7 +60,7 @@
 				<table class="table table-bordered" id="parant_table" style="width:100%;">
 					<thead>
 						<tr>
-							<th>Sr.No.</th><th>Exporter</th><th>Attestation No</th><th>Date</th><th>Consignee</th><th>Invoice No.</th><th>Invoice Date</th><th>Manufacturer</th><th>Despatched by</th><th>View</th>
+							<th>Sr.No.</th><th>Exporter</th><th>Attestation No</th><th>Date</th><th>Consignee</th><th>Invoice No.</th><th>Invoice Date</th><th>Manufacturer</th><th>Despatched by</th><th>Type</th><th>View</th>
 						</tr>
 					</thead>
 					<tbody class="show_div">
@@ -63,11 +74,13 @@
 						<td><?= $invoice_attestatio->date_current ?></td>
 						<td><?= $invoice_attestatio->consignee ?></td>
 						<td><?= $invoice_attestatio->invoice_no ?></td>
-						<td><?= date('d-m-Y', strtotime($invoice_attestatio->invoice_date)) ?></td>
+						<td><?php if($invoice_attestatio->invoice_type=='Invoice Attestation'){ echo date('d-m-Y', strtotime($invoice_attestatio->invoice_date)); }?></td>
 						<td><?= $invoice_attestatio->manufacturer ?></td>
-						<td><?php if($invoice_attestatio->despatched_by==0){ echo 'Sea'; }else if($invoice_attestatio->despatched_by==1){ echo 'Air'; }else{ echo 'Road'; } ?></td>
+						<td><?php if($invoice_attestatio->invoice_type=='Invoice Attestation'){
+						if($invoice_attestatio->despatched_by==0){ echo 'Sea'; }else if($invoice_attestatio->despatched_by==1){ echo 'Air'; }else{ echo 'Road'; } } ?></td>
+						<td><?php echo $invoice_attestatio->invoice_type; ?></td>
 						<td><?= $this->Form->button(__('View') . $this->Html->tag('i', '', ['class'=>'fa fa-book']),['class'=>'btn btn-info btn-sm','formtarget'=>'_blank','value'=>$invoice_attestatio->id,'type'=>'Submit','name'=>'view']);   ?> </td>
-						</tr>
+					</tr>
 
 					
 					<?php endforeach; ?>
@@ -99,10 +112,11 @@ $(document).ready(function(){
 		var originno = $('.origin_no').val();
 		var datefrom = $('.from').val();
 		var dateto = $('.to').val();
+		var invoice_type = $('.invoice_type').val();
 		
-	$('#excl').attr("href","InvoiceAttestationViewListexcel?exporter="+exporter+"&originno="+originno+"&datefrom="+datefrom+"&dateto="+dateto);
+	$('#excl').attr("href","InvoiceAttestationViewListexcel?exporter="+exporter+"&originno="+originno+"&datefrom="+datefrom+"&dateto="+dateto+"&invoice_type="+invoice_type);
 			var url="<?php echo $this->Url->build(['controller'=>'InvoiceAttestations','action'=>'filterdata']);?>";
-			url=url+'?exporter='+exporter+'&originno='+originno+'&datefrom='+datefrom+'&dateto='+dateto;
+			url=url+'?exporter='+exporter+'&originno='+originno+'&datefrom='+datefrom+'&dateto='+dateto+'&invoice_type='+invoice_type;
 			
 			$.ajax({ 
 					url:url,

@@ -54,13 +54,17 @@ class InvoiceAttestationsController extends AppController
 		$originno=$this->request->query['originno'];
 		$datefrom=$this->request->query['datefrom']; 
 		$dateto=$this->request->query['dateto'];
+		$invoice_type=$this->request->query['invoice_type'];
 		
 		$condition['status']='approved';
 		if(!empty($exporter)){
 			$condition['exporter Like']='%'.$exporter.'%';
 		}
-		 if( !empty($originno)){
+		 if(!empty($originno)){
 			$condition['origin_no']=$originno;
+		}
+		if(!empty($invoice_type)){
+			$condition['invoice_type']=$invoice_type;
 		}
 		
 		if(!empty($datefrom) && !empty($dateto)){
@@ -205,6 +209,11 @@ class InvoiceAttestationsController extends AppController
 		@$originno=$this->request->query['originno'];
 		@$datefrom=$this->request->query['datefrom']; 
 		@$dateto=$this->request->query['dateto'];
+		$invoice_type=$this->request->query['invoice_type'];
+
+		if(!empty($invoice_type)){
+			$condition['invoice_type']=$invoice_type;
+		}
 		$condition['status']='approved';
 		if(!empty($exporter)){
 			$condition['exporter Like']='%'.$exporter.'%';
@@ -234,19 +243,27 @@ class InvoiceAttestationsController extends AppController
 			
 			
 		$sr_no=0;
-		$_header=['S.No.', 'Exporter', 'Attestation No', 'Date', 'Consignee', 'Invoice No.', 'Invoice Date','Manufacturer', 'Despatched by'];
+		$_header=['S.No.', 'Exporter', 'Attestation No', 'Date', 'Consignee', 'Invoice No.', 'Invoice Date','Manufacturer', 'Despatched by','Type'];
 		foreach($invoice_attestation as $invoice_attestation) 
 		{	
-			if($invoice_attestation['despatched_by']==0){ 
-			$despatched_by='Sea'; 
-			}else if( $invoice_attestation['despatched_by']==1 ){
-				$despatched_by= 'Air'; 
-			}
-			else{ 
-				$despatched_by= 'Road';
-			} 
-			$contain[]=[ ++$sr_no, $invoice_attestation['exporter'], $invoice_attestation['origin_no'], $invoice_attestation['date_current'], $invoice_attestation['consignee'], $invoice_attestation['invoice_no'], date('d-m-Y', strtotime($invoice_attestation['invoice_date'])), $invoice_attestation['manufacturer'], 
-			$despatched_by ];
+			if($invoice_attestation['invoice_type']=='Invoice Attestation'){
+			
+				if($invoice_attestation['despatched_by']==0){ 
+				$despatched_by='Sea'; 
+				}else if( $invoice_attestation['despatched_by']==1 ){
+					$despatched_by= 'Air'; 
+				}
+				else{ 
+					$despatched_by= 'Road';
+				} 
+				$date=date('d-m-Y', strtotime($invoice_attestation['invoice_date']));
+			 }else{
+				$despatched_by= ''; 
+				$date='';
+			 }
+			 
+			$contain[]=[ ++$sr_no, $invoice_attestation['exporter'], $invoice_attestation['origin_no'], $invoice_attestation['date_current'], $invoice_attestation['consignee'], $invoice_attestation['invoice_no'],$date, $invoice_attestation['manufacturer'], 
+			$despatched_by,$invoice_attestation['invoice_type']];
 		}
 		
 		$_serialize = 'contain';

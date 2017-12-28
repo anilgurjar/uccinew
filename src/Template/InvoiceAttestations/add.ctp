@@ -135,7 +135,7 @@ input[type="radio"]
 				   </div>
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-8">
 				<div class="form-group">
 					<label class="col-sm-4 control-label attachment">Invoice Attachment</label>
 					<table id="file_table" style="line-height:2.5">
