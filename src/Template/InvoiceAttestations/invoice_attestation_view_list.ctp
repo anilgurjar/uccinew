@@ -106,6 +106,13 @@ echo $this->Html->script('/assets/plugins/jquery/jquery-2.2.3.min.js');
 <script>
 $(document).ready(function(){ 
 //alert();
+	var exporter = $('.exporter').val();
+	var originno = $('.origin_no').val();
+	var datefrom = $('.from').val();
+	var dateto = $('.to').val();
+	var invoice_type = $('.invoice_type').val();
+
+	$('#excl').attr("href","InvoiceAttestationViewListexcel?exporter="+exporter+"&originno="+originno+"&datefrom="+datefrom+"&dateto="+dateto+"&invoice_type="+invoice_type);
 	
 	$('.go').click(function(){
 		var exporter = $('.exporter').val();
