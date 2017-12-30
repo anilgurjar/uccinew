@@ -1,4 +1,3 @@
-
 <div class="col-md-12">
   <!-- Horizontal Form -->
   <div class="box box-primary">
@@ -29,9 +28,10 @@
 						<td><?= $invoice_attestation->exporter ?></td>
 						<td><?= $invoice_attestation->consignee ?></td>
 						<td><?= $invoice_attestation->invoice_no ?></td>
-						<td><?= date('d-m-Y', strtotime($invoice_attestation->invoice_date)) ?></td>
+						
+						<td><?php if($invoice_attestation->invoice_type=='Invoice Attestation'){ echo date('d-m-Y', strtotime($invoice_attestation->invoice_date)); }?></td>
 						<td><?= $invoice_attestation->manufacturer ?></td>
-						<td><?php if($invoice_attestation->despatched_by==0){ echo 'Sea'; }else if($invoice_attestation->despatched_by==1){ echo 'Air'; } else{ echo 'Road'; }?></td>
+						<td><?php if($invoice_attestation->invoice_type=='Invoice Attestation'){ if($invoice_attestation->despatched_by==0){ echo 'Sea'; }else if($invoice_attestation->despatched_by==1){ echo 'Air'; } else{ echo 'Road'; } }?></td>
 						<td><?= $this->Form->button(__('View') . $this->Html->tag('i', '', ['class'=>'fa fa-book']),['class'=>'btn btn-info btn-sm','formaction'=>'invoice_attestation_approve_view','value'=>$invoice_attestation->id,'type'=>'Submit','name'=>'view']);
 					   ?></td>
 						</tr>

@@ -34,9 +34,10 @@
 						<td><?= $certificate_origin->date_current ?></td>
 						<td><?= $certificate_origin->consignee ?></td>
 						<td><?= $certificate_origin->invoice_no ?></td>
-						<td><?= date('d-m-Y', strtotime($certificate_origin->invoice_date)) ?></td>
+						
+						<td><?php if($certificate_origin->invoice_type=='Invoice Attestation'){ echo date('d-m-Y', strtotime($certificate_origin->invoice_date)); }?> </td>
 						<td><?= $certificate_origin->manufacturer ?></td>
-						<td><?php if($certificate_origin->despatched_by==0){ echo 'Sea'; }else if($certificate_origin->despatched_by==1){ echo 'Air'; }else{ echo 'Road'; } ?></td>
+						<td><?php if($certificate_origin->invoice_type=='Invoice Attestation'){ if($certificate_origin->despatched_by==0){ echo 'Sea'; }else if($certificate_origin->despatched_by==1){ echo 'Air'; }else{ echo 'Road'; } } ?></td>
 						<td><?= $this->Form->button(__('Publish') . $this->Html->tag('i', '', ['class'=>'fa fa-book']),['class'=>'btn btn-success btn-sm','formaction'=>'attestationDraftView/'.$certificate_origin->id.'','type'=>'Submit','name'=>'view']);   ?> </td>
 						
 						

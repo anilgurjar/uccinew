@@ -77,7 +77,7 @@ class InvoiceAttestationsTable extends Table
             ->requirePresence('origin_no', 'create')
             ->notEmpty('origin_no'); */
 
-        $validator
+       /* $validator
             ->requirePresence('exporter', 'create')
             ->notEmpty('exporter');
 
@@ -118,7 +118,7 @@ class InvoiceAttestationsTable extends Table
             ->date('date_current')
             ->requirePresence('date_current', 'create')
             ->notEmpty('date_current');
-/* 
+ 
         $validator
             ->integer('approve')
             ->requirePresence('approve', 'create')
