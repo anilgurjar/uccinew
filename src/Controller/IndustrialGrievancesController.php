@@ -186,7 +186,7 @@ class IndustrialGrievancesController extends AppController
 							} 
 						} 
 						
-						if(!empty($email_to1)){		
+						/* if(!empty($email_to1)){		
 						try {
 							$email->from(['ucciudaipur@gmail.com' => $from_name])
 								->to($email_to1)
@@ -202,7 +202,7 @@ class IndustrialGrievancesController extends AppController
 								echo 'Exception : ',  $e->getMessage(), "\n";
 
 							} 
-						}
+						} */
 					
 			        
 					$this->Flash->success(__('Industrial Grievance has been Accept.'));

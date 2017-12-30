@@ -331,7 +331,7 @@ class CompaniesController extends AppController
 			
 			
 			// mail send on submit and save start
-			$email = new Email();
+			/* $email = new Email();
 			$email->transport('SendGrid');
 			$sub='Secretary';
 			$sendmails= $this->Companies->find()->where(['role_id'=>1 ])->orwhere(['role_id'=>4])->contain(['Users']);
@@ -362,7 +362,7 @@ class CompaniesController extends AppController
 					   }
 					
 				}
-			}
+			} */
 			
 			// mail send on submit and save end
 			

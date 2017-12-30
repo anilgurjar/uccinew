@@ -7,10 +7,10 @@
 <meta content="width=device-width, initial-scale=1" name="viewport">
 <meta content="" name="description">
 <meta content="" name="author">
-	<?php echo $this->Html->css('/assets/Lato2OFLWeb/Lato2OFLWeb/Lato/latofonts.css'); ?>
+	<?php //echo $this->Html->css('/assets/Lato2OFLWeb/Lato2OFLWeb/Lato/latofonts.css'); ?>
+	<?php echo $this->Html->css('/assets/Lato2OFLWeb/Lato2OFLWeb/Lato/Montserrat.css'); ?>
 	<?php echo $this->Html->css('/assets/bootstrap/css/bootstrap.min.css'); ?>
-	<link href='//fonts.googleapis.com/css?family=Montserrat:thin,extra-light,light,100,200,300,400,500,600,700,800' 
-rel='stylesheet' type='text/css'>
+	
 	<?php echo $this->Html->css('/assets/plugins/bootstrap-datepicker/css/datepicker3.css'); ?> 
 	<?php echo $this->Html->css('/assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css'); ?> 
 	<?php echo $this->Html->css('/assets/plugins/timepicker/bootstrap-timepicker.min.css'); ?> 
@@ -56,16 +56,17 @@ sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a {
 
 body{
 	font-family: 'Montserrat';
+	color: #606062;
 
 }
 
 </style>
 <style>
 
-<!--body{
-font-family: 'LatoHairline';
+body{
+font-family: 'Montserrat';
 font-size:14px;
-}-->
+}
 .self-table > tbody > tr > td, .self-table > tr > td
 {
 border-top:none !important;

@@ -9,7 +9,7 @@ padding-left: 0px;
 }
 
 fieldset {
- padding: 10px;
+ padding: 10px ;
  border: 1px solid #bfb7b7f7;
  margin: 12px;
 }
@@ -17,8 +17,9 @@ legend{
 margin-left: 20px;	
 //color:#144277; 
 color:#144277c9; 
-font-size: 14px;
+font-size: 17px;
 margin-bottom: 0px;
+border:none;
 }
 
 
@@ -38,7 +39,7 @@ margin-bottom: 0px;
 			<div class="box-body" style="display: block;">
 			<div class="row">
 			
-		<fieldset border="1" >
+		<fieldset border="1" style="margin-left: 50px;margin-right: 50px;">
 			<legend><b>COMPANY INFORMATION </b></legend>
 				
 				
@@ -78,7 +79,7 @@ margin-bottom: 0px;
 						<?php
 						$options=array();
 						foreach($member_type as $member_type_data){
-							$options[$member_type_data->id] = $member_type_data['member_type'];
+							$options[$member_type_data->id] = '   '.$member_type_data['member_type'];
 					
 						}
 						
@@ -198,11 +199,11 @@ margin-bottom: 0px;
 			</div>
 		</fieldset>		
 		
-		<fieldset>	
+		<fieldset style="margin-left: 50px;margin-right: 50px;">	
 			<legend><b>FIRST NOMINEE </b></legend>
 			<div class="col-md-12 pad">
 					<div class="col-md-4">
-						<div class="form-group"> 
+						<div class="form-group" style="text-align:center"> 
 							<?php 
 							  if (file_exists(WWW_ROOT . ''.@$users[0]->image.'')){ 
 									$html_img= $this->Html->image('/'.@$users[0]->image.'',['width'=>'100px','height'=>'100px']); 
@@ -221,7 +222,7 @@ margin-bottom: 0px;
 					
 					
 					<div class="col-md-4">
-						<div class="form-group">
+						<div class="form-group" >
 							<label class="control-label">Name</label>
 							<?php echo $this->Form->input('users[0][member_name]', ['label' => false,'placeholder'=>'Member Name','class'=>'form-control','value'=>@$users[0]->member_name]); ?>
 
@@ -245,12 +246,11 @@ margin-bottom: 0px;
 				<div class="col-md-12 pad">
 					
 					<div class="col-md-4">
-						<div class="form-group"> 
-						
-
+						<div class="form-group" style="text-align:center"> 
 							<label class="control-label">Upload Photograph </label><br/> 
+							<div class="col-md-offset-3 col-md-9">
 							<?= $this->Form->file('member_image') ?>
-							
+							</div>
 						</div>
 					</div>
 						
@@ -272,13 +272,13 @@ margin-bottom: 0px;
 				
 			</fieldset>		
 			
-			<fieldset>	
+			<fieldset style="margin-left: 50px;margin-right: 50px;">	
 			  <legend><b>SECOND NOMINEE </b></legend>
 
 				<div class="col-md-12 pad">
 				
 					<div class="col-md-4">
-						<div class="form-group">
+						<div class="form-group" style="text-align:center">
 						<?php
 
 						   if(file_exists(WWW_ROOT . ''.@$users[1]->image.'')){ 
@@ -319,12 +319,11 @@ margin-bottom: 0px;
 				<div class="col-md-12 pad">
 					
 					<div class="col-md-4">
-						<div class="form-group">
-						
+						<div class="form-group" style="text-align:center">
 							<label class="control-label">Upload Photograph  </label><br/>
+							<div class="col-md-offset-3 col-md-9">
 							<?= $this->Form->file('alternate_image') ?>
-							
-							
+							</div>
 						</div>
 					</div>
 					
@@ -347,7 +346,7 @@ margin-bottom: 0px;
 			<div class="box-footer">
 				<center>
 				
-				<?= $this->Form->button(__('Submit') . $this->Html->tag('i', '', ['class'=>'fa fa-plus']),['class'=>'btn btn-success','type'=>'Submit','name'=>'registration_update']);
+				<?= $this->Form->button(__('Submit') . $this->Html->tag('i', '', ['class'=>'fa fa-btn']),['class'=>'btn btn-success btn btn-primary','type'=>'Submit','name'=>'registration_update']);
 					   ?>
 				</center>
 			</div>

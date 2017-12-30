@@ -9,7 +9,7 @@ padding-left: 0px;
 }
 
 fieldset {
- padding: 10px;
+ padding: 10px ;
  border: 1px solid #bfb7b7f7;
  margin: 12px;
 }
@@ -17,8 +17,9 @@ legend{
 margin-left: 20px;	
 //color:#144277; 
 color:#144277c9; 
-font-size: 14px;
+font-size: 17px;
 margin-bottom: 0px;
+border:none;
 }
 
 
@@ -34,7 +35,7 @@ margin-bottom: 0px;
 			<div class="box-body" style="display: block;">
 			<div class="row">
 			
-		<fieldset border="1" >
+		<fieldset border="1" style="margin-left: 50px;margin-right: 50px;">
 			<legend><b>COMPANY INFORMATION </b></legend>
 				
 			
@@ -76,7 +77,7 @@ margin-bottom: 0px;
 						<?php
 						$options=array();
 						foreach($member_type as $member_type_data){
-							$options[$member_type_data->id] = $member_type_data['member_type'];
+							$options[$member_type_data->id] = '       '.$member_type_data['member_type'];
 						}
 						
 						echo $this->Form->input('company_member_types[master_member_type_id]', ['templates' => ['checkboxWrapper' => '<div class=" inline" style="margin-left: 5px !important;">{{label}}</div>',
@@ -132,7 +133,7 @@ margin-bottom: 0px;
 							foreach($fetch_master_classification as $classification_data){
 								$options[$classification_data->id] = $classification_data->classification_name;
 							}
-							echo $this->Form->input('classification', ['empty'=> '--Select--','data-placeholder'=>'Select a Category','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
+							echo $this->Form->input('classification', ['empty'=> '--Select--','data-placeholder'=>'Select a Classification','label' => false,'class'=>'form-control select2','options'=>$options,'style'=>'width:100%;']); ?>
 							<label id="classification-error" class="error" for="classification"></label>
 						</div>
 					</div>
@@ -200,15 +201,14 @@ margin-bottom: 0px;
 			
 		</fieldset>	
 			
-		<fieldset>	
+		<fieldset style="margin-left: 50px;margin-right: 50px;">	
 			<legend><b>FIRST NOMINEE </b></legend>
 			
 			<div class="col-md-12 pad">
 					<div class="col-md-4">
-								<div class="form-group">
-									
-									<?= $html_img= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'80px']) ?>
-								</div>
+						<div class="form-group" style="text-align:center">
+							<?= $html_img= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'80px']) ?>
+						</div>
 					</div>
 					
 					
@@ -232,11 +232,13 @@ margin-bottom: 0px;
 				
 				<div class="col-md-12 pad">
 					
-					<div class="col-md-4">
-						<div class="form-group">
+					<div class=" col-md-4" style="text-align:center">
+						<div class="form-group" >
 							<label class="control-label">Upload Photograph</label><br/>
+							<div class="col-md-offset-3 col-md-9">
 							<?= $this->Form->file('member_image') ?>
 							</div>
+						</div>
 					</div>
 					
 					<div class=" col-sm-4">
@@ -257,13 +259,13 @@ margin-bottom: 0px;
 				
 			</fieldset>	
 
-			<fieldset>	
+			<fieldset style="margin-left: 50px;margin-right: 50px;">	
 			  <legend><b>SECOND NOMINEE </b></legend>
 
 			
 					<div class="col-md-12 pad">
 							<div class="col-md-4">
-								<div class="form-group">
+								<div class="form-group" style="text-align:center">
 									
 									<?= $html_img= $this->Html->image('/img/tab2.png',['width'=>'100px','height'=>'80px']) ?>
 								</div>
@@ -289,9 +291,11 @@ margin-bottom: 0px;
 					</div>
 					<div class="col-md-12 pad">
 							<div class="col-md-4">
-								<div class="form-group">
+								<div class="form-group" style="text-align:center">
 									<label class="control-label">Upload Photograph</label><br/>
-									<?= $this->Form->file('alternate_image',['class'=>'second']) ?>
+									<div class="col-md-offset-3 col-md-9">
+										<?= $this->Form->file('alternate_image',['class'=>'second']) ?>
+									</div>
 								</div>
 							</div>
 							<div class="col-sm-4">
@@ -315,7 +319,7 @@ margin-bottom: 0px;
 			<div class="box-footer">
 				<center>
 				
-				<?= $this->Form->button( $this->Html->tag('i', '', ['class'=>'fa fa-plus']). __(' Save') ,['class'=>'btn btn btn-info btn-flat','type'=>'Submit','id'=>'submit_member','name'=>'registration_submit']);
+				<?= $this->Form->button( $this->Html->tag('i', '', ['class'=>'fa fa-btn']). __(' Register') ,['class'=>'btn btn btn-info btn-flat btn btn-primary','type'=>'Submit','id'=>'submit_member','name'=>'registration_submit']);
 					   ?>
 				</center>
 			</div>

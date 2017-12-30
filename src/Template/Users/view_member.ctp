@@ -47,13 +47,13 @@ label{
 		</div>
 		<div class="box-body" style="display: block;">
 			<div class="row">
-				<fieldset border="1" >
+				<fieldset border="1" style="margin-left: 50px;margin-right: 50px;">
 					<legend><b>COMPANY INFORMATION </b></legend>
 					<div class="col-md-12 pad">
 						<div class="col-md-4">
 							<div class="form-group">
 								<label class="control-label">Company/Organisation</label><br>
-								<span class="span"><?php echo $update->company_organisation;		?></span>
+								<span class="span"><?php      echo $update->company_organisation;		?></span>
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -163,14 +163,14 @@ label{
 						</div>
 					</div>
 				</fieldset>	
-				<fieldset>	
+				<fieldset style="margin-left: 50px;margin-right: 50px;">	
 					<legend ><b>PERSON INFORMATION</b></legend>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="col-md-6 pad">
 								<label class="control-label" style="color:#66CAD5">FIRST NOMINEE</label><br/>
 								<div class="col-md-4">
-									<div class="form-group"> 
+									<div class="form-group" style="text-align:center"> 
 									<?php 
 										if (file_exists(WWW_ROOT . ''.$update->users[0]->image.'')){ 
 										$html_img= $this->Html->image('/'.$update->users[0]->image.'',['width'=>'100px','height'=>'100px']); 
@@ -185,19 +185,19 @@ label{
 								</div>
 								<div class="col-md-8">
 									<div class="form-group">
-										<label class="control-label"><b>Name</b></label>
+										<label class="control-label"><b>Name :</b></label>
 										<span class="span"><?php echo $update->users[0]['member_name'];	?></span>
 									</div>
 									<div class="form-group">
-										<label class="control-label">Designation</label><br/>
+										<label class="control-label">Designation :</label>
 										<span class="span"><?php echo $update->users[0]['member_designation'];	?></span>
 									</div>
 									<div class="form-group">
-										<label class="control-label">E-mail</label><br/>
+										<label class="control-label">E-mail :</label>
 										<span class="span"><?php echo $update->users[0]['email'];	?></span>
 									</div>
 									<div class="form-group">
-										<label class="control-label">Mobile No.</label><br/>
+										<label class="control-label">Mobile No. :</label>
 										<span class="span"><?php echo $update->users[0]['mobile_no'];	?></span>
 									</div>
 								</div>
@@ -206,7 +206,7 @@ label{
 							<div class="col-md-6 pad">
 								<label class="control-label" style="color:#66CAD5"><b>SECOND NOMINEE </b></label>
 								<div class="col-md-4">
-									<div class="form-group">
+									<div class="form-group" style="text-align:center">
 										<?php 
 											if (file_exists(WWW_ROOT . ''.@$update->users[1]->image.'')){ 
 											$html_img= $this->Html->image('/'.@$update->users[1]->image.'',['width'=>'100px','height'=>'100px']); 
@@ -221,19 +221,19 @@ label{
 								</div>
 								<div class="col-md-8"> 
 									<div class="form-group">
-										<label class="control-label">Name</label><br/>
+										<label class="control-label">Name</label>
 										<span class="span"><?php echo @$update->users[1]['member_name'];	?></span>
 									</div>
 									<div class="form-group">
-										<label class="control-label">Designation</label><br/>
+										<label class="control-label">Designation</label>
 										<span class="span"><?php echo @$update->users[1]['member_designation'];	?></span>
 									</div>
 									<div class="form-group">
-										<label class="control-label">E-mail</label><br/>
+										<label class="control-label">E-mail</label>
 										<span class="span"><?php echo @$update->users[1]['email'];	?></span>
 									</div>
 									<div class="form-group">
-										<label class="control-label">Mobile No.</label><br/>
+										<label class="control-label">Mobile No.</label>
 										<span class="span"><?php echo @$update->users[1]['mobile_no'];	?></span>
 									</div>
 								</div>
