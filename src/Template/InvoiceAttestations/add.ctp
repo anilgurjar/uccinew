@@ -137,7 +137,7 @@ input[type="radio"]
 			</div>
 			<div class="col-sm-8">
 				<div class="form-group">
-					<label class="col-sm-4 control-label attachment">Invoice Attachment</label>
+					<label class="col-sm-3 control-label attachment">Invoice Attachment</label>
 					<table id="file_table" style="line-height:2.5">
 						<tr>
 							<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?><h6>Upload pdf files only<h6></td>
@@ -147,10 +147,10 @@ input[type="radio"]
 					</table>
 				</div>	
 			</div>	
-			<div class="col-sm-10 ">
+			<div class="col-sm-8 ">
 				<div class="form-group">
 					<label class="col-sm-3 control-label other">Other Information</label>
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 					<?php
 						 echo $this->Form->textarea('other_info',['label'=>false,'class'=>'form-control','type'=>'text']);
 						 ?> 

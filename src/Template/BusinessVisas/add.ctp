@@ -1,3 +1,8 @@
+<style>
+body{
+	font-size:13px !important;
+}
+</style>
 <div class="col-md-12">
   <!-- Horizontal Form -->
   <div class="box box-primary">
@@ -34,7 +39,7 @@
 		</div><br/>
 		<div class="form-group">
 			<h4 class="box-title" style="color:#DA3E2E">Sendor Informations :-</h4>
-		</div>
+		</div><br/>
 		
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Send To</label>
@@ -61,8 +66,8 @@
 				
 				echo $this->Form->input('category_type', ['empty'=>'----Select---','label' => false,'placeholder'=>'Select Category','class'=>'form-control select2me  category_type typevissa','options'=>$category]); ?>
 			</div>
-		</div>
-			
+		</div><br/>
+		
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Sender Name</label>
 			<div class="col-sm-4">
@@ -72,7 +77,7 @@
 			<div class="col-sm-4">
 				<?php echo $this->Form->input('sender_country', ['label' => false,'placeholder'=>'Sender Country','class'=>'form-control sendor_country']); ?>
 			</div>
-		</div>
+		</div><br/>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Subject</label>
 			<div class="col-sm-4">
@@ -82,7 +87,7 @@
 			<div class="col-sm-4">
 				<?php echo $this->Form->input('sender_address', ['label' => false,'placeholder'=>'Sender Address','class'=>'form-control address']); ?>
 			</div>
-		</div>
+		</div><br>
 		<div class="form-group">
 			<h4 class="box-title" style="color:#DA3E2E">Visitor Informations :-</h4>
 		</div><br>
