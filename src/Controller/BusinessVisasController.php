@@ -997,7 +997,7 @@ class BusinessVisasController extends AppController
 										->replyTo('uccisec@hotmail.com')
 										->subject($sub)
 										->profile('default')
-										->template('invoice_attestation_approve')
+										->template('bussiness_vissa_approve')
 										->emailFormat('html')
 										->viewVars(['member_name'=>$member_name,'consignee'=>$consignee]);
 										$email->send();

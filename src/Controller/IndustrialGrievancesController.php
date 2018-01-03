@@ -389,15 +389,13 @@ class IndustrialGrievancesController extends AppController
 						
 					
 					if(!empty($mobile_no)){
-						$sms="We sincerely thank you for contacting our grievance cell. We will investigate the grievance by gathering pertinent information against your grievance";
+						//$sms="We sincerely thank you for contacting our grievance cell. We will investigate the grievance by gathering pertinent information against your grievance";
 						$sms="Dear member, Your grievance has been lodged at UCCI." ;
 						
 						
 						$sms1=str_replace(" ", '+', $sms);
 						
 						$sms_send=file_get_contents('http://103.39.134.40/api/mt/SendSMS?user=UCCIUDR&password=7737291465&senderid=UCCIUD&channel=Trans&DCS=0&flashsms=0&number='.$mobile_no.'&text='.$sms1.'&route=7');
-						
-						
 					}
 					if(!empty($email_to)){
 						$from_name="UCCI";
