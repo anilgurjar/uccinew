@@ -68,11 +68,12 @@
 							<?php $i=0;  foreach ($IndustrialGrievances as $departments):  ?>
 							
 								<?php
+								
 								$k=1; 
 								foreach($departments->industrial_grievances as $industrial_grievance)
 								{ $class="";
 									$complete_status=$industrial_grievance->complete_status;
-									?>
+								?>
 									<tr >
 									
 									<?php
@@ -291,6 +292,7 @@
 									</tr>
 									<?php
 									$k++;
+								
 								}
 								?>
 							<?php endforeach; ?>

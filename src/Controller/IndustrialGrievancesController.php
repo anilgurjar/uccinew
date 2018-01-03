@@ -46,11 +46,31 @@ class IndustrialGrievancesController extends AppController
 		$IndustrialDepartments = $this->IndustrialGrievances->Companies->find('list')->where(['role_id'=>5]);
 				
 		$industrialGrievance = $this->IndustrialGrievances->IndustrialGrievanceFollows->newEntity();
+		$current_date=date('Y-m-d');
+		$fetchgrievences=$this->IndustrialGrievances->find()->where(['complete_status IN'=>['hold'],'close_date <'=>$current_date]);
+		foreach($fetchgrievences as $fetchgrievence){
+			$id=$fetchgrievence->id;
+			$close_date=$fetchgrievence->close_date;
+					$query = $this->IndustrialGrievances->query();
+					$query->update()
+					->set(['complete_status' => 'close'])
+					->where(['id' => $id])
+					->execute();
+					
+		}
+		
+
 		if($role_id==5){
 			$condition['industrial_department_id']=$company_id;
 		}if($role_id==2){
 			$condition['created_by']=$user_id;
 		}
+		
+		
+		
+		
+		
+		
 		if($role_id==1 || $role_id==4){
 			$IndustrialGrievances = $this->IndustrialGrievances->Companies->find()->where(['role_id'=>5])
 					->contain(['IndustrialGrievances'=>function($q){return $q->where(['complete_status IN'=>['running','hold']])
@@ -68,7 +88,7 @@ class IndustrialGrievancesController extends AppController
 				}]);
 		}	
 					
-        $this->set(compact('IndustrialGrievances', 'IndustrialDepartments','random_color','role_id','industrialGrievance'));
+        $this->set(compact('IndustrialGrievances', 'IndustrialDepartments','random_color','role_id','industrialGrievance','current_date'));
         $this->set('_serialize', ['industrialGrievances','industrialGrievance']);
     }
 
@@ -860,7 +880,7 @@ class IndustrialGrievancesController extends AppController
 		
 		if(!empty($category_type)){
 			if($category_type=='Close'){
-				$conditions['complete_status in']=['hold'];
+				$conditions['complete_status in']=['hold','close'];
 			}else
 			{
 				$conditions['complete_status in']=['running'];

@@ -24,10 +24,10 @@
 				<tbody>
 				<?php $i=0;  foreach ($IndustrialGrievances as $industrial_grievance): $i++; $complete_status=$industrial_grievance->complete_status; $class='';  ?>
 				
-						<tr <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:rgba(255, 0, 0, 0.7);" <?php } ?>>
+						<tr <?php if($complete_status=="hold"){ $class="font_color"; ?> style="background-color:green; " <?php } ?>>
 						
-							<td class="<?php echo $class; ?> font_cl"><?= h($i) ?></td>
-							<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->company->company_organisation) ?></td>
+						<td class="<?php echo $class; ?> font_cl"><?= h($i) ?></td>
+						<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->company->company_organisation) ?></td>
 						<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->title) ?></td>
 						<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->description) ?></td>
 						<td class="<?php echo $class; ?> font_cl"><?= h($industrial_grievance->user->company_organisation) ?></td> 
