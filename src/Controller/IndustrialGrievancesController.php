@@ -740,7 +740,7 @@ class IndustrialGrievancesController extends AppController
 								->replyTo('uccisec@hotmail.com')
 								->subject($subject)
 								->profile('default')
-								->template('grievance_add')
+								->template('grievance_cancel')
 								->emailFormat('html')
 								->viewVars(['grievance_number'=>$grievance_number,'member_name'=>$member_name]);
 								$email->send();	
