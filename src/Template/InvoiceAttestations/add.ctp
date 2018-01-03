@@ -140,7 +140,7 @@ input[type="radio"]
 					<label class="col-sm-3 control-label attachment">Invoice Attachment</label>
 					<table id="file_table" style="line-height:2.5">
 						<tr>
-							<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?><h6>Upload pdf files only<h6></td>
+							<td><?= $this->Form->file('file[]',['multiple'=>'multiple','class'=>'invoice_attachment']); ?><h6>Upload PDF of Invoice in A4 size format<h6></td>
 							<!--<td><?php //$this->Form->button($this->Html->tag('i', '', ['class'=>'fa fa-plus']) . __(' Add More'), ['class'=>'btn btn-block btn-primary btn-sm add_more','type'=>'button']) ?></td>-->
 							<td></td>
 						</tr>
@@ -205,12 +205,19 @@ $(document).on('click','input[name="invoice_type"]',function() {
 function file_submit(){
 	
 	var x =$('.invoice_attachment').val();
+	var file_size = $('.invoice_attachment')[0].files[0].size;
 	
 	if(x){
 			var ext = x.substring(x.lastIndexOf('.') + 1);
 			if(ext == "pdf" ||  ext == "PDF")
 			{
-				return true;
+				if(file_size>5242880) {
+					alert("File size is greater than 5MB");
+					return false;
+				}else{
+					return true;
+				
+				}
 			} 
 			else
 			{
@@ -218,6 +225,7 @@ function file_submit(){
 				
 				return false;
 			}
+			
 
 		
 	}else{
